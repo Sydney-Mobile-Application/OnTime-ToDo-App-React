@@ -1,13 +1,25 @@
-import React from 'react';
-import { StyleSheet, View, Text, ScrollView, Pressable } from 'react-native';
+import React, { useState } from 'react';
+import { StyleSheet, View, Text, ScrollView, Pressable, Alert } from 'react-native';
 
 export default function TermAndCondition ({closeModal}) {
+  const [buttonDisable, setButtonDisable] = useState(true);
+
+  function enableButton() {
+    setButtonDisable(false)
+  }
+
+  const isCloseToBottom = ({layoutMeasurement, contentOffset, contentSize}) => {
+    const paddingToBottom = 20;
+    return layoutMeasurement.height + contentOffset.y >=
+      contentSize.height - paddingToBottom;
+  };
+
   return (
     <View style={styles.container}>
       <View style={styles.modalView}>
         <Text style={styles.textTitleAccept}>Terms of Service & Privacy Policy.</Text>
-        <ScrollView style={styles.scrollViewAccept}>
-          <Text style={styles.text}>
+        <ScrollView style={styles.scrollViewAccept} onScroll={({nativeEvent}) => { if (isCloseToBottom(nativeEvent)) {enableButton()}}}>
+          <Text style={styles.textViewAccept}>
           Welcome to OnTime!
           {"\n"}{"\n"}
           These terms and conditions outline the rules and regulations for the use of OnTime Sydney's Website, located at OnTimeSydney.
@@ -24,7 +36,7 @@ export default function TermAndCondition ({closeModal}) {
           Unless otherwise stated, OnTime Sydney and/or its licensors own the intellectual property rights for all material on OnTime. All intellectual property rights are reserved. You may access this from OnTime for your own personal use subjected to restrictions set in these terms and conditions.
           </Text>
         </ScrollView>
-        <Pressable style={styles.buttonAccept} onPress={() => closeModal()}>
+        <Pressable style={[styles.buttonAccept, buttonDisable ? {backgroundColor: 'rgba(108, 122, 137, 1)'} : '']} onPress={() => closeModal()} disabled={buttonDisable}>
           <Text style={{color: 'white', fontWeight: 'bold'}}>Accept</Text>
         </Pressable>
       </View>
@@ -62,6 +74,9 @@ const styles = StyleSheet.create({
   scrollViewAccept: {
     maxHeight: 350,
     marginBottom: 10
+  },
+  textViewAccept: {
+    textAlign: 'justify'
   },
   buttonAccept: {
     backgroundColor: '#293462',
