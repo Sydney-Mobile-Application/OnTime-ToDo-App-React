@@ -1,11 +1,18 @@
-import React from 'react';
-import { StyleSheet, View, Text, TextInput, Pressable } from 'react-native';
+import React, { useState } from 'react';
+import { StyleSheet, View, Text, TextInput, Pressable, Modal } from 'react-native';
+import TermCondition from './termAndCondition';
 
 export default function Register ({ navigation }) {
   const [text, onChangeText] = React.useState("Useless Text");
+  const [modalVisible, setModalVisible] = useState(false);
+
+  function closeModal() {
+    setModalVisible(false)
+    navigation.navigate('Sign In')
+  }
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, modalVisible ? {backgroundColor: 'rgba(0,0,0,0.5)'} : '']}>
       <View style={styles.headerContent}>
         <Text style={styles.textTopFRegister}>Let's Get You Ready!</Text>
         <Text style={styles.textTopSRegister}>Fill This Form, And You Are Ready To Go!</Text>
@@ -21,10 +28,13 @@ export default function Register ({ navigation }) {
           <Text style={{fontWeight: 'bold'}}>Sign In</Text>
         </Pressable>
       </View>
-      <Pressable style={styles.buttonRegister} onPress={() => navigation.navigate('Sign In')}>
+      <Pressable style={styles.buttonRegister} onPress={() => setModalVisible(true)}>
         <Text style={{color: 'white', fontWeight: 'bold'}}>Register</Text>
       </Pressable>
       <Text style={styles.textBottomSRegister}>By signing up, you agree to the Terms of Service and Privacy Policy.</Text>
+      <Modal animationType="slide" transparent={true} visible={modalVisible} onRequestClose={() => { setModalVisible(!modalVisible); }}>
+        <TermCondition closeModal={closeModal} />
+      </Modal>
     </View>
   );
 };

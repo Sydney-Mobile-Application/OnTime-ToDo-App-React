@@ -49,12 +49,12 @@ const styles = StyleSheet.create({
     fontWeight: 'bold'
   },
   bottomTitleGetStarted: {
-   paddingBottom: 10 
+    paddingBottom: 10 
   },
   inlineButton: {
     flexDirection:'row',
     flexWrap:'wrap',
-    width: '80%',
+    width: '60%',
     backgroundColor: '#E8E8E8',
     borderRadius: 26
   },
