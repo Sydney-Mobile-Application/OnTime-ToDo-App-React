@@ -45,7 +45,6 @@ export default function SettingMenu ({navigation}) {
       </View> 
     </View>
 
-{/* Pressable */}
       <View style={styles.taskList}>
         <View style={styles.priorityTask}> 
           <Text style={styles.taskTitle}>Priority Task</Text>
