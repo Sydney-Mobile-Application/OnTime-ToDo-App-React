@@ -8,6 +8,7 @@ import {
   Pressable,
   Dimensions,
   Switch,
+  ScrollView,
 } from "react-native";
 
 const width_name = "60%";
@@ -17,61 +18,63 @@ const windowHeight = Dimensions.get("window").height;
 
 export default function Dashboard() {
   return (
-    <View style={styles.containertop}> 
+    <ScrollView>
+      <View style={styles.containertop}> 
 
-      <View style={styles.top}>
-        <View style={styles.left}>
-          <Text style={styles.name}>Ohayou, James-kun!</Text>
-          <Text style={styles.date}>20 Jun</Text>
+        <View style={styles.top}>
+          <View style={styles.left}>
+            <Text style={styles.name}>Ohayou, James-kun!</Text>
+            <Text style={styles.date}>20 Jun</Text>
+          </View>
+
+          <View style={styles.right}>
+            <Image
+              style={styles.avatar}
+              source={require("../../assets/profile1.jpeg")}
+            />
+            <Text style={styles.notif}>20 tasks to do today</Text>
+          </View>
         </View>
 
-        <View style={styles.right}>
-          <Image
-            style={styles.avatar}
-            source={require("../../assets/profile1.jpeg")}
-          />
-          <Text style={styles.notif}>20 tasks to do today</Text>
+        <View style={styles.container}>
+          <View style={styles.highlight}>
+            <Text style={styles.highlight_text}>Meeting with project team</Text>
+          </View>
+
+          <View style={styles.Head} >
+            <Text style={styles.priority}>Priority</Text>
+            <Text style={styles.seeall}>See All</Text>
+          </View>
+
+          <View style={styles.priorityCont}>
+            <View style={styles.taskNear}>
+              <Text style={styles.taskText}>Meeting with Project Team</Text>
+              <Text style={styles.taskDate}>20 Sep</Text>
+            </View>
+            <View style={styles.taskNear2}>
+              <Text style={styles.taskText}>Kerjakan Tugas PAM</Text>
+              <Text style={styles.taskDate2}>26 Sep</Text>
+            </View>
+          </View>
+
+          <View style={styles.Head} >
+            <Text style={styles.upcoming}>Upcoming</Text>
+            <Text style={styles.seeall}>See All</Text>
+          </View>
+
+          <View style={styles.upcomingCont}>
+            <View style={styles.taskCommon}>
+              <Text style={styles.taskText}>Meeting with Project Team</Text>
+              <Text style={styles.taskDate}>20 Sep</Text>
+            </View>
+            <View style={styles.taskCommon2}>
+              <Text style={styles.taskText}>Kerjakan Tugas PAM</Text>
+              <Text style={styles.taskDate2}>26 Sep</Text>
+            </View>
+          </View>
         </View>
       </View>
-
-      <View style={styles.container}>
-        <View style={styles.highlight}>
-          <Text style={styles.highlight_text}>Meeting with project team</Text>
-        </View>
-
-        <View style={styles.Head} >
-          <Text style={styles.priority}>Priority</Text>
-          <Text style={styles.seeall}>See All</Text>
-        </View>
-
-        <View style={styles.priorityCont}>
-          <View style={styles.taskNear}>
-            <Text style={styles.taskText}>Meeting with Project Team</Text>
-            <Text style={styles.taskDate}>20 Sep</Text>
-          </View>
-          <View style={styles.taskNear2}>
-            <Text style={styles.taskText}>Kerjakan Tugas PAM</Text>
-            <Text style={styles.taskDate2}>26 Sep</Text>
-          </View>
-        </View>
-
-        <View style={styles.Head} >
-          <Text style={styles.upcoming}>Upcoming</Text>
-          <Text style={styles.seeall}>See All</Text>
-        </View>
-
-        <View style={styles.upcomingCont}>
-          <View style={styles.taskCommon}>
-            <Text style={styles.taskText}>Meeting with Project Team</Text>
-            <Text style={styles.taskDate}>20 Sep</Text>
-          </View>
-          <View style={styles.taskCommon2}>
-            <Text style={styles.taskText}>Kerjakan Tugas PAM</Text>
-            <Text style={styles.taskDate2}>26 Sep</Text>
-          </View>
-        </View>
-      </View>
-    </View>
+    </ScrollView>
   );
 }
 
