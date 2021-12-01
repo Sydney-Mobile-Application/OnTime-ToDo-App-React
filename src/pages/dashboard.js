@@ -1,5 +1,6 @@
 import React from "react";
 import {
+  ImageBackground,
   StyleSheet,
   View,
   Text,
@@ -16,18 +17,19 @@ const width_name = "60%";
 const width_highlight = "75%";
 const windowWidth = Dimensions.get("window").width;
 const windowHeight = Dimensions.get("window").height;
+const image = { uri: '../../assets/profileContainer.png' };
 
 export default function Dashboard({ navigation }) {
   return (
     <ScrollView>
       <View style={styles.containertop}> 
-
+        <ImageBackground source={require('../../assets/profileDashboard.png')} style={styles.image}>
         <View style={styles.top}>
           <View style={styles.left}>
             <Text style={styles.name}>Ohayou, James-kun!</Text>
             
             <View style={styles.date}>  
-              {/* <MaterialIcons style={styles.bookmark} name='bookmark' size={20} color='#082032'/> */}
+                <MaterialIcons name='bookmark' size={30} color='#082032'/>
               <Text style={styles.dateText}> 20 Jun</Text>
             </View>
           </View>
@@ -39,21 +41,36 @@ export default function Dashboard({ navigation }) {
               source={require("../../assets/profile1.jpeg")}
             />
             </Pressable>
-            <Text style={styles.notif}>20 tasks to do today</Text>
+            <View style={styles.date}> 
+              <MaterialIcons  name='check-box' size={15} color='#082032'/>
+              <Text style={styles.notif}>20 tasks to do today</Text>
+            </View>
           </View>
         </View>
+        </ImageBackground>
 
         <View style={styles.container}>
           <View style={styles.highlight}>
             <Text style={styles.highlight_text}>Meeting with project team</Text>
+            <View style={styles.time}>
+              <MaterialIcons  name='access-time' size={45} color='#EC9B3B'/>
+            
+            <View style={styles.detail}>
+              <MaterialIcons  name='notifications' size={15} color='#EC9B3B'/>
+              <Text style={styles.notifSmall}>02.45 PM</Text>
+            </View>
+            <Text style={styles.notifSmall}>10 minutes left</Text>
+            </View>
           </View>
 
           <View style={styles.Head} >
             <Text style={styles.priority}>Priority</Text>
+            
             <Pressable onPress={() => navigation.navigate('To Do Priority')}>
               <Text style={styles.seeall}>See All</Text>
             </Pressable>
           </View>
+          
 
           <View style={styles.priorityCont}>
             <View style={styles.taskNear}>
@@ -230,13 +247,20 @@ const styles = StyleSheet.create({
 
   },
   notif: {
-    paddingTop: 20,
+    marginLeft: 5,
     fontSize: 12,
+    color: '#000000',
+    opacity: 0.57,
+  },
+  notifSmall: {
+    fontSize: 9,
+    color: '#000000',
+    opacity: 0.57,
   },
   top: {
     marginTop:20,
     paddingTop:20,
-    backgroundColor: '#FBFBFB',
+    // backgroundColor: '#FBFBFB',
     flexDirection:'row',
     paddingBottom:20,
     paddingEnd:20,
@@ -266,17 +290,16 @@ const styles = StyleSheet.create({
     alignSelf: "flex-start",
   },
   dateText: {
-    marginTop: 22,
-    marginLeft: 19,
+    marginLeft:5,
     borderRadius: 15,
-    paddingLeft: 15,
-    paddingRight: 15,
+    paddingLeft: 10,
+    paddingRight: 10,
     paddingTop: 5,
     paddingBottom: 5,
     backgroundColor: "#fff",
     fontWeight: "bold",
     fontSize: 15,
-    alignSelf: "flex-start",
+    alignSelf: "flex-end",
     shadowColor: "#000",
     shadowOffset: { width: 0, height: 1 },
     shadowOpacity: 0.5,
@@ -284,12 +307,15 @@ const styles = StyleSheet.create({
     elevation: 5,
   },
   date: {
+    marginTop: 22,
     flexDirection: "row",
+    marginLeft: 19,
   },
   highlight: {
+    flexDirection: 'row',
     margin: 20,
     borderRadius: 20,
-    paddingTop: 30,
+    
     paddingBottom: 30,
     paddingLeft: 15,
     paddingRight: 15,
@@ -297,10 +323,28 @@ const styles = StyleSheet.create({
     width: windowWidth*0.75,
   },
   highlight_text: {
+    paddingTop: 30,
+    marginTop:10,
     width: windowWidth*0.5,
     alignItems: "center",
     justifyContent: "flex-start",
     fontSize: 19,
     fontWeight: "bold",
+  },
+  time: {
+    paddingTop: 20,
+    marginTop:10,
+    marginLeft:10,
+    alignItems:"center",
+    justifyContent: "flex-end",
+  },
+  detail: {
+    flexDirection: "row",
+    justifyContent: "flex-start",
+  },
+  image: {
+    flex: 1,
+    justifyContent: "center",
+    resizeMode: 'cover',
   },
 });
