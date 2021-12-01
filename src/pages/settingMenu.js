@@ -68,7 +68,7 @@ export default function SettingMenu ({navigation}) {
       <View style={styles.bottomText}>
         <View style={styles.darkMode}>
           <Text style={styles.bottomDetail}>Dark Mode</Text>
-            <Switch 
+            <Switch rol
             trackColor={{ false: "#767577", true: "#293462" }} 
             style={styles.switch} onValueChange={toggleSwitch} value = {switchValue} />
         </View>
