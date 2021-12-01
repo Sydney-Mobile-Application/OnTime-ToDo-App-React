@@ -115,7 +115,6 @@ const styles = StyleSheet.create({
     paddingRight:15,
     alignSelf: 'flex-start',
     alignItems: 'center',
-    justifyContent: 'left',
     backgroundColor: '#293462',
   },
   taskNear2:{
@@ -184,7 +183,7 @@ const styles = StyleSheet.create({
   top: {
     backgroundColor: '#FBFBFB',
     alignItems: 'center',
-    justifyContent: 'left',
+    alignSelf:'flex-start',
     flexDirection:'row',
     paddingBottom:20,
   },
