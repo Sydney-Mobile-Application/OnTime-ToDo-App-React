@@ -115,19 +115,6 @@ const styles = StyleSheet.create({
     height: 131,
     marginRight: 20,
     borderRadius: 20,
-<<<<<<< HEAD
-    paddingTop:30,
-    paddingBottom:30,
-    paddingLeft:15,
-    paddingRight:15,
-    alignSelf: 'flex-start',
-    alignItems: 'center',
-    backgroundColor: '#293462',
-  },
-  taskNear2:{
-    width:131,
-    height:131,
-=======
     paddingTop: 30,
     paddingBottom: 30,
     paddingLeft: 15,
@@ -140,7 +127,6 @@ const styles = StyleSheet.create({
   taskNear2: {
     width: 131,
     height: 131,
->>>>>>> ac2cdeea32b97f2f2b85c5b02b1eb5edf4a761e4
     marginLeft: 20,
     borderRadius: 20,
     paddingTop: 30,
