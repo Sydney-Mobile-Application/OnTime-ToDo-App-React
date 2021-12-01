@@ -17,7 +17,7 @@ const width_highlight = "75%";
 const windowWidth = Dimensions.get("window").width;
 const windowHeight = Dimensions.get("window").height;
 
-export default function Dashboard() {
+export default function Dashboard({ navigation }) {
   return (
     <ScrollView>
       <View style={styles.containertop}> 
@@ -33,10 +33,12 @@ export default function Dashboard() {
           </View>
 
           <View style={styles.right}>
+          <Pressable onPress={() => navigation.navigate('Setting Menu')}>
             <Image
               style={styles.avatar}
               source={require("../../assets/profile1.jpeg")}
             />
+            </Pressable>
             <Text style={styles.notif}>20 tasks to do today</Text>
           </View>
         </View>
@@ -48,7 +50,9 @@ export default function Dashboard() {
 
           <View style={styles.Head} >
             <Text style={styles.priority}>Priority</Text>
-            <Text style={styles.seeall}>See All</Text>
+            <Pressable onPress={() => navigation.navigate('To Do Priority')}>
+              <Text style={styles.seeall}>See All</Text>
+            </Pressable>
           </View>
 
           <View style={styles.priorityCont}>
@@ -64,7 +68,9 @@ export default function Dashboard() {
 
           <View style={styles.Head} >
             <Text style={styles.upcoming}>Upcoming</Text>
-            <Text style={styles.seeall}>See All</Text>
+            <Pressable onPress={() => navigation.navigate('To Do Upcoming')}>
+              <Text style={styles.seeall}>See All</Text>
+            </Pressable>
           </View>
 
           <View style={styles.upcomingCont}>
