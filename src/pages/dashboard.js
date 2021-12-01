@@ -17,7 +17,8 @@ const windowHeight = Dimensions.get("window").height;
 
 export default function Dashboard() {
   return (
-    <View>
+    <View style={styles.containertop}> 
+
       <View style={styles.top}>
         <View style={styles.left}>
           <Text style={styles.name}>Ohayou, James-kun!</Text>
@@ -38,7 +39,10 @@ export default function Dashboard() {
           <Text style={styles.highlight_text}>Meeting with project team</Text>
         </View>
 
-        <Text style={styles.priority}>Priority</Text>
+        <View style={styles.Head} >
+          <Text style={styles.priority}>Priority</Text>
+          <Text style={styles.seeall}>See All</Text>
+        </View>
 
         <View style={styles.priorityCont}>
           <View style={styles.taskNear}>
@@ -47,11 +51,14 @@ export default function Dashboard() {
           </View>
           <View style={styles.taskNear2}>
             <Text style={styles.taskText}>Kerjakan Tugas PAM</Text>
-            <Text style={styles.taskDate}>26 Sep</Text>
+            <Text style={styles.taskDate2}>26 Sep</Text>
           </View>
         </View>
 
-        <Text style={styles.upcoming}>Upcoming</Text>
+        <View style={styles.Head} >
+          <Text style={styles.upcoming}>Upcoming</Text>
+          <Text style={styles.seeall}>See All</Text>
+        </View>
 
         <View style={styles.upcomingCont}>
           <View style={styles.taskCommon}>
@@ -60,7 +67,7 @@ export default function Dashboard() {
           </View>
           <View style={styles.taskCommon2}>
             <Text style={styles.taskText}>Kerjakan Tugas PAM</Text>
-            <Text style={styles.taskDate}>26 Sep</Text>
+            <Text style={styles.taskDate2}>26 Sep</Text>
           </View>
         </View>
       </View>
@@ -69,38 +76,53 @@ export default function Dashboard() {
 }
 
 const styles = StyleSheet.create({
+  containertop: {
+    paddingTop: 30,
+    backgroundColor: "#fff",
+    alignItems: "center",
+    justifyContent: "center",
+  },
   container: {
     paddingTop: 30,
     backgroundColor: "#fff",
     alignItems: "center",
     justifyContent: "center",
   },
-  priorityHead: {
+  Head: {
     fontWeight: "bold",
-    fontSize: 18,
-    marginBottom: 30,
     marginLeft: 20,
     alignSelf: "flex-start",
-    alignItems: "flex-start",
-    justifyContent: "flex-start",
+    flexDirection: "row",
   },
   priority: {
     fontWeight: "bold",
     fontSize: 18,
     marginBottom: 30,
-    marginLeft: 20,
     alignSelf: "flex-start",
     alignItems: "flex-start",
     justifyContent: "flex-start",
+    marginRight: windowWidth*0.25,
+  },
+  seeall: {
+    fontWeight: "bold",
+    fontSize: 10,
+    marginBottom: 30,
+    alignSelf: "flex-end",
+    alignItems: "flex-end",
+    justifyContent: "flex-end",
+    color: '#000000',
+    opacity: 0.25,
+    marginLeft: windowWidth*0.25,
   },
   upcoming: {
     fontWeight: "bold",
     fontSize: 18,
     marginBottom: 30,
-    marginLeft: 20,
+    // marginLeft: 20,
     alignSelf: "flex-start",
-    // alignItems: 'left',
-    // justifyContent: "flex-start",
+    alignItems: "flex-start",
+    justifyContent: "flex-start",
+    marginRight: windowWidth*0.19,
   },
   priorityCont: {
     marginBottom: 30,
@@ -117,7 +139,7 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     paddingTop: 30,
     paddingBottom: 30,
-    paddingLeft: 15,
+    // paddingLeft: 15,
     paddingRight: 15,
     alignSelf: "flex-start",
     alignItems: "center",
@@ -145,7 +167,7 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     paddingTop: 30,
     paddingBottom: 30,
-    paddingLeft: 15,
+    // paddingLeft: 15,
     paddingRight: 15,
     alignSelf: "flex-start",
     alignItems: "center",
@@ -175,36 +197,42 @@ const styles = StyleSheet.create({
     alignSelf: "flex-start",
     fontWeight: "bold",
     fontSize: 22,
+    paddingLeft: 15,
+  },
+  taskDate2: {
+    marginTop: 10,
+    color: "#FFFFFF",
+    alignSelf: "flex-start",
+    fontWeight: "bold",
+    fontSize: 22,
   },
   avatar: {
     width: 55,
     height: 55,
     borderRadius: 50,
     alignSelf: "flex-end",
-    marginRight: 8,
+    // marginRight: 8,
     marginBottom: 5,
   },
   notif: {
     fontSize: 13,
   },
   top: {
+    marginTop:20,
     backgroundColor: '#FBFBFB',
-    alignItems: 'center',
-    alignSelf:'flex-start',
     flexDirection:'row',
     paddingBottom:20,
+    paddingEnd:20,
+    width: windowWidth,
+    alignItems: "center",
+    justifyContent: "center",
   },
   left: {
-    backgroundColor: "#FBFBFB",
     alignSelf: "flex-start",
-    alignItems: "flex-start",
-    justifyContent: "flex-start",
+    
   },
   right: {
-    backgroundColor: "#FBFBFB",
     alignSelf: "flex-end",
-    alignItems: "flex-start",
-    justifyContent: "flex-start",
   },
   name: {
     marginTop: 20,
@@ -244,9 +272,10 @@ const styles = StyleSheet.create({
     paddingLeft: 15,
     paddingRight: 15,
     backgroundColor: "#FFEDBF",
+    width: windowWidth*0.75,
   },
   highlight_text: {
-    width: width_highlight,
+    width: windowWidth*0.5,
     alignItems: "center",
     justifyContent: "flex-start",
     fontSize: 19,
