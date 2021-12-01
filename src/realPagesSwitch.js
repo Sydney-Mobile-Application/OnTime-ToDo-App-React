@@ -1,8 +1,9 @@
 import React from 'react';
-import { StyleSheet, View, Button, Text, Image } from 'react-native';
+import { StyleSheet, View, Button, Text, Image, ScrollView } from 'react-native';
 
 export default function HomeScreen ({ navigation }) {
   return (
+    <ScrollView>
     <View style={styles.container}>
       <Image
         style={styles.tinyLogo}
@@ -136,6 +137,7 @@ export default function HomeScreen ({ navigation }) {
         }
       />
     </View>
+    </ScrollView>
   );
 };
 
