@@ -10,6 +10,7 @@ import {
   Switch,
   ScrollView,
 } from "react-native";
+import { MaterialIcons } from '@expo/vector-icons';
 
 const width_name = "60%";
 const width_highlight = "75%";
@@ -24,7 +25,11 @@ export default function Dashboard() {
         <View style={styles.top}>
           <View style={styles.left}>
             <Text style={styles.name}>Ohayou, James-kun!</Text>
-            <Text style={styles.date}>20 Jun</Text>
+            
+            <View style={styles.date}>  
+              {/* <MaterialIcons style={styles.bookmark} name='bookmark' size={20} color='#082032'/> */}
+              <Text style={styles.dateText}> 20 Jun</Text>
+            </View>
           </View>
 
           <View style={styles.right}>
@@ -216,12 +221,15 @@ const styles = StyleSheet.create({
     alignSelf: "flex-end",
     // marginRight: 8,
     marginBottom: 5,
+
   },
   notif: {
-    fontSize: 13,
+    paddingTop: 20,
+    fontSize: 12,
   },
   top: {
     marginTop:20,
+    paddingTop:20,
     backgroundColor: '#FBFBFB',
     flexDirection:'row',
     paddingBottom:20,
@@ -251,21 +259,26 @@ const styles = StyleSheet.create({
     fontSize: 12,
     alignSelf: "flex-start",
   },
-  date: {
-    marginTop: 17,
+  dateText: {
+    marginTop: 22,
     marginLeft: 19,
     borderRadius: 15,
-    paddingLeft: 10,
-    paddingRight: 10,
+    paddingLeft: 15,
+    paddingRight: 15,
+    paddingTop: 5,
+    paddingBottom: 5,
     backgroundColor: "#fff",
     fontWeight: "bold",
-    fontSize: 18,
+    fontSize: 15,
     alignSelf: "flex-start",
     shadowColor: "#000",
     shadowOffset: { width: 0, height: 1 },
     shadowOpacity: 0.5,
     shadowRadius: 2,
     elevation: 5,
+  },
+  date: {
+    flexDirection: "row",
   },
   highlight: {
     margin: 20,
