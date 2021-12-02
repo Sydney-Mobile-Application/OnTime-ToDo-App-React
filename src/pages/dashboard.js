@@ -50,18 +50,30 @@ export default function Dashboard({ navigation }) {
         </ImageBackground>
 
         <View style={styles.container}>
-          <View style={styles.highlight}>
-            <Text style={styles.highlight_text}>Meeting with project team</Text>
-            <View style={styles.time}>
-              <MaterialIcons  name='share' size={12} color='#ABACF7'/>
-              <MaterialIcons  name='access-time' size={45} color='#EC9B3B'/>
+          <View style={styles.containerhighlight}>
+            <MaterialIcons  name='more-time' size={25} color='#000'/>
+            <View style={styles.highlight}>
+              <Text style={styles.highlight_text}>Meeting with project team</Text>
+              <View style={styles.time}>
+                <MaterialIcons  name='share' size={12} color='#ABACF7'/>
+                <MaterialIcons  name='access-time' size={45} color='#EC9B3B'/>
+              
+              <View style={styles.detail}>
+                <MaterialIcons  name='notifications' size={15} color='#EC9B3B'/>
+                <Text style={styles.notifSmall}>02.45 PM</Text>
+              </View>
+              <Text style={styles.notifSmall}>10 minutes left</Text>
+              </View>
+            </View>
+            <MaterialIcons  name='done' size={25} color='#000'/>
             
-            <View style={styles.detail}>
-              <MaterialIcons  name='notifications' size={15} color='#EC9B3B'/>
-              <Text style={styles.notifSmall}>02.45 PM</Text>
-            </View>
-            <Text style={styles.notifSmall}>10 minutes left</Text>
-            </View>
+          </View>
+          {/* <View style={styles.containerhighlight}>
+              <Text style={styles.reschedule}>Swipe here to reschedule</Text>
+              <Text style={styles.markdone}>Swipe here to mark as done</Text>
+            </View> */}
+          <View>
+          
           </View>
 
           <View style={styles.Head} >
@@ -72,7 +84,6 @@ export default function Dashboard({ navigation }) {
             </Pressable>
           </View>
           
-
           <View style={styles.priorityCont}>
             <View style={styles.task}>
               <View style={styles.taskNear}>
@@ -144,10 +155,20 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
+  containerhighlight: {
+    backgroundColor: "#fff",
+    alignItems: "center",
+    justifyContent: "center",
+    flexDirection:"row",
+    marginBottom:20,
+    // marginLeft:10,
+  },
   Head: {
     fontWeight: "bold",
     marginLeft: 20,
-    alignSelf: "flex-start",
+    // alignSelf: "flex-start",
+    justifyContent: "center",
+    marginLeft:-20,
     flexDirection: "row",
   },
   priority: {
@@ -299,6 +320,18 @@ const styles = StyleSheet.create({
     fontSize: 9,
     color: '#000000',
     opacity: 0.57,
+  },
+  reschedule: {
+    fontSize: 9,
+    color: '#000000',
+    opacity: 0.57,
+    alignSelf:"flex-start",
+  },
+  markdone: {
+    fontSize: 9,
+    color: '#000000',
+    opacity: 0.57,
+    alignSelf:"flex-end",
   },
   top: {
     marginTop:20,
