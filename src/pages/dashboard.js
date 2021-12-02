@@ -53,6 +53,7 @@ export default function Dashboard({ navigation }) {
           <View style={styles.highlight}>
             <Text style={styles.highlight_text}>Meeting with project team</Text>
             <View style={styles.time}>
+              <MaterialIcons  name='share' size={12} color='#ABACF7'/>
               <MaterialIcons  name='access-time' size={45} color='#EC9B3B'/>
             
             <View style={styles.detail}>
@@ -73,13 +74,25 @@ export default function Dashboard({ navigation }) {
           
 
           <View style={styles.priorityCont}>
-            <View style={styles.taskNear}>
-              <Text style={styles.taskText}>Meeting with Project Team</Text>
-              <Text style={styles.taskDate}>20 Sep</Text>
+            <View style={styles.task}>
+              <View style={styles.taskNear}>
+                <Text style={styles.taskText}>Meeting with Project Team</Text>
+                <Text style={styles.taskDate}>20 Sep</Text>
+              </View>
+              <View>
+                <MaterialIcons name='share' size={10} color='#ABACF7' style={styles.share}/>
+                <MaterialIcons name='star' size={10} color='#EC9B3B' style={styles.star}/>
+              </View>
             </View>
-            <View style={styles.taskNear2}>
-              <Text style={styles.taskText}>Kerjakan Tugas PAM</Text>
-              <Text style={styles.taskDate2}>26 Sep</Text>
+            <View style={styles.task}>  
+              <View style={styles.taskNear2}>
+                <Text style={styles.taskText}>Kerjakan Tugas PAM</Text>
+                <Text style={styles.taskDate2}>26 Sep</Text>
+              </View>
+              <View>
+                <MaterialIcons name='share' size={10} color='#ABACF7' style={styles.share}/>
+                <MaterialIcons name='star' size={10} color='#EC9B3B' style={styles.star}/>
+              </View>
             </View>
           </View>
 
@@ -91,13 +104,25 @@ export default function Dashboard({ navigation }) {
           </View>
 
           <View style={styles.upcomingCont}>
-            <View style={styles.taskCommon}>
-              <Text style={styles.taskText}>Meeting with Project Team</Text>
-              <Text style={styles.taskDate}>20 Sep</Text>
+            <View style={styles.task}>
+              <View style={styles.taskCommon}>
+                <Text style={styles.taskText}>Meeting with Project Team</Text>
+                <Text style={styles.taskDate}>20 Sep</Text>
+              </View>
+              <View>
+                <MaterialIcons name='share' size={10} color='#ABACF7' style={styles.share}/>
+                <MaterialIcons name='star' size={10} color='#EC9B3B' style={styles.star}/>
+              </View>
             </View>
-            <View style={styles.taskCommon2}>
-              <Text style={styles.taskText}>Kerjakan Tugas PAM</Text>
-              <Text style={styles.taskDate2}>26 Sep</Text>
+            <View style={styles.task}>
+              <View style={styles.taskCommon2}>
+                <Text style={styles.taskText}>Kerjakan Tugas PAM</Text>
+                <Text style={styles.taskDate2}>26 Sep</Text>
+              </View>
+              <View>
+                <MaterialIcons name='share' size={10} color='#ABACF7' style={styles.share}/>
+                <MaterialIcons name='star' size={10} color='#EC9B3B' style={styles.star}/>
+              </View>
             </View>
           </View>
         </View>
@@ -163,10 +188,29 @@ const styles = StyleSheet.create({
     marginBottom: 30,
     flexDirection: "row",
   },
+  task: {
+    width: 131,
+    borderRadius: 20,
+    marginRight: 20,
+    flexDirection:"row",
+    alignSelf: "flex-start",
+    // justifyContent: "center",
+    // backgroundColor: "#EC9B3B",
+  },
+  share: {
+    marginLeft:5,
+    marginTop:30,
+    justifyContent: "center",
+  },
+  star: {
+    marginLeft:5,
+    marginTop:10,
+    justifyContent: "center",
+  },
   taskNear: {
     width: 131,
     height: 131,
-    marginRight: 20,
+    // marginTop: 20,
     borderRadius: 20,
     paddingTop: 30,
     paddingBottom: 30,
@@ -194,7 +238,6 @@ const styles = StyleSheet.create({
   taskCommon: {
     width: 131,
     height: 131,
-    marginRight: 20,
     borderRadius: 20,
     paddingTop: 30,
     paddingBottom: 30,
@@ -324,10 +367,11 @@ const styles = StyleSheet.create({
   },
   highlight_text: {
     paddingTop: 30,
-    marginTop:10,
+    marginRight:10,
     width: windowWidth*0.5,
+    textAlignVertical:"center",
     alignItems: "center",
-    justifyContent: "flex-start",
+    justifyContent: "center",
     fontSize: 19,
     fontWeight: "bold",
   },
@@ -335,7 +379,7 @@ const styles = StyleSheet.create({
     paddingTop: 20,
     marginTop:10,
     marginLeft:10,
-    alignItems:"center",
+    alignItems:"flex-end",
     justifyContent: "flex-end",
   },
   detail: {
