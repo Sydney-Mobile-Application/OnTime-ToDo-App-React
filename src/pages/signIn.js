@@ -18,7 +18,7 @@ export default function Register ({ navigation }) {
           <Text style={{fontWeight: 'bold'}}>Register</Text>
         </Pressable>
       </View>
-      <Pressable style={styles.buttonSignIn} onPress={() => navigation.navigate('Dashboard')}>
+      <Pressable style={styles.buttonSignIn} onPress={() => navigation.navigate('Sign In Successfully')}>
         <Text style={{color: 'white', fontWeight: 'bold'}}>Sign In</Text>
       </Pressable>
     </View>
