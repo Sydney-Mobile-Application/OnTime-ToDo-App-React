@@ -411,9 +411,8 @@ const styles = StyleSheet.create({
   time: {
     paddingTop: 20,
     marginTop:10,
-    marginLeft:10,
+    // marginLeft:10,
     alignItems:"flex-end",
-    justifyContent: "flex-end",
   },
   detail: {
     flexDirection: "row",

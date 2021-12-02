@@ -29,13 +29,13 @@ const App = ({ navigation }) => {
         </View>
         </Pressable>
       </Modal>
-      <Pressable
+      {/* <Pressable
         style={[styles.button, styles.buttonOpen]}
         onPress={() => setModalVisible(true)
         }
       >
         <Text style={styles.textStyle}>Show Modal</Text>
-      </Pressable>
+      </Pressable> */}
     </View>
   );
 };
