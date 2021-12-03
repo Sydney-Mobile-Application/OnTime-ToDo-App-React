@@ -18,9 +18,14 @@ export default function AddToDo () {
           <MaterialIcons  name='settings' size={30} color='#293462'/>
         </View>
       </View>
-      <View style={styles.container}>
-        <TextInput onChangeText={onChangeTextEmail} placeholder="Title" />
-        <Text>Add To Do - Silahkan Mengubah Halaman Sesuai Figma</Text>
+      <View style={styles.task}>
+          <TextInput style={styles.title} onChangeText={onChangeTextEmail}  placeholder="Title " />
+          <TextInput style={styles.description} onChangeText={onChangeTextEmail} multiline={true} placeholder="Description " />
+        </View>
+      <View style={styles.containerBottom}>
+          <MaterialIcons  name='font-download' size={30} color='#293462'/>
+          <Text>Add To Do - Silahkan Mengubah Halaman Sesuai Figma</Text>
+
       </View>
     
     </View>
@@ -28,11 +33,13 @@ export default function AddToDo () {
 };
 
 const styles = StyleSheet.create({
-  container: {
+  containerBottom: {
     // flex: 1,
     backgroundColor: '#fff',
     alignItems: 'center',
-    justifyContent: 'center',
+    justifyContent: 'flex-start',
+    flexDirection:'column',
+    height: windowHeight,
   },
   containertop: {
     width: windowWidth,
@@ -53,5 +60,28 @@ const styles = StyleSheet.create({
     alignItems: 'flex-end',
     alignSelf: "flex-end",
     alignItems: "flex-end",
+  },
+  task: {
+    alignSelf: 'flex-start',
+    marginTop: windowHeight*0.05,
+    marginLeft:  windowWidth*0.1,
+    marginRight:  windowWidth*0.08,
+    height: windowHeight*0.75,
+  },
+  title: {
+    fontSize: 30,
+    fontWeight: "bold",
+    alignSelf: "flex-start",
+    justifyContent: "flex-start",
+    alignItems: "flex-start",
+    marginBottom: windowHeight*0.02,
+  },
+  description: {
+    fontSize: 20,
+    // fontWeight: "semi-bold",
+    alignSelf: "flex-start",
+    justifyContent: "flex-start",
+    alignItems: "flex-start",
+    // maxHeight: windowHeight*0.8,
   },
 });
