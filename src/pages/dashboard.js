@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import {
   ImageBackground,
   StyleSheet,
@@ -10,8 +10,10 @@ import {
   Dimensions,
   Switch,
   ScrollView,
+  Modal,
 } from "react-native";
 import { MaterialIcons } from '@expo/vector-icons';
+import Successfully from './signInSuccessfully'
 
 const width_name = "60%";
 const width_highlight = "75%";
@@ -20,125 +22,143 @@ const windowHeight = Dimensions.get("window").height;
 const image = { uri: '../../assets/profileContainer.png' };
 
 export default function Dashboard({ navigation }) {
+  const [modalVisible, setModalVisible] = useState(false);
+
+  useEffect(() => {
+    setModalVisible(true);
+    setTimeout(() => {
+      setModalVisible(false);
+    }, 5000);
+  }, [])
+
+  const closeModal = () => {
+    setModalVisible(false);
+  }
+
   return (
-    <ScrollView>
-      <View style={styles.containertop}> 
-        <ImageBackground source={require('../../assets/profileDashboard.png')} style={styles.image}>
-        <View style={styles.top}>
-          <View style={styles.left}>
-            <Text style={styles.name}>Ohayou, James-kun!</Text>
-            
-            <View style={styles.date}>  
-                <MaterialIcons name='bookmark' size={30} color='#082032'/>
-              <Text style={styles.dateText}> 20 Jun</Text>
-            </View>
-          </View>
-
-          <View style={styles.right}>
-          <Pressable onPress={() => navigation.navigate('Setting Menu')}>
-            <Image
-              style={styles.avatar}
-              source={require("../../assets/profile1.jpeg")}
-            />
-            </Pressable>
-            <View style={styles.date}> 
-              <MaterialIcons  name='check-box' size={15} color='#082032'/>
-              <Text style={styles.notif}>20 tasks to do today</Text>
-            </View>
-          </View>
-        </View>
-        </ImageBackground>
-
-        <View style={styles.container}>
-          <View style={styles.containerhighlight}>
-            <MaterialIcons  name='more-time' size={25} color='#000'/>
-            <View style={styles.highlight}>
-              <Text style={styles.highlight_text}>Meeting with project team</Text>
-              <View style={styles.time}>
-                <MaterialIcons  name='share' size={12} color='#ABACF7'/>
-                <MaterialIcons  name='access-time' size={45} color='#EC9B3B'/>
+    <View>
+      <ScrollView>
+        <View style={styles.containertop}> 
+          <ImageBackground source={require('../../assets/profileDashboard.png')} style={styles.image}>
+          <View style={styles.top}>
+            <View style={styles.left}>
+              <Text style={styles.name}>Ohayou, James-kun!</Text>
               
-              <View style={styles.detail}>
-                <MaterialIcons  name='notifications' size={15} color='#EC9B3B'/>
-                <Text style={styles.notifSmall}>02.45 PM</Text>
-              </View>
-              <Text style={styles.notifSmall}>10 minutes left</Text>
+              <View style={styles.date}>  
+                  <MaterialIcons name='bookmark' size={30} color='#082032'/>
+                <Text style={styles.dateText}> 20 Jun</Text>
               </View>
             </View>
-            <MaterialIcons  name='done' size={25} color='#000'/>
+
+            <View style={styles.right}>
+            <Pressable onPress={() => navigation.navigate('Setting Menu')}>
+              <Image
+                style={styles.avatar}
+                source={require("../../assets/profile1.jpeg")}
+              />
+              </Pressable>
+              <View style={styles.date}> 
+                <MaterialIcons  name='check-box' size={15} color='#082032'/>
+                <Text style={styles.notif}>20 tasks to do today</Text>
+              </View>
+            </View>
+          </View>
+          </ImageBackground>
+
+          <View style={styles.container}>
+            <View style={styles.containerhighlight}>
+              <MaterialIcons  name='more-time' size={25} color='#000'/>
+              <View style={styles.highlight}>
+                <Text style={styles.highlight_text}>Meeting with project team</Text>
+                <View style={styles.time}>
+                  <MaterialIcons  name='share' size={12} color='#ABACF7'/>
+                  <MaterialIcons  name='access-time' size={45} color='#EC9B3B'/>
+                
+                <View style={styles.detail}>
+                  <MaterialIcons  name='notifications' size={15} color='#EC9B3B'/>
+                  <Text style={styles.notifSmall}>02.45 PM</Text>
+                </View>
+                <Text style={styles.notifSmall}>10 minutes left</Text>
+                </View>
+              </View>
+              <MaterialIcons  name='done' size={25} color='#000'/>
+              
+            </View>
+            {/* <View style={styles.containerhighlight}>
+                <Text style={styles.reschedule}>Swipe here to reschedule</Text>
+                <Text style={styles.markdone}>Swipe here to mark as done</Text>
+              </View> */}
+            <View>
             
-          </View>
-          {/* <View style={styles.containerhighlight}>
-              <Text style={styles.reschedule}>Swipe here to reschedule</Text>
-              <Text style={styles.markdone}>Swipe here to mark as done</Text>
-            </View> */}
-          <View>
-          
-          </View>
+            </View>
 
-          <View style={styles.Head} >
-            <Text style={styles.priority}>Priority</Text>
+            <View style={styles.Head} >
+              <Text style={styles.priority}>Priority</Text>
+              
+              <Pressable onPress={() => navigation.navigate('To Do Priority')}>
+                <Text style={styles.seeall}>See All</Text>
+              </Pressable>
+            </View>
             
-            <Pressable onPress={() => navigation.navigate('To Do Priority')}>
-              <Text style={styles.seeall}>See All</Text>
-            </Pressable>
-          </View>
-          
-          <View style={styles.priorityCont}>
-            <View style={styles.task}>
-              <View style={styles.taskNear}>
-                <Text style={styles.taskText}>Meeting with Project Team</Text>
-                <Text style={styles.taskDate}>20 Sep</Text>
+            <View style={styles.priorityCont}>
+              <View style={styles.task}>
+                <View style={styles.taskNear}>
+                  <Text style={styles.taskText}>Meeting with Project Team</Text>
+                  <Text style={styles.taskDate}>20 Sep</Text>
+                </View>
+                <View>
+                  <MaterialIcons name='share' size={10} color='#ABACF7' style={styles.share}/>
+                  <MaterialIcons name='star' size={10} color='#EC9B3B' style={styles.star}/>
+                </View>
               </View>
-              <View>
-                <MaterialIcons name='share' size={10} color='#ABACF7' style={styles.share}/>
-                <MaterialIcons name='star' size={10} color='#EC9B3B' style={styles.star}/>
-              </View>
-            </View>
-            <View style={styles.task}>  
-              <View style={styles.taskNear2}>
-                <Text style={styles.taskText}>Kerjakan Tugas PAM</Text>
-                <Text style={styles.taskDate2}>26 Sep</Text>
-              </View>
-              <View>
-                <MaterialIcons name='share' size={10} color='#ABACF7' style={styles.share}/>
-                <MaterialIcons name='star' size={10} color='#EC9B3B' style={styles.star}/>
+              <View style={styles.task}>  
+                <View style={styles.taskNear2}>
+                  <Text style={styles.taskText}>Kerjakan Tugas PAM</Text>
+                  <Text style={styles.taskDate2}>26 Sep</Text>
+                </View>
+                <View>
+                  <MaterialIcons name='share' size={10} color='#ABACF7' style={styles.share}/>
+                  <MaterialIcons name='star' size={10} color='#EC9B3B' style={styles.star}/>
+                </View>
               </View>
             </View>
-          </View>
 
-          <View style={styles.Head} >
-            <Text style={styles.upcoming}>Upcoming</Text>
-            <Pressable onPress={() => navigation.navigate('To Do Upcoming')}>
-              <Text style={styles.seeall}>See All</Text>
-            </Pressable>
-          </View>
-
-          <View style={styles.upcomingCont}>
-            <View style={styles.task}>
-              <View style={styles.taskCommon}>
-                <Text style={styles.taskText}>Meeting with Project Team</Text>
-                <Text style={styles.taskDate}>20 Sep</Text>
-              </View>
-              <View>
-                <MaterialIcons name='share' size={10} color='#ABACF7' style={styles.share}/>
-                <MaterialIcons name='star' size={10} color='#EC9B3B' style={styles.star}/>
-              </View>
+            <View style={styles.Head} >
+              <Text style={styles.upcoming}>Upcoming</Text>
+              <Pressable onPress={() => navigation.navigate('To Do Upcoming')}>
+                <Text style={styles.seeall}>See All</Text>
+              </Pressable>
             </View>
-            <View style={styles.task}>
-              <View style={styles.taskCommon2}>
-                <Text style={styles.taskText}>Kerjakan Tugas PAM</Text>
-                <Text style={styles.taskDate2}>26 Sep</Text>
+
+            <View style={styles.upcomingCont}>
+              <View style={styles.task}>
+                <View style={styles.taskCommon}>
+                  <Text style={styles.taskText}>Meeting with Project Team</Text>
+                  <Text style={styles.taskDate}>20 Sep</Text>
+                </View>
+                <View>
+                  <MaterialIcons name='share' size={10} color='#ABACF7' style={styles.share}/>
+                  <MaterialIcons name='star' size={10} color='#EC9B3B' style={styles.star}/>
+                </View>
               </View>
-              <View>
-                <MaterialIcons name='share' size={10} color='#ABACF7' style={styles.share}/>
-                <MaterialIcons name='star' size={10} color='#EC9B3B' style={styles.star}/>
+              <View style={styles.task}>
+                <View style={styles.taskCommon2}>
+                  <Text style={styles.taskText}>Kerjakan Tugas PAM</Text>
+                  <Text style={styles.taskDate2}>26 Sep</Text>
+                </View>
+                <View>
+                  <MaterialIcons name='share' size={10} color='#ABACF7' style={styles.share}/>
+                  <MaterialIcons name='star' size={10} color='#EC9B3B' style={styles.star}/>
+                </View>
               </View>
             </View>
           </View>
         </View>
-      </View>
-    </ScrollView>
+      </ScrollView>
+      <Modal animationType="slide" transparent={true} visible={modalVisible} onRequestClose={() => { setModalVisible(!modalVisible); }}>
+        <Successfully closeModal={closeModal} />
+      </Modal>
+    </View>
   );
 }
 

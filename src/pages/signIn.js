@@ -1,8 +1,19 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { StyleSheet, View, Text, TextInput, Pressable } from 'react-native';
 
-export default function Register ({ navigation }) {
+export default function SignIn ({ navigation }) {
   const [text, onChangeText] = React.useState("Useless Text");
+  const [textEmail, onChangeTextEmail] = useState("");
+  const [textPassword, onChangeTextPassword] = useState("");
+  const [signInDisable, setSignInDisable] = useState(true);
+
+  useEffect(() => {
+    if (!textEmail.trim() || !textPassword.trim()){
+      setSignInDisable(true)
+    } else {
+      setSignInDisable(false)
+    }
+  }, [textEmail, textPassword])
 
   return (
     <View style={styles.container}>
@@ -10,15 +21,15 @@ export default function Register ({ navigation }) {
         <Text style={styles.textTopFSignIn}>Let's Sign You In!</Text>
         <Text style={styles.textTopSSignIn}>Welcome Back. You've Been Missed!</Text>
       </View>
-      <TextInput style={styles.inputSignIn} onChangeText={onChangeText} placeholder="Email Or Username" />
-      <TextInput style={styles.inputSignIn} onChangeText={onChangeText} secureTextEntry={true} placeholder="Password" />
+      <TextInput style={styles.inputSignIn} onChangeText={onChangeTextEmail} placeholder="Email Or Username" />
+      <TextInput style={styles.inputSignIn} onChangeText={onChangeTextPassword} secureTextEntry={true} placeholder="Password" />
       <View style={styles.inlineText}>
         <Text>Don't Have An Account Yet? </Text>
         <Pressable onPress={() => navigation.navigate('Register')}>
           <Text style={{fontWeight: 'bold'}}>Register</Text>
         </Pressable>
       </View>
-      <Pressable style={styles.buttonSignIn} onPress={() => navigation.navigate('Sign In Successfully')}>
+      <Pressable style={[styles.buttonSignIn, signInDisable ? {backgroundColor: 'rgba(108, 122, 137, 1)'} : '']} onPress={() => navigation.navigate('Dashboard')}  disabled={signInDisable}>
         <Text style={{color: 'white', fontWeight: 'bold'}}>Sign In</Text>
       </Pressable>
     </View>

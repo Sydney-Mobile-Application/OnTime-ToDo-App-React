@@ -2,21 +2,10 @@ import React, { useState } from "react";
 import { Alert, Modal, StyleSheet, Text, Pressable, View } from "react-native";
 import { MaterialIcons } from '@expo/vector-icons';
 
-const App = ({ navigation }) => {
-  const [modalVisible, setModalVisible] = useState(true);
-  
+const App = ({ closeModal }) => {
   return (
     <View style={styles.centeredView}>
-      <Modal
-        animationType="slide"
-        transparent={true}
-        visible={modalVisible}
-        onRequestClose={() => {
-          Alert.alert("Modal has been closed.");
-          setModalVisible(!modalVisible);
-        }}
-      >
-        <Pressable style={styles.centeredView} onPress={() => navigation.navigate('Dashboard')} > 
+      <Pressable style={styles.centeredView} onPress={() => closeModal()} > 
         <View style={styles.centeredView}>
           <View style={styles.modalView}>
             <MaterialIcons name='check-circle-outline' size={80} color='#293462' style={styles.modalPic}/>
@@ -27,8 +16,7 @@ const App = ({ navigation }) => {
             
           </View>
         </View>
-        </Pressable>
-      </Modal>
+      </Pressable>
       {/* <Pressable
         style={[styles.button, styles.buttonOpen]}
         onPress={() => setModalVisible(true)
