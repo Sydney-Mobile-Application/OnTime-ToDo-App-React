@@ -13,20 +13,22 @@ export default function SettingMenu ({navigation}) {
 
   return (
     <View style={styles.container}>
-     <View style={styles.headerContent}>
-      <Text style={styles.settingMenu}>Settings</Text>
-    </View>
+      <View>
+        <Text style={styles.headerContent}>Settings</Text>
+      </View>
       
       <View style={styles.viewTop}>
-      <Image
-      style={styles.profileContainer}
-      source={require('../../assets/profileContainer.png')} />
+      {/* <View>
+        <Image style={styles.profileContainer} source={require('../../assets/profileContainer.png')} />
+      </View> */}
+      <View>
 
-      <TouchableOpacity style={styles.bookmarkIcon}>
-        <MaterialIcons name='bookmark' size={20} color='#082032'/>
-      </TouchableOpacity>
+        <TouchableOpacity style={styles.bookmarkIcon}>
+          <MaterialIcons name='bookmark' size={20} color='#082032'/>
+        </TouchableOpacity>
+      </View>
 
-      <View style={styles.information}>
+      <View style={styles.left}>
         <View style={styles.today}>
           <Text>20 Jun</Text>
         </View>
@@ -35,12 +37,12 @@ export default function SettingMenu ({navigation}) {
         </View>
       </View>
 
-      <View style={styles.profileAvatar}>
+      <View style={styles.right}>
         <Pressable onPress={() => navigation.navigate('Profile')}>
           <Text style={styles.profileSetting}>Profile Setting <MaterialIcons name='arrow-forward-ios' size={10}/></Text>
         </Pressable>
         <Image
-        style={styles.avatar}
+        style={styles.profilePicture}
         source={require('../../assets/profile1.jpeg')} />
       </View> 
     </View>
@@ -116,19 +118,17 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
+    justifyContent: 'flex-start',
+    paddingTop: 100,
+    // paddingLeft: 40,
     alignItems: 'center',
-    // justifyContent: 'center'
   },
 
   headerContent: {
-    width: '80%',
-  },
-
-  settingMenu: {
+    alignSelf: 'flex-start',
+    justifyContent: 'flex-start',
     fontWeight: 'bold',
     fontSize: 30,
-    alignSelf: 'flex-start',
-    marginTop: 120,
   },
 
   viewTop: {
@@ -140,34 +140,37 @@ const styles = StyleSheet.create({
     marginTop: 20,
     flexDirection: 'row',
     position: 'relative',
+    backgroundColor: '#FBFBFB',
+    zIndex: 3,
   },
 
-  profileContainer: {
-    width: '100%',
-    height: '100%',
-    position: 'absolute',
-    borderRadius: 50,
-    zIndex: -1,
-    alignItems: 'center',
-    justifyContent: 'center'
-  },
+  // profileContainer: {
+  //   width: '100%',
+  //   height: '150%',
+  //   position: 'absolute',
+  //   borderRadius: 50,
+  //   zIndex: -1,
+  //   alignItems: 'center',
+  //   justifyContent: 'center',
+  // },
 
   bookmarkIcon: {
-    marginLeft: windowWidth*0.04,
-    marginTop: windowHeight*0.025,
+    paddingTop: 20,
+    paddingLeft: 20,
+    position: 'relative',
   },
 
-  information: {
-    marginTop: windowHeight*0.025,
-    marginLeft: windowWidth*0.02,
+  left: {
+    paddingTop: 20,
+    paddingLeft: 10,
     flexDirection: 'column',
     justifyContent: 'flex-start',
   },
 
   today: {
     backgroundColor: '#FFFFFF',
-    width: '60%',
-    height: '25%',
+    width: 60,
+    height: 20,
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: 20,
@@ -183,34 +186,33 @@ const styles = StyleSheet.create({
   },
 
   username: {
-    marginTop: '5%',
-    marginLeft: 10,
+    paddingTop: 10,
     fontWeight: 'bold',
     fontSize: 22,
   },
 
-  profileAvatar: {
-    shadowColor: "#000",
-    shadowOffset: {
-      width: 0,
-      height: 3,
-    },
-      shadowOpacity: 0.27,
-      shadowRadius: 4.65,
-      elevation: 6,
+  right: {
+    // shadowColor: "#000",
+    //   shadowOffset: {
+    //   width: 0,
+    //   height: 3,
+    // },
+    //   shadowOpacity: 0.27,
+    //   shadowRadius: 4.65,
+    //   elevation: 6,
+    //REACTIVE
       flex: 1,
       flexDirection: 'column',
-      // paddingLeft: 20,
   },
 
-  avatar: {
+  profilePicture: {
     width: 50,
     height: 50,
     borderRadius: 50,
     marginTop: 10,
     position: 'relative',
-    marginLeft: windowWidth*0.22,
-    marginTop: windowHeight*0.03,
+    marginLeft: 70,
+    marginTop: 20,
   },
 
   profileSetting: {
@@ -218,17 +220,17 @@ const styles = StyleSheet.create({
     fontWeight: '400',
     color:'#293462',
     position: 'absolute',
-    marginTop: windowHeight*0.1,
-    marginLeft: windowWidth*0.1,
+    marginTop: 80,
+    marginLeft: 28,
   },
 
   taskList: {
     flexDirection:'row', 
-    paddingHorizontal: 10,
+    // paddingHorizontal: 10,
   },
 
   taskTitle: {
-    fontSize: 12,
+    fontSize: 10,
     paddingHorizontal: 4,
     width: 58,
   },
@@ -238,15 +240,15 @@ const styles = StyleSheet.create({
     color: '#293462',
     alignContent: 'flex-start',
     justifyContent: 'flex-start',
-    marginLeft: '85%',
+    marginLeft: 70,
     position: 'absolute',
-    marginTop: '20%',
+    marginTop: 10,
   },
 
   textInline: {
     flexDirection: 'row',
     fontSize: 8,
-    marginVertical: windowHeight*0.01,
+    marginVertical: 10,
     color: '#9799A1',
     paddingHorizontal: 4,
   },
