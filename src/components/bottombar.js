@@ -8,14 +8,14 @@ export default function BottomBar () {
   const RecentsRoute = () => <Text></Text>;
   const [index, setIndex] = React.useState(0);
   const [routes] = React.useState([
-    { key: 'music', title: 'Music', icon: 'queue-music' },
-    { key: 'albums', title: 'Albums', icon: 'album' },
-    { key: 'recents', title: 'Recents', icon: 'history' },
+    { key: 'Dashboard', title: 'Dashboard', icon: 'grid' },
+    { key: 'NewTask', title: 'New Task', icon: 'plus' },
+    { key: 'Filter', title: 'Filter', icon: 'chart-pie' },
   ]);
   const renderScene = BottomNavigation.SceneMap({
-    music: MusicRoute,
-    albums: AlbumsRoute,
-    recents: RecentsRoute,
+    Dashboard: MusicRoute,
+    NewTask: AlbumsRoute,
+    Filter: RecentsRoute,
   });
   return (
     <BottomNavigation

@@ -29,10 +29,11 @@ import BackupData from './pages/backupData';
 import HelpSupport from './pages/helpSupport';
 import Permission from './pages/permission';
 import About from './pages/about';
+import DashboardConnection from './components/bottomBarDashboardConnect';
 
 export {
   GetStarted, Register, TermAndCondition, SignIn, SignInSuccessfully,
   Dashboard, AddToDo, AddToDoSetting, AddToDoCalendar, ToDoPriority,
   ToDoUpcoming, ToDoCompleted, SettingMenu, Profile, LanguageSetting,
-  BackupData, HelpSupport, Permission, About, Switcher
+  BackupData, HelpSupport, Permission, About, DashboardConnection, Switcher
 }

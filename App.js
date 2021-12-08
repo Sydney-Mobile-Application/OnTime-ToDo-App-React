@@ -50,7 +50,7 @@ export default function App() {
           name="Sign In Successfully"
           component={CallBack.SignInSuccessfully}
         />
-        <Stack.Screen name="Dashboard" component={CallBack.Dashboard} />
+        <Stack.Screen name="Dashboard" component={CallBack.DashboardConnection} />
         <Stack.Screen name="Add To Do" component={CallBack.AddToDo} />
         <Stack.Screen
           name="Add To Do Setting"
