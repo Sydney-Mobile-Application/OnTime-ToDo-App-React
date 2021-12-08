@@ -77,21 +77,21 @@ export default function SettingMenu ({navigation}) {
         
         <View style={styles.language}>
             <Text style={styles.bottomDetail}>Language</Text>
-          <Pressable onPress={() => navigation.navigate('LanguageSetting')}>
+          <Pressable onPress={() => navigation.navigate('Language Setting')}>
             <Text style={styles.bottomDetail}>English <MaterialIcons name='arrow-forward-ios' size={12}/></Text>
           </Pressable>
         </View>
 
         <View style={styles.backupData}>
           <Text style={styles.bottomDetail}>Backup Data</Text>
-          <Pressable onPress={() => navigation.navigate('BackupData')}>
+          <Pressable onPress={() => navigation.navigate('Backup Data')}>
             <Text style={styles.bottomDetail}><MaterialIcons name='arrow-forward-ios' size={12}/></Text>
           </Pressable>
         </View>
 
         <View style={styles.helpSupport}>
           <Text style={styles.bottomDetail}>Help & Support</Text>
-          <Pressable onPress={() => navigation.navigate('HelpSupport')}>
+          <Pressable onPress={() => navigation.navigate('Help Support')}>
             <Text style={styles.bottomDetail}><MaterialIcons name='arrow-forward-ios' size={12}/></Text>
           </Pressable>
         </View>

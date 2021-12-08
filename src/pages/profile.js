@@ -1,7 +1,7 @@
 import React from 'react';
 import { StyleSheet, View, Text, Image, Pressable } from 'react-native';
 
-export default function Profile () {
+export default function Profile ({ navigation }) {
   return (
     <View style={styles.container}>
       <View style={styles.top}>
@@ -31,11 +31,11 @@ export default function Profile () {
           <Text style={{color: 'white', fontWeight: 'bold'}}>Change Password</Text>
         </Pressable>
 
-        <Pressable style={styles.signOut} onPress={() => navigation.navigate('SignOut')}>
+        <Pressable style={styles.signOut} onPress={() => navigation.navigate('Sign In')}>
           <Text style={{color: 'white', fontWeight: 'bold'}}>Sign Out</Text>
         </Pressable>
         
-        <Pressable style={styles.bottomText} onPress={() => navigation.navigate('HelpSupport')}>
+        <Pressable style={styles.bottomText} onPress={() => navigation.navigate('Help Support')}>
           <Text style={styles.left}>Help & Support</Text>
         </Pressable>
     </View>
