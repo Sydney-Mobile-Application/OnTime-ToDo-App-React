@@ -6,14 +6,16 @@ const windowWidth = Dimensions.get("window").width;
 const windowHeight = Dimensions.get("window").height;
 
 
-export default function AddToDo () {
+export default function AddToDo ({ navigation }) {
   const [textEmail, onChangeTextEmail] = useState("");
   return (
     <View style={styles.container}>
 
       <View style={styles.containertop}>
         <View style={styles.back} >
-          <MaterialIcons name='arrow-back' size={30} color='#293462'/>
+          <Pressable onPress={() => navigation.navigate('Dashboard')}>
+            <MaterialIcons name='arrow-back' size={30} color='#293462'/>
+          </Pressable>
         </View>
         <View style={styles.settings} >
           <MaterialIcons  name='settings' size={30} color='#293462'/>
@@ -26,7 +28,9 @@ export default function AddToDo () {
       <View style={styles.containerBottom}>
         <MaterialIcons  name='font-download' size={30} color='#293462' style={styles.font}/>
         <MaterialIcons  name='calendar-today' size={30} color='#293462' style={styles.font}/>
-        <Text style={styles.saveButton}>Save</Text>
+        <Pressable onPress={() => navigation.navigate('Dashboard')}>
+          <Text style={styles.saveButton}>Save</Text>
+        </Pressable>
         
       </View>
 
