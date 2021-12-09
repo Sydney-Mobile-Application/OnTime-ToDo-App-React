@@ -1,11 +1,22 @@
 import React from 'react';
 import { StyleSheet, View, Text, Pressable, Alert } from 'react-native';
+// import {Calendar, CalendarList, Agenda} from 'react-native-calendars';
+import CalendarPicker from 'react-native-calendar-picker';
 
 export default function TermAndCondition ({closeCalendarModal}) {
   return (
     <View style={styles.container}>
       <View style={styles.modalView}>
         <Text style={styles.textTitleSave}>Choose Date And Time.</Text>
+        {/* <Calendar
+          selectionMode="singleDay"
+          scrollMode="oneMonth"
+          monthsBefore={12}
+          monthsAfter={24}
+        /> */}
+        <CalendarPicker
+          onDateChange={this.onDateChange}
+        />
         <Pressable style={styles.buttonSave} onPress={() => closeCalendarModal()}>
           <Text style={{color: 'white', fontWeight: 'bold'}}>Save Date And Time</Text>
         </Pressable>
