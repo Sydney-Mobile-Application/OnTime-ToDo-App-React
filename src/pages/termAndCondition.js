@@ -51,7 +51,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   modalView: {
-    width: '90%',
+    width: '100%',
     margin: 20,
     backgroundColor: "white",
     borderRadius: 20,
@@ -64,7 +64,9 @@ const styles = StyleSheet.create({
     },
     shadowOpacity: 0.25,
     shadowRadius: 4,
-    elevation: 5
+    elevation: 5,
+    position: 'absolute',
+    bottom: -40
   },
   textTitleAccept: {
     fontWeight: 'bold',

@@ -4,9 +4,11 @@ import { StyleSheet, View, Text, Image, Pressable } from 'react-native';
 export default function GetStarted ({ navigation }) {
   return (
     <View style={styles.container}>
-      <Text style={styles.topTitleGetStarted}>
-        Get To Your Task, Right OnTime
-      </Text>
+      <View style={styles.headerContainer}>
+        <Text style={styles.topTitleGetStarted}>
+          Get To Your Task, Right OnTime
+        </Text>
+      </View>
       <Image
         style={styles.iconGetStarted}
         source={require('../../assets/getstart.png')}
@@ -40,9 +42,13 @@ const styles = StyleSheet.create({
     width: 250,
     height: 250,
   },
+  headerContainer: {
+    width: '60%'
+  },
   topTitleGetStarted: {
     fontWeight: 'bold',
-    left: 0
+    left: 0,
+    alignSelf: 'flex-start'
   },
   titleGetStarted: {
     fontSize: 50,
