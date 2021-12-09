@@ -13,8 +13,10 @@ export default function SettingMenu ({navigation}) {
 
   return (
     <View style={styles.container}>
-      <View>
-        <Text style={styles.headerContent}>Settings</Text>
+      <View style={{width: '80%'}}>
+        <View style={styles.headerContainer}>
+          <Text style={styles.headerContent}>Settings</Text>
+        </View>
       </View>
       
       <View style={styles.viewTop}>
@@ -122,6 +124,10 @@ const styles = StyleSheet.create({
     paddingTop: 100,
     // paddingLeft: 40,
     alignItems: 'center',
+  },
+
+  headerContainer: {
+    alignSelf: 'flex-start'
   },
 
   headerContent: {
