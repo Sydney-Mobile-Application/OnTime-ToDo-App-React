@@ -1,9 +1,41 @@
 import React, { useState, useEffect } from 'react';
 import { StyleSheet, View, Text, Dimensions, TextInput, Pressable } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
+import { FloatingAction } from "react-native-floating-action";
 
 const windowWidth = Dimensions.get("window").width;
 const windowHeight = Dimensions.get("window").height;
+
+const actions = [
+  {
+    text: "Camera",
+    color: '#293462',
+    // icon: require("./images/ic_accessibility_white.png"),
+    name: "bt_camera",
+    position: 2
+  },
+  {
+    text: "Gallery",
+    color: '#293462',
+    // icon: require("./images/ic_language_white.png"),
+    name: "bt_gallery",
+    position: 1
+  },
+  {
+    text: "Location",
+    color: '#293462',
+    // icon: require("./images/ic_room_white.png"),
+    name: "bt_location",
+    position: 3
+  },
+  {
+    text: "URL",
+    color: '#293462',
+    // icon: require("./images/ic_videocam_white.png"),
+    name: "bt_link",
+    position: 4
+  }
+];
 
 
 export default function AddToDo ({ navigation }) {
@@ -24,7 +56,16 @@ export default function AddToDo ({ navigation }) {
       <View style={styles.task}>
           <TextInput style={styles.title} onChangeText={onChangeTextEmail}  placeholder="Title " />
           <TextInput style={styles.description} onChangeText={onChangeTextEmail} multiline={true} placeholder="Description " />
+          <FloatingAction   
+          actions={actions}
+          color= '#293462'
+          showBackground= {false}
+          onPressItem={name => {
+            console.log(`selected button: ${name}`);
+          }}
+        />
       </View>  
+    
       <View style={styles.containerBottom}>
         <MaterialIcons  name='font-download' size={30} color='#293462' style={styles.font}/>
         <MaterialIcons  name='calendar-today' size={30} color='#293462' style={styles.font}/>
@@ -77,9 +118,11 @@ const styles = StyleSheet.create({
   task: {
     alignSelf: 'flex-start',
     marginTop: windowHeight*0.05,
+    marginBottom:  windowWidth*0.1,
     marginLeft:  windowWidth*0.1,
     marginRight:  windowWidth*0.08,
-    height: windowHeight*0.68,
+    height: windowHeight*0.65,
+    width: windowWidth*0.8,
   },
   title: {
     fontSize: 30,
@@ -97,6 +140,7 @@ const styles = StyleSheet.create({
     alignItems: "flex-start",
     // maxHeight: windowHeight*0.8,
   },
+
   font: {
     alignSelf: "flex-start",
     justifyContent: "flex-start",
