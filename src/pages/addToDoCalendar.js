@@ -15,7 +15,7 @@ export default function TermAndCondition ({closeCalendarModal}) {
           monthsAfter={24}
         /> */}
         <CalendarPicker
-          onDateChange={this.onDateChange}
+          // onDateChange={this.onDateChange}
         />
         <Pressable style={styles.buttonSave} onPress={() => closeCalendarModal()}>
           <Text style={{color: 'white', fontWeight: 'bold'}}>Save Date And Time</Text>
