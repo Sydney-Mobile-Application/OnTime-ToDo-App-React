@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, View, Text, Dimensions, TextInput, Pressable } from 'react-native';
+import { StyleSheet, View, Text, Dimensions, TextInput, Pressable, Modal } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
 import { FloatingAction } from "react-native-floating-action";
+import AddToDoCalendar from './addToDoCalendar';
 
 const windowWidth = Dimensions.get("window").width;
 const windowHeight = Dimensions.get("window").height;
@@ -40,6 +41,10 @@ const actions = [
 
 export default function AddToDo ({ navigation }) {
   const [textEmail, onChangeTextEmail] = useState("");
+  const [modalCalendarVisible, setModalCalendarVisible] = useState(false);
+  function closeCalendarModal() {
+    setModalCalendarVisible(false)
+  }
   return (
     <View style={styles.container}>
 
@@ -68,12 +73,15 @@ export default function AddToDo ({ navigation }) {
     
       <View style={styles.containerBottom}>
         <MaterialIcons  name='font-download' size={30} color='#293462' style={styles.font}/>
-        <MaterialIcons  name='calendar-today' size={30} color='#293462' style={styles.font}/>
+        <MaterialIcons onPress={() => setModalCalendarVisible(true)} name='calendar-today' size={30} color='#293462' style={styles.font}/>
         <Pressable onPress={() => navigation.navigate('Dashboard')}>
           <Text style={styles.saveButton}>Save</Text>
         </Pressable>
         
       </View>
+      <Modal animationType="slide" transparent={true} visible={modalCalendarVisible} onRequestClose={() => { setModalCalendarVisible(!modalCalendarVisible); }}>
+        <AddToDoCalendar closeCalendarModal={closeCalendarModal} />
+      </Modal>
 
     </View> 
       
