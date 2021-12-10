@@ -36,14 +36,14 @@ const styles = StyleSheet.create({
     alignContent: 'flex-start',
     justifyContent: 'flex-start',
     paddingLeft: 40,
-    paddingTop: 100
+    paddingTop: 50
   },
 
   backupTitle: {
     fontWeight: 'bold',
     fontSize: 30,
     alignSelf: 'flex-start',
-    paddingTop: 30,
+    paddingTop: 20,
     marginBottom: 20,
     marginLeft: 7
   },

@@ -37,14 +37,14 @@ const styles = StyleSheet.create({
     alignContent: 'flex-start',
     justifyContent: 'flex-start',
     paddingHorizontal: 40,
-    paddingTop: 100
+    paddingTop: 50
   },
 
   helpSupportTitle: {
     fontWeight: 'bold',
     fontSize: 30,
     alignSelf: 'flex-start',
-    paddingTop: 30,
+    paddingTop: 20,
     marginBottom: 25,
     marginLeft: 7
   },

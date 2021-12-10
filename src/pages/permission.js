@@ -55,21 +55,20 @@ const styles = StyleSheet.create({
     alignContent: 'flex-start',
     justifyContent: 'flex-start',
     paddingHorizontal: 40,
-    paddingTop: 100
+    paddingTop: 50
   },
 
   permissionTitle: {
     fontWeight: 'bold',
     fontSize: 30,
     alignSelf: 'flex-start',
-    paddingTop: 30,
+    paddingTop: 20,
     marginBottom: 25,
     marginLeft: 7
   },
 
     permissionDetail: {
     marginLeft: 7,
-    // backgroundColor: '#000',
     color: '#293462',
     fontSize: 14,
     fontWeight: 'bold',
@@ -77,13 +76,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignContent: 'flex-end'
-  },
-  left: {
-    alignSelf: 'flex-start',
-    flexDirection: 'row',
-  },
-  right: {
-    alignSelf: 'flex-end',
   },
 
   bottomDetail: {
@@ -93,6 +85,7 @@ const styles = StyleSheet.create({
 
     switch: {
     transform: [{ scaleX: 0.6}, { scaleY: 0.6}],
-    width: '60%'
+    width: '25%',
+    // backgroundColor: 'red'
   },
 });

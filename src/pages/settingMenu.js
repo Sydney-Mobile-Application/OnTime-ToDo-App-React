@@ -12,7 +12,6 @@ export default function SettingMenu ({navigation}) {
   }
 
   return (
-    
     <View style={styles.container}>
       <View style={{width: '80%'}}>
         <View style={styles.headerContainer}>
@@ -51,18 +50,22 @@ export default function SettingMenu ({navigation}) {
     </View>
 
       <View style={styles.taskList}>
-        <View style={styles.priorityTask}> 
+        <Pressable onPress={() => navigation.navigate("To Do Priority")}>
+          <View style={styles.priorityTask}> 
           <Text style={styles.taskTitle}>Priority Task</Text>
           <Text style={styles.taskDetail}>7</Text> 
           <Text style={styles.textInline}>Manage your task</Text>         
         </View>
+        </Pressable>
 
-        <View style={styles.upcomingTask}>
+        <Pressable onPress={() => navigation.navigate("To Do Upcoming")}>
+          <View style={styles.upcomingTask}>
           <Text style={styles.taskTitle}>Upcoming Task</Text>
           <Text style={styles.taskDetail}>15</Text>
           <Text style={styles.textInline}>Manage your task</Text>
         </View>
-
+        </Pressable>
+        
         <View style={styles.doneTask}>
           <Text style={styles.taskTitle}>Done Task</Text>
           <Text style={styles.taskDetail}>3</Text>
@@ -71,36 +74,47 @@ export default function SettingMenu ({navigation}) {
       </View>
 
       <View style={styles.bottomText}>
-        <View style={styles.leftText}>
+        <View style={styles.bottomTitle}>
           <Text style={styles.bottomDetail}>Dark Mode</Text>
-          <Text style={styles.bottomDetail}>Language</Text>
-          <Text style={styles.bottomDetail}>Backup Data</Text>
-          <Text style={styles.bottomDetail}>Help & Support</Text>
-          <Text style={styles.bottomDetail}>Permission</Text>
-          <Text style={styles.bottomDetail}>About</Text>
+          <Switch rol trackColor={{ false: "#767577", true: "#293462" }} style={styles.switch} onValueChange={toggleSwitch} value = {switchValue} />
         </View>
         
-        <View style={styles.rightText}>
-          <Switch rol trackColor={{ false: "#767577", true: "#293462" }} style={styles.switch} onValueChange={toggleSwitch} value = {switchValue} />
-          <Pressable onPress={() => navigation.navigate('Language Setting')}>
-            <Text style={styles.bottomDetail}>English <MaterialIcons name='arrow-forward-ios' size={12}/></Text>
-          </Pressable>
-          <Pressable onPress={() => navigation.navigate('Backup Data')}>
+        <Pressable onPress={() => navigation.navigate('Language Setting')}>
+          <View style={styles.bottomTitle}>
+            <Text style={styles.bottomDetail}>Language</Text>
+            <Text style={styles.bottomDetail}>English <MaterialIcons name='arrow-forward-ios' size={12}/></Text>        
+          </View>
+        </Pressable> 
+
+        <Pressable onPress={() => navigation.navigate('Backup Data')}>
+          <View style={styles.bottomTitle}>
+            <Text style={styles.bottomDetail}>Backup Data</Text>
             <Text style={styles.bottomDetail}><MaterialIcons name='arrow-forward-ios' size={12}/></Text>
-          </Pressable>
-          <Pressable onPress={() => navigation.navigate('Help Support')}>
+          </View>
+        </Pressable>
+
+        <Pressable onPress={() => navigation.navigate('Help Support')}>
+          <View style={styles.bottomTitle}>
+            <Text style={styles.bottomDetail}>Help & Support</Text>
             <Text style={styles.bottomDetail}><MaterialIcons name='arrow-forward-ios' size={12}/></Text>
-          </Pressable>
-          <Pressable onPress={() => navigation.navigate('Permission')}>
+          </View>
+        </Pressable>
+
+        <Pressable onPress={() => navigation.navigate('Permission')}>
+          <View style={styles.bottomTitle}>
+            <Text style={styles.bottomDetail}>Permission</Text>
             <Text style={styles.bottomDetail}><MaterialIcons name='arrow-forward-ios' size={12}/></Text>
-          </Pressable>  
-          <Pressable onPress={() => navigation.navigate('About')}>
+          </View>
+        </Pressable>  
+
+        <Pressable onPress={() => navigation.navigate('About')}>
+          <View style={styles.bottomTitle}>
+            <Text style={styles.bottomDetail}>About</Text>
             <Text style={styles.bottomDetail}><MaterialIcons name='arrow-forward-ios' size={12}/></Text>
-          </Pressable>
-        </View>
+          </View>
+        </Pressable>
       </View>
     </View> //container
-    
   );
 };
 
@@ -109,7 +123,7 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#fff',
     justifyContent: 'flex-start',
-    paddingTop: 50,
+    paddingTop: 60,
     alignItems: 'center',
   },
 
@@ -125,8 +139,8 @@ const styles = StyleSheet.create({
   },
 
   viewTop: {
-    width: '80%',
-    height: '18%',
+    width: windowWidth*0.9,
+    height: windowHeight*0.14,
     alignContent: 'space-between',
     justifyContent: 'space-between',
     alignItems: 'stretch',
@@ -138,16 +152,6 @@ const styles = StyleSheet.create({
     zIndex: 3,
   },
 
-  // profileContainer: {
-  //   width: '100%',
-  //   height: '150%',
-  //   position: 'absolute',
-  //   borderRadius: 50,
-  //   zIndex: -1,
-  //   alignItems: 'center',
-  //   justifyContent: 'center',
-  // },
-
   bookmarkIcon: {
     paddingTop: 20,
     paddingLeft: 30,
@@ -156,7 +160,6 @@ const styles = StyleSheet.create({
 
   left: {
     marginTop: 20,
-    marginLeft: 10,
     flexDirection: 'column',
     justifyContent: 'flex-start',
   },
@@ -186,14 +189,14 @@ const styles = StyleSheet.create({
   },
 
   right: {
-    // shadowColor: "#000",
-    //   shadowOffset: {
-    //   width: 0,
-    //   height: 3,
-    // },
-    //   shadowOpacity: 0.27,
-    //   shadowRadius: 4.65,
-    //   elevation: 6,
+    shadowColor: "#000",
+      shadowOffset: {
+      width: 0,
+      height: 3,
+    },
+      shadowOpacity: 0.27,
+      shadowRadius: 4.65,
+      elevation: 6,
       // flex: 1,
       flexDirection: 'column',
       marginHorizontal: 30,
@@ -213,8 +216,8 @@ const styles = StyleSheet.create({
     fontWeight: '400',
     color:'#293462',
     position: 'absolute',
-    marginTop: 70,
-    width: '120%',
+    marginTop: 80,
+    width: windowWidth*1,
   },
 
   taskList: {
@@ -227,7 +230,6 @@ const styles = StyleSheet.create({
   },
 
   taskTitle: {
-
     fontSize: 14,
     paddingHorizontal: 4,
     width: 72,
@@ -235,7 +237,7 @@ const styles = StyleSheet.create({
   },
 
   taskDetail: {
-    fontSize: 10, 
+    fontSize: 12, 
     color: '#293462',
     alignContent: 'flex-start',
     justifyContent: 'flex-start',
@@ -297,31 +299,34 @@ const styles = StyleSheet.create({
     color: '#293462',
     fontSize: 14,
     fontWeight: 'bold',
-    width: '80%',
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignContent: 'flex-end'
+    flexDirection: 'column',
   },
 
   switch: {
     transform: [{ scaleX: 0.6}, { scaleY: 0.6}],
-    width: '60%'
   },
-
-  leftText: {
-    justifyContent: 'flex-start',
-    flexDirection: 'column',
-    alignItems: 'flex-start'
-  },
-
-  rightText: {
-    flexDirection: 'column',
-    justifyContent: 'flex-end',
-    alignItems: 'flex-end'
-  },
-
+  
   bottomDetail: {
     fontSize: 20,
     lineHeight: 40,
-  }
+  },
+
+  bottomTitle: {
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+      alignContent: 'space-between',
+      width: windowWidth*0.8
+  },
+  // leftText: {
+  //   justifyContent: 'flex-start',
+  //   flexDirection: 'column',
+  //   alignItems: 'flex-start'
+  // },
+
+  // rightText: {
+  //   flexDirection: 'column',
+  //   justifyContent: 'flex-end',
+  //   alignItems: 'flex-end'
+  // },
+
 });

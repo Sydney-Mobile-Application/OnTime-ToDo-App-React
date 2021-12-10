@@ -62,7 +62,7 @@ export default function AddToDo ({ navigation }) {
         <View style={styles.settings} >
           <Text style={styles.dateInfo}>13th Desember 21 - 04.00 PM </Text>
           <Pressable onPress={() => navigation.navigate('Dashboard')} >
-             <Feather style={styles.saveButton} name='check' size={25} color='#293462'/>
+             <Feather style={styles.saveButton} name='check' size={15} color='#293462'/>
           </Pressable>
           {/* <MaterialIcons  name='settings' size={30} color='#293462'/> */}
         </View>
@@ -178,7 +178,7 @@ const styles = StyleSheet.create({
   },
   saveButton: {
     marginLeft: windowWidth*0.05,
-    borderRadius: 25,
+    borderRadius: 50,
     paddingLeft: 5,
     paddingRight: 5,
     paddingTop: 5,
