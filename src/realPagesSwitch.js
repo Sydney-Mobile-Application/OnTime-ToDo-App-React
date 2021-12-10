@@ -77,6 +77,12 @@ export default function HomeScreen ({ navigation }) {
         }
       />
       <Button
+        title="Go To Add To Do Time"
+        onPress={() =>
+          navigation.navigate('Add To Do Time')
+        }
+      />
+      <Button
         title="Go To To Do Priority"
         onPress={() =>
           navigation.navigate('To Do Priority')

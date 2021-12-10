@@ -65,6 +65,7 @@ const styles = StyleSheet.create({
     marginBottom: 10
   },
   buttonSave: {
+    marginTop: 50,
     backgroundColor: '#293462',
     color: '#293462',
     width: '100%',
