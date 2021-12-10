@@ -1,12 +1,14 @@
 import React from 'react';
-import { StyleSheet, View, Text } from 'react-native';
+import { StyleSheet, View, Text, Pressable } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
 
-export default function About () {
+export default function About ({ navigation }) {
   return (
     <View style={styles.container}>
       <View>
-        <MaterialIcons  name='arrow-back' size={30} color='#293462'/>
+        <Pressable onPress={() => navigation.navigate("Setting Menu")}>
+          <MaterialIcons  name='arrow-back' size={30} color='#293462'/>
+        </Pressable>
         <Text style={styles.aboutTitle}>About ToDoApp</Text>
       </View>
       <View style={styles.aboutDetail}>

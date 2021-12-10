@@ -6,7 +6,9 @@ export default function BackupData ({ navigation }) {
   return (
     <View style={styles.container}>
     <View>
-      <MaterialIcons  name='arrow-back' size={30} color='#293462'/>
+      <Pressable onPress={() => navigation.navigate("Setting Menu")}>
+        <MaterialIcons  name='arrow-back' size={30} color='#293462'/>
+      </Pressable>
     </View>
       <Text style={styles.backupTitle}>Backup Data</Text>
 

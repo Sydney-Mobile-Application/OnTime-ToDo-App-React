@@ -1,5 +1,5 @@
-import React, {useState} from 'react';
-import { StyleSheet, View, Text, TouchableOpacity, Image, Pressable, Dimensions, Switch} from 'react-native';
+import React, {useState, useEffect} from 'react';
+import { StyleSheet, View, Text, TouchableOpacity, Image, Pressable, Dimensions, Switch, ScrollView} from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
 
 const windowWidth = Dimensions.get('window').width;
@@ -12,6 +12,7 @@ export default function SettingMenu ({navigation}) {
   }
 
   return (
+    
     <View style={styles.container}>
       <View style={{width: '80%'}}>
         <View style={styles.headerContainer}>
@@ -99,6 +100,7 @@ export default function SettingMenu ({navigation}) {
         </View>
       </View>
     </View> //container
+    
   );
 };
 
@@ -107,7 +109,7 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#fff',
     justifyContent: 'flex-start',
-    paddingTop: 100,
+    paddingTop: 50,
     alignItems: 'center',
   },
 
@@ -180,7 +182,7 @@ const styles = StyleSheet.create({
   username: {
     paddingTop: 10,
     fontWeight: 'bold',
-    fontSize: 22,
+    fontSize: 20,
   },
 
   right: {
@@ -192,7 +194,7 @@ const styles = StyleSheet.create({
     //   shadowOpacity: 0.27,
     //   shadowRadius: 4.65,
     //   elevation: 6,
-      flex: 1,
+      // flex: 1,
       flexDirection: 'column',
       marginHorizontal: 30,
   },
@@ -211,7 +213,7 @@ const styles = StyleSheet.create({
     fontWeight: '400',
     color:'#293462',
     position: 'absolute',
-    marginTop: 80,
+    marginTop: 70,
     width: '120%',
   },
 
@@ -225,9 +227,11 @@ const styles = StyleSheet.create({
   },
 
   taskTitle: {
+
     fontSize: 14,
     paddingHorizontal: 4,
-    width: 75,
+    width: 72,
+    // marginTop: windowHeight*0.005,
   },
 
   taskDetail: {
@@ -241,17 +245,20 @@ const styles = StyleSheet.create({
   },
 
   textInline: {
-    flexDirection: 'row',
+    // flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'flex-end',
     fontSize: 10,
     marginVertical: 6,
     color: '#9799A1',
-    paddingHorizontal: 4,
+    // paddingHorizontal: 4,
   },
 
   priorityTask: {
     width: 100,
     height: 80,
     backgroundColor: '#BFE4FF',
+    flexDirection:'column',
     borderRadius: 25,
     paddingVertical: 15,
     paddingLeft: 10, 
@@ -279,6 +286,7 @@ const styles = StyleSheet.create({
     borderRadius: 25,
     paddingVertical: 15,
     paddingLeft: 10, 
+    flexDirection:'column',
     alignContent: 'flex-start',
     marginHorizontal: 8,
     marginVertical: 20
