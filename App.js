@@ -50,7 +50,10 @@ export default function App() {
           name="Sign In Successfully"
           component={CallBack.SignInSuccessfully}
         />
-        <Stack.Screen name="Dashboard" component={CallBack.DashboardConnection} />
+        <Stack.Screen
+          name="Dashboard"
+          component={CallBack.DashboardConnection}
+        />
         <Stack.Screen name="Add To Do" component={CallBack.AddToDo} />
         <Stack.Screen
           name="Add To Do Setting"
@@ -60,11 +63,17 @@ export default function App() {
           name="Add To Do Calendar"
           component={CallBack.AddToDoCalendar}
         />
-        <Stack.Screen name="To Do Priority" component={CallBack.ToDoPriority} />
-        <Stack.Screen name="To Do Upcoming" component={CallBack.ToDoUpcoming} />
+        <Stack.Screen
+          name="To Do Priority"
+          component={CallBack.ToDoParentPage}
+        />
+        <Stack.Screen
+          name="To Do Upcoming"
+          component={CallBack.ToDoParentPage}
+        />
         <Stack.Screen
           name="To Do Completed"
-          component={CallBack.ToDoCompleted}
+          component={CallBack.ToDoParentPage}
         />
         <Stack.Screen name="Setting Menu" component={CallBack.SettingMenu} />
         <Stack.Screen name="Profile" component={CallBack.Profile} />
