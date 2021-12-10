@@ -7,7 +7,7 @@ export default function TermAndCondition ({closeCalendarModal}) {
   return (
     <View style={styles.container}>
       <View style={styles.modalView}>
-        <Text style={styles.textTitleSave}>Choose Date And Time.</Text>
+        {/* <Text style={styles.textTitleSave}>Choose Date And Time.</Text> */}
         {/* <Calendar
           selectionMode="singleDay"
           scrollMode="oneMonth"
@@ -15,6 +15,9 @@ export default function TermAndCondition ({closeCalendarModal}) {
           monthsAfter={24}
         /> */}
         <CalendarPicker
+        todayBackgroundColor="#293462"
+        selectedDayColor="#293462"
+        selectedDayTextColor="#FFFFFF"
           // onDateChange={this.onDateChange}
         />
         <Pressable style={styles.buttonSave} onPress={() => closeCalendarModal()}>
@@ -34,7 +37,7 @@ const styles = StyleSheet.create({
   modalView: {
     width: '100%',
     margin: 20,
-    backgroundColor: "lightblue",
+    backgroundColor: "#BFE4FF",
     borderRadius: 20,
     padding: 35,
     alignItems: "center",
