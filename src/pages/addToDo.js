@@ -45,6 +45,10 @@ export default function AddToDo ({ navigation }) {
   function closeCalendarModal() {
     setModalCalendarVisible(false)
   }
+  const [modalFontVisible, setModalFontVisible] = useState(false);
+  function closeFontModal() {
+    setModalFontVisible(false)
+  }
   return (
     <View style={styles.container}>
 
@@ -55,7 +59,8 @@ export default function AddToDo ({ navigation }) {
           </Pressable>
         </View>
         <View style={styles.settings} >
-          <MaterialIcons  name='settings' size={30} color='#293462'/>
+          <Text>Date - Time</Text>
+          {/* <MaterialIcons  name='settings' size={30} color='#293462'/> */}
         </View>
       </View>
       <View style={styles.task}>
@@ -72,15 +77,26 @@ export default function AddToDo ({ navigation }) {
       </View>  
     
       <View style={styles.containerBottom}>
-        <MaterialIcons  name='font-download' size={30} color='#293462' style={styles.font}/>
+        <MaterialIcons  onPress={() => setModalFontVisible(true)} name='font-download' size={30} color='#293462' style={styles.font}/>
         <MaterialIcons onPress={() => setModalCalendarVisible(true)} name='calendar-today' size={30} color='#293462' style={styles.font}/>
         <Pressable onPress={() => navigation.navigate('Dashboard')}>
           <Text style={styles.saveButton}>Save</Text>
+          
         </Pressable>
         
       </View>
       <Modal animationType="slide" transparent={true} visible={modalCalendarVisible} onRequestClose={() => { setModalCalendarVisible(!modalCalendarVisible); }}>
         <AddToDoCalendar closeCalendarModal={closeCalendarModal} />
+      </Modal>
+      <Modal animationType="slide" transparent={true} visible={modalFontVisible} onRequestClose={() => { setModalFontVisible(!modalFontVisible); }}>
+        <Pressable onPress={() => closeFontModal()}>
+          <View style={styles.fontOption}>
+            <MaterialIcons  onPress={() => closeFontModal()} name='format-underline' size={30} color='#293462' style={styles.font}/>
+            <MaterialIcons  onPress={() => closeFontModal()} name='format-bold' size={30} color='#293462' style={styles.font}/>
+            <MaterialIcons  onPress={() => closeFontModal()} name='format-italic' size={30} color='#293462' style={styles.font}/>
+          </View>
+          
+        </Pressable>
       </Modal>
 
     </View> 
@@ -97,6 +113,7 @@ const styles = StyleSheet.create({
   },
   containerBottom: {
     // flex: 1,
+    marginTop: windowHeight*0.05,
     backgroundColor: '#fff',
     alignItems: 'flex-start',
     justifyContent: 'flex-start',
@@ -118,7 +135,7 @@ const styles = StyleSheet.create({
     alignItems: "flex-start",
   },
   settings: {
-    marginLeft: windowWidth*0.70,
+    marginLeft: windowWidth*0.60,
     alignItems: 'flex-end',
     alignSelf: "flex-end",
     alignItems: "flex-end",
@@ -129,7 +146,7 @@ const styles = StyleSheet.create({
     marginBottom:  windowWidth*0.05,
     marginLeft:  windowWidth*0.12,
     marginRight:  windowWidth*0.08,
-    height: windowHeight*0.65,
+    height: windowHeight*0.6,
     width: windowWidth*0.8,
   },
   title: {
@@ -167,6 +184,24 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     fontSize: 15,
     alignSelf:'flex-end',
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.5,
+    shadowRadius: 2,
+    elevation: 5,
+  },
+  fontOption: {
+    flexDirection: 'row',
+    marginTop: windowHeight*0.7,
+    borderRadius: 15,
+    paddingRight: 30,
+    paddingTop: 5,
+    paddingBottom: 5,
+    color: "#fff",
+    backgroundColor: "#ECECEC",
+    alignSelf:'center',
+    alignItems:'center',
+    justifyContent:'space-between',
     shadowColor: "#000",
     shadowOffset: { width: 0, height: 1 },
     shadowOpacity: 0.5,
