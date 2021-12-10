@@ -6,7 +6,10 @@ export default function GetStarted ({ navigation }) {
     <View style={styles.container}>
       <View style={styles.headerContainer}>
         <Text style={styles.topTitleGetStarted}>
-          Get To Your Task, Right OnTime
+          Get To Your Task, Right
+        </Text>
+        <Text style={styles.topTitleGetStarted1}>
+          OnTime
         </Text>
       </View>
       <Image
@@ -46,6 +49,15 @@ const styles = StyleSheet.create({
     width: '60%'
   },
   topTitleGetStarted: {
+    color: '#082032',
+    fontSize: 20,
+    fontWeight: 'bold',
+    left: 0,
+    alignSelf: 'flex-start'
+  },
+  topTitleGetStarted1: {
+    color: '#082032',
+    fontSize: 25,
     fontWeight: 'bold',
     left: 0,
     alignSelf: 'flex-start'

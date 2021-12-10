@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { StyleSheet, View, Text, Dimensions, TextInput, Pressable, Modal } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
+import { Feather } from '@expo/vector-icons';
 import { FloatingAction } from "react-native-floating-action";
 import AddToDoCalendar from './addToDoCalendar';
 
@@ -59,14 +60,24 @@ export default function AddToDo ({ navigation }) {
           </Pressable>
         </View>
         <View style={styles.settings} >
-          <Text>Date - Time</Text>
+          <Text style={styles.dateInfo}>13th Desember 21 - 04.00 PM </Text>
+          <Pressable onPress={() => navigation.navigate('Dashboard')} >
+             <Feather style={styles.saveButton} name='check' size={25} color='#293462'/>
+          </Pressable>
           {/* <MaterialIcons  name='settings' size={30} color='#293462'/> */}
         </View>
       </View>
       <View style={styles.task}>
           <TextInput style={styles.title} onChangeText={onChangeTextEmail}  placeholder="Title " />
           <TextInput style={styles.description} onChangeText={onChangeTextEmail} multiline={true} placeholder="Description " />
-          <FloatingAction   
+          
+      </View>  
+    
+      <View style={styles.containerBottom}>
+        <MaterialIcons  onPress={() => setModalFontVisible(true)} name='font-download' size={30} color='#293462' style={styles.font}/>
+        <MaterialIcons onPress={() => setModalCalendarVisible(true)} name='calendar-today' size={30} color='#293462' style={styles.font}/>
+      </View>
+      <FloatingAction   
           actions={actions}
           color= '#293462'
           showBackground= {false}
@@ -74,17 +85,6 @@ export default function AddToDo ({ navigation }) {
             console.log(`selected button: ${name}`);
           }}
         />
-      </View>  
-    
-      <View style={styles.containerBottom}>
-        <MaterialIcons  onPress={() => setModalFontVisible(true)} name='font-download' size={30} color='#293462' style={styles.font}/>
-        <MaterialIcons onPress={() => setModalCalendarVisible(true)} name='calendar-today' size={30} color='#293462' style={styles.font}/>
-        <Pressable onPress={() => navigation.navigate('Dashboard')}>
-          <Text style={styles.saveButton}>Save</Text>
-          
-        </Pressable>
-        
-      </View>
       <Modal animationType="slide" transparent={true} visible={modalCalendarVisible} onRequestClose={() => { setModalCalendarVisible(!modalCalendarVisible); }}>
         <AddToDoCalendar closeCalendarModal={closeCalendarModal} />
       </Modal>
@@ -122,20 +122,24 @@ const styles = StyleSheet.create({
   },
   containertop: {
     width: windowWidth,
+    marginTop: windowHeight*0.02,
     paddingTop: 30,
     backgroundColor: "#fff",
     flexDirection:"row",
     alignSelf: "center",
+    justifyContent:"space-between",
   },
   back: {
     marginLeft: windowWidth*0.08,
-    marginTop: windowHeight*0.02,
+    marginTop: windowHeight*0.01,
     alignSelf: "flex-start",
     justifyContent: "flex-start",
     alignItems: "flex-start",
   },
   settings: {
-    marginLeft: windowWidth*0.60,
+    textAlignVertical: "center",
+    marginRight: windowWidth*0.08,
+    flexDirection: 'row',
     alignItems: 'flex-end',
     alignSelf: "flex-end",
     alignItems: "flex-end",
@@ -173,22 +177,24 @@ const styles = StyleSheet.create({
     marginLeft: windowWidth*0.1,
   },
   saveButton: {
-    marginLeft: windowWidth*0.35 ,
-    borderRadius: 15,
-    paddingLeft: 30,
-    paddingRight: 30,
+    marginLeft: windowWidth*0.05,
+    borderRadius: 25,
+    paddingLeft: 5,
+    paddingRight: 5,
     paddingTop: 5,
     paddingBottom: 5,
     color: "#fff",
     backgroundColor: "#293462",
-    fontWeight: "bold",
-    fontSize: 15,
-    alignSelf:'flex-end',
+    // alignSelf:'flex-end',
     shadowColor: "#000",
     shadowOffset: { width: 0, height: 1 },
     shadowOpacity: 0.5,
     shadowRadius: 2,
     elevation: 5,
+  },
+  dateInfo: {
+    marginBottom: windowHeight*0.005,
+    textAlignVertical: "center",
   },
   fontOption: {
     flexDirection: 'row',

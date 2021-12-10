@@ -96,7 +96,6 @@ export default function Dashboard({ navigation }) {
                 <Text style={styles.reschedule}>Swipe here to reschedule</Text>
                 <Text style={styles.markdone}>Swipe here to mark as done</Text>
               </View> */}
-            <View></View>
 
             <View style={styles.Head}>
               <Text style={styles.priority}>Priority</Text>
@@ -229,11 +228,14 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   containerhighlight: {
-    backgroundColor: "#fff",
+    // backgroundColor: "#000",
+    // paddingLeft: 30,
+    // paddingRight: 30,
     alignItems: "center",
     justifyContent: "center",
     flexDirection: "row",
     marginBottom: 20,
+
     // marginLeft:10,
   },
   Head: {
@@ -460,9 +462,8 @@ const styles = StyleSheet.create({
   },
   highlight: {
     flexDirection: "row",
-    margin: 20,
+    margin: 10,
     borderRadius: 20,
-
     paddingBottom: 30,
     paddingLeft: 15,
     paddingRight: 15,
