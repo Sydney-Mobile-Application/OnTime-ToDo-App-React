@@ -74,8 +74,8 @@ export default function AddToDo ({ navigation }) {
       </View>  
     
       <View style={styles.containerBottom}>
-        <MaterialIcons  onPress={() => setModalFontVisible(true)} name='font-download' size={30} color='#293462' style={styles.font}/>
-        <MaterialIcons onPress={() => setModalCalendarVisible(true)} name='calendar-today' size={30} color='#293462' style={styles.font}/>
+        <MaterialIcons  onPress={() => setModalFontVisible(true)} name='font-download' size={25} color='#293462' style={styles.font}/>
+        <MaterialIcons onPress={() => setModalCalendarVisible(true)} name='calendar-today' size={25} color='#293462' style={styles.font}/>
       </View>
       <FloatingAction   
           actions={actions}
