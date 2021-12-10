@@ -13,8 +13,10 @@ export default function SettingMenu ({navigation}) {
 
   return (
     <View style={styles.container}>
-      <View>
-        <Text style={styles.headerContent}>Settings</Text>
+      <View style={{width: '80%'}}>
+        <View style={styles.headerContainer}>
+          <Text style={styles.headerContent}>Settings</Text>
+        </View>
       </View>
       
       <View style={styles.viewTop}>
@@ -24,7 +26,7 @@ export default function SettingMenu ({navigation}) {
       <View>
 
         <TouchableOpacity style={styles.bookmarkIcon}>
-          <MaterialIcons name='bookmark' size={20} color='#082032'/>
+          <MaterialIcons name='bookmark' size={25} color='#082032'/>
         </TouchableOpacity>
       </View>
 
@@ -68,43 +70,29 @@ export default function SettingMenu ({navigation}) {
       </View>
 
       <View style={styles.bottomText}>
-        <View style={styles.darkMode}>
+        <View style={styles.leftText}>
           <Text style={styles.bottomDetail}>Dark Mode</Text>
-            <Switch rol
-            trackColor={{ false: "#767577", true: "#293462" }} 
-            style={styles.switch} onValueChange={toggleSwitch} value = {switchValue} />
+          <Text style={styles.bottomDetail}>Language</Text>
+          <Text style={styles.bottomDetail}>Backup Data</Text>
+          <Text style={styles.bottomDetail}>Help & Support</Text>
+          <Text style={styles.bottomDetail}>Permission</Text>
+          <Text style={styles.bottomDetail}>About</Text>
         </View>
         
-        <View style={styles.language}>
-            <Text style={styles.bottomDetail}>Language</Text>
+        <View style={styles.rightText}>
+          <Switch rol trackColor={{ false: "#767577", true: "#293462" }} style={styles.switch} onValueChange={toggleSwitch} value = {switchValue} />
           <Pressable onPress={() => navigation.navigate('Language Setting')}>
             <Text style={styles.bottomDetail}>English <MaterialIcons name='arrow-forward-ios' size={12}/></Text>
           </Pressable>
-        </View>
-
-        <View style={styles.backupData}>
-          <Text style={styles.bottomDetail}>Backup Data</Text>
           <Pressable onPress={() => navigation.navigate('Backup Data')}>
             <Text style={styles.bottomDetail}><MaterialIcons name='arrow-forward-ios' size={12}/></Text>
           </Pressable>
-        </View>
-
-        <View style={styles.helpSupport}>
-          <Text style={styles.bottomDetail}>Help & Support</Text>
           <Pressable onPress={() => navigation.navigate('Help Support')}>
             <Text style={styles.bottomDetail}><MaterialIcons name='arrow-forward-ios' size={12}/></Text>
           </Pressable>
-        </View>
-
-        <View style={styles.permission}>
-          <Text style={styles.bottomDetail}>Permission</Text>
           <Pressable onPress={() => navigation.navigate('Permission')}>
             <Text style={styles.bottomDetail}><MaterialIcons name='arrow-forward-ios' size={12}/></Text>
           </Pressable>  
-        </View>
-
-        <View style={styles.about}>
-          <Text style={styles.bottomDetail}>About</Text>
           <Pressable onPress={() => navigation.navigate('About')}>
             <Text style={styles.bottomDetail}><MaterialIcons name='arrow-forward-ios' size={12}/></Text>
           </Pressable>
@@ -120,8 +108,11 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     justifyContent: 'flex-start',
     paddingTop: 100,
-    // paddingLeft: 40,
     alignItems: 'center',
+  },
+
+  headerContainer: {
+    alignSelf: 'flex-start',
   },
 
   headerContent: {
@@ -133,9 +124,10 @@ const styles = StyleSheet.create({
 
   viewTop: {
     width: '80%',
-    height: '15%',
-    alignContent: 'center',
-    justifyContent: 'center',
+    height: '18%',
+    alignContent: 'space-between',
+    justifyContent: 'space-between',
+    alignItems: 'stretch',
     borderRadius: 42,
     marginTop: 20,
     flexDirection: 'row',
@@ -156,21 +148,21 @@ const styles = StyleSheet.create({
 
   bookmarkIcon: {
     paddingTop: 20,
-    paddingLeft: 20,
+    paddingLeft: 30,
     position: 'relative',
   },
 
   left: {
-    paddingTop: 20,
-    paddingLeft: 10,
+    marginTop: 20,
+    marginLeft: 10,
     flexDirection: 'column',
     justifyContent: 'flex-start',
   },
 
   today: {
     backgroundColor: '#FFFFFF',
-    width: 60,
-    height: 20,
+    width: 80,
+    height: 30,
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: 20,
@@ -200,18 +192,17 @@ const styles = StyleSheet.create({
     //   shadowOpacity: 0.27,
     //   shadowRadius: 4.65,
     //   elevation: 6,
-    //REACTIVE
       flex: 1,
       flexDirection: 'column',
+      marginHorizontal: 30,
   },
 
   profilePicture: {
     width: 50,
     height: 50,
     borderRadius: 50,
-    marginTop: 10,
     position: 'relative',
-    marginLeft: 70,
+    marginLeft: 40,
     marginTop: 20,
   },
 
@@ -221,41 +212,45 @@ const styles = StyleSheet.create({
     color:'#293462',
     position: 'absolute',
     marginTop: 80,
-    marginLeft: 28,
+    width: '120%',
   },
 
   taskList: {
     flexDirection:'row', 
-    // paddingHorizontal: 10,
+    justifyContent: 'center',
+    alignContent: 'stretch',
+    alignItems: 'center',
+    marginTop: 15,
+    width: '80%',
   },
 
   taskTitle: {
-    fontSize: 10,
+    fontSize: 14,
     paddingHorizontal: 4,
-    width: 58,
+    width: 75,
   },
 
   taskDetail: {
-    fontSize: 8, 
+    fontSize: 10, 
     color: '#293462',
     alignContent: 'flex-start',
     justifyContent: 'flex-start',
-    marginLeft: 70,
+    marginLeft: 75,
     position: 'absolute',
     marginTop: 10,
   },
 
   textInline: {
     flexDirection: 'row',
-    fontSize: 8,
-    marginVertical: 10,
+    fontSize: 10,
+    marginVertical: 6,
     color: '#9799A1',
     paddingHorizontal: 4,
   },
 
   priorityTask: {
-    width: 90,
-    height: 75,
+    width: 100,
+    height: 80,
     backgroundColor: '#BFE4FF',
     borderRadius: 25,
     paddingVertical: 15,
@@ -266,8 +261,8 @@ const styles = StyleSheet.create({
   },
 
   upcomingTask: {
-    width: 90,
-    height: 75,
+    width: 100,
+    height: 80,
     backgroundColor: '#D3BFFF',
     borderRadius: 25,
     paddingVertical: 15,
@@ -278,8 +273,8 @@ const styles = StyleSheet.create({
   },
 
   doneTask: {
-    width: 90,
-    height: 75,
+    width: 100,
+    height: 80,
     backgroundColor: '#FFECBF',
     borderRadius: 25,
     paddingVertical: 15,
@@ -295,45 +290,30 @@ const styles = StyleSheet.create({
     fontSize: 14,
     fontWeight: 'bold',
     width: '80%',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignContent: 'flex-end'
   },
 
   switch: {
     transform: [{ scaleX: 0.6}, { scaleY: 0.6}],
-    flex: 0.18,
+    width: '60%'
   },
 
-  darkMode: {
-    flexDirection: 'row',
-    justifyContent: 'space-between'
+  leftText: {
+    justifyContent: 'flex-start',
+    flexDirection: 'column',
+    alignItems: 'flex-start'
   },
 
-  language: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-  },
-
-  backupData: {
-    flexDirection: 'row',
-    justifyContent: 'space-between'
-  },
-
-  helpSupport: {
-    flexDirection: 'row',
-    justifyContent: 'space-between'
-  },
-
-  permission: {
-    flexDirection: 'row',
-    justifyContent: 'space-between'
-  },
-
-  about: {
-    flexDirection: 'row',
-    justifyContent: 'space-between'
+  rightText: {
+    flexDirection: 'column',
+    justifyContent: 'flex-end',
+    alignItems: 'flex-end'
   },
 
   bottomDetail: {
     fontSize: 20,
-    lineHeight: 40
+    lineHeight: 40,
   }
 });
