@@ -16,7 +16,8 @@ export default function TermAndCondition ({closeCalendarModal}) {
           monthsAfter={24}
         /> */}
         <CalendarPicker
-        todayBackgroundColor="#293462"
+        todayBackgroundColor="rgba(41, 52, 98, 0.3)"
+        todayTextStyle="#fff"
         selectedDayColor="#293462"
         selectedDayTextColor="#FFFFFF"
           // onDateChange={this.onDateChange}

@@ -117,7 +117,7 @@ export default function toDoUpcoming() {
                       <MaterialIcons
                         name="star"
                         size={16}
-                        color="#EC9B3B"
+                        color="rgba(0,0,0,0.12)"
                         style={styles.star}
                       />
                     </Pressable>

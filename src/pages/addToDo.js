@@ -126,8 +126,8 @@ const styles = StyleSheet.create({
   task: {
     alignSelf: 'flex-start',
     marginTop: windowHeight*0.05,
-    marginBottom:  windowWidth*0.1,
-    marginLeft:  windowWidth*0.1,
+    marginBottom:  windowWidth*0.05,
+    marginLeft:  windowWidth*0.12,
     marginRight:  windowWidth*0.08,
     height: windowHeight*0.65,
     width: windowWidth*0.8,
