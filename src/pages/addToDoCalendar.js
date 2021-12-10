@@ -2,6 +2,7 @@ import React from 'react';
 import { StyleSheet, View, Text, Pressable, Alert } from 'react-native';
 // import {Calendar, CalendarList, Agenda} from 'react-native-calendars';
 import CalendarPicker from 'react-native-calendar-picker';
+import AddToDoTime from './addToDoTime';
 
 export default function TermAndCondition ({closeCalendarModal}) {
   return (
@@ -19,6 +20,9 @@ export default function TermAndCondition ({closeCalendarModal}) {
         selectedDayColor="#293462"
         selectedDayTextColor="#FFFFFF"
           // onDateChange={this.onDateChange}
+        />
+        <AddToDoTime
+        
         />
         <Pressable style={styles.buttonSave} onPress={() => closeCalendarModal()}>
           <Text style={{color: 'white', fontWeight: 'bold'}}>Save Date And Time</Text>

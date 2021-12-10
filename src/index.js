@@ -19,6 +19,7 @@ import Dashboard from './pages/dashboard';
 import AddToDo from './pages/addToDo';
 import AddToDoSetting from './pages/addToDoSetting';
 import AddToDoCalendar from './pages/addToDoCalendar';
+import AddToDoTime from './pages/addToDoTime';
 import ToDoPriority from './pages/toDoPriority';
 import ToDoUpcoming from './pages/toDoUpcoming';
 import ToDoCompleted from './pages/toDoCompleted';
@@ -33,7 +34,7 @@ import DashboardConnection from './components/bottomBarDashboardConnect';
 
 export {
   GetStarted, Register, TermAndCondition, SignIn, SignInSuccessfully,
-  Dashboard, AddToDo, AddToDoSetting, AddToDoCalendar, ToDoPriority,
+  Dashboard, AddToDo, AddToDoSetting, AddToDoCalendar, AddToDoTime, ToDoPriority,
   ToDoUpcoming, ToDoCompleted, SettingMenu, Profile, LanguageSetting,
   BackupData, HelpSupport, Permission, About, DashboardConnection, Switcher
 }
