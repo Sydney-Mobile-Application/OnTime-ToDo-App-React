@@ -113,7 +113,7 @@ export default function toDoCompleted() {
                     </Pressable>
                   </View>
                   <View>
-                    <Pressable onPress={() => console.log("Add To Favourite")}>
+                    <Pressable onPress={() => console.log("Add To Priority")}>
                       <MaterialIcons
                         name="star"
                         size={16}

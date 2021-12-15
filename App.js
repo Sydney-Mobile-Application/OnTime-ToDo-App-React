@@ -64,6 +64,10 @@ export default function App() {
           component={CallBack.AddToDoCalendar}
         />
         <Stack.Screen
+          name="Add To Do Time"
+          component={CallBack.AddToDoTime}
+        />
+        <Stack.Screen
           name="To Do Priority"
           component={CallBack.ToDoParentPage}
         />

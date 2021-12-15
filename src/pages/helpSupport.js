@@ -1,12 +1,14 @@
 import React from 'react';
-import { StyleSheet, View, Text } from 'react-native';
+import { StyleSheet, View, Text, Pressable } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
 
-export default function HelpSupport () {
+export default function HelpSupport ({ navigation }) {
   return (
     <View style={styles.container}>
       <View>
-      <MaterialIcons  name='arrow-back' size={30} color='#293462'/>
+        <Pressable onPress={() => navigation.navigate("Setting Menu")}>
+          <MaterialIcons  name='arrow-back' size={30} color='#293462'/>
+        </Pressable>
       <Text style={styles.helpSupportTitle}>Help & Support</Text>
     </View>
 
@@ -35,14 +37,14 @@ const styles = StyleSheet.create({
     alignContent: 'flex-start',
     justifyContent: 'flex-start',
     paddingHorizontal: 40,
-    paddingTop: 100
+    paddingTop: 50
   },
 
   helpSupportTitle: {
     fontWeight: 'bold',
     fontSize: 30,
     alignSelf: 'flex-start',
-    paddingTop: 30,
+    paddingTop: 20,
     marginBottom: 25,
     marginLeft: 7
   },
