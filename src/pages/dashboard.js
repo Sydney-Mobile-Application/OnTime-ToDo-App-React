@@ -11,8 +11,10 @@ import {
   Switch,
   ScrollView,
   Modal,
+  TouchableHighlight,
 } from "react-native";
 import { MaterialIcons } from "@expo/vector-icons";
+import Swipeable from "react-native-swipeable";
 import Successfully from "./signInSuccessfully";
 
 const width_name = "60%";
@@ -23,6 +25,60 @@ const image = { uri: "../../assets/profileContainer.png" };
 
 export default function Dashboard({ navigation }) {
   const [modalVisible, setModalVisible] = useState(false);
+
+  const rightButtons = [
+    <TouchableHighlight
+      style={[styles.swipeTextRight, { backgroundColor: "#00FF00" }]}
+    >
+      <Text style={styles.swipeTextContent}>
+        {/* Done */}
+        <MaterialIcons name="done" size={25} color="#000" />
+      </Text>
+    </TouchableHighlight>,
+    <TouchableHighlight
+      style={[styles.swipeTextRight, { backgroundColor: "#FF0000" }]}
+    >
+      <Text style={styles.swipeTextContent}>
+        {/* Trash */}
+        <MaterialIcons name="delete" size={25} color="#000" />
+      </Text>
+    </TouchableHighlight>,
+  ];
+
+  const leftButtons = [
+    <TouchableHighlight
+      style={[styles.swipeTextLeft, { backgroundColor: "#FFFF00" }]}
+    >
+      <Text style={styles.swipeTextContent}>
+        {/* Reschedule */}
+        <MaterialIcons name="more-time" size={25} color="#000" />
+      </Text>
+    </TouchableHighlight>,
+  ];
+
+  function MyListItem() {
+    return (
+      <Swipeable leftButtons={leftButtons} rightButtons={rightButtons}>
+        <View style={styles.containerhighlight}>
+          <MaterialIcons name="more-time" size={25} color="#000" />
+          <View style={styles.highlight}>
+            <Text style={styles.highlight_text}>Meeting with project team</Text>
+            <View style={styles.time}>
+              <MaterialIcons name="share" size={12} color="#ABACF7" />
+              <MaterialIcons name="access-time" size={45} color="#EC9B3B" />
+
+              <View style={styles.detail}>
+                <MaterialIcons name="notifications" size={15} color="#EC9B3B" />
+                <Text style={styles.notifSmall}>02.45 PM</Text>
+              </View>
+              <Text style={styles.notifSmall}>10 minutes left</Text>
+            </View>
+          </View>
+          <MaterialIcons name="done" size={25} color="#000" />
+        </View>
+      </Swipeable>
+    );
+  }
 
   useEffect(() => {
     setModalVisible(true);
@@ -69,29 +125,7 @@ export default function Dashboard({ navigation }) {
           </ImageBackground>
 
           <View style={styles.container}>
-            <View style={styles.containerhighlight}>
-              <MaterialIcons name="more-time" size={25} color="#000" />
-              <View style={styles.highlight}>
-                <Text style={styles.highlight_text}>
-                  Meeting with project team
-                </Text>
-                <View style={styles.time}>
-                  <MaterialIcons name="share" size={12} color="#ABACF7" />
-                  <MaterialIcons name="access-time" size={45} color="#EC9B3B" />
-
-                  <View style={styles.detail}>
-                    <MaterialIcons
-                      name="notifications"
-                      size={15}
-                      color="#EC9B3B"
-                    />
-                    <Text style={styles.notifSmall}>02.45 PM</Text>
-                  </View>
-                  <Text style={styles.notifSmall}>10 minutes left</Text>
-                </View>
-              </View>
-              <MaterialIcons name="done" size={25} color="#000" />
-            </View>
+            <MyListItem />
             {/* <View style={styles.containerhighlight}>
                 <Text style={styles.reschedule}>Swipe here to reschedule</Text>
                 <Text style={styles.markdone}>Swipe here to mark as done</Text>
@@ -494,5 +528,21 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     resizeMode: "cover",
+  },
+  swipeTextRight: {
+    flex: 1,
+    justifyContent: "center",
+    paddingLeft: 20,
+    marginBottom: 20,
+  },
+  swipeTextLeft: {
+    flex: 1,
+    alignItems: "flex-end",
+    justifyContent: "center",
+    paddingRight: 20,
+    marginBottom: 20,
+  },
+  swipeTextContent: {
+    fontWeight: "bold",
   },
 });
