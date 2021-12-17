@@ -134,7 +134,11 @@ export default function Dashboard({ navigation }) {
             <View style={styles.Head}>
               <Text style={styles.priority}>Priority</Text>
 
-              <Pressable onPress={() => navigation.navigate("To Do Priority")}>
+              <Pressable
+                onPress={() =>
+                  navigation.navigate("To Do Priority", { upcoming: false })
+                }
+              >
                 <Text style={styles.seeall}>See All</Text>
               </Pressable>
             </View>
@@ -184,7 +188,11 @@ export default function Dashboard({ navigation }) {
 
             <View style={styles.Head}>
               <Text style={styles.upcoming}>Upcoming</Text>
-              <Pressable onPress={() => navigation.navigate("To Do Upcoming")}>
+              <Pressable
+                onPress={() =>
+                  navigation.navigate("To Do Upcoming", { upcoming: true })
+                }
+              >
                 <Text style={styles.seeall}>See All</Text>
               </Pressable>
             </View>

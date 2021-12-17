@@ -12,7 +12,17 @@ const windowHeight = Dimensions.get("window").height;
 
 const Tab = createMaterialTopTabNavigator();
 
-function MyTabs() {
+function MyTabs({ upcoming }) {
+  function checkerUpcoming() {
+    if (upcoming) {
+      const saver = "Upcoming";
+      return saver;
+    } else {
+      const saver = "Priority";
+      return saver;
+    }
+  }
+
   return (
     <>
       <View style={styles.containertop}>
@@ -24,7 +34,7 @@ function MyTabs() {
       </View>
 
       <Tab.Navigator
-        initialRouteName="Feed"
+        initialRouteName={checkerUpcoming()}
         screenOptions={{
           tabBarActiveTintColor: "#000000",
           tabBarLabelStyle: { fontSize: 12 },
@@ -54,10 +64,11 @@ function MyTabs() {
   );
 }
 
-export default function ToDoPriority() {
+export default function ToDoPriority({ route }) {
+  const { upcoming } = route.params;
   return (
     <NavigationContainer independent={true}>
-      <MyTabs />
+      <MyTabs upcoming={upcoming} />
     </NavigationContainer>
   );
 }
