@@ -1,8 +1,23 @@
 import React from 'react';
 import { StyleSheet, View, Text, Pressable} from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
+import {
+  Poppins_300Light,
+  Poppins_400Regular,
+  Poppins_600SemiBold,
+  Poppins_700Bold,
+  Poppins_800ExtraBold,
+} from '@expo-google-fonts/poppins'
+import {useFonts} from 'expo-font'
 
 export default function BackupData ({ navigation }) {
+  let [fontsLoaded] = useFonts({
+      Poppins_300Light,
+      Poppins_400Regular,
+      Poppins_600SemiBold,
+      Poppins_700Bold,
+      Poppins_800ExtraBold,
+    })
   return (
     <View style={styles.container}>
     <View>
@@ -23,7 +38,7 @@ export default function BackupData ({ navigation }) {
       </View>
       </View>
       <Pressable style={styles.backupNow} onPress={() => navigation.navigate('Dashboard')}>
-          <Text style={{color: 'white', fontWeight: 'bold'}}>Backup Now</Text>
+          <Text style={{color: 'white', fontFamily: 'Poppins_400Regular'}}>Backup Now</Text>
         </Pressable>
     </View>
   );
@@ -40,12 +55,12 @@ const styles = StyleSheet.create({
   },
 
   backupTitle: {
-    fontWeight: 'bold',
     fontSize: 30,
     alignSelf: 'flex-start',
     paddingTop: 20,
     marginBottom: 20,
-    marginLeft: 7
+    marginLeft: 7,
+    fontFamily: 'Poppins_600SemiBold'
   },
 
   backupDetail: {
@@ -58,11 +73,13 @@ const styles = StyleSheet.create({
   left: {
     fontSize: 18,
     lineHeight: 40,
+    fontFamily: 'Poppins_400Regular'
   },
 
   right: {
     fontSize: 18,
     lineHeight: 40,
+    fontFamily: 'Poppins_400Regular'
   },
 
   backupNow: {

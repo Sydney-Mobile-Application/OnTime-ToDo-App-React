@@ -1,6 +1,14 @@
 import React, {useState} from 'react';
 import { StyleSheet, View, Text, Switch, Pressable } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
+import {
+  Poppins_300Light,
+  Poppins_400Regular,
+  Poppins_600SemiBold,
+  Poppins_700Bold,
+  Poppins_800ExtraBold,
+} from '@expo-google-fonts/poppins'
+import {useFonts} from 'expo-font'
 
 export default function Permission ({ navigation }) {
   const [switchValue1, setswitchValue1] = useState(false);
@@ -20,6 +28,13 @@ export default function Permission ({ navigation }) {
     setswitchValue4(value);
   }
   
+  let [fontsLoaded] = useFonts({
+      Poppins_300Light,
+      Poppins_400Regular,
+      Poppins_600SemiBold,
+      Poppins_700Bold,
+      Poppins_800ExtraBold,
+    })
   return (
     <View style={styles.container}>
       <View>
@@ -64,7 +79,8 @@ const styles = StyleSheet.create({
     alignSelf: 'flex-start',
     paddingTop: 20,
     marginBottom: 25,
-    marginLeft: 7
+    marginLeft: 7,
+    fontFamily: 'Poppins_600SemiBold'
   },
 
     permissionDetail: {
@@ -81,6 +97,7 @@ const styles = StyleSheet.create({
   bottomDetail: {
     fontSize: 20,
     lineHeight: 40,
+    fontFamily: 'Poppins_400Regular'
   },
 
     switch: {

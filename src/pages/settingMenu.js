@@ -1,6 +1,14 @@
-import React, {useState, useEffect} from 'react';
-import { StyleSheet, View, Text, TouchableOpacity, Image, Pressable, Dimensions, Switch, ScrollView} from 'react-native';
+import React, {useState} from 'react';
+import { StyleSheet, View, Text, TouchableOpacity, Image, Pressable, Dimensions, Switch} from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
+import {
+  Poppins_300Light,
+  Poppins_400Regular,
+  Poppins_600SemiBold,
+  Poppins_700Bold,
+  Poppins_800ExtraBold,
+} from '@expo-google-fonts/poppins'
+import {useFonts} from 'expo-font'
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
@@ -11,6 +19,13 @@ export default function SettingMenu ({navigation}) {
     setswitchValue(value);
   }
 
+  let [fontsLoaded] = useFonts({
+    Poppins_300Light,
+    Poppins_400Regular,
+    Poppins_600SemiBold,
+    Poppins_700Bold,
+    Poppins_800ExtraBold,
+  })
   return (
     <View style={styles.container}>
       <View style={{width: '80%'}}>
@@ -32,7 +47,7 @@ export default function SettingMenu ({navigation}) {
 
       <View style={styles.left}>
         <View style={styles.today}>
-          <Text>20 Jun</Text>
+          <Text style={{fontFamily: 'Poppins_400Regular'}}>20 Jun</Text>
         </View>
         <View>
           <Text style={styles.username}>James-Kun</Text>
@@ -134,7 +149,7 @@ const styles = StyleSheet.create({
   headerContent: {
     alignSelf: 'flex-start',
     justifyContent: 'flex-start',
-    fontWeight: 'bold',
+    fontFamily: 'Poppins_600SemiBold',
     fontSize: 30,
   },
 
@@ -184,7 +199,7 @@ const styles = StyleSheet.create({
 
   username: {
     paddingTop: 10,
-    fontWeight: 'bold',
+    fontFamily: 'Poppins_600SemiBold',
     fontSize: 20,
   },
 
@@ -213,7 +228,7 @@ const styles = StyleSheet.create({
 
   profileSetting: {
     fontSize: 14,
-    fontWeight: '400',
+    fontFamily: 'Poppins_400Regular',
     color:'#293462',
     position: 'absolute',
     marginTop: 80,
@@ -233,7 +248,7 @@ const styles = StyleSheet.create({
     fontSize: 14,
     paddingHorizontal: 4,
     width: 72,
-    // marginTop: windowHeight*0.005,
+    fontFamily: 'Poppins_400Regular',
   },
 
   taskDetail: {
@@ -244,6 +259,7 @@ const styles = StyleSheet.create({
     marginLeft: 75,
     position: 'absolute',
     marginTop: 10,
+    fontFamily: 'Poppins_400Regular',
   },
 
   textInline: {
@@ -253,6 +269,7 @@ const styles = StyleSheet.create({
     fontSize: 10,
     marginVertical: 6,
     color: '#9799A1',
+    fontFamily: 'Poppins_400Regular',
     // paddingHorizontal: 4,
   },
 
@@ -309,6 +326,7 @@ const styles = StyleSheet.create({
   bottomDetail: {
     fontSize: 20,
     lineHeight: 40,
+    fontFamily: 'Poppins_400Regular',
   },
 
   bottomTitle: {

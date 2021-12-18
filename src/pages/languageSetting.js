@@ -1,8 +1,23 @@
 import React from 'react';
 import { StyleSheet, View, Text, Pressable} from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
+import {
+  Poppins_300Light,
+  Poppins_400Regular,
+  Poppins_600SemiBold,
+  Poppins_700Bold,
+  Poppins_800ExtraBold,
+} from '@expo-google-fonts/poppins'
+import {useFonts} from 'expo-font'
 
 export default function LanguageSetting ({ navigation }) {
+  let [fontsLoaded] = useFonts({
+    Poppins_300Light,
+    Poppins_400Regular,
+    Poppins_600SemiBold,
+    Poppins_700Bold,
+    Poppins_800ExtraBold,
+  })
   return (
     <View style={styles.container}>
     <View>
@@ -34,18 +49,19 @@ const styles = StyleSheet.create({
   },
 
   languageTitle: {
-    fontWeight: 'bold',
     fontSize: 30,
     alignSelf: 'flex-start',
     paddingTop: 20,
     marginBottom: 20,
-    marginLeft: 7
+    marginLeft: 7,
+    fontFamily: 'Poppins_600SemiBold'
   },
 
   languageDescOn: {
     fontSize: 20,
     lineHeight: 40,
-    marginLeft: 7
+    marginLeft: 7,
+    fontFamily: 'Poppins_400Regular'
   },
 
   languageDescOff: {
@@ -53,6 +69,7 @@ const styles = StyleSheet.create({
     lineHeight: 40,
     marginLeft: 7,
     color: 'rgba(108, 122, 137, 1)',
+    fontFamily: 'Poppins_400Regular'
   },
 
 });
