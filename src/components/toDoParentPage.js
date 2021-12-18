@@ -12,7 +12,7 @@ const windowHeight = Dimensions.get("window").height;
 
 const Tab = createMaterialTopTabNavigator();
 
-function MyTabs({ upcoming }) {
+function MyTabs({ navigation, upcoming }) {
   function checkerUpcoming() {
     if (upcoming) {
       const saver = "Upcoming";
@@ -27,7 +27,7 @@ function MyTabs({ upcoming }) {
     <>
       <View style={styles.containertop}>
         <View style={styles.back}>
-          <Pressable onPress={() => console.log("go back history")}>
+          <Pressable onPress={() => navigation.navigate("Dashboard")}>
             <MaterialIcons name="arrow-back" size={30} color="#293462" />
           </Pressable>
         </View>
@@ -64,11 +64,11 @@ function MyTabs({ upcoming }) {
   );
 }
 
-export default function ToDoPriority({ route }) {
+export default function ToDoPriority({ route, navigation }) {
   const { upcoming } = route.params;
   return (
     <NavigationContainer independent={true}>
-      <MyTabs upcoming={upcoming} />
+      <MyTabs upcoming={upcoming} navigation={navigation} />
     </NavigationContainer>
   );
 }
