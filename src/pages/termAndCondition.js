@@ -1,7 +1,22 @@
 import React, { useState } from 'react';
 import { StyleSheet, View, Text, ScrollView, Pressable, Alert } from 'react-native';
+import { useFont,
+  Poppins_300Light,
+  Poppins_400Regular,
+  Poppins_600SemiBold,
+  Poppins_700Bold,
+  Poppins_800ExtraBold,
+} from '@expo-google-fonts/poppins'
+import {useFonts} from 'expo-font'
 
 export default function TermAndCondition ({closeModal}) {
+  let [fontsLoaded] = useFonts({
+    Poppins_300Light,
+    Poppins_400Regular,
+    Poppins_600SemiBold,
+    Poppins_700Bold,
+    Poppins_800ExtraBold,
+  })
   const [buttonDisable, setButtonDisable] = useState(true);
 
   function enableButton() {
@@ -37,7 +52,7 @@ export default function TermAndCondition ({closeModal}) {
           </Text>
         </ScrollView>
         <Pressable style={[styles.buttonAccept, buttonDisable ? {backgroundColor: 'rgba(108, 122, 137, 1)'} : '']} onPress={() => closeModal()} disabled={buttonDisable}>
-          <Text style={{color: 'white', fontWeight: 'bold'}}>Accept</Text>
+          <Text style={{fontFamily:'Poppins_700Bold',color: 'white', fontWeight: 'bold'}}>Accept</Text>
         </Pressable>
       </View>
     </View>
@@ -69,7 +84,7 @@ const styles = StyleSheet.create({
     bottom: -40
   },
   textTitleAccept: {
-    fontWeight: 'bold',
+    fontFamily: 'Poppins_700Bold',
     fontSize: 18,
     marginBottom: 10
   },
@@ -78,7 +93,8 @@ const styles = StyleSheet.create({
     marginBottom: 10
   },
   textViewAccept: {
-    textAlign: 'justify'
+    textAlign: 'justify',
+    fontFamily: 'Poppins_400Regular',
   },
   buttonAccept: {
     backgroundColor: '#293462',

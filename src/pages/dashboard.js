@@ -13,6 +13,14 @@ import {
   Modal,
   TouchableHighlight,
 } from "react-native";
+import { useFont,
+  Poppins_300Light,
+  Poppins_400Regular,
+  Poppins_600SemiBold,
+  Poppins_700Bold,
+  Poppins_800ExtraBold,
+} from '@expo-google-fonts/poppins'
+import {useFonts} from 'expo-font'
 import { MaterialIcons } from "@expo/vector-icons";
 import Swipeable from "react-native-swipeable";
 import Successfully from "./signInSuccessfully";
@@ -24,6 +32,13 @@ const windowHeight = Dimensions.get("window").height;
 const image = { uri: "../../assets/profileContainer.png" };
 
 export default function Dashboard({ navigation }) {
+  let [fontsLoaded] = useFonts({
+    Poppins_300Light,
+    Poppins_400Regular,
+    Poppins_600SemiBold,
+    Poppins_700Bold,
+    Poppins_800ExtraBold,
+  })
   const [modalVisible, setModalVisible] = useState(false);
 
   const rightButtons = [
@@ -289,7 +304,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
   },
   priority: {
-    fontWeight: "bold",
+    fontFamily: 'Poppins_700Bold',
     fontSize: 18,
     marginBottom: 30,
     alignSelf: "flex-start",
@@ -298,7 +313,7 @@ const styles = StyleSheet.create({
     marginRight: windowWidth * 0.25,
   },
   seeall: {
-    fontWeight: "bold",
+    fontFamily: 'Poppins_400Regular',
     fontSize: 10,
     marginBottom: 30,
     alignSelf: "flex-end",
@@ -309,7 +324,7 @@ const styles = StyleSheet.create({
     marginLeft: windowWidth * 0.25,
   },
   upcoming: {
-    fontWeight: "bold",
+    fontFamily: 'Poppins_700Bold',
     fontSize: 18,
     marginBottom: 30,
     // marginLeft: 20,
@@ -369,7 +384,7 @@ const styles = StyleSheet.create({
     paddingLeft: 15,
     paddingRight: 15,
     alignSelf: "flex-end",
-    alignItems: "center",
+    // alignItems: "center",
     justifyContent: "flex-start",
     backgroundColor: "#EE6F57",
   },
@@ -396,18 +411,19 @@ const styles = StyleSheet.create({
     paddingLeft: 15,
     paddingRight: 15,
     alignSelf: "flex-end",
-    alignItems: "center",
+    // alignItems: "center",
     justifyContent: "flex-start",
     backgroundColor: "#5089C6",
   },
   taskText: {
+    fontFamily:'Poppins_400Regular',
     color: "#FFFFFF",
   },
   taskDate: {
     marginTop: 10,
     color: "#FFFFFF",
     alignSelf: "flex-start",
-    fontWeight: "bold",
+    fontFamily: 'Poppins_700Bold',
     fontSize: 22,
     paddingLeft: 15,
   },
@@ -427,12 +443,14 @@ const styles = StyleSheet.create({
     marginBottom: 5,
   },
   notif: {
+    fontFamily:'Poppins_400Regular',
     marginLeft: 5,
     fontSize: 12,
     color: "#000000",
     opacity: 0.57,
   },
   notifSmall: {
+    fontFamily:'Poppins_400Regular',
     fontSize: 9,
     color: "#000000",
     opacity: 0.57,
@@ -470,26 +488,27 @@ const styles = StyleSheet.create({
     marginTop: 20,
     marginLeft: 25,
     width: width_name,
-    fontWeight: "bold",
-    fontSize: 19,
+    fontFamily:'Poppins_700Bold',
+    fontSize: 17,
     alignSelf: "flex-start",
   },
   taskp: {
     alignItems: "flex-end",
+    fontFamily:'Poppins_400Regular',
     justifyContent: "flex-end",
     fontSize: 12,
     alignSelf: "flex-start",
   },
   dateText: {
+    fontFamily:'Poppins_700Bold',
     marginLeft: 5,
     borderRadius: 15,
     paddingLeft: 10,
     paddingRight: 10,
     paddingTop: 5,
-    paddingBottom: 5,
+    paddingBottom: 3,
     backgroundColor: "#fff",
-    fontWeight: "bold",
-    fontSize: 15,
+    fontSize: 13,
     alignSelf: "flex-end",
     shadowColor: "#000",
     shadowOffset: { width: 0, height: 1 },
@@ -498,6 +517,7 @@ const styles = StyleSheet.create({
     elevation: 5,
   },
   date: {
+    fontFamily:'Poppins_400Regular',
     marginTop: 22,
     flexDirection: "row",
     marginLeft: 19,
@@ -519,17 +539,19 @@ const styles = StyleSheet.create({
     textAlignVertical: "center",
     alignItems: "center",
     justifyContent: "center",
-    fontSize: 19,
-    fontWeight: "bold",
+    fontSize: 17,
+    fontFamily:'Poppins_600SemiBold',
   },
   time: {
     paddingTop: 20,
     marginTop: 10,
+    fontFamily:'Poppins_600SemiBold',
     // marginLeft:10,
     alignItems: "flex-end",
   },
   detail: {
     flexDirection: "row",
+    fontFamily:'Poppins_600SemiBold',
     justifyContent: "flex-start",
   },
   image: {

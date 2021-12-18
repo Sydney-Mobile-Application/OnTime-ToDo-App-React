@@ -1,8 +1,23 @@
 import React, { useState, useEffect } from 'react';
 import { StyleSheet, View, Text, TextInput, Pressable, Modal } from 'react-native';
 import TermCondition from './termAndCondition';
+import { useFont,
+  Poppins_300Light,
+  Poppins_400Regular,
+  Poppins_600SemiBold,
+  Poppins_700Bold,
+  Poppins_800ExtraBold,
+} from '@expo-google-fonts/poppins'
+import {useFonts} from 'expo-font'
 
 export default function Register ({ navigation }) {
+  let [fontsLoaded] = useFonts({
+    Poppins_300Light,
+    Poppins_400Regular,
+    Poppins_600SemiBold,
+    Poppins_700Bold,
+    Poppins_800ExtraBold,
+  })
   const [text, onChangeText] = React.useState("Useless Text");
   const [textEmail, onChangeTextEmail] = useState("");
   const [textUsername, onChangeTextUsername] = useState("");
@@ -37,13 +52,13 @@ export default function Register ({ navigation }) {
       <TextInput style={styles.inputRegister} onChangeText={onChangeTextPassword1} secureTextEntry={true} placeholder="Password" />
       <TextInput style={styles.inputRegister} onChangeText={onChangeTextPassword2} secureTextEntry={true} placeholder="Confirm Password" />
       <View style={styles.inlineText}>
-        <Text>Have An Account? </Text>
+        <Text style={{fontFamily:'Poppins_300Light'}}>Have An Account? </Text>
         <Pressable onPress={() => navigation.navigate('Sign In')}>
-          <Text style={{fontWeight: 'bold'}}>Sign In</Text>
+          <Text style={{fontFamily:'Poppins_600SemiBold'}}>Sign In</Text>
         </Pressable>
       </View>
       <Pressable style={[styles.buttonRegister, registerDisable ? {backgroundColor: 'rgba(108, 122, 137, 1)'} : '']} onPress={() => setModalVisible(true)} disabled={registerDisable}>
-        <Text style={{color: 'white', fontWeight: 'bold'}}>Register</Text>
+        <Text style={{fontFamily:'Poppins_600SemiBold',color: 'white', }}>Register</Text>
       </Pressable>
       <Text style={styles.textBottomSRegister}>By signing up, you agree to the Terms of Service and Privacy Policy.</Text>
       <Modal animationType="slide" transparent={true} visible={modalVisible} onRequestClose={() => { setModalVisible(!modalVisible); }}>
@@ -64,15 +79,17 @@ const styles = StyleSheet.create({
     width: '80%'
   },
   textTopFRegister: {
-    fontWeight: 'bold',
+    fontFamily:'Poppins_600SemiBold',
     fontSize: 30,
     alignSelf: 'flex-start'
   },
   textTopSRegister: {
+    fontFamily:'Poppins_300Light',
     fontSize: 25,
     marginBottom: 12
   },
   inputRegister: {
+    fontFamily:'Poppins_300Light',
     height: 50,
     width: '80%',
     borderRadius: 12,
@@ -82,6 +99,7 @@ const styles = StyleSheet.create({
     padding: 10,
   },
   inlineText: {
+    fontFamily:'Poppins_300Light',
     flexDirection:'row',
     flexWrap:'wrap',
     width: '80%',
@@ -100,6 +118,7 @@ const styles = StyleSheet.create({
     marginBottom: 12
   },
   textBottomSRegister: {
+    fontFamily:'Poppins_400Regular',
     fontSize: 10
   }
 });
