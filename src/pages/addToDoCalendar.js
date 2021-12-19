@@ -24,7 +24,7 @@ export default function TermAndCondition ({closeCalendarModal}) {
         />
         
         <Pressable style={styles.buttonSave} onPress={() => closeCalendarModal()}>
-          <Text style={{color: 'white', fontWeight: 'bold'}}>Save Date And Time</Text>
+          <Text style={{color: 'white', fontFamily:'Poppins_600SemiBold'}}>Save Date And Time</Text>
         </Pressable>
       </View>
     </View>
