@@ -20,7 +20,8 @@ import { useFont,
   Poppins_700Bold,
   Poppins_800ExtraBold,
 } from '@expo-google-fonts/poppins'
-import {useFonts} from 'expo-font'
+import {useFonts} from 'expo-font';
+import AppLoading from 'expo-app-loading';
 import { MaterialIcons } from "@expo/vector-icons";
 import Swipeable from "react-native-swipeable";
 import Successfully from "./signInSuccessfully";
@@ -43,39 +44,35 @@ export default function Dashboard({ navigation }) {
 
   const rightButtons = [
     <TouchableHighlight
-      style={[styles.swipeTextRight, { backgroundColor: "#00FF00" }]}
+      style={[styles.swipeTextRight,]}
     >
       <Text style={styles.swipeTextContent}>
-        {/* Done */}
-        <MaterialIcons name="done" size={25} color="#000" />
+        Done
+        {/* <MaterialIcons name="done" size={25} color="#000" /> */}
       </Text>
     </TouchableHighlight>,
-    <TouchableHighlight
-      style={[styles.swipeTextRight, { backgroundColor: "#FF0000" }]}
-    >
-      <Text style={styles.swipeTextContent}>
-        {/* Trash */}
-        <MaterialIcons name="delete" size={25} color="#000" />
-      </Text>
-    </TouchableHighlight>,
+  ,
   ];
 
   const leftButtons = [
     <TouchableHighlight
-      style={[styles.swipeTextLeft, { backgroundColor: "#FFFF00" }]}
+      style={[styles.swipeTextLeft,]}
     >
       <Text style={styles.swipeTextContent}>
-        {/* Reschedule */}
-        <MaterialIcons name="more-time" size={25} color="#000" />
+        Reschedule
+        {/* <MaterialIcons name="more-time" size={25} color="#000" /> */}
       </Text>
     </TouchableHighlight>,
   ];
-
+  
   function MyListItem() {
+    if (!fontsLoaded) {
+      return <AppLoading />;
+    } else {
     return (
-      <Swipeable leftButtons={leftButtons} rightButtons={rightButtons}>
+      <Swipeable leftButtons={leftButtons} leftButtonWidth={100} rightButtonWidth={50} rightButtons={rightButtons}>
         <View style={styles.containerhighlight}>
-          <MaterialIcons name="more-time" size={25} color="#000" />
+          <MaterialIcons name="more-time" size={25} color="#EC9B3B"/>
           <View style={styles.highlight}>
             <Text style={styles.highlight_text}>Meeting with project team</Text>
             <View style={styles.time}>
@@ -89,11 +86,12 @@ export default function Dashboard({ navigation }) {
               <Text style={styles.notifSmall}>10 minutes left</Text>
             </View>
           </View>
-          <MaterialIcons name="done" size={25} color="#000" />
+          <MaterialIcons name="done" size={25} color="#50C671" />
         </View>
       </Swipeable>
     );
   }
+}
 
   useEffect(() => {
     setModalVisible(true);
@@ -228,7 +226,7 @@ export default function Dashboard({ navigation }) {
                   <MaterialIcons
                     name="star"
                     size={10}
-                    color="#EC9B3B"
+                    color="#E5E5E5"
                     style={styles.star}
                   />
                 </View>
@@ -248,7 +246,7 @@ export default function Dashboard({ navigation }) {
                   <MaterialIcons
                     name="star"
                     size={10}
-                    color="#EC9B3B"
+                    color="#E5E5E5"
                     style={styles.star}
                   />
                 </View>
@@ -562,17 +560,18 @@ const styles = StyleSheet.create({
   swipeTextRight: {
     flex: 1,
     justifyContent: "center",
-    paddingLeft: 20,
+    // paddingLeft: 20,
     marginBottom: 20,
   },
   swipeTextLeft: {
     flex: 1,
     alignItems: "flex-end",
     justifyContent: "center",
-    paddingRight: 20,
+    // paddingRight: 20,
     marginBottom: 20,
   },
   swipeTextContent: {
-    fontWeight: "bold",
+    fontFamily: 'Poppins_600SemiBold',
+    // fontWeight: "bold",
   },
 });

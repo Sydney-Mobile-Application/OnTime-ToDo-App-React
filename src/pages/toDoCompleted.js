@@ -1,8 +1,24 @@
 import React from "react";
 import { StyleSheet, View, Text, ScrollView, Pressable } from "react-native";
 import { MaterialIcons } from "@expo/vector-icons";
+import { useFont,
+  Poppins_300Light,
+  Poppins_400Regular,
+  Poppins_600SemiBold,
+  Poppins_700Bold,
+  Poppins_800ExtraBold,
+} from '@expo-google-fonts/poppins';
+import {useFonts} from 'expo-font';
+import AppLoading from 'expo-app-loading';
 
 export default function toDoCompleted() {
+  let [fontsLoaded] = useFonts({
+    Poppins_300Light,
+    Poppins_400Regular,
+    Poppins_600SemiBold,
+    Poppins_700Bold,
+    Poppins_800ExtraBold,
+  })
   function capitalizeFirstLetter(string) {
     return string.charAt(0).toUpperCase() + string.slice(1);
   }
@@ -81,7 +97,9 @@ export default function toDoCompleted() {
       // },
     ],
   };
-
+  if (!fontsLoaded) {
+    return <AppLoading />;
+  } else {
   return (
     <View style={styles.container}>
       <ScrollView
@@ -130,6 +148,7 @@ export default function toDoCompleted() {
       </ScrollView>
     </View>
   );
+  }
 }
 
 const styles = StyleSheet.create({
@@ -163,7 +182,7 @@ const styles = StyleSheet.create({
     paddingLeft: 15,
     paddingRight: 15,
     alignSelf: "flex-end",
-    alignItems: "center",
+    // alignItems: "center",
     justifyContent: "flex-start",
     backgroundColor: "#FFEDBF",
   },
@@ -178,13 +197,15 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   taskText: {
-    color: "#082032",
+    fontFamily:'Poppins_400Regular',
+    color: "#293462",
   },
   taskDate: {
-    color: "#082032",
-    fontSize: 16,
-    fontWeight: "bold",
+    marginTop: 10,
+    color: "#293462",
     alignSelf: "flex-start",
-    marginTop: 20,
+    fontFamily: 'Poppins_700Bold',
+    fontSize: 22,
+    // paddingLeft: 15,
   },
 });

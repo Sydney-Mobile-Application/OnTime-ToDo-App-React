@@ -163,7 +163,7 @@ const styles = StyleSheet.create({
     paddingLeft: 15,
     paddingRight: 15,
     alignSelf: "flex-end",
-    alignItems: "center",
+    // alignItems: "center",
     justifyContent: "flex-start",
     backgroundColor: "#EE6F57",
   },
@@ -182,9 +182,9 @@ const styles = StyleSheet.create({
   },
   taskDate: {
     color: "#FFFFFF",
-    fontSize: 16,
-    fontWeight: "bold",
+    fontSize: 22,
+    fontFamily:'Poppins_700Bold',
     alignSelf: "flex-start",
-    marginTop: 20,
+    marginTop: 10,
   },
 });
