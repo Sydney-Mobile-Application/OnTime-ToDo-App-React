@@ -84,7 +84,7 @@ export default function AddToDo ({ navigation }) {
       </View>
       <View style={styles.task}>
           <TextInput style={styles.title} onChangeText={onChangeTextEmail}  placeholder="Title " />
-          <TextInput style={styles.description} onChangeText={onChangeTextEmail} multiline={true} placeholder="Descriptionn " />
+          <TextInput style={styles.description} onChangeText={onChangeTextEmail} multiline={true} placeholder="Description" />
           
       </View>  
     
