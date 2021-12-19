@@ -61,6 +61,7 @@ const styles = StyleSheet.create({
   aboutDescription: {
     fontSize: 18,
     lineHeight: 40,
-    fontFamily: 'Poppins_400Regular'
+    fontFamily: 'Poppins_400Regular',
+    textAlign: 'justify'
   }
 });

@@ -4,6 +4,14 @@ import { MaterialIcons } from '@expo/vector-icons';
 import { Feather } from '@expo/vector-icons';
 import { FloatingAction } from "react-native-floating-action";
 import AddToDoCalendar from './addToDoCalendar';
+import {
+  Poppins_300Light,
+  Poppins_400Regular,
+  Poppins_600SemiBold,
+  Poppins_700Bold,
+  Poppins_800ExtraBold,
+} from '@expo-google-fonts/poppins'
+import {useFonts} from 'expo-font'
 
 const windowWidth = Dimensions.get("window").width;
 const windowHeight = Dimensions.get("window").height;
@@ -50,6 +58,13 @@ export default function AddToDo ({ navigation }) {
   function closeFontModal() {
     setModalFontVisible(false)
   }
+    let [fontsLoaded] = useFonts({
+    Poppins_300Light,
+    Poppins_400Regular,
+    Poppins_600SemiBold,
+    Poppins_700Bold,
+    Poppins_800ExtraBold,
+  })
   return (
     <View style={styles.container}>
 
@@ -155,15 +170,15 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 30,
-    fontWeight: "bold",
     alignSelf: "flex-start",
     justifyContent: "flex-start",
     alignItems: "flex-start",
     marginBottom: windowHeight*0.02,
+    fontFamily: 'Poppins_600SemiBold',
   },
   description: {
     fontSize: 20,
-    // fontWeight: "semi-bold",
+    fontFamily: 'Poppins_400Regular',
     alignSelf: "flex-start",
     justifyContent: "flex-start",
     alignItems: "flex-start",
@@ -195,6 +210,7 @@ const styles = StyleSheet.create({
   dateInfo: {
     marginBottom: windowHeight*0.005,
     textAlignVertical: "center",
+    fontFamily: 'Poppins_400Regular',
   },
   fontOption: {
     flexDirection: 'row',
