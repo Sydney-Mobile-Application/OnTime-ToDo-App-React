@@ -59,15 +59,16 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   headerContent: {
+    marginTop: '10%',
     width: '80%'
   },
   textTopFSignIn: {
     fontFamily: 'Poppins_600SemiBold',
-    fontSize: 30,
+    fontSize: 25,
     alignSelf: 'flex-start'
   },
   textTopSSignIn: {
-    fontSize: 25,
+    fontSize: 20,
     fontFamily:'Poppins_300Light',
     marginBottom: 12
   },
