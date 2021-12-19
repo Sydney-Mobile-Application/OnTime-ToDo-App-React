@@ -84,7 +84,7 @@ export default function AddToDo ({ navigation }) {
       </View>
       <View style={styles.task}>
           <TextInput style={styles.title} onChangeText={onChangeTextEmail}  placeholder="Title " />
-          <TextInput style={styles.description} onChangeText={onChangeTextEmail} multiline={true} placeholder="Description " />
+          <TextInput style={styles.description} onChangeText={onChangeTextEmail} multiline={true} placeholder="Descriptionn " />
           
       </View>  
     
@@ -177,6 +177,7 @@ const styles = StyleSheet.create({
     fontFamily: 'Poppins_600SemiBold',
   },
   description: {
+    textAlignVertical: 'center',
     fontSize: 20,
     fontFamily: 'Poppins_400Regular',
     alignSelf: "flex-start",
