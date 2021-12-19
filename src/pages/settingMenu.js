@@ -65,7 +65,7 @@ export default function SettingMenu ({navigation}) {
     </View>
 
       <View style={styles.taskList}>
-        <Pressable onPress={() => navigation.navigate("To Do Priority")}>
+        <Pressable onPress={() => navigation.navigate("To Do Priority", { upcoming: false })}>
           <View style={styles.priorityTask}> 
           <Text style={styles.taskTitle}>Priority Task</Text>
           <Text style={styles.taskDetail}>7</Text> 
@@ -73,7 +73,7 @@ export default function SettingMenu ({navigation}) {
         </View>
         </Pressable>
 
-        <Pressable onPress={() => navigation.navigate("To Do Upcoming")}>
+        <Pressable onPress={() => navigation.navigate("To Do Upcoming", { upcoming: true })}>
           <View style={styles.upcomingTask}>
           <Text style={styles.taskTitle}>Upcoming Task</Text>
           <Text style={styles.taskDetail}>15</Text>
