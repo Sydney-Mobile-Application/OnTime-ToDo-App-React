@@ -332,7 +332,7 @@ const styles = StyleSheet.create({
   bottomTitle: {
       flexDirection: 'row',
       justifyContent: 'space-between',
-      alignContent: 'space-between',
+      // alignContent: 'space-between',
       width: windowWidth*0.8
   },
   // leftText: {

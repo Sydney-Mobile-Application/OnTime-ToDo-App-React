@@ -70,7 +70,7 @@ export default function Dashboard({ navigation }) {
       return <AppLoading />;
     } else {
     return (
-      <Swipeable leftButtons={leftButtons} leftButtonWidth={100} rightButtonWidth={50} rightButtons={rightButtons}>
+      <Swipeable leftButtons={leftButtons} leftButtonWidth={100} rightButtonWidth={30} rightButtons={rightButtons}>
         <View style={styles.containerhighlight}>
           <MaterialIcons name="more-time" size={25} color="#EC9B3B"/>
           <View style={styles.highlight}>

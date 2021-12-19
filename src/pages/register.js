@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, View, Text, TextInput, Pressable, Modal } from 'react-native';
+import { StyleSheet, View, Text, TextInput, Pressable, Modal, Dimensions } from 'react-native';
 import TermCondition from './termAndCondition';
 import { useFont,
   Poppins_300Light,
@@ -18,6 +18,8 @@ export default function Register ({ navigation }) {
     Poppins_700Bold,
     Poppins_800ExtraBold,
   })
+  const windowWidth = Dimensions.get("window").width;
+  const windowHeight = Dimensions.get("window").height;
   const [text, onChangeText] = React.useState("Useless Text");
   const [textEmail, onChangeTextEmail] = useState("");
   const [textUsername, onChangeTextUsername] = useState("");
@@ -76,16 +78,17 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   headerContent: {
+    marginTop: '10%',
     width: '80%'
   },
   textTopFRegister: {
     fontFamily:'Poppins_600SemiBold',
-    fontSize: 30,
+    fontSize: 25,
     alignSelf: 'flex-start'
   },
   textTopSRegister: {
     fontFamily:'Poppins_300Light',
-    fontSize: 25,
+    fontSize: 20,
     marginBottom: 12
   },
   inputRegister: {

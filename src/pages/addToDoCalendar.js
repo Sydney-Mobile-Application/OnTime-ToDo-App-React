@@ -4,7 +4,11 @@ import { StyleSheet, View, Text, Pressable, Alert } from 'react-native';
 import CalendarPicker from 'react-native-calendar-picker';
 // import AddToDoTime from './addToDoTime';
 
-export default function TermAndCondition ({closeCalendarModal}) {
+export default function TermAndCondition ({closeCalendarModal, receiveDate}) {
+  const onDateChange = (date) => {
+    receiveDate(String(date._i.day) + " - " + String(date._i.month) + " - " + String(date._i.year));
+    console.log(date);
+  }
   return (
     <View style={styles.container}>
       <View style={styles.modalView}>
@@ -20,6 +24,7 @@ export default function TermAndCondition ({closeCalendarModal}) {
         todayTextStyle="#fff"
         selectedDayColor="#293462"
         selectedDayTextColor="#FFFFFF"
+        onDateChange={onDateChange}
           // onDateChange={this.onDateChange}
         />
         

@@ -50,6 +50,7 @@ const actions = [
 
 export default function AddToDo ({ navigation }) {
   const [textEmail, onChangeTextEmail] = useState("");
+  const [oldDate, newDate] = useState("Select Date Time")
   const [modalCalendarVisible, setModalCalendarVisible] = useState(false);
   function closeCalendarModal() {
     setModalCalendarVisible(false)
@@ -65,6 +66,12 @@ export default function AddToDo ({ navigation }) {
     Poppins_700Bold,
     Poppins_800ExtraBold,
   })
+  // const callback = React.useCallback((date) => {
+  //   newDate(date);
+  // }, []);
+  const receiveDate = (index) => {
+    newDate(String(index));
+  }
   return (
     <View style={styles.container}>
 
@@ -75,7 +82,7 @@ export default function AddToDo ({ navigation }) {
           </Pressable>
         </View>
         <View style={styles.settings} >
-          <Text style={styles.dateInfo}>13th Desember 21 - 04.00 PM </Text>
+          <Text style={styles.dateInfo}>{oldDate} </Text>
           <Pressable onPress={() => navigation.navigate('Dashboard')} >
              <Feather style={styles.saveButton} name='check' size={15} color='#293462'/>
           </Pressable>
@@ -101,7 +108,7 @@ export default function AddToDo ({ navigation }) {
           }}
         />
       <Modal animationType="slide" transparent={true} visible={modalCalendarVisible} onRequestClose={() => { setModalCalendarVisible(!modalCalendarVisible); }}>
-        <AddToDoCalendar closeCalendarModal={closeCalendarModal} />
+        <AddToDoCalendar receiveDate={receiveDate} closeCalendarModal={closeCalendarModal} />
       </Modal>
       <Modal animationType="slide" transparent={true} visible={modalFontVisible} onRequestClose={() => { setModalFontVisible(!modalFontVisible); }}>
         <Pressable onPress={() => closeFontModal()}>
