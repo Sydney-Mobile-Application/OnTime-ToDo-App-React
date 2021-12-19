@@ -21,7 +21,7 @@ export default function About ({ navigation }) {
   return (
     <View style={styles.container}>
       <View>
-        <Pressable onPress={() => navigation.navigate("Setting Menu")}>
+        <Pressable onPress={() => navigation.navigate("Dashboard")}>
           <MaterialIcons  name='arrow-back' size={30} color='#293462'/>
         </Pressable>
         <Text style={styles.aboutTitle}>About ToDoApp</Text>
