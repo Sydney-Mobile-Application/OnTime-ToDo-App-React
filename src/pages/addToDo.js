@@ -53,6 +53,7 @@ const actions = [
 export default function AddToDo ({ navigation }) {
   const [textEmail, onChangeTextEmail] = useState("");
   const [oldDate, newDate] = useState("Select Date Time")
+  const [oldTime, newTime] = useState("0:00")
   const [modalCalendarVisible, setModalCalendarVisible] = useState(false);
   const [date, setDate] = useState(new Date());
   const [show, setShow] = useState(false);
@@ -89,6 +90,7 @@ export default function AddToDo ({ navigation }) {
     var minute = timenow.substring(19,21)
     // receiveDate(String(time._i.hour) + " : " + String(time._i.minute));
     console.log(hour+":"+minute);
+    newTime(hour+":"+minute)
     // const currentDate = selectedDate || time;
     // setShow(Platform.OS === 'ios');
     // setDate(currentDate);
@@ -107,7 +109,7 @@ export default function AddToDo ({ navigation }) {
           </Pressable>
         </View>
         <View style={styles.settings} >
-          <Text style={styles.dateInfo}>{oldDate} </Text>
+          <Text style={styles.dateInfo}>{oldDate} - {oldTime}</Text>
           <Pressable onPress={() => navigation.navigate('Dashboard')} >
              <Feather style={styles.saveButton} name='check' size={15} color='#293462'/>
           </Pressable>
