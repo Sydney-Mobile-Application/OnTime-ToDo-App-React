@@ -77,15 +77,26 @@ export default function AddToDo ({ navigation }) {
     newDate(String(index));
     setShow(true);
   }
-  if (!fontsLoaded) {
+ 
+  const onChangeTime = (time) => {
+    let timenow = String(time.nativeEvent.timestamp);
+    if(Number(Number(timenow.substring(16,18))-6)<0){
+      var hour = Number(timenow.substring(16,18))+18
+        }
+        else{
+          var hour = Number(timenow.substring(16,18))-6
+        }
+    var minute = timenow.substring(19,21)
+    // receiveDate(String(time._i.hour) + " : " + String(time._i.minute));
+    console.log(hour+":"+minute);
+    // const currentDate = selectedDate || time;
+    // setShow(Platform.OS === 'ios');
+    // setDate(currentDate);
+    // console.log(date)
+  };
+   if (!fontsLoaded) {
     return <AppLoading />;
   } else {
-  const onChangeTime = (event, selectedDate) => {
-    const currentDate = selectedDate || date;
-    setShow(Platform.OS === 'ios');
-    setDate(currentDate);
-    console.log(date)
-  };
   return (
     <View style={styles.container}>
 
@@ -125,7 +136,15 @@ export default function AddToDo ({ navigation }) {
         <AddToDoCalendar receiveDate={receiveDate} closeCalendarModal={closeCalendarModal} />
       </Modal>
       {show && (
-      <DateTimePicker testID="dateTimePicker" format="HH:mm" value={date} mode="time" is24Hour={true} display="default" onChange={onChangeTime} />
+      <DateTimePicker 
+      testID="dateTimePicker" 
+      format="HH:mm" 
+      value={date} 
+      mode="time" 
+      is24Hour={true} 
+      timeZoneOffsetInMinutes={60}
+      display="default" 
+      onChange={onChangeTime} />
       )}
       <Modal animationType="slide" transparent={true} visible={modalFontVisible} onRequestClose={() => { setModalFontVisible(!modalFontVisible); }}>
         <Pressable onPress={() => closeFontModal()}>
