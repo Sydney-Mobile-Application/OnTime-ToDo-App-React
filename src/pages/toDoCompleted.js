@@ -1,15 +1,16 @@
 import React from "react";
 import { StyleSheet, View, Text, ScrollView, Pressable } from "react-native";
 import { MaterialIcons } from "@expo/vector-icons";
-import { useFont,
+import {
+  useFont,
   Poppins_300Light,
   Poppins_400Regular,
   Poppins_600SemiBold,
   Poppins_700Bold,
   Poppins_800ExtraBold,
-} from '@expo-google-fonts/poppins';
-import {useFonts} from 'expo-font';
-import AppLoading from 'expo-app-loading';
+} from "@expo-google-fonts/poppins";
+import { useFonts } from "expo-font";
+import AppLoading from "expo-app-loading";
 
 export default function toDoCompleted() {
   let [fontsLoaded] = useFonts({
@@ -18,7 +19,7 @@ export default function toDoCompleted() {
     Poppins_600SemiBold,
     Poppins_700Bold,
     Poppins_800ExtraBold,
-  })
+  });
   function capitalizeFirstLetter(string) {
     return string.charAt(0).toUpperCase() + string.slice(1);
   }
@@ -100,54 +101,54 @@ export default function toDoCompleted() {
   if (!fontsLoaded) {
     return <AppLoading />;
   } else {
-  return (
-    <View style={styles.container}>
-      <ScrollView
-        // horizontal={true}
-        // showsHorizontalScrollIndicator={false}
-        contentContainerStyle={styles.scrollView}
-      >
-        <View style={styles.row}>
-          {dummyData.data.map((x) => {
-            return (
-              <View style={styles.task}>
-                <Pressable onPress={() => console.log("Note Details")}>
-                  <View style={styles.taskNear2}>
-                    <Text style={styles.taskText}>
-                      {capitalizeFirstLetter(x.title)}
-                    </Text>
-                    <Text style={styles.taskDate}>{x.date}</Text>
-                  </View>
-                </Pressable>
-                <View>
+    return (
+      <View style={styles.container}>
+        <ScrollView
+          // horizontal={true}
+          // showsHorizontalScrollIndicator={false}
+          contentContainerStyle={styles.scrollView}
+        >
+          <View style={styles.row}>
+            {dummyData.data.map((x) => {
+              return (
+                <View style={styles.task}>
+                  <Pressable onPress={() => console.log("Note Details")}>
+                    <View style={styles.taskNear2}>
+                      <Text style={styles.taskText}>
+                        {capitalizeFirstLetter(x.title)}
+                      </Text>
+                      <Text style={styles.taskDate}>{x.date}</Text>
+                    </View>
+                  </Pressable>
                   <View>
-                    <Pressable onPress={() => console.log("Share Note")}>
-                      <MaterialIcons
-                        name="share"
-                        size={16}
-                        color="#ABACF7"
-                        style={styles.share}
-                      />
-                    </Pressable>
-                  </View>
-                  <View>
-                    <Pressable onPress={() => console.log("Add To Priority")}>
-                      <MaterialIcons
-                        name="star"
-                        size={16}
-                        color="#EC9B3B"
-                        style={styles.star}
-                      />
-                    </Pressable>
+                    <View>
+                      <Pressable onPress={() => console.log("Share Note")}>
+                        <MaterialIcons
+                          name="share"
+                          size={16}
+                          color="#ABACF7"
+                          style={styles.share}
+                        />
+                      </Pressable>
+                    </View>
+                    <View>
+                      <Pressable onPress={() => console.log("Add To Priority")}>
+                        <MaterialIcons
+                          name="star"
+                          size={16}
+                          color="#EC9B3B"
+                          style={styles.star}
+                        />
+                      </Pressable>
+                    </View>
                   </View>
                 </View>
-              </View>
-            );
-          })}
-        </View>
-      </ScrollView>
-    </View>
-  );
+              );
+            })}
+          </View>
+        </ScrollView>
+      </View>
+    );
   }
 }
 
@@ -170,7 +171,7 @@ const styles = StyleSheet.create({
     marginTop: 10,
     margin: 20,
     flexDirection: "row",
-    alignSelf: "flex-start",
+    alignSelf: "center",
   },
   taskNear2: {
     width: 131,
@@ -197,14 +198,14 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   taskText: {
-    fontFamily:'Poppins_400Regular',
+    fontFamily: "Poppins_400Regular",
     color: "#293462",
   },
   taskDate: {
     marginTop: 10,
     color: "#293462",
     alignSelf: "flex-start",
-    fontFamily: 'Poppins_700Bold',
+    fontFamily: "Poppins_700Bold",
     fontSize: 22,
     // paddingLeft: 15,
   },

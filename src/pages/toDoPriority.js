@@ -151,7 +151,7 @@ const styles = StyleSheet.create({
     marginTop: 10,
     margin: 20,
     flexDirection: "row",
-    alignSelf: "flex-start",
+    alignSelf: "center",
   },
   taskNear2: {
     width: 131,
@@ -183,7 +183,7 @@ const styles = StyleSheet.create({
   taskDate: {
     color: "#FFFFFF",
     fontSize: 22,
-    fontFamily:'Poppins_700Bold',
+    fontFamily: "Poppins_700Bold",
     alignSelf: "flex-start",
     marginTop: 10,
   },
