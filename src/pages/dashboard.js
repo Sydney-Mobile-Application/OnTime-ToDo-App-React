@@ -471,8 +471,8 @@ const styles = StyleSheet.create({
   top: {
     marginTop: 20,
     paddingTop: 20,
-    marginLeft: 10,
-    marginRight: 10,
+    marginLeft: 20,
+    marginRight: 20,
     // backgroundColor: '#FBFBFB',
     flexDirection: "row",
     paddingBottom: 20,
