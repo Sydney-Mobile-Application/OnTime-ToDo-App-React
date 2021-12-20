@@ -8,7 +8,7 @@ export default function TermAndCondition ({closeCalendarModal, receiveDate}) {
   
 
   const onDateChange = (date) => {
-    switch (date._i.month){
+    switch (date._i.month+1){
       case 1: 
         var month = "January";
         break;
