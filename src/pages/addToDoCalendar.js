@@ -5,8 +5,48 @@ import CalendarPicker from 'react-native-calendar-picker';
 // import AddToDoTime from './addToDoTime';
 
 export default function TermAndCondition ({closeCalendarModal, receiveDate}) {
+  
+
   const onDateChange = (date) => {
-    receiveDate(String(date._i.day) + " - " + String(date._i.month) + " - " + String(date._i.year));
+    switch (date._i.month){
+      case 1: 
+        var month = "January";
+        break;
+      case 2:
+        var month = "February";
+        break;
+      case 3:
+        var month = "March";
+        break;
+      case 4:
+        var month = "April";
+        break;
+      case 5: 
+        var month = "May";
+        break;
+      case 6:
+        var month = "June";
+        break;
+      case 7:
+        var month = "July";
+        break;
+      case 8:
+        var month = "August";
+        break;
+      case 9:
+        var month = "September";
+        break;
+      case 10:
+        var month = "October";
+        break;
+      case 11:
+        var month = "November";
+        break;
+      case 12:
+        var month = "December";
+        break;
+    }
+    receiveDate(String(date._i.day) + "th " + String(month) + " " + String(date._i.year));
     console.log(date);
   }
   return (
