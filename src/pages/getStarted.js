@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, View, Text, Image, Pressable } from 'react-native';
+import { ImageBackground, StyleSheet, View, Text, Image, Pressable } from 'react-native';
 import { useFont,
   Poppins_300Light,
   Poppins_400Regular,
@@ -24,6 +24,10 @@ export default function GetStarted ({ navigation }) {
   } else {
   return (
     <View style={styles.container}>
+      <ImageBackground
+        source={require("../../assets/background.png")}
+        style={styles.image}
+      >
       <View style={styles.headerContainer}>
         <Text style={styles.topTitleGetStarted}>
           Get To Your Task, Right
@@ -50,6 +54,7 @@ export default function GetStarted ({ navigation }) {
           <Text style={{fontFamily:'Poppins_400Regular'}}>Sign In</Text>
         </Pressable>
       </View>
+      </ImageBackground>
     </View>
   );
   }
@@ -115,5 +120,10 @@ const styles = StyleSheet.create({
     borderRadius: 26,
     alignItems: 'center',
     justifyContent: 'center',
-  }
+  },
+  image: {
+    flex: 1,
+    justifyContent: "center",
+    resizeMode: "cover",
+  },
 });
