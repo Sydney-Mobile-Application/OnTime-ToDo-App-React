@@ -10,8 +10,9 @@ import {
   Poppins_600SemiBold,
   Poppins_700Bold,
   Poppins_800ExtraBold,
-} from '@expo-google-fonts/poppins'
-import {useFonts} from 'expo-font'
+} from '@expo-google-fonts/poppins';
+import {useFonts} from 'expo-font';
+import AppLoading from 'expo-app-loading';
 
 const windowWidth = Dimensions.get("window").width;
 const windowHeight = Dimensions.get("window").height;
@@ -72,6 +73,9 @@ export default function AddToDo ({ navigation }) {
   const receiveDate = (index) => {
     newDate(String(index));
   }
+  if (!fontsLoaded) {
+    return <AppLoading />;
+  } else {
   return (
     <View style={styles.container}>
 
@@ -124,6 +128,7 @@ export default function AddToDo ({ navigation }) {
     </View> 
       
   );
+  }
 };
 
 const styles = StyleSheet.create({
