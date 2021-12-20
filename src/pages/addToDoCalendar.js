@@ -46,7 +46,7 @@ export default function TermAndCondition ({closeCalendarModal, receiveDate}) {
         var month = "December";
         break;
     }
-    receiveDate(String(date._i.day) + "th " + String(month) + " " + String(date._i.year));
+    receiveDate(String(date._i.day) + " " + String(month) + " " + String(date._i.year));
     console.log(date);
   }
   return (
@@ -60,7 +60,7 @@ export default function TermAndCondition ({closeCalendarModal, receiveDate}) {
           monthsAfter={24}
         /> */}
         <CalendarPicker
-        todayBackgroundColor="rgba(41, 52, 98, 0.3)"
+        todayBackgroundColor="rgba(226, 238, 247, 1)"
         todayTextStyle="#fff"
         selectedDayColor="#293462"
         selectedDayTextColor="#FFFFFF"

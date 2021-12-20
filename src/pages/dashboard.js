@@ -103,7 +103,9 @@ export default function Dashboard({ navigation }) {
   const closeModal = () => {
     setModalVisible(false);
   };
-
+  if (!fontsLoaded) {
+    return <AppLoading />;
+  } else {
   return (
     <View>
       <ScrollView>
@@ -267,6 +269,7 @@ export default function Dashboard({ navigation }) {
       </Modal>
     </View>
   );
+  }
 }
 
 const styles = StyleSheet.create({
@@ -303,7 +306,7 @@ const styles = StyleSheet.create({
   },
   priority: {
     fontFamily: 'Poppins_700Bold',
-    fontSize: 18,
+    fontSize: 16,
     marginBottom: 30,
     alignSelf: "flex-start",
     alignItems: "flex-start",
@@ -323,7 +326,7 @@ const styles = StyleSheet.create({
   },
   upcoming: {
     fontFamily: 'Poppins_700Bold',
-    fontSize: 18,
+    fontSize: 16,
     marginBottom: 30,
     // marginLeft: 20,
     alignSelf: "flex-start",
