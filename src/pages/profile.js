@@ -1,5 +1,6 @@
 import React from 'react';
 import { StyleSheet, View, Text, Image, Pressable } from 'react-native';
+import { MaterialIcons } from '@expo/vector-icons';
 import {
   Poppins_300Light,
   Poppins_400Regular,
@@ -23,6 +24,11 @@ export default function Profile ({ navigation }) {
   } else {    
   return (
     <View style={styles.container}>
+    <View>
+      <Pressable onPress={() => navigation.navigate("Dashboard")}>
+        <MaterialIcons  name='arrow-back' size={30} color='#293462'/>
+      </Pressable>
+    </View>
       <View style={styles.top}>
         <Image
         style={styles.profilePicture}
@@ -47,11 +53,11 @@ export default function Profile ({ navigation }) {
       </View>
       </View>
         <Pressable style={styles.changePassword} onPress={() => navigation.navigate('ChangePassword')}>
-          <Text style={{color: 'white', fontWeight: 'bold'}}>Change Password</Text>
+          <Text style={{color: 'white', fontFamily:'Poppins_600SemiBold',}}>Change Password</Text>
         </Pressable>
 
         <Pressable style={styles.signOut} onPress={() => navigation.navigate('Sign In')}>
-          <Text style={{color: 'white', fontWeight: 'bold'}}>Sign Out</Text>
+          <Text style={{color: 'white', fontFamily:'Poppins_600SemiBold',}}>Sign Out</Text>
         </Pressable>
         
         <Pressable style={styles.bottomText} onPress={() => navigation.navigate('Help Support')}>
@@ -86,7 +92,7 @@ const styles = StyleSheet.create({
 
   name: {
     fontSize: 30,
-    fontWeight: 'bold',
+    fontFamily:'Poppins_600SemiBold',
   },
 
   profileDetail: {
@@ -99,11 +105,13 @@ const styles = StyleSheet.create({
   left: {
     fontSize: 18,
     lineHeight: 40,
+    fontFamily:'Poppins_400Regular',
   },
 
   right: {
     fontSize: 18,
     lineHeight: 40,
+    fontFamily:'Poppins_400Regular',
   },
 
    changePassword: {
