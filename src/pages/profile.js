@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, View, Text, Image, Pressable } from 'react-native';
+import { StyleSheet, View, Text, Image, Pressable, Dimensions } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
 import {
   Poppins_300Light,
@@ -10,6 +10,8 @@ import {
 } from '@expo-google-fonts/poppins';
 import {useFonts} from 'expo-font';
 import AppLoading from 'expo-app-loading';
+const windowWidth = Dimensions.get("window").width;
+const windowHeight = Dimensions.get("window").height;
 
 export default function Profile ({ navigation }) {
   let [fontsLoaded] = useFonts({
@@ -24,9 +26,9 @@ export default function Profile ({ navigation }) {
   } else {    
   return (
     <View style={styles.container}>
-    <View>
+    <View style={styles.back}>
       <Pressable onPress={() => navigation.navigate("Dashboard")}>
-        <MaterialIcons  name='arrow-back' size={30} color='#293462'/>
+        <MaterialIcons name="arrow-back" size={30} color="#293462" />
       </Pressable>
     </View>
       <View style={styles.top}>
@@ -77,7 +79,7 @@ const styles = StyleSheet.create({
   },
 
   top: {
-    paddingTop: 130
+    // paddingTop: 90
   },
 
   topName: {
@@ -138,5 +140,12 @@ const styles = StyleSheet.create({
 
   bottomText: {
     marginTop: 110
-  }
+  },
+  back: {
+    marginLeft: windowWidth * 0.08,
+    marginTop: windowHeight * 0.1,
+    alignSelf: "flex-start",
+    justifyContent: "flex-start",
+    alignItems: "flex-start",
+  },
 });

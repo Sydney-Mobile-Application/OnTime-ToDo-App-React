@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import {
-  ImageBackground,
   StyleSheet,
   View,
   Text,
@@ -47,10 +46,7 @@ export default function SettingMenu({ navigation }) {
             <Text style={styles.headerContent}>Settings</Text>
           </View>
         </View>
-        <ImageBackground
-            source={require("../../assets/Backgroundprofile.png")}
-            style={styles.image}
-          >
+
         <View style={styles.viewTop}>
           {/* <View>
         <Image style={styles.profileContainer} source={require('../../assets/profileContainer.png')} />
@@ -76,6 +72,7 @@ export default function SettingMenu({ navigation }) {
                 Profile Setting{" "}
                 <MaterialIcons name="arrow-forward-ios" size={10} />
               </Text>
+            
             <Image
               style={styles.profilePicture}
               source={require("../../assets/profile1.jpeg")}
@@ -83,7 +80,6 @@ export default function SettingMenu({ navigation }) {
             </Pressable>
           </View>
         </View>
-        </ImageBackground>
 
         <View style={styles.taskList}>
           <Pressable
@@ -208,7 +204,7 @@ const styles = StyleSheet.create({
     marginTop: 20,
     flexDirection: "row",
     position: "relative",
-    // backgroundColor: "#FBFBFB",
+    backgroundColor: "#FBFBFB",
     zIndex: 3,
   },
 
@@ -377,11 +373,6 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     // alignContent: 'space-between',
     width: windowWidth * 0.8,
-  },
-  image: {
-    flex: 1,
-    justifyContent: "center",
-    resizeMode: "cover",
   },
   // leftText: {
   //   justifyContent: 'flex-start',
