@@ -125,7 +125,7 @@ export default function Dashboard({ navigation }) {
               </View>
 
               <View style={styles.right}>
-                <Pressable onPress={() => navigation.navigate("Profile")}>
+                <Pressable onPress={() => navigation.navigate("Profilez")}>
                   <Image
                     style={styles.avatar}
                     source={require("../../assets/profile1.jpeg")}
@@ -529,19 +529,20 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     margin: 10,
     borderRadius: 20,
-    paddingBottom: 30,
+    // paddingBottom: 30,
     paddingLeft: 15,
-    paddingRight: 15,
+    // paddingRight: 15,
     backgroundColor: "#FFEDBF",
-    width: windowWidth * 0.65,
+    width: windowWidth * 0.75,
+    height: '100%',
   },
   highlight_text: {
-    paddingTop: 30,
+    // backgroundColor: '#000',
+    // paddingTop: 30,
     marginRight: 10,
     width: windowWidth * 0.5,
+    height: '100%',
     textAlignVertical: "center",
-    alignItems: "center",
-    justifyContent: "center",
     fontSize: 17,
     fontFamily:'Poppins_600SemiBold',
   },
@@ -549,7 +550,7 @@ const styles = StyleSheet.create({
     paddingTop: 20,
     marginTop: 10,
     fontFamily:'Poppins_600SemiBold',
-    marginRight:10,
+    marginRight:15,
     alignItems: "flex-end",
   },
   detail: {
