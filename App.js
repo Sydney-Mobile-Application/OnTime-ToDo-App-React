@@ -15,6 +15,7 @@ export default function App() {
           headerShown: false,
         }}
       >
+        <Stack.Screen name="Get Started" component={CallBack.GetStarted} />
         {/* Example Resources */}
         <Stack.Screen
           name="Switcher"
@@ -39,7 +40,6 @@ export default function App() {
           component={CallBack.DoubleInnerScreen}
         />
         {/* Real Pages */}
-        <Stack.Screen name="Get Started" component={CallBack.GetStarted} />
         <Stack.Screen name="Register" component={CallBack.Register} />
         <Stack.Screen
           name="Terms And Condition"

@@ -136,7 +136,6 @@ export default function AddToDo ({ navigation }) {
         />
       <Modal animationType="slide" transparent={true} visible={modalCalendarVisible} onRequestClose={() => { setModalCalendarVisible(!modalCalendarVisible); }}>
         <AddToDoCalendar receiveDate={receiveDate} closeCalendarModal={closeCalendarModal} />
-      </Modal>
       {show && (
       <DateTimePicker 
       testID="dateTimePicker" 
@@ -148,6 +147,7 @@ export default function AddToDo ({ navigation }) {
       display="default" 
       onChange={onChangeTime} />
       )}
+      </Modal>
       <Modal animationType="slide" transparent={true} visible={modalFontVisible} onRequestClose={() => { setModalFontVisible(!modalFontVisible); }}>
         <Pressable onPress={() => closeFontModal()}>
           <View style={styles.fontOption}>
