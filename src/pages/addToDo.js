@@ -3,6 +3,7 @@ import { StyleSheet, View, Text, Dimensions, TextInput, Pressable, Modal } from 
 import { MaterialIcons } from '@expo/vector-icons';
 import { Feather } from '@expo/vector-icons';
 import { FloatingAction } from "react-native-floating-action";
+import DateTimePicker from '@react-native-community/datetimepicker';
 import AddToDoCalendar from './addToDoCalendar';
 import {
   Poppins_300Light,
@@ -53,6 +54,8 @@ export default function AddToDo ({ navigation }) {
   const [textEmail, onChangeTextEmail] = useState("");
   const [oldDate, newDate] = useState("Select Date Time")
   const [modalCalendarVisible, setModalCalendarVisible] = useState(false);
+  const [date, setDate] = useState(new Date());
+  const [show, setShow] = useState(false);
   function closeCalendarModal() {
     setModalCalendarVisible(false)
   }
@@ -72,10 +75,17 @@ export default function AddToDo ({ navigation }) {
   // }, []);
   const receiveDate = (index) => {
     newDate(String(index));
+    setShow(true);
   }
   if (!fontsLoaded) {
     return <AppLoading />;
   } else {
+  const onChangeTime = (event, selectedDate) => {
+    const currentDate = selectedDate || date;
+    setShow(Platform.OS === 'ios');
+    setDate(currentDate);
+    console.log(date)
+  };
   return (
     <View style={styles.container}>
 
@@ -114,6 +124,9 @@ export default function AddToDo ({ navigation }) {
       <Modal animationType="slide" transparent={true} visible={modalCalendarVisible} onRequestClose={() => { setModalCalendarVisible(!modalCalendarVisible); }}>
         <AddToDoCalendar receiveDate={receiveDate} closeCalendarModal={closeCalendarModal} />
       </Modal>
+      {show && (
+      <DateTimePicker testID="dateTimePicker" format="HH:mm" value={date} mode="time" is24Hour={true} display="default" onChange={onChangeTime} />
+      )}
       <Modal animationType="slide" transparent={true} visible={modalFontVisible} onRequestClose={() => { setModalFontVisible(!modalFontVisible); }}>
         <Pressable onPress={() => closeFontModal()}>
           <View style={styles.fontOption}>
