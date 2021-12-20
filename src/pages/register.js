@@ -7,8 +7,9 @@ import { useFont,
   Poppins_600SemiBold,
   Poppins_700Bold,
   Poppins_800ExtraBold,
-} from '@expo-google-fonts/poppins'
-import {useFonts} from 'expo-font'
+} from '@expo-google-fonts/poppins';
+import {useFonts} from 'expo-font';
+import AppLoading from 'expo-app-loading';
 
 export default function Register ({ navigation }) {
   let [fontsLoaded] = useFonts({
@@ -41,7 +42,9 @@ export default function Register ({ navigation }) {
       setRegisterDisable(false)
     }
   }, [textEmail, textUsername, textPhone, textPassword1, textPassword2])
-
+  if (!fontsLoaded) {
+    return <AppLoading />;
+  } else {
   return (
     <View style={[styles.container, modalVisible ? {backgroundColor: 'rgba(0,0,0,0.5)'} : '']}>
       <View style={styles.headerContent}>
@@ -68,6 +71,7 @@ export default function Register ({ navigation }) {
       </Modal>
     </View>
   );
+  }
 };
 
 const styles = StyleSheet.create({

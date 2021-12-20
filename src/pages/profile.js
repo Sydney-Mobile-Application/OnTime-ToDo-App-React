@@ -1,7 +1,26 @@
 import React from 'react';
 import { StyleSheet, View, Text, Image, Pressable } from 'react-native';
+import {
+  Poppins_300Light,
+  Poppins_400Regular,
+  Poppins_600SemiBold,
+  Poppins_700Bold,
+  Poppins_800ExtraBold,
+} from '@expo-google-fonts/poppins';
+import {useFonts} from 'expo-font';
+import AppLoading from 'expo-app-loading';
 
 export default function Profile ({ navigation }) {
+  let [fontsLoaded] = useFonts({
+    Poppins_300Light,
+    Poppins_400Regular,
+    Poppins_600SemiBold,
+    Poppins_700Bold,
+    Poppins_800ExtraBold,
+  })
+  if (!fontsLoaded) {
+    return <AppLoading />;
+  } else {    
   return (
     <View style={styles.container}>
       <View style={styles.top}>
@@ -41,6 +60,7 @@ export default function Profile ({ navigation }) {
     </View>
     
   );
+  }
 };
 
 const styles = StyleSheet.create({

@@ -7,8 +7,9 @@ import {
   Poppins_600SemiBold,
   Poppins_700Bold,
   Poppins_800ExtraBold,
-} from '@expo-google-fonts/poppins'
-import {useFonts} from 'expo-font'
+} from '@expo-google-fonts/poppins';
+import {useFonts} from 'expo-font';
+import AppLoading from 'expo-app-loading';
 
 export default function BackupData ({ navigation }) {
   let [fontsLoaded] = useFonts({
@@ -18,6 +19,9 @@ export default function BackupData ({ navigation }) {
       Poppins_700Bold,
       Poppins_800ExtraBold,
     })
+    if (!fontsLoaded) {
+      return <AppLoading />;
+    } else {
   return (
     <View style={styles.container}>
     <View>
@@ -42,6 +46,7 @@ export default function BackupData ({ navigation }) {
         </Pressable>
     </View>
   );
+  }
 };
 
 const styles = StyleSheet.create({
