@@ -115,7 +115,9 @@ export default function AddToDo({ navigation }) {
             </Pressable>
           </View>
           <View style={styles.settings}>
-            <Text style={styles.dateInfo}>{oldDate} </Text>
+            <Text style={styles.dateInfo}>
+              {oldDate} - {oldTime}
+            </Text>
             <Pressable onPress={() => navigation.navigate("Dashboard")}>
               <Feather
                 style={styles.saveButton}
@@ -127,19 +129,18 @@ export default function AddToDo({ navigation }) {
             {/* <MaterialIcons  name='settings' size={30} color='#293462'/> */}
           </View>
         </View>
-        <View style={styles.settings}>
-          <Text style={styles.dateInfo}>
-            {oldDate} - {oldTime}
-          </Text>
-          <Pressable onPress={() => navigation.navigate("Dashboard")}>
-            <Feather
-              style={styles.saveButton}
-              name="check"
-              size={15}
-              color="#293462"
-            />
-          </Pressable>
-          {/* <MaterialIcons  name='settings' size={30} color='#293462'/> */}
+        <View style={styles.task}>
+          <TextInput
+            style={styles.title}
+            onChangeText={onChangeTextEmail}
+            placeholder="Title "
+          />
+          <TextInput
+            style={styles.description}
+            onChangeText={onChangeTextEmail}
+            multiline={true}
+            placeholder="Descriptionn "
+          />
         </View>
 
         <View style={styles.containerBottom}>
