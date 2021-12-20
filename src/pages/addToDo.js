@@ -60,6 +60,7 @@ const actions = [
 export default function AddToDo({ navigation }) {
   const [textEmail, onChangeTextEmail] = useState("");
   const [oldDate, newDate] = useState("Select Date Time");
+  const [oldTime, newTime] = useState("0:00");
   const [modalCalendarVisible, setModalCalendarVisible] = useState(false);
   const [date, setDate] = useState(new Date());
   const [show, setShow] = useState(false);
@@ -86,6 +87,7 @@ export default function AddToDo({ navigation }) {
   };
 
   const onChangeTime = (time) => {
+    setShow(Platform.OS === "ios");
     let timenow = String(time.nativeEvent.timestamp);
     if (Number(Number(timenow.substring(16, 18)) - 6) < 0) {
       var hour = Number(timenow.substring(16, 18)) + 18;
@@ -95,6 +97,7 @@ export default function AddToDo({ navigation }) {
     var minute = timenow.substring(19, 21);
     // receiveDate(String(time._i.hour) + " : " + String(time._i.minute));
     console.log(hour + ":" + minute);
+    newTime(hour + ":" + minute);
     // const currentDate = selectedDate || time;
     // setShow(Platform.OS === 'ios');
     // setDate(currentDate);
@@ -124,18 +127,19 @@ export default function AddToDo({ navigation }) {
             {/* <MaterialIcons  name='settings' size={30} color='#293462'/> */}
           </View>
         </View>
-        <View style={styles.task}>
-          <TextInput
-            style={styles.title}
-            onChangeText={onChangeTextEmail}
-            placeholder="Title "
-          />
-          <TextInput
-            style={styles.description}
-            onChangeText={onChangeTextEmail}
-            multiline={true}
-            placeholder="Descriptionn "
-          />
+        <View style={styles.settings}>
+          <Text style={styles.dateInfo}>
+            {oldDate} - {oldTime}
+          </Text>
+          <Pressable onPress={() => navigation.navigate("Dashboard")}>
+            <Feather
+              style={styles.saveButton}
+              name="check"
+              size={15}
+              color="#293462"
+            />
+          </Pressable>
+          {/* <MaterialIcons  name='settings' size={30} color='#293462'/> */}
         </View>
 
         <View style={styles.containerBottom}>
@@ -174,19 +178,19 @@ export default function AddToDo({ navigation }) {
             receiveDate={receiveDate}
             closeCalendarModal={closeCalendarModal}
           />
+          {show && (
+            <DateTimePicker
+              testID="dateTimePicker"
+              format="HH:mm"
+              value={date}
+              mode="time"
+              is24Hour={true}
+              timeZoneOffsetInMinutes={60}
+              display="default"
+              onChange={onChangeTime}
+            />
+          )}
         </Modal>
-        {show && (
-          <DateTimePicker
-            testID="dateTimePicker"
-            format="HH:mm"
-            value={date}
-            mode="time"
-            is24Hour={true}
-            timeZoneOffsetInMinutes={60}
-            display="default"
-            onChange={onChangeTime}
-          />
-        )}
         <Modal
           animationType="slide"
           transparent={true}
