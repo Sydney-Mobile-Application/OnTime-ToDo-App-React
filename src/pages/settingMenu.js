@@ -72,11 +72,11 @@ export default function SettingMenu({ navigation }) {
                 Profile Setting{" "}
                 <MaterialIcons name="arrow-forward-ios" size={10} />
               </Text>
-            </Pressable>
             <Image
               style={styles.profilePicture}
               source={require("../../assets/profile1.jpeg")}
             />
+            </Pressable>
           </View>
         </View>
 

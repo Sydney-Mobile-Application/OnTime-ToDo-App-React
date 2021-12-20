@@ -125,7 +125,7 @@ export default function Dashboard({ navigation }) {
               </View>
 
               <View style={styles.right}>
-                <Pressable onPress={() => navigation.navigate("Setting Menu")}>
+                <Pressable onPress={() => navigation.navigate("Profile")}>
                   <Image
                     style={styles.avatar}
                     source={require("../../assets/profile1.jpeg")}
@@ -533,7 +533,7 @@ const styles = StyleSheet.create({
     paddingLeft: 15,
     paddingRight: 15,
     backgroundColor: "#FFEDBF",
-    width: windowWidth * 0.75,
+    width: windowWidth * 0.65,
   },
   highlight_text: {
     paddingTop: 30,
