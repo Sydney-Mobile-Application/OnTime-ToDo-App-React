@@ -80,6 +80,7 @@ export default function AddToDo ({ navigation }) {
   }
  
   const onChangeTime = (time) => {
+    setShow(Platform.OS === 'ios');
     let timenow = String(time.nativeEvent.timestamp);
     if(Number(Number(timenow.substring(16,18))-6)<0){
       var hour = Number(timenow.substring(16,18))+18
