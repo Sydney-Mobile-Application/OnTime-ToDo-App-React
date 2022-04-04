@@ -54,7 +54,14 @@ export default function App() {
           name="Dashboard"
           component={CallBack.DashboardConnection}
         />
-        <Stack.Screen name="Add To Do" component={CallBack.AddToDo} />
+        <Stack.Screen 
+        name="Add To Do" 
+        component={CallBack.AddToDo} 
+        />
+        <Stack.Screen 
+        name="Edit To Do" 
+        component={CallBack.EditToDo} 
+        />
         <Stack.Screen
           name="Add To Do Setting"
           component={CallBack.AddToDoSetting}

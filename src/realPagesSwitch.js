@@ -65,6 +65,12 @@ export default function HomeScreen ({ navigation }) {
         }
       />
       <Button
+        title="Go To Edit To Do"
+        onPress={() =>
+          navigation.navigate('Edit To Do')
+        }
+      />
+      <Button
         title="Go To Add To Do Setting"
         onPress={() =>
           navigation.navigate('Add To Do Setting')

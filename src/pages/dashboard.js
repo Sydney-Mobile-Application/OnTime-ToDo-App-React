@@ -53,13 +53,14 @@ export default function Dashboard({ navigation }) {
     ,
   ];
 
-  const leftButtons = [
-    <TouchableHighlight style={[styles.swipeTextLeft]}>
-      <Text style={styles.swipeTextContent}>
-        Reschedule
-        {/* <MaterialIcons name="more-time" size={25} color="#000" /> */}
-      </Text>
-    </TouchableHighlight>,
+  const leftButtons = [      
+      
+      <TouchableHighlight style={[styles.swipeTextLeft]} onPress={() => navigation.navigate("Edit To Do", { upcoming: false })}>
+        <Text style={styles.swipeTextContent}>
+          Reschedule
+          {/* <MaterialIcons name="more-time" size={25} color="#000" /> */}
+        </Text>
+      </TouchableHighlight>,
   ];
 
   function MyListItem() {

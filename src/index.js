@@ -17,6 +17,7 @@ import SignIn from "./pages/signIn";
 import SignInSuccessfully from "./pages/signInSuccessfully";
 import Dashboard from "./pages/dashboard";
 import AddToDo from "./pages/addToDo";
+import EditToDo from "./pages/editToDo";
 import AddToDoSetting from "./pages/addToDoSetting";
 import AddToDoCalendar from "./pages/addToDoCalendar";
 import AddToDoTime from "./pages/addToDoTime";
@@ -41,6 +42,7 @@ export {
   SignInSuccessfully,
   Dashboard,
   AddToDo,
+  EditToDo,
   AddToDoSetting,
   AddToDoCalendar,
   AddToDoTime,
