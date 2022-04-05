@@ -90,7 +90,7 @@ export default function SettingMenu({ navigation }) {
             <View style={styles.priorityTask}>
               <Text style={styles.taskTitle}>Priority Task</Text>
               <Text style={styles.taskDetail}>7</Text>
-              <Text style={styles.textInline}>Manage your task</Text>
+              {/* <Text style={styles.textInline}>Manage your task</Text> */}
             </View>
           </Pressable>
 
@@ -100,16 +100,16 @@ export default function SettingMenu({ navigation }) {
             }
           >
             <View style={styles.upcomingTask}>
-              <Text style={styles.taskTitle}>Upcoming Task</Text>
+              <Text style={styles.taskTitle}>Next Task</Text>
               <Text style={styles.taskDetail}>15</Text>
-              <Text style={styles.textInline}>Manage your task</Text>
+              {/* <Text style={styles.textInline}>Manage your task</Text> */}
             </View>
           </Pressable>
 
           <View style={styles.doneTask}>
             <Text style={styles.taskTitle}>Done Task</Text>
             <Text style={styles.taskDetail}>3</Text>
-            <Text style={styles.textInline}>Manage your task</Text>
+            {/* <Text style={styles.textInline}>Manage your task</Text> */}
           </View>
         </View>
 
@@ -217,6 +217,14 @@ const styles = StyleSheet.create({
   left: {
     marginTop: 20,
     flexDirection: "column",
+    position: "absolute",
+    justifyContent: "flex-start",
+    marginLeft: 70,
+  },
+
+  left1: {
+    marginTop: 20,
+    flexDirection: "row",
     justifyContent: "flex-start",
   },
 
@@ -242,6 +250,7 @@ const styles = StyleSheet.create({
     paddingTop: 10,
     fontFamily: "Poppins_600SemiBold",
     fontSize: 20,
+    width: 130,
   },
 
   right: {
@@ -282,18 +291,20 @@ const styles = StyleSheet.create({
     alignContent: "stretch",
     alignItems: "center",
     marginTop: 15,
-    width: "80%",
+    width: "10%",
   },
 
   taskTitle: {
-    fontSize: 12,
-    paddingHorizontal: 4,
-    width: 72,
+    fontSize: 16,
+    padding: windowWidth * 0.02,
+    // width: 72,
     fontFamily: "Poppins_400Regular",
+    justifyContent: "center",
+    alignItems: 'center',
   },
 
   taskDetail: {
-    fontSize: 10,
+    fontSize: 0,
     color: "#293462",
     alignContent: "flex-start",
     justifyContent: "flex-start",
