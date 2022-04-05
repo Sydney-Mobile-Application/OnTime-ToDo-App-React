@@ -72,11 +72,11 @@ export default function SettingMenu({ navigation }) {
                 Profile Setting{" "}
                 <MaterialIcons name="arrow-forward-ios" size={10} />
               </Text>
-            
-            <Image
-              style={styles.profilePicture}
-              source={require("../../assets/profile1.jpeg")}
-            />
+
+              <Image
+                style={styles.profilePicture}
+                source={require("../../assets/profile1.jpeg")}
+              />
             </Pressable>
           </View>
         </View>
@@ -90,7 +90,6 @@ export default function SettingMenu({ navigation }) {
             <View style={styles.priorityTask}>
               <Text style={styles.taskTitle}>Priority Task</Text>
               <Text style={styles.taskDetail}>7</Text>
-              <Text style={styles.textInline}>Manage your task</Text>
             </View>
           </Pressable>
 
@@ -102,14 +101,12 @@ export default function SettingMenu({ navigation }) {
             <View style={styles.upcomingTask}>
               <Text style={styles.taskTitle}>Upcoming Task</Text>
               <Text style={styles.taskDetail}>15</Text>
-              <Text style={styles.textInline}>Manage your task</Text>
             </View>
           </Pressable>
 
           <View style={styles.doneTask}>
             <Text style={styles.taskTitle}>Done Task</Text>
             <Text style={styles.taskDetail}>3</Text>
-            <Text style={styles.textInline}>Manage your task</Text>
           </View>
         </View>
 

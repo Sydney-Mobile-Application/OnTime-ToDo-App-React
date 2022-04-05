@@ -26,6 +26,7 @@ import AppLoading from "expo-app-loading";
 import { MaterialIcons } from "@expo/vector-icons";
 import Swipeable from "react-native-swipeable";
 import Successfully from "./signInSuccessfully";
+import { TouchableWithoutFeedback } from "react-native-web";
 
 const width_name = "60%";
 const width_highlight = "75%";
@@ -44,23 +45,25 @@ export default function Dashboard({ navigation }) {
   const [modalVisible, setModalVisible] = useState(false);
 
   const rightButtons = [
-    <TouchableHighlight style={[styles.swipeTextRight]}>
+    <TouchableWithoutFeedback style={[styles.swipeTextRight]}>
       <Text style={styles.swipeTextContent}>
         Done
         {/* <MaterialIcons name="done" size={25} color="#000" /> */}
       </Text>
-    </TouchableHighlight>,
+    </TouchableWithoutFeedback>,
     ,
   ];
 
-  const leftButtons = [      
-      
-      <TouchableHighlight style={[styles.swipeTextLeft]} onPress={() => navigation.navigate("Edit To Do", { upcoming: false })}>
-        <Text style={styles.swipeTextContent}>
-          Reschedule
-          {/* <MaterialIcons name="more-time" size={25} color="#000" /> */}
-        </Text>
-      </TouchableHighlight>,
+  const leftButtons = [
+    <TouchableWithoutFeedback
+      style={[styles.swipeTextLeft]}
+      onPress={() => navigation.navigate("Edit To Do", { upcoming: false })}
+    >
+      <Text style={styles.swipeTextContent}>
+        Reschedule
+        {/* <MaterialIcons name="more-time" size={25} color="#000" /> */}
+      </Text>
+    </TouchableWithoutFeedback>,
   ];
 
   function MyListItem() {
