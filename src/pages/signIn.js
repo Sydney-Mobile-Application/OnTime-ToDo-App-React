@@ -43,7 +43,7 @@ export default function SignIn({ navigation }) {
     getDocs(
       query(
         collection(db, "users"),
-        where("email", "==", textEmail.toString().toLowerCase())
+        where("username", "==", textEmail.toString())
       )
     ).then((querySnapshot) => {
       if (querySnapshot.empty) {
@@ -83,7 +83,7 @@ export default function SignIn({ navigation }) {
         <TextInput
           style={styles.inputSignIn}
           onChangeText={onChangeTextEmail}
-          placeholder="Email Or Username"
+          placeholder="Username"
         />
         <TextInput
           style={styles.inputSignIn}
