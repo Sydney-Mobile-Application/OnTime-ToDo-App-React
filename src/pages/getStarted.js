@@ -89,14 +89,17 @@ const styles = StyleSheet.create({
     alignSelf: 'flex-start'
   },
   titleGetStarted: {
+    alignSelf: 'center',
     fontSize: 40,
     fontFamily:'Poppins_600SemiBold',
   },
   bottomTitleGetStarted: {
+    alignSelf: 'center',
     fontFamily: 'Poppins_300Light',
     paddingBottom: 10 
   },
   inlineButton: {
+    alignSelf: 'center',
     flexDirection:'row',
     flexWrap:'wrap',
     width: '60%',
