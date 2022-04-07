@@ -45,17 +45,17 @@ export default function Dashboard({ navigation }) {
   const [modalVisible, setModalVisible] = useState(false);
 
   const rightButtons = [
-    <TouchableWithoutFeedback style={[styles.swipeTextRight]}>
+    <TouchableOpacity style={[styles.swipeTextRight]}>
       <Text style={styles.swipeTextContent}>
         Done
         {/* <MaterialIcons name="done" size={25} color="#000" /> */}
       </Text>
-    </TouchableWithoutFeedback>,
+    </TouchableOpacity>,
     ,
   ];
 
   const leftButtons = [
-    <TouchableWithoutFeedback
+    <TouchableOpacity
       style={[styles.swipeTextLeft]}
       onPress={() => navigation.navigate("Edit To Do", { upcoming: false })}
     >
@@ -63,7 +63,7 @@ export default function Dashboard({ navigation }) {
         Reschedule
         {/* <MaterialIcons name="more-time" size={25} color="#000" /> */}
       </Text>
-    </TouchableWithoutFeedback>,
+    </TouchableOpacity>,
   ];
 
   function MyListItem() {
