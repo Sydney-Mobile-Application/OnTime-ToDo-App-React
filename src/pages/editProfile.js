@@ -27,7 +27,7 @@ export default function Profile ({ navigation }) {
   return (
     <View style={styles.container}>
     <View style={styles.back}>
-      <Pressable onPress={() => navigation.navigate("Dashboard")}>
+      <Pressable onPress={() => navigation.navigate("Profile")}>
         <MaterialIcons name="arrow-back" size={30} color="#293462" />
       </Pressable>
     </View>
@@ -58,9 +58,6 @@ export default function Profile ({ navigation }) {
           <Text style={{color: 'white', fontFamily:'Poppins_600SemiBold',}}>Edit Profile</Text>
         </Pressable>
 
-        <Pressable style={styles.signOut} onPress={() => navigation.navigate('Sign In')}>
-          <Text style={{color: 'white', fontFamily:'Poppins_600SemiBold',}}>Sign Out</Text>
-        </Pressable>
         <Pressable style={styles.changePassword} onPress={() => navigation.navigate('ChangePassword')}>
           <Text style={{color: 'white', fontFamily:'Poppins_600SemiBold',}}>Change Password</Text>
         </Pressable>

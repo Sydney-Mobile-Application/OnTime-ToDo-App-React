@@ -91,6 +91,12 @@ export default function SignIn({ navigation }) {
           secureTextEntry={true}
           placeholder="Password"
         />
+        <View style={styles.forgotPassword}>
+          {/* <Pressable onPress={() => navigation.navigate("Register")}> */}
+          <Pressable>
+            <Text style={{ fontFamily: "Poppins_600SemiBold" }}>Forgot Password?</Text>
+          </Pressable>
+        </View>
         <View style={styles.inlineText}>
           <Text style={{ fontFamily: "Poppins_400Regular" }}>
             Don't Have An Account Yet?{" "}
@@ -146,6 +152,16 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: "#293462",
     padding: 10,
+  },
+  forgotPassword: {
+    fontFamily: "Poppins_600SemiBold",
+    flexDirection: "row",
+    flexWrap: "wrap",
+    width: "80%",
+    // alignItems: "flex-start",
+    justifyContent: "flex-end",
+    // marginTop: 225,
+    // marginBottom: 12,
   },
   inlineText: {
     fontFamily: "Poppins_600SemiBold",

@@ -26,6 +26,7 @@ import ToDoUpcoming from "./pages/toDoUpcoming";
 import ToDoCompleted from "./pages/toDoCompleted";
 import SettingMenu from "./pages/settingMenu";
 import Profile from "./pages/profile";
+import EditProfile from "./pages/editProfile";
 import LanguageSetting from "./pages/languageSetting";
 import BackupData from "./pages/backupData";
 import HelpSupport from "./pages/helpSupport";
@@ -52,6 +53,7 @@ export {
   ToDoCompleted,
   SettingMenu,
   Profile,
+  EditProfile,
   LanguageSetting,
   BackupData,
   HelpSupport,

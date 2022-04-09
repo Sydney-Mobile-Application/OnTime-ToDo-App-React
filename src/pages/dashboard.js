@@ -80,9 +80,17 @@ export default function Dashboard({ navigation }) {
           <View style={styles.containerhighlight}>
             <MaterialIcons name="more-time" size={25} color="#EC9B3B" />
             <View style={styles.highlight}>
-              <Text style={styles.highlight_text}>
-                Meeting with project team
-              </Text>
+              <View style={styles.highlight_text}>
+                <Text
+                style={
+                  {textAlignVertical: "center",
+                  fontSize:17,
+                  fontFamily: "Poppins_600SemiBold"}
+                }
+                >
+                  Meeting with project team
+                </Text>
+              </View>
               <View style={styles.time}>
                 <MaterialIcons name="share" size={12} color="#ABACF7" />
                 <MaterialIcons name="access-time" size={45} color="#EC9B3B" />
@@ -120,7 +128,10 @@ export default function Dashboard({ navigation }) {
   } else {
     return (
       <View>
-        <ScrollView>
+        <ScrollView
+        showsVerticalScrollIndicator={false}
+        showsHorizontalScrollIndicator={false}
+        >
           <View style={styles.containertop}>
             <ImageBackground
               source={require("../../assets/profileDashboard.png")}
@@ -181,7 +192,7 @@ export default function Dashboard({ navigation }) {
                   <View>
                     <MaterialIcons
                       name="share"
-                      size={10}
+                      // size={10}
                       color="#ABACF7"
                       style={styles.share}
                     />
@@ -370,6 +381,7 @@ const styles = StyleSheet.create({
   share: {
     marginLeft: 5,
     marginTop: 30,
+    // fontSize: "1%",
     justifyContent: "center",
   },
   star: {
@@ -546,31 +558,34 @@ const styles = StyleSheet.create({
     margin: 10,
     borderRadius: 20,
     // paddingBottom: 30,
-    paddingLeft: 15,
+    paddingLeft: "1%",
     // paddingRight: 15,
     backgroundColor: "#FFEDBF",
     width: windowWidth * 0.75,
     height: "100%",
   },
   highlight_text: {
-    // backgroundColor: '#000',
-    // paddingTop: 30,
-    marginRight: 10,
-    width: windowWidth * 0.5,
-    height: "100%",
-    textAlignVertical: "center",
-    fontSize: 17,
-    fontFamily: "Poppins_600SemiBold",
+    // backgroundColor: '#fff',
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: "100%",
+    
   },
   time: {
-    paddingTop: 20,
-    marginTop: 10,
+    // backgroundColor: '#000',
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: "35%",
+    // paddingTop: "10%",
+    // marginTop: 10,
     fontFamily: "Poppins_600SemiBold",
-    marginRight: 15,
+    paddingRight: "5%",
     alignItems: "flex-end",
   },
   detail: {
     flexDirection: "row",
+    paddingRight: "10%",
     fontFamily: "Poppins_600SemiBold",
     justifyContent: "flex-start",
   },
