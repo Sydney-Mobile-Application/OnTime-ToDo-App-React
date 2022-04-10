@@ -88,6 +88,7 @@ export default function App() {
         />
         <Stack.Screen name="Setting Menu" component={CallBack.SettingMenu} />
         <Stack.Screen name="Profile" component={CallBack.Profile} />
+        <Stack.Screen name="Edit Profile" component={CallBack.EditProfile} />
         <Stack.Screen
           name="Language Setting"
           component={CallBack.LanguageSetting}

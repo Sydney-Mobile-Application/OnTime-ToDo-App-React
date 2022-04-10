@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, View, Text, Image, Pressable, Dimensions } from 'react-native';
+import { StyleSheet, View, Text, Image, Pressable, Dimensions, TextInput } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
 import {
   Poppins_300Light,
@@ -13,7 +13,7 @@ import AppLoading from 'expo-app-loading';
 const windowWidth = Dimensions.get("window").width;
 const windowHeight = Dimensions.get("window").height;
 
-export default function Profile ({ navigation }) {
+export default function EditProfile ({ navigation }) {
   let [fontsLoaded] = useFonts({
     Poppins_300Light,
     Poppins_400Regular,
@@ -45,16 +45,25 @@ export default function Profile ({ navigation }) {
         <View>
           <Text style={styles.left}>Email Address</Text>
           <Text style={styles.left}>Phone Number</Text>
-          <Text style={styles.left}>Subscription</Text>
        </View>
 
       <View>
-          <Text style={styles.right}>: James@gmail.com</Text>
-          <Text style={styles.right}>: +62 81234567234</Text>
-          <Text style={styles.right}>: Premium Lifetime</Text>
+      <TextInput
+          style={styles.right}
+          // onChangeText={onChangeTextEmail}
+          placeholder="James@gmail.com"
+        />
+          {/* <Text style={styles.right}>: James@gmail.com</Text> */}
+          <TextInput
+          style={styles.right}
+          // onChangeText={onChangeTextEmail}
+          placeholder="+62 81234567234"
+        />
+          {/* <Text style={styles.right}>: +62 81234567234</Text> */}
+          
       </View>
       </View>
-        <Pressable style={styles.changePassword} onPress={() => navigation.navigate('EditProfile')}>
+        <Pressable style={styles.changePassword} onPress={() => navigation.navigate('Edit Profile')}>
           <Text style={{color: 'white', fontFamily:'Poppins_600SemiBold',}}>Edit Profile</Text>
         </Pressable>
 

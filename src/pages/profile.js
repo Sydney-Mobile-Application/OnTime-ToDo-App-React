@@ -54,17 +54,14 @@ export default function Profile ({ navigation }) {
           <Text style={styles.right}>: Premium Lifetime</Text>
       </View>
       </View>
-        <Pressable style={styles.changePassword} onPress={() => navigation.navigate('EditProfile')}>
+        <Pressable style={styles.changePassword} onPress={() => navigation.navigate('Edit Profile')}>
           <Text style={{color: 'white', fontFamily:'Poppins_600SemiBold',}}>Edit Profile</Text>
         </Pressable>
 
-        <Pressable style={styles.signOut} onPress={() => navigation.navigate('Sign In')}>
-          <Text style={{color: 'white', fontFamily:'Poppins_600SemiBold',}}>Sign Out</Text>
-        </Pressable>
-        <Pressable style={styles.changePassword} onPress={() => navigation.navigate('ChangePassword')}>
+        <Pressable style={styles.signOut} onPress={() => navigation.navigate('ChangePassword')}>
           <Text style={{color: 'white', fontFamily:'Poppins_600SemiBold',}}>Change Password</Text>
         </Pressable>
-
+        
         <Pressable style={styles.signOut} onPress={() => navigation.navigate('Sign In')}>
           <Text style={{color: 'white', fontFamily:'Poppins_600SemiBold',}}>Sign Out</Text>
         </Pressable>
