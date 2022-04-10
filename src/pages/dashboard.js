@@ -557,6 +557,8 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     margin: 10,
     borderRadius: 20,
+    paddingTop: "2%",
+    paddingBottom: "2%",
     // paddingBottom: 30,
     paddingLeft: "1%",
     // paddingRight: 15,
@@ -566,6 +568,7 @@ const styles = StyleSheet.create({
   },
   highlight_text: {
     // backgroundColor: '#fff',
+    
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',

@@ -10,6 +10,7 @@ import {
 } from '@expo-google-fonts/poppins';
 import {useFonts} from 'expo-font';
 import AppLoading from 'expo-app-loading';
+import { SimpleLineIcons } from "@expo/vector-icons";
 const windowWidth = Dimensions.get("window").width;
 const windowHeight = Dimensions.get("window").height;
 
@@ -34,51 +35,57 @@ export default function EditProfile ({ navigation }) {
       <View style={styles.top}>
         <Image
         style={styles.profilePicture}
-        source={require('../../assets/profile1.jpeg')} />
+        source={require('../../assets/profile1.jpeg')} 
+        />
+    
+        <SimpleLineIcons
+          name="camera"
+          size={30}
+          color="#ABACF7"
+          style={styles.editPicture}
+        />
+        
       </View>
 
-      <View style={styles.topName}>
+      {/* <View style={styles.topName}>
         <Text style= {styles.name}>James - Kun</Text>
-      </View>
+      </View> */}
 
       <View style={styles.profileDetail}>
         <View>
-          <Text style={styles.left}>Email Address</Text>
-          <Text style={styles.left}>Phone Number</Text>
+          <Text>
+            Email
+          </Text>
+          <TextInput
+            style={styles.inputRegister}
+            // onChangeText={onChangeTextEmail}
+            placeholder="James@gmail.com"
+          />
+          <Text>
+            Username
+          </Text>
+          <TextInput
+            style={styles.inputRegister}
+            // onChangeText={onChangeTextUsername}
+            placeholder="James-kun"
+          />
+          <Text>
+            Phone Number
+          </Text>
+          <TextInput
+            style={styles.inputRegister}
+            // onChangeText={onChangeTextPhone}
+            placeholder="+62 81234567234"
+            keyboardType={"phone-pad"}
+          />
        </View>
 
-      <View>
-      <TextInput
-          style={styles.right}
-          // onChangeText={onChangeTextEmail}
-          placeholder="James@gmail.com"
-        />
-          {/* <Text style={styles.right}>: James@gmail.com</Text> */}
-          <TextInput
-          style={styles.right}
-          // onChangeText={onChangeTextEmail}
-          placeholder="+62 81234567234"
-        />
-          {/* <Text style={styles.right}>: +62 81234567234</Text> */}
-          
+      
       </View>
+        <Pressable style={styles.changePassword} onPress={() => navigation.navigate('Profile')}>
+          <Text style={{color: 'white', fontFamily:'Poppins_600SemiBold',}}>Save</Text>
+        </Pressable>
       </View>
-        <Pressable style={styles.changePassword} onPress={() => navigation.navigate('Edit Profile')}>
-          <Text style={{color: 'white', fontFamily:'Poppins_600SemiBold',}}>Edit Profile</Text>
-        </Pressable>
-
-        <Pressable style={styles.changePassword} onPress={() => navigation.navigate('ChangePassword')}>
-          <Text style={{color: 'white', fontFamily:'Poppins_600SemiBold',}}>Change Password</Text>
-        </Pressable>
-
-        <Pressable style={styles.signOut} onPress={() => navigation.navigate('Sign In')}>
-          <Text style={{color: 'white', fontFamily:'Poppins_600SemiBold',}}>Sign Out</Text>
-        </Pressable>
-        
-        <Pressable style={styles.bottomText} onPress={() => navigation.navigate('Help Support')}>
-          <Text style={styles.left}>Help & Support</Text>
-        </Pressable>
-    </View>
     
   );
   }
@@ -90,6 +97,16 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     alignItems: 'center',
   },
+  inputRegister: {
+    fontFamily: "Poppins_300Light",
+    // height: 50,
+    width: "100%",
+    borderRadius: 12,
+    margin: "5%",
+    borderWidth: 1,
+    borderColor: "#293462",
+    padding: "5%",
+  },
 
   top: {
     // paddingTop: 90
@@ -100,6 +117,7 @@ const styles = StyleSheet.create({
   },
 
   profilePicture: {
+    opacity: 0.7,
     width: 150,
     height: 150,
     borderRadius: 100,
@@ -150,7 +168,10 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     margin: 10
   },
-
+  editPicture: {
+    // backgroundColor: "#000",
+    alignSelf: "flex-end",
+  },
   bottomText: {
     marginTop: 110
   },
