@@ -497,14 +497,13 @@ const styles = StyleSheet.create({
     alignSelf: "flex-end",
   },
   top: {
-    marginTop: 20,
-    paddingTop: 20,
-    marginLeft: 20,
-    marginRight: 20,
+    margin: "5%",
+    padding: "2%",
+    
     // backgroundColor: '#FBFBFB',
     flexDirection: "row",
-    paddingBottom: 20,
-    paddingEnd: 20,
+    // paddingBottom: 20,
+    // paddingEnd: 20,
     width: windowWidth,
     alignItems: "center",
     justifyContent: "center",
@@ -513,6 +512,8 @@ const styles = StyleSheet.create({
     alignSelf: "flex-start",
   },
   right: {
+    // backgroundColor: "#000",
+    paddingRight: "3%",
     alignSelf: "flex-end",
   },
   name: {
