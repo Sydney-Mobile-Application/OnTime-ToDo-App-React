@@ -139,7 +139,7 @@ export default function AddToDo({ navigation }) {
             style={styles.description}
             onChangeText={onChangeTextEmail}
             multiline={true}
-            placeholder="Descriptionn "
+            placeholder="Description "
           />
         </View>
 
@@ -282,13 +282,15 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 30,
+    padding: "5%",
     alignSelf: "flex-start",
     justifyContent: "flex-start",
     alignItems: "flex-start",
-    marginBottom: windowHeight * 0.02,
+    // marginBottom: windowHeight * 0.02,
     fontFamily: "Poppins_600SemiBold",
   },
   description: {
+    padding: "5%",
     textAlignVertical: "center",
     fontSize: 20,
     fontFamily: "Poppins_400Regular",
