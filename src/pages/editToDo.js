@@ -142,11 +142,13 @@ export default function EditToDo({ navigation }) {
           <TextInput
             multiline={true}
             style={styles.title }
+            padding={"5%"}
             onChangeText={onChangeTextEmail}
             placeholder="Meeting with project team "
           />
           <TextInput
             style={styles.description}
+            padding={"5%"}
             onChangeText={onChangeTextEmail}
             multiline={true}
             placeholder="Discussing CRUD Function for OnTime App "
@@ -291,7 +293,7 @@ const styles = StyleSheet.create({
     width: windowWidth * 0.8,
   },
   title: {
-    padding: "5%",
+    // padding: "5%",
     fontSize: 30,
     alignSelf: "flex-start",
     justifyContent: "flex-start",
@@ -300,7 +302,7 @@ const styles = StyleSheet.create({
     fontFamily: "Poppins_600SemiBold",
   },
   description: {
-    padding: "5%",
+    // padding: "5%",
     // paddingTop: windowHeight * 0.01,
     textAlignVertical: "center",
     fontSize: 20,
