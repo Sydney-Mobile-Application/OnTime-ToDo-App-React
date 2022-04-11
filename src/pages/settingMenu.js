@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   StyleSheet,
   View,
@@ -20,6 +20,8 @@ import {
 import { useFonts } from "expo-font";
 import AppLoading from "expo-app-loading";
 
+import AsyncStorage from "@react-native-async-storage/async-storage";
+
 const windowWidth = Dimensions.get("window").width;
 const windowHeight = Dimensions.get("window").height;
 
@@ -28,6 +30,28 @@ export default function SettingMenu({ navigation }) {
   const toggleSwitch = (value) => {
     setswitchValue(value);
   };
+
+  const [state, setState] = useState({
+    userData: "",
+  });
+
+  const getSavedUserData = async () => {
+    try {
+      const userData = await AsyncStorage.getItem("@userData");
+      if (userData !== null) {
+        setState((prevState) => ({
+          ...prevState,
+          userData: JSON.parse(userData),
+        }));
+      }
+    } catch (err) {
+      console.log("error msg : ", err);
+    }
+  };
+
+  useEffect(() => {
+    getSavedUserData();
+  }, []);
 
   let [fontsLoaded] = useFonts({
     Poppins_300Light,
@@ -62,7 +86,7 @@ export default function SettingMenu({ navigation }) {
               <Text style={{ fontFamily: "Poppins_400Regular" }}>20 Jun</Text>
             </View>
             <View>
-              <Text style={styles.username}>James-Kun</Text>
+              <Text style={styles.username}>{state.userData.username}</Text>
             </View>
           </View>
 
@@ -72,11 +96,10 @@ export default function SettingMenu({ navigation }) {
                 Profile Setting{" "}
                 <MaterialIcons name="arrow-forward-ios" size={10} />
               </Text>
-            
-            <Image
-              style={styles.profilePicture}
-              source={require("../../assets/profile1.jpeg")}
-            />
+              <Image
+                style={styles.profilePicture}
+                source={require("../../assets/profile1.jpeg")}
+              />
             </Pressable>
           </View>
         </View>
@@ -300,7 +323,7 @@ const styles = StyleSheet.create({
     // width: 72,
     fontFamily: "Poppins_400Regular",
     justifyContent: "center",
-    alignItems: 'center',
+    alignItems: "center",
   },
 
   taskDetail: {

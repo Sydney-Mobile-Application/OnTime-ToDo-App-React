@@ -24,6 +24,9 @@ import AppLoading from "expo-app-loading";
 import { getDocs, collection, query, where } from "firebase/firestore";
 import { db } from "../config/firebase";
 
+// Async Storoage
+import AsyncStorage from "@react-native-async-storage/async-storage";
+
 export default function SignIn({ navigation }) {
   let [fontsLoaded] = useFonts({
     Poppins_300Light,
@@ -54,6 +57,13 @@ export default function SignIn({ navigation }) {
         // console.log(doc.id, " => ", doc.data());
         if (doc.data()["password"] === textPassword) {
           navigation.navigate("Dashboard");
+          try {
+            const userData = Object.assign({ uid: doc.id }, doc.data());
+            const value = JSON.stringify(userData);
+            AsyncStorage.setItem("@userData", value);
+          } catch (err) {
+            console.log("Error Msg :", err);
+          }
         } else {
           Alert.alert("Error", "Password Incorrect !");
         }
@@ -94,7 +104,9 @@ export default function SignIn({ navigation }) {
         <View style={styles.forgotPassword}>
           {/* <Pressable onPress={() => navigation.navigate("Register")}> */}
           <Pressable>
-            <Text style={{ fontFamily: "Poppins_600SemiBold" }}>Forgot Password?</Text>
+            <Text style={{ fontFamily: "Poppins_600SemiBold" }}>
+              Forgot Password?
+            </Text>
           </Pressable>
         </View>
         <View style={styles.inlineText}>

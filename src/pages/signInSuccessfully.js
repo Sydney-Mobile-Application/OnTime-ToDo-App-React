@@ -1,19 +1,24 @@
 import React, { useState } from "react";
 import { Alert, Modal, StyleSheet, Text, Pressable, View } from "react-native";
-import { MaterialIcons } from '@expo/vector-icons';
+import { MaterialIcons } from "@expo/vector-icons";
+import { useLinkProps } from "@react-navigation/native";
 
-const App = ({ closeModal }) => {
+const App = ({ closeModal, userData }) => {
   return (
     <View style={styles.centeredView}>
-      <Pressable style={styles.centeredView} onPress={() => closeModal()} > 
+      <Pressable style={styles.centeredView} onPress={() => closeModal()}>
         <View style={styles.centeredView}>
           <View style={styles.modalView}>
-            <MaterialIcons name='check-circle-outline' size={80} color='#293462' style={styles.modalPic}/>
+            <MaterialIcons
+              name="check-circle-outline"
+              size={80}
+              color="#293462"
+              style={styles.modalPic}
+            />
             <Text style={styles.modalText}>Welcome Back,</Text>
-            <Text style={styles.modalText}>James-kun</Text>
-            
-              {/* <Text style={styles.textStyle}>Hide Modal</Text> */}
-            
+            <Text style={styles.modalText}>{userData.username}</Text>
+
+            {/* <Text style={styles.textStyle}>Hide Modal</Text> */}
           </View>
         </View>
       </Pressable>
@@ -33,28 +38,28 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    marginTop: 22
+    marginTop: 22,
   },
   modalView: {
     margin: 20,
     backgroundColor: "white",
     borderRadius: 20,
     padding: 25,
-    paddingHorizontal:55,
+    paddingHorizontal: 55,
     alignItems: "center",
     shadowColor: "#000",
     shadowOffset: {
       width: 0,
-      height: 2
+      height: 2,
     },
     shadowOpacity: 0.25,
     shadowRadius: 4,
-    elevation: 5
+    elevation: 5,
   },
   button: {
     borderRadius: 20,
     padding: 10,
-    elevation: 2
+    elevation: 2,
   },
   buttonOpen: {
     backgroundColor: "#F194FF",
@@ -65,15 +70,15 @@ const styles = StyleSheet.create({
   textStyle: {
     color: "white",
     fontWeight: "bold",
-    textAlign: "center"
+    textAlign: "center",
   },
   modalText: {
     fontSize: 20,
-    textAlign: "center"
+    textAlign: "center",
   },
   modalPic: {
-    marginBottom:10,
-  }
+    marginBottom: 10,
+  },
 });
 
 export default App;

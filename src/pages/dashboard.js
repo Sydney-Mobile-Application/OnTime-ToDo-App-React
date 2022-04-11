@@ -25,8 +25,9 @@ import { useFonts } from "expo-font";
 import AppLoading from "expo-app-loading";
 import { MaterialIcons } from "@expo/vector-icons";
 import Swipeable from "react-native-swipeable";
-import Successfully from "./signInSuccessfully";
 import { TouchableWithoutFeedback } from "react-native-web";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import Successfully from "./signInSuccessfully";
 
 const width_name = "60%";
 const width_highlight = "75%";
@@ -43,6 +44,10 @@ export default function Dashboard({ navigation }) {
     Poppins_800ExtraBold,
   });
   const [modalVisible, setModalVisible] = useState(false);
+
+  const [state, setState] = useState({
+    userData: "",
+  });
 
   const rightButtons = [
     <TouchableOpacity style={[styles.swipeTextRight]}>
@@ -82,11 +87,11 @@ export default function Dashboard({ navigation }) {
             <View style={styles.highlight}>
               <View style={styles.highlight_text}>
                 <Text
-                style={
-                  {textAlignVertical: "center",
-                  fontSize:17,
-                  fontFamily: "Poppins_600SemiBold"}
-                }
+                  style={{
+                    textAlignVertical: "center",
+                    fontSize: 17,
+                    fontFamily: "Poppins_600SemiBold",
+                  }}
                 >
                   Meeting with project team
                 </Text>
@@ -113,7 +118,22 @@ export default function Dashboard({ navigation }) {
     }
   }
 
+  const getSavedUserData = async () => {
+    try {
+      const userData = await AsyncStorage.getItem("@userData");
+      if (userData !== null) {
+        setState((prevState) => ({
+          ...prevState,
+          userData: JSON.parse(userData),
+        }));
+      }
+    } catch (err) {
+      console.log("error msg : ", err);
+    }
+  };
+
   useEffect(() => {
+    getSavedUserData();
     setModalVisible(true);
     setTimeout(() => {
       setModalVisible(false);
@@ -129,8 +149,8 @@ export default function Dashboard({ navigation }) {
     return (
       <View>
         <ScrollView
-        showsVerticalScrollIndicator={false}
-        showsHorizontalScrollIndicator={false}
+          showsVerticalScrollIndicator={false}
+          showsHorizontalScrollIndicator={false}
         >
           <View style={styles.containertop}>
             <ImageBackground
@@ -139,7 +159,9 @@ export default function Dashboard({ navigation }) {
             >
               <View style={styles.top}>
                 <View style={styles.left}>
-                  <Text style={styles.name}>Ohayou, James-kun!</Text>
+                  <Text style={styles.name}>
+                    Welcome, {state.userData.username}
+                  </Text>
 
                   <View style={styles.date}>
                     <MaterialIcons name="bookmark" size={30} color="#082032" />
@@ -292,7 +314,7 @@ export default function Dashboard({ navigation }) {
             setModalVisible(!modalVisible);
           }}
         >
-          <Successfully closeModal={closeModal} />
+          <Successfully userData={state.userData} closeModal={closeModal} />
         </Modal>
       </View>
     );
@@ -499,7 +521,7 @@ const styles = StyleSheet.create({
   top: {
     margin: "5%",
     padding: "2%",
-    
+
     // backgroundColor: '#FBFBFB',
     flexDirection: "row",
     // paddingBottom: 20,
@@ -569,17 +591,16 @@ const styles = StyleSheet.create({
   },
   highlight_text: {
     // backgroundColor: '#fff',
-    
+
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center",
     width: "100%",
-    
   },
   time: {
     // backgroundColor: '#000',
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center",
     width: "35%",
     // paddingTop: "10%",
     // marginTop: 10,
