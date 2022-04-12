@@ -151,6 +151,8 @@ const styles = StyleSheet.create({
   },
 
   profileDetail: {
+    width: "100%",
+    // margin: "2%"
     justifyContent: "flex-start",
     flexDirection: "row",
     justifyContent: "center",
@@ -159,6 +161,7 @@ const styles = StyleSheet.create({
 
   left: {
     fontSize: 18,
+    // marginRight: "2%",
     lineHeight: 40,
     fontFamily: "Poppins_400Regular",
   },
@@ -192,7 +195,7 @@ const styles = StyleSheet.create({
   },
 
   bottomText: {
-    marginTop: 110,
+    marginTop: "10%",
   },
   back: {
     marginLeft: windowWidth * 0.08,
