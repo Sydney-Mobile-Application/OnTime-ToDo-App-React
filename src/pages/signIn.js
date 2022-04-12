@@ -3,6 +3,7 @@ import {
   StyleSheet,
   View,
   Text,
+  TouchableOpacity,
   TextInput,
   Pressable,
   LogBox,
@@ -103,11 +104,13 @@ export default function SignIn({ navigation }) {
         />
         <View style={styles.forgotPassword}>
           {/* <Pressable onPress={() => navigation.navigate("Register")}> */}
-          <Pressable>
+          <TouchableOpacity>
+          {/* <Pressable> */}
             <Text style={{ fontFamily: "Poppins_600SemiBold" }}>
               Forgot Password?
             </Text>
-          </Pressable>
+          {/* </Pressable> */}
+          </TouchableOpacity>
         </View>
         <View style={styles.inlineText}>
           <Text style={{ fontFamily: "Poppins_400Regular" }}>
