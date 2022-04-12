@@ -323,6 +323,7 @@ export default function Dashboard({ navigation }) {
 
 const styles = StyleSheet.create({
   containertop: {
+    paddingTop: "2%",
     // paddingTop: 30,
     backgroundColor: "#fff",
     alignItems: "center",

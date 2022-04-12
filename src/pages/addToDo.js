@@ -141,7 +141,7 @@ export default function AddToDo({ navigation }) {
             padding={"5%"}
             onChangeText={onChangeTextEmail}
             multiline={true}
-            placeholder="Description "
+            placeholder="Descriptionn "
           />
         </View>
 

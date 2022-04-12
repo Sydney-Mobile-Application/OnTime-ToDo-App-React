@@ -50,7 +50,7 @@ export default function SignIn({ navigation }) {
       )
     ).then((querySnapshot) => {
       if (querySnapshot.empty) {
-        Alert.alert("Not Found", "Email Not Found");
+        Alert.alert("Not Found", "Username Not Found");
       }
       querySnapshot.forEach((doc) => {
         // doc.data() is never undefined for query doc snapshots
