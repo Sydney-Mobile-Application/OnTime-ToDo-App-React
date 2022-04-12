@@ -116,9 +116,9 @@ export default function SignIn({ navigation }) {
           <Text style={{ fontFamily: "Poppins_400Regular" }}>
             Don't Have An Account Yet?{" "}
           </Text>
-          <Pressable onPress={() => navigation.navigate("Register")}>
+          <TouchableOpacity onPress={() => navigation.navigate("Register")}>
             <Text style={{ fontFamily: "Poppins_600SemiBold" }}>Register</Text>
-          </Pressable>
+          </TouchableOpacity>
         </View>
         <Pressable
           style={[
