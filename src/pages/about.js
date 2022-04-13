@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, View, Text, Pressable } from 'react-native';
+import { StyleSheet, View, Text, Pressable, Dimensions } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
 import {
   Poppins_300Light,
@@ -10,6 +10,9 @@ import {
 } from '@expo-google-fonts/poppins';
 import {useFonts} from 'expo-font';
 import AppLoading from 'expo-app-loading';
+
+const windowWidth = Dimensions.get("window").width;
+const windowHeight = Dimensions.get("window").height;
 
 export default function About ({ navigation }) {
   let [fontsLoaded] = useFonts({
@@ -46,7 +49,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     alignContent: 'flex-start',
     justifyContent: 'flex-start',
-    paddingHorizontal: 40,
+    paddingLeft: windowHeight * 0.04,
     paddingTop: 50,
   },
   
@@ -54,19 +57,20 @@ const styles = StyleSheet.create({
     fontSize: 30,
     alignSelf: 'flex-start',
     paddingTop: 20,
-    marginBottom: 25,
-    marginLeft: 7,
+    marginBottom: 20,
+    marginLeft: windowHeight * 0.01,
     fontFamily: 'Poppins_600SemiBold'
   },
   
   aboutDetail: {
-    marginLeft: 7,
+    marginLeft: windowHeight * 0.01,
   },
   
   aboutDescription: {
     fontSize: 18,
     lineHeight: 40,
     fontFamily: 'Poppins_400Regular',
-    textAlign: 'justify'
+    textAlign: 'justify',
+    width: windowWidth * 0.78,
   }
 });
