@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { StyleSheet, View, Text, Switch, Pressable } from "react-native";
+import { StyleSheet, View, Text, Switch, Pressable, Dimensions } from "react-native";
 import { MaterialIcons } from "@expo/vector-icons";
 import {
   Poppins_300Light,
@@ -10,6 +10,9 @@ import {
 } from "@expo-google-fonts/poppins";
 import { useFonts } from "expo-font";
 import AppLoading from "expo-app-loading";
+
+const windowWidth = Dimensions.get("window").width;
+const windowHeight = Dimensions.get("window").height;
 
 export default function Permission({ navigation }) {
   const [switchValue1, setswitchValue1] = useState(false);
@@ -98,7 +101,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
     alignContent: "flex-start",
     justifyContent: "flex-start",
-    paddingHorizontal: 40,
+    paddingLeft: windowHeight * 0.04,
     paddingTop: 50,
   },
 
@@ -107,17 +110,16 @@ const styles = StyleSheet.create({
     fontSize: 30,
     alignSelf: "flex-start",
     paddingTop: 20,
-    marginBottom: 25,
-    marginLeft: 7,
+    marginBottom: 20,
+    marginLeft: windowHeight * 0.01,
     fontFamily: "Poppins_600SemiBold",
   },
 
   permissionDetail: {
-    marginLeft: 7,
+    marginLeft: windowHeight * 0.01,
     color: "#293462",
     fontSize: 14,
     fontWeight: "bold",
-    // width: '80%',
     flexDirection: "row",
     justifyContent: "space-between",
     alignContent: "flex-end",
@@ -131,7 +133,6 @@ const styles = StyleSheet.create({
 
   switch: {
     transform: [{ scaleX: 0.9 }, { scaleY: 0.9 }],
-    width: "25%",
-    // backgroundColor: 'red'
+    width: "28%",
   },
 });
