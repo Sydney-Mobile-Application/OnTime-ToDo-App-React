@@ -75,11 +75,11 @@ export default function SettingMenu({ navigation }) {
           {/* <View>
         <Image style={styles.profileContainer} source={require('../../assets/profileContainer.png')} />
       </View> */}
-          <View>
+          {/* <View>
             <TouchableOpacity style={styles.bookmarkIcon}>
               <MaterialIcons name="bookmark" size={25} color="#082032" />
             </TouchableOpacity>
-          </View>
+          </View> */}
 
           <View style={styles.left}>
             <View style={styles.today}>
@@ -123,7 +123,7 @@ export default function SettingMenu({ navigation }) {
             }
           >
             <View style={styles.upcomingTask}>
-              <Text style={styles.taskTitle}>Next Task</Text>
+              <Text style={styles.taskTitle}>Upcoming Task</Text>
               {/* <Text style={styles.taskDetail}>15</Text> */}
               {/* <Text style={styles.textInline}>Manage your task</Text> */}
             </View>
@@ -219,11 +219,11 @@ const styles = StyleSheet.create({
   },
 
   viewTop: {
-    width: windowWidth * 0.9,
+    width: windowWidth * 0.8,
     height: windowHeight * 0.14,
     alignContent: "space-between",
     justifyContent: "space-between",
-    borderRadius: 42,
+    borderRadius: 25,
     marginTop: 20,
     flexDirection: "row",
     position: "relative",
@@ -231,30 +231,24 @@ const styles = StyleSheet.create({
     zIndex: 3,
   },
 
-  bookmarkIcon: {
-    paddingTop: 20,
-    paddingLeft: 30,
-    position: "relative",
-  },
+  // bookmarkIcon: {
+  //   paddingTop: windowHeight * 0.03,
+  //   paddingLeft: 30,
+  //   position: "relative",
+  // },
 
   left: {
-    marginTop: 20,
+    marginTop: windowHeight * 0.025,
+    marginLeft: windowHeight * 0.025,
     flexDirection: "column",
     position: "absolute",
-    justifyContent: "flex-start",
-    marginLeft: 70,
-  },
-
-  left1: {
-    marginTop: 20,
-    flexDirection: "row",
     justifyContent: "flex-start",
   },
 
   today: {
     backgroundColor: "#FFFFFF",
-    width: 80,
-    height: 30,
+    width: windowHeight * 0.1,
+    height: windowWidth * 0.08,
     justifyContent: "center",
     alignItems: "center",
     borderRadius: 20,
@@ -270,10 +264,10 @@ const styles = StyleSheet.create({
   },
 
   username: {
-    paddingTop: 10,
+    marginTop: windowHeight * 0.02,
     fontFamily: "Poppins_600SemiBold",
     fontSize: 20,
-    width: 130,
+    width: windowHeight * 0.18,
   },
 
   right: {
@@ -295,8 +289,8 @@ const styles = StyleSheet.create({
     height: 50,
     borderRadius: 50,
     position: "relative",
-    marginLeft: 40,
-    marginTop: 20,
+    marginLeft: windowHeight * 0.25,
+    marginTop: windowHeight * 0.025,
   },
 
   profileSetting: {
@@ -304,17 +298,16 @@ const styles = StyleSheet.create({
     fontFamily: "Poppins_400Regular",
     color: "#293462",
     position: "absolute",
-    marginTop: 80,
-    width: windowWidth * 1,
+    marginTop: windowHeight * 0.1,
+    marginLeft: windowHeight * 0.19,
   },
 
   taskList: {
     flexDirection: "row",
     justifyContent: "center",
-    alignContent: "stretch",
     alignItems: "center",
     marginTop: 15,
-    width: "10%",
+    width: "80%",
   },
 
   taskTitle: {
@@ -347,41 +340,38 @@ const styles = StyleSheet.create({
   },
 
   priorityTask: {
-    width: 110,
-    height: 90,
+    width: windowWidth * 0.24,
+    height: windowHeight * 0.1,
     backgroundColor: "#BFE4FF",
     flexDirection: "column",
     borderRadius: 25,
-    paddingVertical: 15,
-    paddingLeft: 10,
-    alignContent: "flex-start",
+    alignItems: "center",
+    justifyContent: "center",
     marginHorizontal: 8,
-    marginVertical: 20,
+    // marginVertical: 20,
   },
 
   upcomingTask: {
-    width: 110,
-    height: 90,
+    width: windowWidth * 0.24,
+    height: windowHeight * 0.1,
     backgroundColor: "#D3BFFF",
     borderRadius: 25,
-    paddingVertical: 15,
-    paddingLeft: 10,
-    alignContent: "flex-start",
+    alignItems: "center",
+    justifyContent: "center",
     marginHorizontal: 8,
-    marginVertical: 20,
+    // marginVertical: 20,
   },
 
   doneTask: {
-    width: 110,
-    height: 90,
+    width: windowWidth * 0.24,
+    height: windowHeight * 0.1,
     backgroundColor: "#FFECBF",
     borderRadius: 25,
-    paddingVertical: 15,
-    paddingLeft: 10,
     flexDirection: "column",
-    alignContent: "flex-start",
+    alignItems: "center",
+    justifyContent: "center",
     marginHorizontal: 8,
-    marginVertical: 20,
+    // marginVertical: 20,
   },
 
   bottomText: {
