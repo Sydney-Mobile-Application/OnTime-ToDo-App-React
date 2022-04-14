@@ -32,8 +32,10 @@ export default function LanguageSetting ({ navigation }) {
         <MaterialIcons  name='arrow-back' size={30} color='#293462'/>
       </Pressable>
     </View>
-      <Text style={styles.languageTitle}>Language Setting</Text>
-      <Text style={styles.languageDescOn}>English (US)</Text>
+      <Text style={styles.languageTitle}>Language Setting </Text>
+      <Text style={styles.languageDescOn}>
+        
+        English (US)</Text>
       <Text style={styles.languageDescOff}>English (UK)</Text>
       <Text style={styles.languageDescOff}>Bahasa Indonesia</Text>
       <Text style={styles.languageDescOff}>Deutsch</Text>
@@ -71,6 +73,14 @@ const styles = StyleSheet.create({
     marginLeft: windowHeight * 0.01,
     fontFamily: 'Poppins_400Regular'
   },
+  profilePicture: {
+    width: 50,
+    height: 50,
+    borderRadius: 50,
+    position: "relative",
+    marginLeft: windowHeight * 0.25,
+    marginTop: windowHeight * 0.025,
+  },
 
   languageDescOff: {
     fontSize: 20,
@@ -79,5 +89,7 @@ const styles = StyleSheet.create({
     color: 'rgba(108, 122, 137, 1)',
     fontFamily: 'Poppins_400Regular'
   },
+
+
 
 });

@@ -112,7 +112,7 @@ export default function Register({ navigation }) {
         <TextInput
           style={styles.inputRegister}
           onChangeText={onChangeTextPhone}
-          placeholder="Phone Number"
+          placeholder="Phone Number (ex:81267714878)"
           keyboardType={"phone-pad"}
         />
         <TextInput
