@@ -212,18 +212,22 @@ export default function Dashboard({ navigation }) {
                     <Text style={styles.taskDate}>20 Sep</Text>
                   </View>
                   <View>
+                  <TouchableOpacity>
                     <MaterialIcons
                       name="share"
-                      // size={10}
+                      size={15}
                       color="#ABACF7"
                       style={styles.share}
                     />
+                    </TouchableOpacity>
+                    <TouchableOpacity>
                     <MaterialIcons
                       name="star"
-                      size={10}
+                      size={15}
                       color="#EC9B3B"
                       style={styles.star}
                     />
+                    </TouchableOpacity>
                   </View>
                 </View>
                 <View style={styles.task}>
@@ -232,18 +236,22 @@ export default function Dashboard({ navigation }) {
                     <Text style={styles.taskDate2}>26 Sep</Text>
                   </View>
                   <View>
+                  <TouchableOpacity>
                     <MaterialIcons
                       name="share"
-                      size={10}
+                      size={15}
                       color="#ABACF7"
                       style={styles.share}
                     />
+                    </TouchableOpacity>
+                    <TouchableOpacity>
                     <MaterialIcons
                       name="star"
-                      size={10}
+                      size={15}
                       color="#EC9B3B"
                       style={styles.star}
                     />
+                    </TouchableOpacity>
                   </View>
                 </View>
               </View>
@@ -268,18 +276,22 @@ export default function Dashboard({ navigation }) {
                     <Text style={styles.taskDate}>20 Sep</Text>
                   </View>
                   <View>
+                  <TouchableOpacity>
                     <MaterialIcons
                       name="share"
-                      size={10}
+                      size={15}
                       color="#ABACF7"
                       style={styles.share}
                     />
+                    </TouchableOpacity>
+                    <TouchableOpacity>
                     <MaterialIcons
                       name="star"
-                      size={10}
+                      size={15}
                       color="#E5E5E5"
                       style={styles.star}
                     />
+                    </TouchableOpacity>
                   </View>
                 </View>
                 <View style={styles.task}>
@@ -288,18 +300,22 @@ export default function Dashboard({ navigation }) {
                     <Text style={styles.taskDate2}>26 Sep</Text>
                   </View>
                   <View>
+                    <TouchableOpacity>
                     <MaterialIcons
                       name="share"
-                      size={10}
+                      size={15}
                       color="#ABACF7"
                       style={styles.share}
                     />
+                    </TouchableOpacity>
+                    <TouchableOpacity>
                     <MaterialIcons
                       name="star"
-                      size={10}
+                      size={15}
                       color="#E5E5E5"
                       style={styles.star}
                     />
+                    </TouchableOpacity>
                   </View>
                 </View>
               </View>
@@ -330,7 +346,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   container: {
-    paddingTop: 30,
+    paddingTop: "10%",
     backgroundColor: "#fff",
     alignItems: "center",
     justifyContent: "center",
@@ -342,22 +358,22 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     flexDirection: "row",
-    marginBottom: 20,
+    marginBottom: "15%",
 
     // marginLeft:10,
   },
   Head: {
     fontWeight: "bold",
-    marginLeft: 20,
+    // marginLeft: 20,
     // alignSelf: "flex-start",
     justifyContent: "center",
-    marginLeft: -20,
+    // marginLeft: -20,
     flexDirection: "row",
   },
   priority: {
     fontFamily: "Poppins_700Bold",
     fontSize: 16,
-    marginBottom: 30,
+    marginBottom: "5%",
     alignSelf: "flex-start",
     alignItems: "flex-start",
     justifyContent: "flex-start",
@@ -366,7 +382,7 @@ const styles = StyleSheet.create({
   seeall: {
     fontFamily: "Poppins_400Regular",
     fontSize: 10,
-    marginBottom: 30,
+    marginBottom: "5%",
     alignSelf: "flex-end",
     alignItems: "flex-end",
     justifyContent: "flex-end",
@@ -377,7 +393,7 @@ const styles = StyleSheet.create({
   upcoming: {
     fontFamily: "Poppins_700Bold",
     fontSize: 16,
-    marginBottom: 30,
+    marginBottom: "5%",
     // marginLeft: 20,
     alignSelf: "flex-start",
     alignItems: "flex-start",
@@ -385,83 +401,86 @@ const styles = StyleSheet.create({
     marginRight: windowWidth * 0.19,
   },
   priorityCont: {
-    marginBottom: 30,
+    marginBottom: "10%",
     flexDirection: "row",
   },
   upcomingCont: {
-    marginBottom: 30,
+    marginBottom: "10%",
     flexDirection: "row",
   },
   task: {
-    width: 131,
+    maxWidth: 131,
+    maxHeight: 131,
     borderRadius: 20,
-    marginRight: 20,
+    marginRight: "5%",
     flexDirection: "row",
     alignSelf: "flex-start",
     // justifyContent: "center",
     // backgroundColor: "#EC9B3B",
   },
   share: {
-    marginLeft: 5,
-    marginTop: 30,
+    marginLeft: "15%",
+    // marginRight: "5%",
+    marginTop: "100%",
     // fontSize: "1%",
     justifyContent: "center",
   },
   star: {
-    marginLeft: 5,
-    marginTop: 10,
+    marginLeft: "15%",
+    marginTop: "30%",
     justifyContent: "center",
   },
   taskNear: {
-    width: 131,
-    height: 131,
+    width: "100%",
+    height: "100%",
+    // marginRight: "5%",
     // marginTop: 20,
     borderRadius: 20,
-    paddingTop: 30,
-    paddingBottom: 30,
-    // paddingLeft: 15,
-    paddingRight: 15,
+    paddingTop: "20%",
+    paddingBottom: "12%",
+    paddingLeft: "12%",
+    paddingRight: "15%",
     alignSelf: "flex-start",
     alignItems: "center",
     justifyContent: "flex-start",
     backgroundColor: "#293462",
   },
   taskNear2: {
-    width: 131,
-    height: 131,
-    marginLeft: 20,
+    width: "100%",
+    height: "100%",
+    marginLeft: "13%",
     borderRadius: 20,
-    paddingTop: 30,
-    paddingBottom: 30,
-    paddingLeft: 15,
-    paddingRight: 15,
+    paddingTop: "20%",
+    paddingBottom: "20%",
+    paddingLeft: "15%",
+    paddingRight: "15%",
     alignSelf: "flex-end",
     // alignItems: "center",
     justifyContent: "flex-start",
     backgroundColor: "#EE6F57",
   },
   taskCommon: {
-    width: 131,
-    height: 131,
+    width: "100%",
+    height: "100%",
     borderRadius: 20,
-    paddingTop: 30,
-    paddingBottom: 30,
-    // paddingLeft: 15,
-    paddingRight: 15,
+    paddingTop: "20%",
+    paddingBottom: "12%",
+    paddingLeft: "15%",
+    paddingRight: "15%",
     alignSelf: "flex-start",
     alignItems: "center",
     justifyContent: "flex-start",
     backgroundColor: "#5089C6",
   },
   taskCommon2: {
-    width: 131,
-    height: 131,
-    marginLeft: 20,
+    width: "100%",
+    height: "100%",
+    marginLeft: "13%",
     borderRadius: 20,
-    paddingTop: 30,
-    paddingBottom: 30,
-    paddingLeft: 15,
-    paddingRight: 15,
+    paddingTop: "20%",
+    paddingBottom: "20%",
+    paddingLeft: "15%",
+    paddingRight: "12%",
     alignSelf: "flex-end",
     // alignItems: "center",
     justifyContent: "flex-start",
@@ -472,15 +491,15 @@ const styles = StyleSheet.create({
     color: "#FFFFFF",
   },
   taskDate: {
-    marginTop: 10,
+    marginTop: "5%",
     color: "#FFFFFF",
     alignSelf: "flex-start",
     fontFamily: "Poppins_700Bold",
     fontSize: 22,
-    paddingLeft: 15,
+    // paddingLeft: "11%",
   },
   taskDate2: {
-    marginTop: 10,
+    marginTop: "5%",
     color: "#FFFFFF",
     alignSelf: "flex-start",
     fontWeight: "bold",
@@ -492,11 +511,11 @@ const styles = StyleSheet.create({
     borderRadius: 50,
     alignSelf: "flex-end",
     // marginRight: 8,
-    marginBottom: 5,
+    marginBottom: "4%",
   },
   notif: {
     fontFamily: "Poppins_400Regular",
-    marginLeft: 5,
+    marginLeft: "5%",
     fontSize: 12,
     color: "#000000",
     opacity: 0.57,
@@ -532,16 +551,19 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   left: {
+    width: "50%",
+    // backgroundColor: "#fff",
     alignSelf: "flex-start",
   },
   right: {
+    width: "50%",
     // backgroundColor: "#000",
     paddingRight: "3%",
     alignSelf: "flex-end",
   },
   name: {
-    marginTop: 20,
-    marginLeft: 25,
+    marginTop: "15%",
+    marginLeft: "13%",
     width: width_name,
     fontFamily: "Poppins_700Bold",
     fontSize: 17,
@@ -556,12 +578,12 @@ const styles = StyleSheet.create({
   },
   dateText: {
     fontFamily: "Poppins_700Bold",
-    marginLeft: 5,
+    marginLeft: "5%",
     borderRadius: 15,
-    paddingLeft: 10,
-    paddingRight: 10,
-    paddingTop: 5,
-    paddingBottom: 3,
+    paddingLeft: "5%",
+    paddingRight: "5%",
+    paddingTop: "5%",
+    paddingBottom: "3%",
     backgroundColor: "#fff",
     fontSize: 13,
     alignSelf: "flex-end",
@@ -573,13 +595,13 @@ const styles = StyleSheet.create({
   },
   date: {
     fontFamily: "Poppins_400Regular",
-    marginTop: 22,
+    marginTop: "15%",
     flexDirection: "row",
-    marginLeft: 19,
+    marginLeft: "10%",
   },
   highlight: {
     flexDirection: "row",
-    margin: 10,
+    margin: "2%",
     borderRadius: 20,
     paddingTop: "2%",
     paddingBottom: "2%",
@@ -624,14 +646,14 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     // paddingLeft: 20,
-    marginBottom: 20,
+    marginBottom: "5%",
   },
   swipeTextLeft: {
     flex: 1,
     alignItems: "flex-end",
     justifyContent: "center",
     // paddingRight: 20,
-    marginBottom: 20,
+    marginBottom: "5%",
   },
   swipeTextContent: {
     fontFamily: "Poppins_600SemiBold",
