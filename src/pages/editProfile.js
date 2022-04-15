@@ -178,8 +178,8 @@ const styles = StyleSheet.create({
   },
   inputRegister: {
     fontFamily: "Poppins_300Light",
-    // height: 50,
-    // width: "100%",
+    height: 50,
+    width: windowWidth * .8,
     borderRadius: 12,
     margin: "5%",
     borderWidth: 1,
@@ -208,11 +208,11 @@ const styles = StyleSheet.create({
   },
 
   profileDetail: {
-    justifyContent: "flex-start",
+    alignContent: "flex-start",
     flexDirection: "row",
     justifyContent: "center",
     marginTop: 30,
-    width: "150%",
+    width: windowWidth * .8,
   },
 
   left: {
