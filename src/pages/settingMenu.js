@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState,Component, useEffect} from "react";
 import {
   StyleSheet,
   View,
@@ -7,6 +7,7 @@ import {
   Image,
   Pressable,
   Dimensions,
+  Alert,
   Switch,
 } from "react-native";
 import { MaterialIcons } from "@expo/vector-icons";
@@ -22,8 +23,20 @@ import AppLoading from "expo-app-loading";
 
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
+
+import CalendarPicker from 'react-native-calendar-picker';
+// import AddToDoTime from './addToDoTime';
+
+//import {AppearanceProvider} from 'react-native-appearance';
+//import apperanceprovider
+
 const windowWidth = Dimensions.get("window").width;
 const windowHeight = Dimensions.get("window").height;
+
+
+
+
+
 
 export default function SettingMenu({ navigation }) {
   const [switchValue, setswitchValue] = useState(false);
@@ -34,6 +47,10 @@ export default function SettingMenu({ navigation }) {
   const [state, setState] = useState({
     userData: "",
   });
+
+
+
+
 
   const getSavedUserData = async () => {
     try {
@@ -60,6 +77,11 @@ export default function SettingMenu({ navigation }) {
     Poppins_700Bold,
     Poppins_800ExtraBold,
   });
+
+
+
+
+
   if (!fontsLoaded) {
     return <AppLoading />;
   } else {
@@ -83,7 +105,12 @@ export default function SettingMenu({ navigation }) {
 
           <View style={styles.left}>
             <View style={styles.today}>
-              <Text style={{ fontFamily: "Poppins_400Regular" }}>20 Jun</Text>
+              <Text style={{ fontFamily: "Poppins_400Regular" }}> 
+              
+             15 Ap
+           
+              
+               </Text>
             </View>
             <View>
               <Text style={styles.username}>{state.userData.username}</Text>
@@ -318,12 +345,13 @@ const styles = StyleSheet.create({
   },
 
   taskTitle: {
-    fontSize: 16,
+    fontSize: 14,
     padding: windowWidth * 0.02,
     // width: 72,
     fontFamily: "Poppins_400Regular",
     justifyContent: "center",
     alignItems: "center",
+    
   },
 
   taskDetail: {

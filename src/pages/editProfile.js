@@ -126,9 +126,12 @@ export default function EditProfile({ navigation }) {
                 setState((prevState) => ({
                   ...prevState,
                   email: val,
-                }));
+                }))  
+                ;
               }}
-              placeholder="James@gmail.com"
+              placeholder={state.userData.email}
+
+            
             />
             <Text>Username</Text>
             <TextInput
@@ -139,9 +142,9 @@ export default function EditProfile({ navigation }) {
                   username: val,
                 }));
               }}
-              placeholder="James-kun"
+              placeholder={state.userData.username}
             />
-            <Text>Phone Number</Text>
+            <Text>Phone Number (ex : 81267714878) </Text>
             <TextInput
               style={styles.inputRegister}
               onChangeText={(val) => {
@@ -150,7 +153,8 @@ export default function EditProfile({ navigation }) {
                   phone: val,
                 }));
               }}
-              placeholder="+62 81234567234"
+              
+              placeholder={state.userData.phone}
               keyboardType={"phone-pad"}
             />
           </View>
@@ -178,7 +182,7 @@ const styles = StyleSheet.create({
   },
   inputRegister: {
     fontFamily: "Poppins_300Light",
-    height: 50,
+    height: 60,
     width: windowWidth * .8,
     borderRadius: 12,
     margin: "5%",
