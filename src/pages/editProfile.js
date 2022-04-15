@@ -107,7 +107,7 @@ export default function EditProfile({ navigation }) {
 
           <SimpleLineIcons
             name="camera"
-            size={30}
+            size={20}
             color="#ABACF7"
             style={styles.editPicture}
           />
@@ -161,7 +161,7 @@ export default function EditProfile({ navigation }) {
             onSubmitData();
           }}
         >
-          <Text style={{ color: "white", fontFamily: "Poppins_600SemiBold" }}>
+          <Text style={{ color: "white", fontFamily: "Poppins_600SemiBold"}}>
             Save
           </Text>
         </Pressable>
@@ -179,7 +179,7 @@ const styles = StyleSheet.create({
   inputRegister: {
     fontFamily: "Poppins_300Light",
     // height: 50,
-    width: "100%",
+    // width: "100%",
     borderRadius: 12,
     margin: "5%",
     borderWidth: 1,
@@ -212,6 +212,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "center",
     marginTop: 30,
+    width: "150%",
   },
 
   left: {
