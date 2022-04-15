@@ -465,7 +465,7 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     paddingTop: "20%",
     paddingBottom: "12%",
-    paddingLeft: "15%",
+    paddingLeft: "12%",
     paddingRight: "15%",
     alignSelf: "flex-start",
     alignItems: "center",
