@@ -192,6 +192,13 @@ export default function SettingMenu({ navigation }) {
               </Text>
             </View>
           </Pressable>
+
+          <Pressable onPress={() => navigation.navigate("Sign In")}>
+            <View style={styles.bottomTitle}>
+              <Text style={styles.bottomDetail}>Sign Out</Text>
+              
+            </View>
+          </Pressable>
         </View>
       </View> //container
     );

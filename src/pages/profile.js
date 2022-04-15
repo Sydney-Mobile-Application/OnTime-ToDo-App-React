@@ -104,14 +104,7 @@ export default function Profile({ navigation }) {
           </Text>
         </Pressable>
 
-        <Pressable
-          style={styles.signOut}
-          onPress={() => navigation.navigate("Sign In")}
-        >
-          <Text style={{ color: "white", fontFamily: "Poppins_600SemiBold" }}>
-            Sign Out
-          </Text>
-        </Pressable>
+        
 
         <Pressable
           style={styles.bottomText}
