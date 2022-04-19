@@ -656,6 +656,8 @@ const styles = StyleSheet.create({
     marginBottom: "5%",
   },
   swipeTextContent: {
+    // backgroundColor:"#000",
+    marginBottom: "10%",
     fontFamily: "Poppins_600SemiBold",
     // fontWeight: "bold",
   },
