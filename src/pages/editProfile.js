@@ -30,14 +30,13 @@ const windowWidth = Dimensions.get("window").width;
 const windowHeight = Dimensions.get("window").height;
 
 export default function EditProfile({ navigation }) {
-  
   const [state, setState] = useState({
     userData: "",
     email: "",
     username: "",
     phone: "",
   });
-  
+
   const getSavedUserData = async () => {
     try {
       const userData = await AsyncStorage.getItem("@userData");
@@ -51,17 +50,22 @@ export default function EditProfile({ navigation }) {
       console.log("error msg : ", err);
     }
   };
+
   const [email, onChangeText] = [state.userData.email];
   const [username, onChangeUser] = [state.userData.username];
   const [phone, onChangePhone] = [state.userData.phone];
+
   const onSubmitData = () => {
     const myDoc = doc(db, "users", state.userData.uid);
 
     const dataPost = {
-      email: state.email.toLowerCase(),
-      username: state.username,
-      phone: state.phone,
+      email: state.email ? state.email.toLowerCase() : email,
+      username: state.username ? state.username : username,
+      phone: state.phone ? state.phone : phone,
     };
+
+    console.log("datapost", dataPost);
+    console.log("email", email);
 
     updateDoc(myDoc, dataPost)
       .then(() => {
@@ -130,13 +134,10 @@ export default function EditProfile({ navigation }) {
                 setState((prevState) => ({
                   ...prevState,
                   email: val,
-                }))  
-                ;
+                }));
               }}
-              defaultValue= {email}
+              defaultValue={email}
               placeholder={state.userData.email}
-
-            
             />
             <Text>Username</Text>
             <TextInput
@@ -147,7 +148,7 @@ export default function EditProfile({ navigation }) {
                   username: val,
                 }));
               }}
-              defaultValue= {username}
+              defaultValue={username}
               placeholder={state.userData.username}
             />
             <Text>Phone Number (ex : 81267714878) </Text>
@@ -159,7 +160,7 @@ export default function EditProfile({ navigation }) {
                   phone: val,
                 }));
               }}
-              defaultValue= {phone}
+              defaultValue={phone}
               placeholder={state.userData.phone}
               keyboardType={"phone-pad"}
             />
@@ -171,7 +172,7 @@ export default function EditProfile({ navigation }) {
             onSubmitData();
           }}
         >
-          <Text style={{ color: "white", fontFamily: "Poppins_600SemiBold"}}>
+          <Text style={{ color: "white", fontFamily: "Poppins_600SemiBold" }}>
             Save
           </Text>
         </Pressable>
@@ -189,7 +190,7 @@ const styles = StyleSheet.create({
   inputRegister: {
     fontFamily: "Poppins_300Light",
     height: 60,
-    width: windowWidth * .8,
+    width: windowWidth * 0.8,
     borderRadius: 12,
     margin: "5%",
     borderWidth: 1,
@@ -222,7 +223,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "center",
     marginTop: 30,
-    width: windowWidth * .8,
+    width: windowWidth * 0.8,
   },
 
   left: {
