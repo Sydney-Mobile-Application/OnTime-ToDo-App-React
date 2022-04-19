@@ -7,6 +7,7 @@ import {
   Pressable,
   Dimensions,
   TextInput,
+  ScrollView,
   Alert,
 } from "react-native";
 import { MaterialIcons } from "@expo/vector-icons";
@@ -96,7 +97,13 @@ export default function EditProfile({ navigation }) {
     return <AppLoading />;
   } else {
     return (
+      <View>
+        <ScrollView
+        showsVerticalScrollIndicator={false}
+        showsHorizontalScrollIndicator={false}
+        >
       <View style={styles.container}>
+        
         <View style={styles.back}>
           <Pressable onPress={() => navigation.navigate("Profile")}>
             <MaterialIcons name="arrow-back" size={30} color="#293462" />
@@ -175,6 +182,8 @@ export default function EditProfile({ navigation }) {
             Save
           </Text>
         </Pressable>
+        </View>
+        </ScrollView>
       </View>
     );
   }
@@ -246,6 +255,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     marginTop: 30,
+    marginBottom: "5%"
   },
 
   signOut: {
