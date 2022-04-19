@@ -30,13 +30,14 @@ const windowWidth = Dimensions.get("window").width;
 const windowHeight = Dimensions.get("window").height;
 
 export default function EditProfile({ navigation }) {
+  
   const [state, setState] = useState({
     userData: "",
     email: "",
     username: "",
     phone: "",
   });
-
+  
   const getSavedUserData = async () => {
     try {
       const userData = await AsyncStorage.getItem("@userData");
@@ -50,7 +51,9 @@ export default function EditProfile({ navigation }) {
       console.log("error msg : ", err);
     }
   };
-
+  const [email, onChangeText] = [state.userData.email];
+  const [username, onChangeUser] = [state.userData.username];
+  const [phone, onChangePhone] = [state.userData.phone];
   const onSubmitData = () => {
     const myDoc = doc(db, "users", state.userData.uid);
 
@@ -122,6 +125,7 @@ export default function EditProfile({ navigation }) {
             <Text>Email</Text>
             <TextInput
               style={styles.inputRegister}
+              // onChangeText={onChangeText}
               onChangeText={(val) => {
                 setState((prevState) => ({
                   ...prevState,
@@ -129,6 +133,7 @@ export default function EditProfile({ navigation }) {
                 }))  
                 ;
               }}
+              defaultValue= {email}
               placeholder={state.userData.email}
 
             
@@ -142,6 +147,7 @@ export default function EditProfile({ navigation }) {
                   username: val,
                 }));
               }}
+              defaultValue= {username}
               placeholder={state.userData.username}
             />
             <Text>Phone Number (ex : 81267714878) </Text>
@@ -153,7 +159,7 @@ export default function EditProfile({ navigation }) {
                   phone: val,
                 }));
               }}
-              
+              defaultValue= {phone}
               placeholder={state.userData.phone}
               keyboardType={"phone-pad"}
             />
