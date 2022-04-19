@@ -655,10 +655,10 @@ const styles = StyleSheet.create({
     // paddingRight: 20,
     marginBottom: "5%",
   },
-  swipeTextContent: {
-    // backgroundColor:"#000",
-    marginBottom: "10%",
-    fontFamily: "Poppins_600SemiBold",
-    // fontWeight: "bold",
-  },
+    swipeTextContent: {
+      // backgroundColor:"#000",
+      marginBottom: "10%",
+      fontFamily: "Poppins_600SemiBold",
+      // fontWeight: "bold",
+    },
 });
