@@ -104,8 +104,6 @@ export default function Profile({ navigation }) {
           </Text>
         </Pressable>
 
-        
-
         <Pressable
           style={styles.bottomText}
           onPress={() => navigation.navigate("Help Support")}
@@ -188,7 +186,7 @@ const styles = StyleSheet.create({
   },
 
   bottomText: {
-    marginTop: "10%",
+    marginTop: "5%",
   },
   back: {
     marginLeft: windowWidth * 0.08,
