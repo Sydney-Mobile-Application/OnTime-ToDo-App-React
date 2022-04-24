@@ -172,8 +172,15 @@ export default function SettingMenu({ navigation }) {
               style={styles.switch}
               onValueChange={toggleSwitch}
               value={switchValue}
+              
+              
             />
+
+        
+
           </View>
+
+
 
           <Pressable onPress={() => navigation.navigate("Language Setting")}>
             <View style={styles.bottomTitle}>

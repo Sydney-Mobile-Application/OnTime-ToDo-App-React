@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, View, Text, Pressable, Dimensions} from 'react-native';
+import { StyleSheet, View, Text, Pressable, Dimensions, Image} from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
 import {
   Poppins_300Light,
@@ -45,7 +45,11 @@ export default function BackupData ({ navigation }) {
       </View>
       </View>
       <Pressable style={styles.backupNow} onPress={() => navigation.navigate('Dashboard')}>
-          <Text style={{color: 'white', fontFamily: 'Poppins_400Regular'}}>Backup Now</Text>
+          <Text style={{color: 'white', fontFamily: 'Poppins_400Regular'}}>
+          
+
+
+            Backup Now</Text>
         </Pressable>
     </View>
   );
@@ -100,5 +104,14 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     marginTop: 30,
     marginLeft: windowHeight * 0.01,
+  },
+
+  profilePicture:{
+    
+    width: 30,
+    height: 30,
+  
+
+
   },
 });

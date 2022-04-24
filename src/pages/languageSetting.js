@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, View, Text, Pressable, Dimensions} from 'react-native';
+import { StyleSheet, View,   Image, Text, Pressable, Dimensions, image } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
 import {
   Poppins_300Light,
@@ -33,20 +33,51 @@ export default function LanguageSetting ({ navigation }) {
       </Pressable>
     </View>
       <Text style={styles.languageTitle}>Language Setting </Text>
-      <Text style={styles.languageDescOn}>
-        
-        English (US)</Text>
-      <Text style={styles.languageDescOff}>English (UK)</Text>
-      <Text style={styles.languageDescOff}>Bahasa Indonesia</Text>
-      <Text style={styles.languageDescOff}>Deutsch</Text>
-      <Text style={styles.languageDescOff}>Espanol</Text>
-      <Text style={styles.languageDescOff}>Hindi</Text>
-      <Text style={styles.languageDescOff}>Filipino</Text>
-      <Text style={styles.languageDescOff}>Chinese Simplified (简体中文)</Text>
+      <Text style={styles.languageDescOff}>
+      <Image style={styles.profilePicture} source={require("../../assets/englishflag.jpg")}/>
+       English (UK)
+      </Text>
+      <Text style={styles.languageDescOff}>
+      <Image style={styles.profilePicture} source={require("../../assets/indonesiaflag.png")} />
+         Bahasa Indonesia
+      </Text>
+      <Text style={styles.languageDescOff}>
+      <Image style={styles.profilePicture} source={require("../../assets/deutschflag.png")}/>
+        Deutsch
+      </Text>
+      <Text style={styles.languageDescOff}>
+      <Image style={styles.profilePicture} source={require("../../assets/espanolflag.png")}/>
+        Espanol
+      </Text>
+      <Text style={styles.languageDescOff}>
+      <Image style={styles.profilePicture} source={require("../../assets/hindiflag.png")}/>
+        Hindi
+      </Text>
+      <Text style={styles.languageDescOff}>
+      <Image style={styles.profilePicture} source={require("../../assets/filipinoflag.png")}/>
+        Filipino
+      </Text>
+      <Text style={styles.languageDescOff}>
+      <Image style={styles.profilePicture} source={require("../../assets/chineseflag.png")}/>
+        Chinese Simplified (简体中文)
+      </Text>
+
+       
+       
+       
+
     </View>
+
+
+      
+
   );
   }
 };
+
+
+
+
 
 const styles = StyleSheet.create({
   container: {
@@ -74,12 +105,11 @@ const styles = StyleSheet.create({
     fontFamily: 'Poppins_400Regular'
   },
   profilePicture: {
-    width: 50,
-    height: 50,
+    width: 30,
+    height: 20,
     borderRadius: 50,
     position: "relative",
-    marginLeft: windowHeight * 0.25,
-    marginTop: windowHeight * 0.025,
+
   },
 
   languageDescOff: {
