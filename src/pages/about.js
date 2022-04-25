@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, View, Text, Pressable, Dimensions } from 'react-native';
+import { StyleSheet, View, Text, Pressable, Dimensions, Image } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
 import {
   Poppins_300Light,
@@ -10,6 +10,7 @@ import {
 } from '@expo-google-fonts/poppins';
 import {useFonts} from 'expo-font';
 import AppLoading from 'expo-app-loading';
+import { CurrentRenderContext } from '@react-navigation/native';
 
 const windowWidth = Dimensions.get("window").width;
 const windowHeight = Dimensions.get("window").height;
@@ -33,10 +34,16 @@ export default function About ({ navigation }) {
         </Pressable>
         <Text style={styles.aboutTitle}>About ToDoApp</Text>
       </View>
+
+      <Image
+                style={styles.profilePicture}
+                source={require("../../assets/getstart.png")}
+              />
+
       <View style={styles.aboutDetail}>
       <Text style={styles.aboutDescription}>ToDoApp is an application designed to assist users in completing daily tasks on time {"\n"}</Text>
-      <Text style={styles.aboutDescription}>Version 1.0 Alpha</Text>
-      <Text style={styles.aboutDescription}>Build 1.0032468</Text>
+      <Text style={styles.aboutfooter}>Version 1.0 Alpha</Text>
+      <Text style={styles.aboutfooter}>Build 1.0032468</Text>
       </View>
     </View>
   );
@@ -51,6 +58,17 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-start',
     paddingLeft: windowHeight * 0.04,
     paddingTop: 50,
+  },
+
+  profilePicture:{
+    
+    width: windowWidth *0.5,
+    height: windowHeight * 0.2 ,
+    borderRadius: 50,
+    position: "relative",
+    marginLeft: windowHeight * 0.08,
+    marginBottom : windowHeight * 0.03,
+
   },
   
   aboutTitle: {
@@ -68,6 +86,15 @@ const styles = StyleSheet.create({
   
   aboutDescription: {
     fontSize: 18,
+    lineHeight: 40,
+    fontFamily: 'Poppins_400Regular',
+    textAlign: 'justify',
+    width: windowWidth * 0.7,
+    //marginBottom : windowHeight *0.3,
+  },
+
+  aboutfooter: {
+    fontSize: 15,
     lineHeight: 40,
     fontFamily: 'Poppins_400Regular',
     textAlign: 'justify',

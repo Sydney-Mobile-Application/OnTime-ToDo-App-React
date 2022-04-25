@@ -47,6 +47,14 @@ export default function HelpSupport ({ navigation }) {
           <Text style={styles.description}>WhatsApp Support</Text>
           <Text style={styles.description}>+12-345-678-900</Text>
        </View>
+
+       <View style={styles.helpSupportContainer}>
+          <Text style={styles.description}>Read our docs</Text>
+          <Text style={styles.description}>
+
+            *masukin pop up docs*
+          </Text>
+       </View>
     </View>
     </View>
   );
@@ -73,8 +81,8 @@ const styles = StyleSheet.create({
   },
 
   helpSupportContainer: {
-    width: '89%',
-    height: '17%',
+    width: windowWidth *0.84 ,
+    height: windowHeight * 0.1,
     borderRadius: 25,
     backgroundColor: '#FFECBF',
     paddingLeft: windowHeight * 0.03,
