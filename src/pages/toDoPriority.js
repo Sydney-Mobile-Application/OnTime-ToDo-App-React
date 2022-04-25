@@ -2,10 +2,12 @@ import React from "react";
 import { StyleSheet, View, Text, ScrollView, Pressable } from "react-native";
 import { MaterialIcons } from "@expo/vector-icons";
 
-export default function ToDoPriority() {
+export default function ToDoPriority(props) {
   function capitalizeFirstLetter(string) {
     return string.charAt(0).toUpperCase() + string.slice(1);
   }
+
+  console.log("props toDoData", props.route.params.toDoData);
 
   let dummyData = {
     data: [

@@ -1,7 +1,21 @@
-import React from "react";
-import { StyleSheet, View, Text, Dimensions, Pressable } from "react-native";
+import React, { useState, useEffect } from "react";
+
+import {
+  StyleSheet,
+  View,
+  Text,
+  Dimensions,
+  Pressable,
+  Alert,
+} from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+
+// Firebase Conn
+import { getDocs, collection, query, where } from "firebase/firestore";
+import { db } from "../config/firebase";
+
 import * as CallBack from "../index";
 
 // Icon
@@ -22,6 +36,68 @@ function MyTabs({ navigation, upcoming }) {
       return saver;
     }
   }
+
+  const [state, setState] = useState({
+    userData: [],
+    toDoData: [],
+  });
+
+  let userDataObj = [];
+  let toDoDataObj = [];
+
+  const getSavedUserData = async () => {
+    try {
+      const userData = await AsyncStorage.getItem("@userData");
+      if (userData !== null) {
+        setState((prevState) => ({
+          ...prevState,
+          userData: JSON.parse(userData),
+        }));
+
+        userDataObj = JSON.parse(userData);
+
+        getToDoData();
+      }
+    } catch (err) {
+      console.log("error msg : ", err);
+    }
+  };
+
+  const getToDoData = async () => {
+    if (!userDataObj.length) {
+      getDocs(
+        query(
+          collection(db, "notes"),
+          where("userId", "==", userDataObj.uid.toString())
+        )
+      ).then((querySnapshot) => {
+        if (querySnapshot.empty) {
+          Alert.alert("Not Found", "Notes Not Found");
+        }
+        querySnapshot.forEach((doc) => {
+          // // doc.data() is never undefined for query doc snapshots
+          console.log(doc.id, " => ", doc.data());
+          try {
+            const toDoData = Object.assign({ uid: doc.id }, doc.data());
+            // const value = JSON.stringify(toDoData);
+
+            toDoDataObj = toDoData;
+
+            setState((prevState) => ({
+              ...prevState,
+              toDoData: toDoData,
+            }));
+          } catch (err) {
+            console.log("Error Msg :", err);
+          }
+        });
+      });
+    }
+  };
+
+  useEffect(() => {
+    getSavedUserData();
+  }, []);
 
   return (
     <>
@@ -47,6 +123,8 @@ function MyTabs({ navigation, upcoming }) {
         <Tab.Screen
           name="Priority"
           component={CallBack.ToDoPriority}
+          // initialParams={{ toDoData: state.toDoData }}
+          initialParams={{ toDoData: state.toDoData }}
           options={{ tabBarLabel: "Priority" }}
         />
         <Tab.Screen

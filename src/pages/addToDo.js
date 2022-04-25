@@ -7,6 +7,7 @@ import {
   TextInput,
   Pressable,
   Modal,
+  Alert,
 } from "react-native";
 import { MaterialIcons } from "@expo/vector-icons";
 import { Feather } from "@expo/vector-icons";
@@ -22,6 +23,18 @@ import {
 } from "@expo-google-fonts/poppins";
 import { useFonts } from "expo-font";
 import AppLoading from "expo-app-loading";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+
+// Firebase
+import {
+  doc,
+  getDoc,
+  setDoc,
+  add,
+  collection,
+  Timestamp,
+} from "firebase/firestore";
+import { db } from "../config/firebase";
 
 const windowWidth = Dimensions.get("window").width;
 const windowHeight = Dimensions.get("window").height;
@@ -58,19 +71,23 @@ const actions = [
 ];
 
 export default function AddToDo({ navigation }) {
-  const [textEmail, onChangeTextEmail] = useState("");
+  const [textTitle, onChangeTextTitle] = useState("");
+  const [textDesc, onChangeTextDesc] = useState("");
   const [oldDate, newDate] = useState("Select Date Time");
   const [oldTime, newTime] = useState("0:00");
   const [modalCalendarVisible, setModalCalendarVisible] = useState(false);
   const [date, setDate] = useState(new Date());
   const [show, setShow] = useState(false);
+
   function closeCalendarModal() {
     setModalCalendarVisible(false);
   }
+
   const [modalFontVisible, setModalFontVisible] = useState(false);
   function closeFontModal() {
     setModalFontVisible(false);
   }
+
   let [fontsLoaded] = useFonts({
     Poppins_300Light,
     Poppins_400Regular,
@@ -86,6 +103,11 @@ export default function AddToDo({ navigation }) {
     setShow(true);
   };
 
+  const [state, setState] = useState({
+    userData: [],
+    dateTime: null,
+  });
+
   const onChangeTime = (time) => {
     setShow(Platform.OS === "ios");
     let timenow = String(time.nativeEvent.timestamp);
@@ -96,13 +118,66 @@ export default function AddToDo({ navigation }) {
     }
     var minute = timenow.substring(19, 21);
     // receiveDate(String(time._i.hour) + " : " + String(time._i.minute));
-    console.log(hour + ":" + minute);
+    // console.log(hour + ":" + minute);
     newTime(hour + ":" + minute);
+    setState((prevState) => ({
+      ...prevState,
+      dateTime: time.nativeEvent.timestamp.toString(),
+    }));
     // const currentDate = selectedDate || time;
     // setShow(Platform.OS === 'ios');
     // setDate(currentDate);
     // console.log(date)
   };
+
+  const onSaveData = () => {
+    if (state.userData.length != 0) {
+      if (state.dateTime === null) {
+        Alert.alert("Error", "Date Time Cannot Empty !");
+      } else if (textTitle === "" || textDesc === "") {
+        Alert.alert("Error", "Title and Description Cannot Empty !");
+      } else {
+        const myDoc = doc(collection(db, "notes"));
+
+        const dataPost = {
+          date: Timestamp.fromDate(new Date(state.dateTime)),
+          title: textTitle,
+          description: textDesc,
+          is_favourite: false,
+          type: "Upcoming",
+          userId: state.userData.uid,
+        };
+
+        setDoc(myDoc, dataPost)
+          .then(() => {
+            Alert.alert("Success", "Task Submitted Successfully !");
+            navigation.navigate("Dashboard");
+          })
+          .catch((error) => {
+            Alert.alert("Error", error.message);
+          });
+      }
+    }
+  };
+
+  useEffect(() => {
+    getSavedUserData();
+  }, []);
+
+  const getSavedUserData = async () => {
+    try {
+      const userData = await AsyncStorage.getItem("@userData");
+      if (userData !== null) {
+        setState((prevState) => ({
+          ...prevState,
+          userData: JSON.parse(userData),
+        }));
+      }
+    } catch (err) {
+      console.log("error msg : ", err);
+    }
+  };
+
   if (!fontsLoaded) {
     return <AppLoading />;
   } else {
@@ -118,7 +193,8 @@ export default function AddToDo({ navigation }) {
             <Text style={styles.dateInfo}>
               {oldDate} - {oldTime}
             </Text>
-            <Pressable onPress={() => navigation.navigate("Dashboard")}>
+            {/* <Pressable onPress={() => navigation.navigate("Dashboard")}> */}
+            <Pressable onPress={() => onSaveData()}>
               <Feather
                 style={styles.saveButton}
                 name="check"
@@ -133,13 +209,13 @@ export default function AddToDo({ navigation }) {
           <TextInput
             style={styles.title}
             padding={"5%"}
-            onChangeText={onChangeTextEmail}
+            onChangeText={onChangeTextTitle}
             placeholder="Title "
           />
           <TextInput
             style={styles.description}
             padding={"5%"}
-            onChangeText={onChangeTextEmail}
+            onChangeText={onChangeTextDesc}
             multiline={true}
             placeholder="Descriptionn "
           />
