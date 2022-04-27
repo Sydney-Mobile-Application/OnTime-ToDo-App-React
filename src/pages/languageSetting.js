@@ -109,15 +109,16 @@ const styles = StyleSheet.create({
     height: 20,
     borderRadius: 50,
     position: "relative",
-
   },
 
   languageDescOff: {
     fontSize: 20,
     lineHeight: 40,
     marginLeft: windowHeight * 0.01,
+    paddingHorizontal: 15,
     color: 'rgba(108, 122, 137, 1)',
-    fontFamily: 'Poppins_400Regular'
+    fontFamily: 'Poppins_400Regular',
+    height: 35,
   },
 
 
