@@ -108,6 +108,14 @@ export default function AddToDo({ navigation }) {
     dateTime: null,
   });
 
+  const clearData = () => {
+    newDate("Select Date Time");
+    newTime("0:00");
+    setModalCalendarVisible(false);
+    onChangeTextDesc("");
+    onChangeTextTitle("");
+  };
+
   const onChangeTime = (time) => {
     setShow(Platform.OS === "ios");
     let timenow = String(time.nativeEvent.timestamp);
@@ -150,6 +158,7 @@ export default function AddToDo({ navigation }) {
 
         setDoc(myDoc, dataPost)
           .then(() => {
+            clearData();
             Alert.alert("Success", "Task Submitted Successfully !");
             navigation.navigate("Dashboard");
           })
@@ -161,6 +170,7 @@ export default function AddToDo({ navigation }) {
   };
 
   useEffect(() => {
+    clearData();
     getSavedUserData();
   }, []);
 
@@ -209,6 +219,7 @@ export default function AddToDo({ navigation }) {
           <TextInput
             style={styles.title}
             padding={"5%"}
+            multiline={true}
             onChangeText={onChangeTextTitle}
             placeholder="Title "
           />
@@ -217,7 +228,7 @@ export default function AddToDo({ navigation }) {
             padding={"5%"}
             onChangeText={onChangeTextDesc}
             multiline={true}
-            placeholder="Descriptionn "
+            placeholder="Description"
           />
         </View>
 
@@ -361,6 +372,8 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 30,
     // padding: "5%",
+    minWidth: "100%",
+    textAlignVertical: "top",
     alignSelf: "flex-start",
     justifyContent: "flex-start",
     alignItems: "flex-start",
@@ -369,7 +382,9 @@ const styles = StyleSheet.create({
   },
   description: {
     // padding: "5%",
-    textAlignVertical: "center",
+    minWidth: "100%",
+    height: "100%",
+    textAlignVertical: "top",
     fontSize: 20,
     fontFamily: "Poppins_400Regular",
     alignSelf: "flex-start",

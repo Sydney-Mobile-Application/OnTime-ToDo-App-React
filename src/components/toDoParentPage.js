@@ -124,7 +124,7 @@ function MyTabs({ navigation, upcoming }) {
           name="Priority"
           component={CallBack.ToDoPriority}
           // initialParams={{ toDoData: state.toDoData }}
-          initialParams={{ toDoData: state.toDoData }}
+          initialParams={{ toDoData: state?.toDoData }}
           options={{ tabBarLabel: "Priority" }}
         />
         <Tab.Screen
