@@ -198,7 +198,7 @@ const styles = StyleSheet.create({
   },
   inputRegister: {
     fontFamily: "Poppins_300Light",
-    height: 60,
+    height: 50,
     width: windowWidth * 0.8,
     borderRadius: 12,
     margin: "5%",

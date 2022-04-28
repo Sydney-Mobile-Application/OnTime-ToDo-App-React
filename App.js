@@ -97,6 +97,7 @@ export default function App() {
         <Stack.Screen name="Help Support" component={CallBack.HelpSupport} />
         <Stack.Screen name="Permission" component={CallBack.Permission} />
         <Stack.Screen name="About" component={CallBack.About} />
+        <Stack.Screen name="Change Password" component={CallBack.ChangePassword} />
       </Stack.Navigator>
     </NavigationContainer>
   );

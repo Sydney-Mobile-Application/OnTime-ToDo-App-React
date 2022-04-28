@@ -97,7 +97,7 @@ export default function Profile({ navigation }) {
 
         <Pressable
           style={styles.signOut}
-          onPress={() => navigation.navigate("ChangePassword")}
+          onPress={() => navigation.navigate("Change Password")}
         >
           <Text style={{ color: "white", fontFamily: "Poppins_600SemiBold" }}>
             Change Password

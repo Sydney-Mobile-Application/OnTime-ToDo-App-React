@@ -148,6 +148,12 @@ export default function HomeScreen ({ navigation }) {
           navigation.navigate('About')
         }
       />
+      <Button
+        title="Go To Change Password"
+        onPress={() =>
+          navigation.navigate('Change Password')
+        }
+      />
     </View>
     </ScrollView>
   );

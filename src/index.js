@@ -34,6 +34,7 @@ import Permission from "./pages/permission";
 import About from "./pages/about";
 import DashboardConnection from "./components/bottomBarDashboardConnect";
 import ToDoParentPage from "./components/toDoParentPage";
+import ChangePassword from "./pages/changePassword";  
 
 export {
   GetStarted,
@@ -61,4 +62,5 @@ export {
   About,
   DashboardConnection,
   Switcher,
+  ChangePassword,
 };
