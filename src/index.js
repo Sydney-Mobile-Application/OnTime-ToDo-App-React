@@ -35,6 +35,9 @@ import About from "./pages/about";
 import DashboardConnection from "./components/bottomBarDashboardConnect";
 import ToDoParentPage from "./components/toDoParentPage";
 import ChangePassword from "./pages/changePassword";  
+import ForgotPassword from "./pages/forgotPassword";
+import VerifyEmail from "./pages/verifyEmail";
+ 
 
 export {
   GetStarted,
@@ -63,4 +66,6 @@ export {
   DashboardConnection,
   Switcher,
   ChangePassword,
+  ForgotPassword,
+  VerifyEmail,
 };

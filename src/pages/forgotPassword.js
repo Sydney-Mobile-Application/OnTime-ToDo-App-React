@@ -1,16 +1,16 @@
-import React, { useState, useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import {
   StyleSheet,
   View,
   Text,
   TouchableOpacity,
-  Image,
+  TextInput,
   Pressable,
   Dimensions,
-  TextInput,
 } from "react-native";
-import { MaterialIcons } from "@expo/vector-icons";
+
 import {
+  useFont,
   Poppins_300Light,
   Poppins_400Regular,
   Poppins_600SemiBold,
@@ -18,45 +18,20 @@ import {
   Poppins_800ExtraBold,
 } from "@expo-google-fonts/poppins";
 import { useFonts } from "expo-font";
+import { MaterialIcons } from "@expo/vector-icons";
 import AppLoading from "expo-app-loading";
-
-import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const windowWidth = Dimensions.get("window").width;
 const windowHeight = Dimensions.get("window").height;
 
-export default function ChangePassword({ navigation }) {
-  const [switchValue, setswitchValue] = useState(false);
-  const toggleSwitch = (value) => {
-    setswitchValue(value);
-  };
+// Firebase Conn
+import { getDocs, collection, query, where } from "firebase/firestore";
+import { db } from "../config/firebase";
 
-  const [text, onChangeText] = React.useState("Useless Text");
-  const [textPassword, onChangeTextPassword] = useState("");
-  const [signInDisable, setSignInDisable] = useState(true);
+// Async Storoage
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
-  const [state, setState] = useState({
-    userData: "",
-  });
-  
-  const getSavedUserData = async () => {
-    try {
-      const userData = await AsyncStorage.getItem("@userData");
-      if (userData !== null) {
-        setState((prevState) => ({
-          ...prevState,
-          userData: JSON.parse(userData),
-        }));
-      }
-    } catch (err) {
-      console.log("error msg : ", err);
-    }
-  };
-
-  useEffect(() => {
-    getSavedUserData();
-  }, []);
-
+export default function ForgotPassword({ navigation }) {
   let [fontsLoaded] = useFonts({
     Poppins_300Light,
     Poppins_400Regular,
@@ -64,7 +39,20 @@ export default function ChangePassword({ navigation }) {
     Poppins_700Bold,
     Poppins_800ExtraBold,
   });
-  
+
+  const [text, onChangeText] = React.useState("Useless Text");
+  const [textEmail, onChangeTextEmail] = useState("");
+  const [textPassword, onChangeTextPassword] = useState("");
+  const [signInDisable, setSignInDisable] = useState(true);
+
+    useEffect(() => {
+    if (!textEmail.trim() || !textPassword.trim()) {
+      setSignInDisable(true);
+    } else {
+      setSignInDisable(false);
+    }
+  }, [textEmail, textPassword]);
+
   if (!fontsLoaded) {
     return <AppLoading />;
   } else {
@@ -77,35 +65,19 @@ export default function ChangePassword({ navigation }) {
         </View>
         <View style={{ width: "80%" }}>
           <View style={styles.headerContainer}>
-            <Text style={styles.headerContent}>Change Password</Text>
+            <Text style={styles.headerContent}>Forgot Your Password?</Text>
+            <Text style={styles.textTop}>Please enter registered email.</Text>
           </View>
         </View>
         <TextInput
-          style={styles.inputPassword}
-          onChangeText={onChangeTextPassword}
-          secureTextEntry={true}
-          placeholder="Old Password"
-        />
-        <TextInput
-          style={styles.inputPassword}
-          onChangeText={onChangeTextPassword}
-          secureTextEntry={true}
-          placeholder="New Password"
-        />
-        <TextInput
-          style={styles.inputPassword}
-          onChangeText={onChangeTextPassword}
-          secureTextEntry={true}
-          placeholder="Confirm New Password"
+          style={styles.inputEmail}
+          onChangeText={onChangeTextEmail}
+          placeholder="Email"
         />
         <Pressable
-          style={styles.changePassword}
-          onPress={() => {
-            onSubmitData();
-          }}
-        >
+          style={styles.changePassword} onPress={() => navigation.navigate('Verify Email')}>
           <Text style={{ color: "white", fontFamily: "Poppins_600SemiBold" }}>
-            Save
+            Submit
           </Text>
         </Pressable>
       </View>
@@ -114,7 +86,7 @@ export default function ChangePassword({ navigation }) {
 }
 
 const styles = StyleSheet.create({
-  container: {
+container: {
     flex: 1,
     backgroundColor: "#fff",
     justifyContent: "flex-start",
@@ -135,10 +107,14 @@ const styles = StyleSheet.create({
     justifyContent: "flex-start",
     fontFamily: "Poppins_600SemiBold",
     fontSize: 30,
-    marginBottom: 10,
   },
-
-  inputPassword: {
+  
+  textTop: {
+    fontSize: 20,
+    fontFamily: "Poppins_300Light",
+    marginBottom: 12,
+  },
+  inputEmail: {
     height: 50,
     width: "80%",
     fontFamily: "Poppins_400Regular",
@@ -157,8 +133,7 @@ const styles = StyleSheet.create({
     borderRadius: 50,
     alignItems: "center",
     justifyContent: "center",
-    marginTop: 30,
-    marginBottom: "5%"
+    marginTop: 50,
   },
-},
-);
+})
+

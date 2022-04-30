@@ -104,12 +104,10 @@ export default function SignIn({ navigation }) {
         />
         <View style={styles.forgotPassword}>
           {/* <Pressable onPress={() => navigation.navigate("Register")}> */}
-          <TouchableOpacity>
-          {/* <Pressable> */}
+          <TouchableOpacity onPress={() => navigation.navigate("Forgot Password")}>
             <Text style={{ fontFamily: "Poppins_600SemiBold" }}>
               Forgot Password?
             </Text>
-          {/* </Pressable> */}
           </TouchableOpacity>
         </View>
         <View style={styles.inlineText}>

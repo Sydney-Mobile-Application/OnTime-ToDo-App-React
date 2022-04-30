@@ -154,6 +154,18 @@ export default function HomeScreen ({ navigation }) {
           navigation.navigate('Change Password')
         }
       />
+      <Button
+        title="Go To Forgot Password"
+        onPress={() =>
+          navigation.navigate('Forgot Password')
+        }
+      />
+      <Button
+        title="Go To Verify Email"
+        onPress={() =>
+          navigation.navigate('Verify Email')
+        }
+      />
     </View>
     </ScrollView>
   );
