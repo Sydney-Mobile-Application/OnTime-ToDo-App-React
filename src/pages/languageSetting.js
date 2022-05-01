@@ -90,7 +90,7 @@ const styles = StyleSheet.create({
   },
 
   languageTitle: {
-    fontSize: 30,
+    fontSize: 25,
     alignSelf: 'flex-start',
     paddingTop: 20,
     marginBottom: 20,

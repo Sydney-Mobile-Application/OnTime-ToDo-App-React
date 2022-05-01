@@ -61,7 +61,6 @@ const styles = StyleSheet.create({
   },
 
   profilePicture:{
-    
     width: windowWidth *0.5,
     height: windowHeight * 0.2 ,
     borderRadius: 50,
@@ -72,16 +71,17 @@ const styles = StyleSheet.create({
   },
   
   aboutTitle: {
-    fontSize: 30,
+    fontSize: 25,
     alignSelf: 'flex-start',
     paddingTop: 20,
-    marginBottom: 20,
+    marginBottom: 30,
     marginLeft: windowHeight * 0.01,
     fontFamily: 'Poppins_600SemiBold'
   },
   
   aboutDetail: {
     marginLeft: windowHeight * 0.01,
+    width: "85%"
   },
   
   aboutDescription: {
@@ -89,13 +89,12 @@ const styles = StyleSheet.create({
     lineHeight: 40,
     fontFamily: 'Poppins_400Regular',
     textAlign: 'justify',
-    width: windowWidth * 0.7,
-    //marginBottom : windowHeight *0.3,
+    marginTop: 10,
   },
 
   aboutfooter: {
     fontSize: 15,
-    lineHeight: 40,
+    lineHeight: 30,
     fontFamily: 'Poppins_400Regular',
     textAlign: 'justify',
     width: windowWidth * 0.78,

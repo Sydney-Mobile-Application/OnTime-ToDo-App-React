@@ -106,7 +106,7 @@ container: {
     alignSelf: "flex-start",
     justifyContent: "flex-start",
     fontFamily: "Poppins_600SemiBold",
-    fontSize: 30,
+    fontSize: 25,
   },
   
   textTop: {
