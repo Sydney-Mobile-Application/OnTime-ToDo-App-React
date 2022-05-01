@@ -166,6 +166,12 @@ export default function HomeScreen ({ navigation }) {
           navigation.navigate('Verify Email')
         }
       />
+      <Button
+        title="Go To Verify On Email"
+        onPress={() =>
+          navigation.navigate('Verify On Email')
+        }
+      />
     </View>
     </ScrollView>
   );

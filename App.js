@@ -100,6 +100,7 @@ export default function App() {
         <Stack.Screen name="Change Password" component={CallBack.ChangePassword} />
         <Stack.Screen name="Forgot Password" component={CallBack.ForgotPassword} />
         <Stack.Screen name="Verify Email" component={CallBack.VerifyEmail} />
+        <Stack.Screen name="Verify On Email" component={CallBack.VerifyOnEmail} />
       </Stack.Navigator>
     </NavigationContainer>
   );
