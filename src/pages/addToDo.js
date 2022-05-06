@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, Component } from "react";
 import {
   StyleSheet,
   View,
@@ -8,6 +8,8 @@ import {
   Pressable,
   Modal,
   Alert,
+  TouchableOpacity,
+  IconButton,
 } from "react-native";
 import { MaterialIcons } from "@expo/vector-icons";
 import { Feather } from "@expo/vector-icons";
@@ -35,6 +37,7 @@ import {
   Timestamp,
 } from "firebase/firestore";
 import { db } from "../config/firebase";
+import { backgroundColor } from "react-native/Libraries/Components/View/ReactNativeStyleAttributes";
 
 const windowWidth = Dimensions.get("window").width;
 const windowHeight = Dimensions.get("window").height;
@@ -78,6 +81,11 @@ export default function AddToDo({ navigation }) {
   const [modalCalendarVisible, setModalCalendarVisible] = useState(false);
   const [date, setDate] = useState(new Date());
   const [show, setShow] = useState(false);
+  const [selected, setSelected] = useState(false);
+
+  // this.state ={
+  //   toggle: false,
+  // }
 
   function closeCalendarModal() {
     setModalCalendarVisible(false);
@@ -187,7 +195,6 @@ export default function AddToDo({ navigation }) {
       console.log("error msg : ", err);
     }
   };
-
   if (!fontsLoaded) {
     return <AppLoading />;
   } else {
@@ -232,14 +239,30 @@ export default function AddToDo({ navigation }) {
           />
         </View>
 
-        <View style={styles.containerBottom}>
-          <MaterialIcons
-            onPress={() => setModalFontVisible(true)}
-            name="font-download"
+          <View style={styles.containerBottom}>
+{/* -------------------------------------------------------------------------------------- */}
+          <Pressable
+          style={({pressed}) =>[{color: pressed? '#EC9B3B' : 'grey'},styles.star]}>
+          {({pressed}) => (
+            <MaterialIcons style={{color: pressed ? '#EC9B3B' : 'grey'}}
+            name="star"
             size={25}
             color="#293462"
-            style={styles.font}
-          />
+            />
+          )}
+          </Pressable>
+{/* haven't fixed */}
+          <Pressable onPress={() => setSelected(!selected)}
+            style={{backgroundColor: selected ? '#EC9B3B' : 'rgba(0,0,0,0.12)',
+            marginLeft: windowWidth * 0.1,
+            height: 25,}}>
+            <MaterialIcons 
+            name="star"
+            color='rgba(0,0,0,0.12)'
+            size={25}
+            />
+          </Pressable>
+{/* -------------------------------------------------------------------------------------- */}
           <MaterialIcons
             onPress={() => setModalCalendarVisible(true)}
             name="calendar-today"
@@ -399,6 +422,15 @@ const styles = StyleSheet.create({
     alignItems: "flex-start",
     marginLeft: windowWidth * 0.1,
   },
+
+  star: {
+    alignSelf: "flex-start",
+    justifyContent: "flex-start",
+    alignItems: "flex-start",
+    marginLeft: windowWidth * 0.1,
+    color: '#EE6F57',
+  },
+
   saveButton: {
     marginLeft: windowWidth * 0.05,
     borderRadius: 50,
