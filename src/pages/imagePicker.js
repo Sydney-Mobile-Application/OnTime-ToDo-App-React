@@ -8,14 +8,30 @@ import {
 import ImagePicker from 'react-native-image-picker';
 import { black } from "react-native-paper/lib/typescript/styles/colors";
 
-const imagePicker ({image, onImagePicked}) => {
+const TheImagePicker = ({ image, onImagePicked}) => {
+
+    const [selectedImage, setSelectedImage] = useState();
+
+    pickImageHandler = () => {
+        ImagePicker.showImagePicker({title: 'Pick an image', maxWidth: 800, maxHeight: 600},
+            response => {
+                if(response.error){
+                    console.log("image error");
+                } else {
+                    console.log("Image:" + response.uri)
+                    setSelectedImage({uri: response.uri})
+                    onImagePicked({uri: response.uri});
+                }
+            }
+        )
+    }
 
     return (
-        <View>
-            <View>
+        <View styles={styles.container}>
+            <View style={styles.imageContainer}>
                 <Image source={}/>
             </View>
-            <View styles={style.button}>
+            <View styles={styles.button}>
                 <Button title ="Pick Image" onPress={this.pickImageHandler}/>
             </View>
         </View>
