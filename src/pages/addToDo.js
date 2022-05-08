@@ -16,6 +16,7 @@ import { Feather } from "@expo/vector-icons";
 import { FloatingAction } from "react-native-floating-action";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import AddToDoCalendar from "./addToDoCalendar";
+import TheImagePicker from "./TheImagePicker";
 import {
   Poppins_300Light,
   Poppins_400Regular,
@@ -38,7 +39,7 @@ import {
 } from "firebase/firestore";
 import { db } from "../config/firebase";
 import { backgroundColor } from "react-native/Libraries/Components/View/ReactNativeStyleAttributes";
-// import TheImagePicker from './imagePicker';
+
 
 const windowWidth = Dimensions.get("window").width;
 const windowHeight = Dimensions.get("window").height;
@@ -86,6 +87,10 @@ export default function AddToDo({ navigation }) {
   const [show, setShow] = useState(false);
   const [selected, setSelected] = useState(false);
   const [priority, setPriority] = useState(false);
+
+  // setTaskImage = (image) => {
+  //   props.setFieldValue('imageUri', image.uri);
+  // }
   
   const priorityTask = () => {
     setPriority(!priority);
@@ -248,7 +253,7 @@ export default function AddToDo({ navigation }) {
             multiline={true}
             placeholder="Description"
           />
-          {/* <TheImagePicker image ={props.task.image} onImagePicked={setTaskImage}/> */}
+          {/* <TheImagePicker image={props.task.image} onImagePicked={setTaskImage}/> --> workin on it */}
         </View>
 
           <View style={styles.containerBottom}>
