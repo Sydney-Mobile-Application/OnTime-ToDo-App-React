@@ -8,6 +8,7 @@ import {
   Pressable,
   LogBox,
   Alert,
+  ScrollView
 } from "react-native";
 
 import {
@@ -84,7 +85,14 @@ export default function SignIn({ navigation }) {
     return <AppLoading />;
   } else {
     return (
-      <View style={styles.container}>
+        
+      // <View style={styles.container}>
+      <ScrollView
+          showsVerticalScrollIndicator={false}
+          showsHorizontalScrollIndicator={false}
+          contentContainerStyle={styles.container}
+        >
+        
         <View style={styles.headerContent}>
           <Text style={styles.textTopFSignIn}>Let's Sign You In!</Text>
           <Text style={styles.textTopSSignIn}>
@@ -130,7 +138,8 @@ export default function SignIn({ navigation }) {
             Sign In
           </Text>
         </Pressable>
-      </View>
+        </ScrollView>
+      // </View>
     );
   }
 }
@@ -138,12 +147,14 @@ export default function SignIn({ navigation }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: '#000',
+    // height: '100%',
     backgroundColor: "#fff",
     alignItems: "center",
     justifyContent: "center",
   },
   headerContent: {
-    marginTop: "10%",
+    marginTop: '30%',
     width: "80%",
   },
   textTopFSignIn: {
