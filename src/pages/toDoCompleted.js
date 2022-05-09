@@ -1,5 +1,5 @@
 import React from "react";
-import { StyleSheet, View, Text, ScrollView, Pressable } from "react-native";
+import { StyleSheet, View, Text, ScrollView, Pressable, Dimensions } from "react-native";
 import { MaterialIcons } from "@expo/vector-icons";
 import {
   useFont,
@@ -11,6 +11,9 @@ import {
 } from "@expo-google-fonts/poppins";
 import { useFonts } from "expo-font";
 import AppLoading from "expo-app-loading";
+
+const windowWidth = Dimensions.get("window").width;
+const windowHeight = Dimensions.get("window").height;
 
 export default function toDoCompleted() {
   let [fontsLoaded] = useFonts({
@@ -122,12 +125,12 @@ export default function toDoCompleted() {
                   </Pressable>
                   <View>
                     <View>
-                      <Pressable onPress={() => console.log("Share Note")}>
+                      <Pressable onPress={() => console.log("Delete Note")}>
                         <MaterialIcons
-                          name="share"
+                          name="delete"
                           size={16}
                           color="#ABACF7"
-                          style={styles.share}
+                          style={styles.delete}
                         />
                       </Pressable>
                     </View>
@@ -154,7 +157,7 @@ export default function toDoCompleted() {
 
 const styles = StyleSheet.create({
   scrollView: {
-    marginVertical: 30,
+    marginVertical: windowHeight*0.02,
   },
   row: {
     display: "flex",
@@ -166,35 +169,34 @@ const styles = StyleSheet.create({
     paddingBottom: 12,
   },
   task: {
-    width: 130,
     borderRadius: 20,
-    marginTop: 10,
-    margin: 20,
+    marginTop: "5%",
+    marginLeft: windowWidth*0.06,
     flexDirection: "row",
     alignSelf: "center",
+    justifyContent: "center",
   },
   taskNear2: {
-    width: 131,
-    height: 131,
-    marginLeft: 20,
+    width: windowWidth*0.35,
+    height: windowHeight*0.15,
     borderRadius: 20,
-    paddingTop: 30,
-    paddingBottom: 30,
-    paddingLeft: 15,
-    paddingRight: 15,
+    paddingTop: "10%",
+    paddingBottom: "10%",
+    paddingLeft: "15%",
+    paddingRight: "15%",
     alignSelf: "flex-end",
-    // alignItems: "center",
-    justifyContent: "flex-start",
+    alignItems: "center",
+    justifyContent: "center",
     backgroundColor: "#FFEDBF",
   },
-  share: {
-    marginLeft: 5,
-    marginTop: 30,
+  delete: {
+    marginLeft: windowWidth*0.02,
+    marginTop: windowHeight*0.05,
     justifyContent: "center",
   },
   star: {
-    marginLeft: 5,
-    marginTop: 10,
+    marginLeft: windowWidth*0.02,
+    marginTop: windowHeight*0.01,
     justifyContent: "center",
   },
   taskText: {

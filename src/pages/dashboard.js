@@ -35,6 +35,7 @@ const windowWidth = Dimensions.get("window").width;
 const windowHeight = Dimensions.get("window").height;
 const image = { uri: "../../assets/profileContainer.png" };
 
+
 export default function Dashboard({ navigation }) {
   let [fontsLoaded] = useFonts({
     Poppins_300Light,
@@ -44,7 +45,6 @@ export default function Dashboard({ navigation }) {
     Poppins_800ExtraBold,
   });
   const [modalVisible, setModalVisible] = useState(false);
-
   const [state, setState] = useState({
     userData: "",
   });
@@ -91,13 +91,14 @@ export default function Dashboard({ navigation }) {
                     textAlignVertical: "center",
                     fontSize: 17,
                     fontFamily: "Poppins_600SemiBold",
+                    marginLeft: "5%"
                   }}
                 >
                   Meeting with project team
                 </Text>
               </View>
               <View style={styles.time}>
-                <MaterialIcons name="share" size={12} color="#ABACF7" />
+                <MaterialIcons name="delete" size={12} color="#ABACF7" />
                 <MaterialIcons name="access-time" size={45} color="#EC9B3B" />
 
                 <View style={styles.detail}>
@@ -192,7 +193,9 @@ export default function Dashboard({ navigation }) {
               </View> */}
 
               <View style={styles.Head}>
+              <View>
                 <Text style={styles.priority}>Priority</Text>
+              </View>
 
                 <Pressable
                   onPress={() =>
@@ -273,7 +276,7 @@ export default function Dashboard({ navigation }) {
                     <Text style={styles.taskText}>
                       Meeting with Project Team
                     </Text>
-                    <Text style={styles.taskDate}>20 Sep</Text>
+                    <Text style={styles.taskDate}>28 Sep</Text>
                   </View>
                   <View>
                   <TouchableOpacity>
@@ -297,7 +300,7 @@ export default function Dashboard({ navigation }) {
                 <View style={styles.task}>
                   <View style={styles.taskCommon2}>
                     <Text style={styles.taskText}>Kerjakan Tugas PAM</Text>
-                    <Text style={styles.taskDate2}>26 Sep</Text>
+                    <Text style={styles.taskDate2}>27 Sep</Text>
                   </View>
                   <View>
                     <TouchableOpacity>
@@ -389,6 +392,7 @@ const styles = StyleSheet.create({
     color: "#000000",
     opacity: 0.25,
     marginLeft: windowWidth * 0.25,
+    backgroundColor: "#de2"
   },
   upcoming: {
     fontFamily: "Poppins_700Bold",
