@@ -9,7 +9,7 @@ import {
   Dimensions,
   ActivityIndicator
 } from "react-native";
-// import { useAuth } from './contexts/AuthContext';
+import { useAuth } from '../contexts/AuthContext';
 import auth from '@react-native-firebase/auth';
 
 
@@ -46,33 +46,33 @@ export default function ForgotPassword({ navigation }) {
     Poppins_800ExtraBold,
   });
 
-  const { resetPassword } = useAuth();
+  const { forgotPassword } = useAuth();
   const [text, onChangeText] = React.useState("Useless Text");
   const [textEmail, onChangeTextEmail] = useState("");
   const [textPassword, onChangeTextPassword] = useState("");
   const [signInDisable, setSignInDisable] = useState(true);
   
-  const reset = async() => {
-    setShowLoading(true);
-    try {
-        await auth().sendPasswordResetEmail(textEmail);
-        setShowLoading(false);
-    } catch (e) {
-        setShowLoading(false);
-        Alert.alert(
-            e.message
-        );
-    }
-};
+//   const reset = async() => {
+//     setShowLoading(true);
+//     try {
+//         await auth().sendPasswordResetEmail(textEmail);
+//         setShowLoading(false);
+//     } catch (e) {
+//         setShowLoading(false);
+//         Alert.alert(
+//             e.message
+//         );
+//     }
+// };
 // const [showLoading, setShowLoading] = useState(false);
 
-    useEffect(() => {
-    if (!textEmail.trim() || !textPassword.trim()) {
-      setSignInDisable(true);
-    } else {
-      setSignInDisable(false);
-    }
-  }, [textEmail, textPassword]);
+  //   useEffect(() => {
+  //   if (!textEmail.trim() || !textPassword.trim()) {
+  //     setSignInDisable(true);
+  //   } else {
+  //     setSignInDisable(false);
+  //   }
+  // }, [textEmail, textPassword]);
 
   if (!fontsLoaded) {
     return <AppLoading />;
@@ -100,7 +100,12 @@ export default function ForgotPassword({ navigation }) {
         />
 
         <Pressable
-          style={styles.changePassword} onPress={() => reset()}>
+          style={styles.changePassword} 
+          onPress={() => forgotPassword(textEmail).then(response => {
+            console.log(response)
+          })
+          .catch(e => console.log(e.message))
+          }>
           <Text style={{ color: "white", fontFamily: "Poppins_600SemiBold" }}>
             Submit
           </Text>
