@@ -1,14 +1,9 @@
 import React, { createContext, useContext, useEffect, useState } from 'react'
-import { auth } from '../config/index'
+import { auth } from './config/index'
 import {
-  createUserWithEmailAndPassword,
-  signInWithEmailAndPassword,
+
   sendPasswordResetEmail,
-  onAuthStateChanged,
-  signInWithPopup,
-  GoogleAuthProvider,
-  signOut,
-  confirmPasswordReset,
+
 } from 'firebase/auth'
 
 const AuthContext = createContext({
@@ -39,31 +34,14 @@ export default function AuthContextProvider({ children }) {
     console.log('The user is', currentUser)
   }, [currentUser])
 
-  function login(email, password) {
-    return signInWithEmailAndPassword(auth, email, password)
-  }
-
-  function register(email, password) {
-    return createUserWithEmailAndPassword(auth, email, password)
-  }
-
-  function forgotPassword(email) {
-    return sendPasswordResetEmail(auth, email, {
+  function forgotPassword(textEmail) {
+    return sendPasswordResetEmail(auth, textEmail, {
       url: `http://localhost:3000/login`,
     })
   }
 
   function resetPassword(oobCode, newPassword) {
     return confirmPasswordReset(auth, oobCode, newPassword)
-  }
-
-  function logout() {
-    return signOut(auth)
-  }
-
-  function signInWithGoogle() {
-    const provider = new GoogleAuthProvider()
-    return signInWithPopup(auth, provider)
   }
 
   const value = {

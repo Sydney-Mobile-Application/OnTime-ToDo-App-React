@@ -9,7 +9,7 @@ import {
   Dimensions,
   ActivityIndicator
 } from "react-native";
-import { useAuth } from '../contexts/AuthContext';
+// import { useAuth } from './contexts/AuthContext';
 import auth from '@react-native-firebase/auth';
 
 
