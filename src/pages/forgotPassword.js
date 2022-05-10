@@ -9,6 +9,7 @@ import {
   Dimensions,
   ActivityIndicator
 } from "react-native";
+import { useAuth } from '../contexts/AuthContext';
 import auth from '@react-native-firebase/auth';
 
 
@@ -45,11 +46,12 @@ export default function ForgotPassword({ navigation }) {
     Poppins_800ExtraBold,
   });
 
-
+  const { resetPassword } = useAuth();
   const [text, onChangeText] = React.useState("Useless Text");
   const [textEmail, onChangeTextEmail] = useState("");
   const [textPassword, onChangeTextPassword] = useState("");
   const [signInDisable, setSignInDisable] = useState(true);
+  
   const reset = async() => {
     setShowLoading(true);
     try {
