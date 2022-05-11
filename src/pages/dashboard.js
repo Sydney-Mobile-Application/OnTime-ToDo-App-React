@@ -392,7 +392,6 @@ const styles = StyleSheet.create({
     color: "#000000",
     opacity: 0.25,
     marginLeft: windowWidth * 0.25,
-    backgroundColor: "#de2"
   },
   upcoming: {
     fontFamily: "Poppins_700Bold",

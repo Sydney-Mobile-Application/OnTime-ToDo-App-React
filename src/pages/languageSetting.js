@@ -112,7 +112,7 @@ const styles = StyleSheet.create({
   },
 
   languageDescOff: {
-    fontSize: 20,
+    fontSize: 18,
     lineHeight: 40,
     marginLeft: windowHeight * 0.01,
     paddingHorizontal: 15,
