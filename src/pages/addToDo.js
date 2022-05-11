@@ -239,6 +239,7 @@ export default function AddToDo({ navigation }) {
           </View>
         </View>
         <View style={styles.task}>
+        <TheImagePicker />
           <TextInput
             style={styles.title}
             padding={"5%"}
@@ -253,7 +254,7 @@ export default function AddToDo({ navigation }) {
             multiline={true}
             placeholder="Description"
           />
-          {/* <TheImagePicker image={props.task.image} onImagePicked={setTaskImage}/> --> workin on it */}
+          
         </View>
 
           <View style={styles.containerBottom}>
