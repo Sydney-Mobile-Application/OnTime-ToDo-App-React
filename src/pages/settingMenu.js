@@ -120,7 +120,7 @@ export default function SettingMenu({ navigation }) {
           <View style={styles.right}>
             <Pressable onPress={() => navigation.navigate("Profile")}>
               <Text style={styles.profileSetting}>
-                Profile Setting{" "}
+                Setting{" "}
                 <MaterialIcons name="arrow-forward-ios" size={10} />
               </Text>
               <Image
@@ -260,8 +260,8 @@ const styles = StyleSheet.create({
   },
 
   viewTop: {
-    width: windowWidth * 0.8,
-    height: windowHeight * 0.14,
+    // width: windowWidth * 0.8,
+    height: windowHeight * 0.15,
     alignContent: "space-between",
     justifyContent: "space-between",
     borderRadius: 25,
@@ -288,8 +288,8 @@ const styles = StyleSheet.create({
 
   today: {
     backgroundColor: "#FFFFFF",
-    width: windowHeight * 0.1,
-    height: windowWidth * 0.08,
+    width: windowHeight * 0.15,
+    height: windowWidth * 0.09,
     justifyContent: "center",
     alignItems: "center",
     borderRadius: 20,
@@ -340,7 +340,7 @@ const styles = StyleSheet.create({
     color: "#293462",
     position: "absolute",
     marginTop: windowHeight * 0.1,
-    marginLeft: windowHeight * 0.19,
+    marginLeft: windowHeight * 0.22,
   },
 
   taskList: {
@@ -430,7 +430,7 @@ const styles = StyleSheet.create({
 
   bottomDetail: {
     fontSize: 20,
-    lineHeight: 40,
+    lineHeight: 45,
     fontFamily: "Poppins_400Regular",
   },
 
