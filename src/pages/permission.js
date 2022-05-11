@@ -133,6 +133,6 @@ const styles = StyleSheet.create({
 
   switch: {
     transform: [{ scaleX: 0.9 }, { scaleY: 0.9 }],
-    width: "28%",
+    width: "30%",
   },
 });
