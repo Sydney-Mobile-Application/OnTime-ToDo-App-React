@@ -217,10 +217,10 @@ export default function Dashboard({ navigation }) {
                   <View>
                   <TouchableOpacity>
                     <MaterialIcons
-                      name="share"
+                      name="delete"
                       size={15}
                       color="#ABACF7"
-                      style={styles.share}
+                      style={styles.delete}
                     />
                     </TouchableOpacity>
                     <TouchableOpacity>
@@ -241,10 +241,10 @@ export default function Dashboard({ navigation }) {
                   <View>
                   <TouchableOpacity>
                     <MaterialIcons
-                      name="share"
+                      name="delete"
                       size={15}
                       color="#ABACF7"
-                      style={styles.share}
+                      style={styles.delete}
                     />
                     </TouchableOpacity>
                     <TouchableOpacity>
@@ -281,10 +281,10 @@ export default function Dashboard({ navigation }) {
                   <View>
                   <TouchableOpacity>
                     <MaterialIcons
-                      name="share"
+                      name="delete"
                       size={15}
                       color="#ABACF7"
-                      style={styles.share}
+                      style={styles.delete}
                     />
                     </TouchableOpacity>
                     <TouchableOpacity>
@@ -305,10 +305,10 @@ export default function Dashboard({ navigation }) {
                   <View>
                     <TouchableOpacity>
                     <MaterialIcons
-                      name="share"
+                      name="delete"
                       size={15}
                       color="#ABACF7"
-                      style={styles.share}
+                      style={styles.delete}
                     />
                     </TouchableOpacity>
                     <TouchableOpacity>
@@ -421,7 +421,7 @@ const styles = StyleSheet.create({
     // justifyContent: "center",
     // backgroundColor: "#EC9B3B",
   },
-  share: {
+  delete: {
     marginLeft: "15%",
     // marginRight: "5%",
     marginTop: "100%",
