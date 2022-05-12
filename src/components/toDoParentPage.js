@@ -42,7 +42,6 @@ function MyTabs({ navigation, upcoming }) {
   }
 
   const dispatch = useDispatch();
-  const toDoData = useSelector((state) => state.toDoDataReducer.data);
 
   const [state, setState] = useState({
     userData: [],
@@ -84,24 +83,14 @@ function MyTabs({ navigation, upcoming }) {
         }
         try {
           querySnapshot.forEach((doc) => {
-            console.log("forEach", doc.data());
-
             // // doc.data() is never undefined for query doc snapshots
             // console.log(doc.id, " => ", doc.data());
 
-            const toDoData = JSON.parse(
-              Object.assign({ uid: doc.id }, doc.data())
-            );
+            const toDoData = Object.assign({ uid: doc.id }, doc.data());
 
             dataCollection.push(toDoData);
 
-            console.log("datacollection", dataCollection);
-
             dispatch(setToDoData(dataCollection));
-            // setState((prevState) => ({
-            //   ...prevState,
-            //   toDoData: dataCollection,
-            // }));
           });
         } catch (err) {
           console.log("Error Msg :", err);
