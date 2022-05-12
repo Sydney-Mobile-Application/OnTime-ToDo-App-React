@@ -1,8 +1,17 @@
 import React, { useEffect } from "react";
-import { StyleSheet, View, Text, ScrollView, Pressable,Dimensions } from "react-native";
+import {
+  StyleSheet,
+  View,
+  Text,
+  ScrollView,
+  Pressable,
+  Dimensions,
+} from "react-native";
 import { MaterialIcons } from "@expo/vector-icons";
 
 import { useSelector } from "react-redux";
+
+import moment from "moment";
 
 const windowWidth = Dimensions.get("window").width;
 const windowHeight = Dimensions.get("window").height;
@@ -14,87 +23,7 @@ export default function ToDoPriority(props) {
 
   const toDoData = useSelector((state) => state.toDoDataReducer.data);
 
-  console.log("toDoData", toDoData);
-
-  // useEffect(() => {
-  //   console.log("props toDoData", props.route.params.toDoData);
-  // }, [props.route.params]);
-
-  let dummyData = {
-    data: [
-      {
-        id: "1",
-        title:
-          "kerjakan tugas PAM kerjakan tugas PAM kerjakan tugas PAM kerjakan tugas PAM",
-        date: "26 Sept",
-      },
-      {
-        id: "2",
-        title: "kerjakan tugas Metpen",
-        date: "27 Sept",
-      },
-      {
-        id: "3",
-        title: "kerjakan tugas B.Indo",
-        date: "28 Sept",
-      },
-      {
-        id: "4",
-        title: "kerjakan tugas MASI",
-        date: "29 Sept",
-      },
-      {
-        id: "5",
-        title: "Beli Dog Food untuk Doggy",
-        date: "30 Sept",
-      },
-      {
-        id: "6",
-        title: "Meeting With Project Team",
-        date: "1 Oct",
-      },
-      {
-        id: "7",
-        title: "Kerjain Progress KP",
-        date: "5 Oct",
-      },
-      {
-        id: "8",
-        title: "Beli Batagor Nagoya",
-        date: "7 Oct",
-      },
-      {
-        id: "9",
-        title: "Jangan Lupa Siram Tanaman",
-        date: "9 Oct",
-      },
-      {
-        id: "10",
-        title: "Jangan Lupa Matiin Air",
-        date: "12 Oct",
-      },
-      {
-        id: "11",
-        title: "Jangan Lupa Matiin Listrik",
-        date: "20 Oct",
-      },
-      {
-        id: "12",
-        title: "Cuci Almamater UIB",
-        date: "20 Oct",
-      },
-      {
-        id: "13",
-        title: "Beli Saham Indomaret",
-        date: "27 Oct",
-      },
-      {
-        id: "14",
-        title: "Tidur di Tempat Kerja",
-        date: "14 Nov",
-      },
-    ],
-  };
+  console.log("todoData", toDoData);
 
   return (
     <View style={styles.container}>
@@ -104,7 +33,7 @@ export default function ToDoPriority(props) {
         contentContainerStyle={styles.scrollView}
       >
         <View style={styles.row}>
-          {dummyData.data.map((x) => {
+          {toDoData.map((x) => {
             return (
               <View style={styles.task}>
                 <Pressable onPress={() => console.log("Note Details")}>
@@ -116,7 +45,9 @@ export default function ToDoPriority(props) {
                     >
                       {capitalizeFirstLetter(x.title)}
                     </Text>
-                    <Text style={styles.taskDate}>{x.date}</Text>
+                    <Text style={styles.taskDate}>
+                      {moment(new Date(x.date.seconds * 1000)).format("DD/MMM")}
+                    </Text>
                   </View>
                 </Pressable>
                 <View>

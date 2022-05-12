@@ -7,7 +7,6 @@ const initState = {
 function toDoDataReducer(state = initState, action) {
   switch (action.type) {
     case SET_TODO_DATA:
-      console.log("SET_TODO_DATA");
       return { ...state, data: action.data };
     default:
       return state;
