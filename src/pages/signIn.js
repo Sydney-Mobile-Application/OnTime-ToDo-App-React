@@ -154,7 +154,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   headerContent: {
-    marginTop: '30%',
+    marginTop: '10%',
     width: "80%",
   },
   textTopFSignIn: {
@@ -184,17 +184,19 @@ const styles = StyleSheet.create({
     width: "80%",
     // alignItems: "flex-start",
     justifyContent: "flex-end",
+    marginBottom: "40%",
     // marginTop: 225,
     // marginBottom: 12,
   },
   inlineText: {
+    backgroundColor: "#000",
     fontFamily: "Poppins_600SemiBold",
     flexDirection: "row",
     flexWrap: "wrap",
     width: "80%",
     alignItems: "center",
     justifyContent: "center",
-    marginTop: 225,
+    // marginTop: 225,
     marginBottom: 12,
   },
   buttonSignIn: {

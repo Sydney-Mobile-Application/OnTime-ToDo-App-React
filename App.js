@@ -4,14 +4,14 @@ import { StyleSheet, Text, View } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import * as CallBack from "./src/index";
-import AuthContextProvider from "./src/contexts/AuthContext";
+// import AuthContextProvider from "./src/contexts/AuthContext";
 
 
 const Stack = createNativeStackNavigator();
 
 export default function App() {
   return (
-    <AuthContextProvider>
+    // <AuthContextProvider>
     <NavigationContainer>
       <Stack.Navigator
         screenOptions={{
@@ -106,7 +106,7 @@ export default function App() {
         <Stack.Screen name="Verify On Email" component={CallBack.VerifyOnEmail} />
       </Stack.Navigator>
     </NavigationContainer>
-    </AuthContextProvider>
+    // </AuthContextProvider>
   );
 }
 
