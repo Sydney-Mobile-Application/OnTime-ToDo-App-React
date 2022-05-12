@@ -239,7 +239,7 @@ export default function AddToDo({ navigation }) {
           </View>
         </View>
         <View style={styles.task}>
-        <TheImagePicker />
+        
           <TextInput
             style={styles.title}
             padding={"5%"}
@@ -247,6 +247,7 @@ export default function AddToDo({ navigation }) {
             onChangeText={onChangeTextTitle}
             placeholder="Title "
           />
+          <TheImagePicker />
           <TextInput
             style={styles.description}
             padding={"5%"}
