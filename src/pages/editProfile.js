@@ -204,7 +204,7 @@ const styles = StyleSheet.create({
     margin: "5%",
     borderWidth: 1,
     borderColor: "#293462",
-    padding: "5%",
+    paddingLeft: "5%",
   },
 
   top: {

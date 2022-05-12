@@ -117,6 +117,7 @@ const styles = StyleSheet.create({
 
   permissionDetail: {
     marginLeft: windowHeight * 0.01,
+    marginRight: windowHeight * 0.05,
     color: "#293462",
     fontSize: 14,
     fontWeight: "bold",
