@@ -11,13 +11,17 @@ import {
   TouchableOpacity,
   IconButton,
   Image,
+  ScrollView,
 } from "react-native";
+import Lightbox from 'react-native-lightbox';
 import { MaterialIcons } from "@expo/vector-icons";
 import { Feather } from "@expo/vector-icons";
 import { FloatingAction } from "react-native-floating-action";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import AddToDoCalendar from "./addToDoCalendar";
 import TheImagePicker from "./TheImagePicker";
+import TheLocationPicker from "./TheLocationPicker";
+
 import {
   Poppins_300Light,
   Poppins_400Regular,
@@ -200,7 +204,25 @@ export default function AddToDo({ navigation }) {
     let result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.Images,
       allowsEditing: true,
-      aspect: [4, 3],
+      // aspect: [4, 3],
+      quality: 1,
+    });
+
+    console.log(result);
+
+
+
+    if (!result.cancelled) {
+      setImage(result.uri);
+    }
+  };
+
+  const takeCamImage = async () => {
+    // No permissions request is necessary for launching the image library
+    let result = await ImagePicker.launchCameraAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.Images,
+      allowsEditing: true,
+      // aspect: [4, 3],
       quality: 1,
     });
 
@@ -263,7 +285,10 @@ export default function AddToDo({ navigation }) {
             {/* <MaterialIcons  name='settings' size={30} color='#293462'/> */}
           </View>
         </View>
-        <View style={styles.task}>
+        <ScrollView 
+        showsVerticalScrollIndicator={false}
+        showsHorizontalScrollIndicator={false}
+        style={styles.task}>
         
           <TextInput
             style={styles.title}
@@ -272,6 +297,7 @@ export default function AddToDo({ navigation }) {
             onChangeText={onChangeTextTitle}
             placeholder="Title "
           />
+          {/* <TheLocationPicker/> */}
           {/* <TheImagePicker /> */}
           <TextInput
             style={styles.description}
@@ -280,12 +306,24 @@ export default function AddToDo({ navigation }) {
             multiline={true}
             placeholder="Description"
           />
-          {image && <Text>Image: </Text>}
-          {image && <Image source={{ uri: image }} style={{ width: 200, height: 200 }} />}
-          {image && <Text onPress={pickImage}>Change</Text> }
-          {image && <Text onPress={deleteImage}>Delete</Text>}
+          {image && 
+          <>
+          <View style={styles.containerBottom}>
+            <View style={{width: "40%"}}>
+              <Text>Image: </Text>
+              <Text onPress={takeCamImage} style={{marginTop: "10%"}}>Camera</Text>
+              <Text onPress={pickImage} style={{marginTop: "5%"}}>Change</Text>
+              <Text onPress={deleteImage} style={{marginTop: "5%"}}>Delete</Text>
+            </View>
+            <Lightbox style={{width: "50%", height: 150,}}>
+              <Image source={{ uri: image }} style={{width: "100%", height: 300, alignItems: "flex-start", justifyContent: "flex-start", flexDirection: "column" }} />
+            </Lightbox>
+          </View>
+          </>
+          }
+
           
-        </View>
+        </ScrollView>
 
           <View style={styles.containerBottom}>
 {/* -------------------------------------------------------------------------------------- */}
@@ -335,10 +373,10 @@ export default function AddToDo({ navigation }) {
           color="#293462"
           showBackground={false}
           onPressItem={(name) => {
-            if(name = "bt_gallery"){
+            if(name === "bt_gallery"){
               pickImage()
-            }else {
-
+            }else if (name === "bt_camera") {
+              takeCamImage()
             }
             console.log(`selected button: ${name}`);
           }}
@@ -415,8 +453,8 @@ const styles = StyleSheet.create({
     // justifyContent: "center",
   },
   containerBottom: {
-    // flex: 1,
-    marginTop: windowHeight * 0.05,
+    flex: 1,
+    // marginTop: windowHeight * 0.05,
     backgroundColor: "#fff",
     alignItems: "flex-start",
     justifyContent: "flex-start",
@@ -450,11 +488,12 @@ const styles = StyleSheet.create({
   task: {
     alignSelf: "flex-start",
     marginTop: windowHeight * 0.05,
-    marginBottom: windowWidth * 0.05,
+    // marginBottom: windowWidth * 0.05,
     marginLeft: windowWidth * 0.12,
     marginRight: windowWidth * 0.08,
     height: windowHeight * 0.6,
     width: windowWidth * 0.8,
+    // backgroundColor:'#000'
   },
   title: {
     fontSize: 30,
