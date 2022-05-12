@@ -1,6 +1,8 @@
-import React from "react";
-import { StyleSheet, View, Text, ScrollView, Pressable, Dimensions } from "react-native";
+import React, { useEffect } from "react";
+import { StyleSheet, View, Text, ScrollView, Pressable } from "react-native";
 import { MaterialIcons } from "@expo/vector-icons";
+
+import { useSelector } from "react-redux";
 
 const windowWidth = Dimensions.get("window").width;
 const windowHeight = Dimensions.get("window").height;
@@ -10,13 +12,20 @@ export default function ToDoPriority(props) {
     return string.charAt(0).toUpperCase() + string.slice(1);
   }
 
-  console.log("props toDoData", props.route.params.toDoData);
+  const toDoData = useSelector((state) => state.toDoDataReducer.data);
+
+  console.log("toDoData", toDoData);
+
+  // useEffect(() => {
+  //   console.log("props toDoData", props.route.params.toDoData);
+  // }, [props.route.params]);
 
   let dummyData = {
     data: [
       {
         id: "1",
-        title: "kerjakan tugas PAM kerjakan tugas PAM kerjakan tugas PAM kerjakan tugas PAM",
+        title:
+          "kerjakan tugas PAM kerjakan tugas PAM kerjakan tugas PAM kerjakan tugas PAM",
         date: "26 Sept",
       },
       {
@@ -100,7 +109,11 @@ export default function ToDoPriority(props) {
               <View style={styles.task}>
                 <Pressable onPress={() => console.log("Note Details")}>
                   <View style={styles.taskNear2}>
-                    <Text ellipsizeMode='tail' numberOfLines={4} style={styles.taskText}>
+                    <Text
+                      ellipsizeMode="tail"
+                      numberOfLines={4}
+                      style={styles.taskText}
+                    >
                       {capitalizeFirstLetter(x.title)}
                     </Text>
                     <Text style={styles.taskDate}>{x.date}</Text>
@@ -139,7 +152,7 @@ export default function ToDoPriority(props) {
 
 const styles = StyleSheet.create({
   scrollView: {
-    marginVertical: windowHeight*0.02,
+    marginVertical: windowHeight * 0.02,
   },
   row: {
     display: "flex",
@@ -153,14 +166,14 @@ const styles = StyleSheet.create({
   task: {
     borderRadius: 20,
     marginTop: "5%",
-    marginLeft: windowWidth*0.06,
+    marginLeft: windowWidth * 0.06,
     flexDirection: "row",
     alignSelf: "center",
     justifyContent: "center",
   },
   taskNear2: {
-    width: windowWidth*0.35,
-    height: windowHeight*0.15,
+    width: windowWidth * 0.35,
+    height: windowHeight * 0.15,
     borderRadius: 20,
     paddingTop: "10%",
     paddingBottom: "10%",
@@ -172,13 +185,13 @@ const styles = StyleSheet.create({
     backgroundColor: "#EE6F57",
   },
   delete: {
-    marginLeft: windowWidth*0.02,
-    marginTop: windowHeight*0.05,
+    marginLeft: windowWidth * 0.02,
+    marginTop: windowHeight * 0.05,
     justifyContent: "center",
   },
   star: {
-    marginLeft: windowWidth*0.02,
-    marginTop: windowHeight*0.01,
+    marginLeft: windowWidth * 0.02,
+    marginTop: windowHeight * 0.01,
     justifyContent: "center",
   },
   taskText: {
