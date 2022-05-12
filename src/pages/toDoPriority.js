@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { StyleSheet, View, Text, ScrollView, Pressable } from "react-native";
+import { StyleSheet, View, Text, ScrollView, Pressable,Dimensions } from "react-native";
 import { MaterialIcons } from "@expo/vector-icons";
 
 import { useSelector } from "react-redux";

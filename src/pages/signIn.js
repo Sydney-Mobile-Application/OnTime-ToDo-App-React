@@ -9,7 +9,7 @@ import {
   LogBox,
   Alert,
   ScrollView,
-  KeyboardAvoidingView
+  KeyboardAvoidingView,
 } from "react-native";
 
 import {
