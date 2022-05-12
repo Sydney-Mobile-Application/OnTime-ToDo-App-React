@@ -8,7 +8,8 @@ import {
   Pressable,
   LogBox,
   Alert,
-  ScrollView
+  ScrollView,
+  KeyboardAvoidingView
 } from "react-native";
 
 import {
@@ -87,12 +88,17 @@ export default function SignIn({ navigation }) {
     return (
         
       // <View style={styles.container}>
-      <ScrollView
-          showsVerticalScrollIndicator={false}
-          showsHorizontalScrollIndicator={false}
-          contentContainerStyle={styles.container}
+      
+      // <ScrollView
+      //     showsVerticalScrollIndicator={false}
+      //     showsHorizontalScrollIndicator={false}
+      //     contentContainerStyle={styles.container}
+      //   >
+        <KeyboardAvoidingView
+        behavior={Platform.OS === "ios" ? "padding" : "height"}
+        style={styles.container}
+        keyboardVerticalOffset={0}
         >
-        
         <View style={styles.headerContent}>
           <Text style={styles.textTopFSignIn}>Let's Sign You In!</Text>
           <Text style={styles.textTopSSignIn}>
@@ -138,7 +144,9 @@ export default function SignIn({ navigation }) {
             Sign In
           </Text>
         </Pressable>
-        </ScrollView>
+        </KeyboardAvoidingView>
+        // </ScrollView>
+        
       // </View>
     );
   }
