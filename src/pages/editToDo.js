@@ -65,6 +65,10 @@ export default function EditToDo({ navigation }) {
   const [modalCalendarVisible, setModalCalendarVisible] = useState(false);
   const [date, setDate] = useState(new Date());
   const [show, setShow] = useState(false);
+  const [priority, setPriority] = useState(false);
+  const priorityTask = () => {
+    setPriority(!priority);
+  };
   function closeCalendarModal() {
     setModalCalendarVisible(false);
   }
@@ -157,19 +161,21 @@ export default function EditToDo({ navigation }) {
 
         <View style={styles.containerBottom}>
           <MaterialIcons
-            onPress={() => setModalFontVisible(true)}
-            name="font-download"
-            size={25}
-            color="#293462"
-            style={styles.font}
-          />
-          <MaterialIcons
             onPress={() => setModalCalendarVisible(true)}
             name="calendar-today"
             size={25}
             color="#293462"
             style={styles.font}
           />
+          <Pressable onPress={()=>priorityTask()}>
+            <MaterialIcons
+              name='star'
+              size={30}
+              color={priority ? '#EC9B3B' : 'grey'}
+              style={styles.priorityStar}
+              value={priority? 0 : 1}
+            />
+          </Pressable>
         </View>
         <FloatingAction
           actions={actions}
@@ -314,12 +320,31 @@ const styles = StyleSheet.create({
     // maxHeight: windowHeight*0.8,
   },
 
-  font: {
+font: {
     alignSelf: "flex-start",
     justifyContent: "flex-start",
     alignItems: "flex-start",
     marginLeft: windowWidth * 0.1,
+    // backgroundColor: '#000'
   },
+
+  priorityStar: {
+    alignSelf: "flex-start",
+    marginTop: "-5%",
+    justifyContent: "flex-start",
+    alignItems: "flex-start",
+    marginLeft: windowWidth * 0.1,
+    // backgroundColor: '#000'
+  },
+
+  star: {
+    alignSelf: "flex-start",
+    justifyContent: "flex-start",
+    alignItems: "flex-start",
+    marginLeft: windowWidth * 0.1,
+    color: '#EE6F57',
+  },
+
   saveButton: {
     marginLeft: windowWidth * 0.05,
     borderRadius: 50,

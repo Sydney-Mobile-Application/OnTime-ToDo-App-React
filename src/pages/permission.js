@@ -117,6 +117,7 @@ const styles = StyleSheet.create({
 
   permissionDetail: {
     marginLeft: windowHeight * 0.01,
+    marginRight: windowHeight * 0.05,
     color: "#293462",
     fontSize: 14,
     fontWeight: "bold",
@@ -133,6 +134,6 @@ const styles = StyleSheet.create({
 
   switch: {
     transform: [{ scaleX: 0.9 }, { scaleY: 0.9 }],
-    width: "28%",
+    width: "30%",
   },
 });

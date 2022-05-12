@@ -7,7 +7,11 @@ import {
   TextInput,
   Pressable,
   Dimensions,
+  ActivityIndicator
 } from "react-native";
+// import { useAuth } from '../contexts/AuthContext';
+import auth from '@react-native-firebase/auth';
+
 
 import {
   useFont,
@@ -30,6 +34,8 @@ import { db } from "../config/firebase";
 
 // Async Storoage
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { async } from "@firebase/util";
+import { Alert } from "react-native-web";
 
 export default function ForgotPassword({ navigation }) {
   let [fontsLoaded] = useFonts({
@@ -40,18 +46,33 @@ export default function ForgotPassword({ navigation }) {
     Poppins_800ExtraBold,
   });
 
+  // const { forgotPassword } = useAuth();
   const [text, onChangeText] = React.useState("Useless Text");
   const [textEmail, onChangeTextEmail] = useState("");
   const [textPassword, onChangeTextPassword] = useState("");
   const [signInDisable, setSignInDisable] = useState(true);
+  
+//   const reset = async() => {
+//     setShowLoading(true);
+//     try {
+//         await auth().sendPasswordResetEmail(textEmail);
+//         setShowLoading(false);
+//     } catch (e) {
+//         setShowLoading(false);
+//         Alert.alert(
+//             e.message
+//         );
+//     }
+// };
+// const [showLoading, setShowLoading] = useState(false);
 
-    useEffect(() => {
-    if (!textEmail.trim() || !textPassword.trim()) {
-      setSignInDisable(true);
-    } else {
-      setSignInDisable(false);
-    }
-  }, [textEmail, textPassword]);
+  //   useEffect(() => {
+  //   if (!textEmail.trim() || !textPassword.trim()) {
+  //     setSignInDisable(true);
+  //   } else {
+  //     setSignInDisable(false);
+  //   }
+  // }, [textEmail, textPassword]);
 
   if (!fontsLoaded) {
     return <AppLoading />;
@@ -59,7 +80,7 @@ export default function ForgotPassword({ navigation }) {
     return (
       <View style={styles.container}>
         <View style={styles.back}>
-          <Pressable onPress={() => navigation.navigate("Profile")}>
+          <Pressable onPress={() => navigation.navigate("Sign In")}>
             <MaterialIcons name="arrow-back" size={30} color="#293462" />
           </Pressable>
         </View>
@@ -71,15 +92,31 @@ export default function ForgotPassword({ navigation }) {
         </View>
         <TextInput
           style={styles.inputEmail}
+          value={textEmail}
           onChangeText={onChangeTextEmail}
-          placeholder="Email"
+          placeholder={"Email"}
+          autoCapitalize={'none'}
+          keyboardType={'email-address'}
         />
+
         <Pressable
-          style={styles.changePassword} onPress={() => navigation.navigate('Verify Email')}>
+          style={styles.changePassword} 
+          onPress={() => forgotPassword(textEmail).then(response => {
+            console.log(response)
+          })
+          .catch(e => console.log(e.message))
+          }>
           <Text style={{ color: "white", fontFamily: "Poppins_600SemiBold" }}>
             Submit
           </Text>
         </Pressable>
+
+        {/* <Pressable
+          style={styles.changePassword} onPress={() => navigation.navigate('Verify Email')}>
+          <Text style={{ color: "white", fontFamily: "Poppins_600SemiBold" }}>
+            Submit
+          </Text>
+        </Pressable> */}
       </View>
     );
   }

@@ -8,6 +8,8 @@ import {
   Pressable,
   LogBox,
   Alert,
+  ScrollView,
+  KeyboardAvoidingView
 } from "react-native";
 
 import {
@@ -84,7 +86,19 @@ export default function SignIn({ navigation }) {
     return <AppLoading />;
   } else {
     return (
-      <View style={styles.container}>
+        
+      // <View style={styles.container}>
+      
+      // <ScrollView
+      //     showsVerticalScrollIndicator={false}
+      //     showsHorizontalScrollIndicator={false}
+      //     contentContainerStyle={styles.container}
+      //   >
+        <KeyboardAvoidingView
+        behavior={Platform.OS === "ios" ? "padding" : "height"}
+        style={styles.container}
+        keyboardVerticalOffset={0}
+        >
         <View style={styles.headerContent}>
           <Text style={styles.textTopFSignIn}>Let's Sign You In!</Text>
           <Text style={styles.textTopSSignIn}>
@@ -130,7 +144,10 @@ export default function SignIn({ navigation }) {
             Sign In
           </Text>
         </Pressable>
-      </View>
+        </KeyboardAvoidingView>
+        // </ScrollView>
+        
+      // </View>
     );
   }
 }
@@ -138,12 +155,14 @@ export default function SignIn({ navigation }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: '#000',
+    // height: '100%',
     backgroundColor: "#fff",
     alignItems: "center",
     justifyContent: "center",
   },
   headerContent: {
-    marginTop: "10%",
+    marginTop: '10%',
     width: "80%",
   },
   textTopFSignIn: {
@@ -173,17 +192,19 @@ const styles = StyleSheet.create({
     width: "80%",
     // alignItems: "flex-start",
     justifyContent: "flex-end",
+    marginBottom: "40%",
     // marginTop: 225,
     // marginBottom: 12,
   },
   inlineText: {
+    // backgroundColor: "#000",
     fontFamily: "Poppins_600SemiBold",
     flexDirection: "row",
     flexWrap: "wrap",
     width: "80%",
     alignItems: "center",
     justifyContent: "center",
-    marginTop: 225,
+    // marginTop: 225,
     marginBottom: 12,
   },
   buttonSignIn: {

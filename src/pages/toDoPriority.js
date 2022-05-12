@@ -4,6 +4,9 @@ import { MaterialIcons } from "@expo/vector-icons";
 
 import { useSelector } from "react-redux";
 
+const windowWidth = Dimensions.get("window").width;
+const windowHeight = Dimensions.get("window").height;
+
 export default function ToDoPriority(props) {
   function capitalizeFirstLetter(string) {
     return string.charAt(0).toUpperCase() + string.slice(1);
@@ -21,7 +24,8 @@ export default function ToDoPriority(props) {
     data: [
       {
         id: "1",
-        title: "kerjakan tugas PAM",
+        title:
+          "kerjakan tugas PAM kerjakan tugas PAM kerjakan tugas PAM kerjakan tugas PAM",
         date: "26 Sept",
       },
       {
@@ -105,7 +109,11 @@ export default function ToDoPriority(props) {
               <View style={styles.task}>
                 <Pressable onPress={() => console.log("Note Details")}>
                   <View style={styles.taskNear2}>
-                    <Text style={styles.taskText}>
+                    <Text
+                      ellipsizeMode="tail"
+                      numberOfLines={4}
+                      style={styles.taskText}
+                    >
                       {capitalizeFirstLetter(x.title)}
                     </Text>
                     <Text style={styles.taskDate}>{x.date}</Text>
@@ -113,12 +121,12 @@ export default function ToDoPriority(props) {
                 </Pressable>
                 <View>
                   <View>
-                    <Pressable onPress={() => console.log("Share Note")}>
+                    <Pressable onPress={() => console.log("Delete Note")}>
                       <MaterialIcons
-                        name="share"
+                        name="delete"
                         size={16}
                         color="#ABACF7"
-                        style={styles.share}
+                        style={styles.delete}
                       />
                     </Pressable>
                   </View>
@@ -144,7 +152,7 @@ export default function ToDoPriority(props) {
 
 const styles = StyleSheet.create({
   scrollView: {
-    marginVertical: 30,
+    marginVertical: windowHeight * 0.02,
   },
   row: {
     display: "flex",
@@ -156,35 +164,34 @@ const styles = StyleSheet.create({
     paddingBottom: 12,
   },
   task: {
-    width: 130,
     borderRadius: 20,
-    marginTop: 10,
-    margin: 20,
+    marginTop: "5%",
+    marginLeft: windowWidth * 0.06,
     flexDirection: "row",
     alignSelf: "center",
+    justifyContent: "center",
   },
   taskNear2: {
-    width: 131,
-    height: 131,
-    marginLeft: 20,
+    width: windowWidth * 0.35,
+    height: windowHeight * 0.15,
     borderRadius: 20,
-    paddingTop: 30,
-    paddingBottom: 30,
-    paddingLeft: 15,
-    paddingRight: 15,
+    paddingTop: "10%",
+    paddingBottom: "10%",
+    paddingLeft: "15%",
+    paddingRight: "15%",
     alignSelf: "flex-end",
-    // alignItems: "center",
-    justifyContent: "flex-start",
+    alignItems: "center",
+    justifyContent: "center",
     backgroundColor: "#EE6F57",
   },
-  share: {
-    marginLeft: 5,
-    marginTop: 30,
+  delete: {
+    marginLeft: windowWidth * 0.02,
+    marginTop: windowHeight * 0.05,
     justifyContent: "center",
   },
   star: {
-    marginLeft: 5,
-    marginTop: 10,
+    marginLeft: windowWidth * 0.02,
+    marginTop: windowHeight * 0.01,
     justifyContent: "center",
   },
   taskText: {

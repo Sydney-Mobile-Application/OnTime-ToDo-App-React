@@ -4,6 +4,7 @@ import { StyleSheet, Text, View } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import * as CallBack from "./src/index";
+// import AuthContextProvider from "./src/contexts/AuthContext";
 
 import { Provider } from "react-redux";
 import { Store } from "./src/redux/store";

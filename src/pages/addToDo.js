@@ -16,6 +16,7 @@ import { Feather } from "@expo/vector-icons";
 import { FloatingAction } from "react-native-floating-action";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import AddToDoCalendar from "./addToDoCalendar";
+import TheImagePicker from "./TheImagePicker";
 import {
   Poppins_300Light,
   Poppins_400Regular,
@@ -39,8 +40,11 @@ import {
 import { db } from "../config/firebase";
 import { backgroundColor } from "react-native/Libraries/Components/View/ReactNativeStyleAttributes";
 
+
 const windowWidth = Dimensions.get("window").width;
 const windowHeight = Dimensions.get("window").height;
+
+
 
 const actions = [
   {
@@ -82,6 +86,16 @@ export default function AddToDo({ navigation }) {
   const [date, setDate] = useState(new Date());
   const [show, setShow] = useState(false);
   const [selected, setSelected] = useState(false);
+  const [priority, setPriority] = useState(false);
+
+  // setTaskImage = (image) => {
+  //   props.setFieldValue('imageUri', image.uri);
+  // }
+  
+  const priorityTask = () => {
+    setPriority(!priority);
+  };
+  
 
   // this.state ={
   //   toggle: false,
@@ -160,7 +174,9 @@ export default function AddToDo({ navigation }) {
           title: textTitle,
           description: textDesc,
           is_favourite: false,
+          priority: priority,
           type: "Upcoming",
+          done: false,
           userId: state.userData.uid,
         };
 
@@ -223,6 +239,7 @@ export default function AddToDo({ navigation }) {
           </View>
         </View>
         <View style={styles.task}>
+        
           <TextInput
             style={styles.title}
             padding={"5%"}
@@ -230,6 +247,7 @@ export default function AddToDo({ navigation }) {
             onChangeText={onChangeTextTitle}
             placeholder="Title "
           />
+          <TheImagePicker />
           <TextInput
             style={styles.description}
             padding={"5%"}
@@ -237,11 +255,14 @@ export default function AddToDo({ navigation }) {
             multiline={true}
             placeholder="Description"
           />
+          
         </View>
 
           <View style={styles.containerBottom}>
 {/* -------------------------------------------------------------------------------------- */}
-          <Pressable
+          
+          
+          {/* <Pressable
           style={({pressed}) =>[{color: pressed? '#EC9B3B' : 'grey'},styles.star]}>
           {({pressed}) => (
             <MaterialIcons style={{color: pressed ? '#EC9B3B' : 'grey'}}
@@ -250,9 +271,9 @@ export default function AddToDo({ navigation }) {
             color="#293462"
             />
           )}
-          </Pressable>
+          </Pressable> */}
 {/* haven't fixed */}
-          <Pressable onPress={() => setSelected(!selected)}
+          {/* <Pressable onPress={() => setSelected(!selected)}
             style={{backgroundColor: selected ? '#EC9B3B' : 'rgba(0,0,0,0.12)',
             marginLeft: windowWidth * 0.1,
             height: 25,}}>
@@ -261,7 +282,7 @@ export default function AddToDo({ navigation }) {
             color='rgba(0,0,0,0.12)'
             size={25}
             />
-          </Pressable>
+          </Pressable> */}
 {/* -------------------------------------------------------------------------------------- */}
           <MaterialIcons
             onPress={() => setModalCalendarVisible(true)}
@@ -270,6 +291,15 @@ export default function AddToDo({ navigation }) {
             color="#293462"
             style={styles.font}
           />
+          <Pressable onPress={()=>priorityTask()}>
+            <MaterialIcons
+              name='star'
+              size={30}
+              color={priority ? '#EC9B3B' : 'grey'}
+              style={styles.priorityStar}
+              value={priority? 0 : 1}
+            />
+          </Pressable>
         </View>
         <FloatingAction
           actions={actions}
@@ -421,6 +451,16 @@ const styles = StyleSheet.create({
     justifyContent: "flex-start",
     alignItems: "flex-start",
     marginLeft: windowWidth * 0.1,
+    // backgroundColor: '#000'
+  },
+
+  priorityStar: {
+    alignSelf: "flex-start",
+    marginTop: "-5%",
+    justifyContent: "flex-start",
+    alignItems: "flex-start",
+    marginLeft: windowWidth * 0.1,
+    // backgroundColor: '#000'
   },
 
   star: {
