@@ -10,6 +10,7 @@ import {
   Alert,
   TouchableOpacity,
   IconButton,
+  Image,
 } from "react-native";
 import { MaterialIcons } from "@expo/vector-icons";
 import { Feather } from "@expo/vector-icons";
@@ -27,6 +28,7 @@ import {
 import { useFonts } from "expo-font";
 import AppLoading from "expo-app-loading";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import * as ImagePicker from 'expo-image-picker';  // not react-image-picker
 
 // Firebase
 import {
@@ -192,6 +194,29 @@ export default function AddToDo({ navigation }) {
       }
     }
   };
+  const [image, setImage] = useState(null);
+  const pickImage = async () => {
+    // No permissions request is necessary for launching the image library
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.Images,
+      allowsEditing: true,
+      aspect: [4, 3],
+      quality: 1,
+    });
+
+    console.log(result);
+
+
+
+    if (!result.cancelled) {
+      setImage(result.uri);
+    }
+  };
+
+  const deleteImage = async () => {
+    let result = null
+    setImage(result)
+  };
 
   useEffect(() => {
     clearData();
@@ -247,7 +272,7 @@ export default function AddToDo({ navigation }) {
             onChangeText={onChangeTextTitle}
             placeholder="Title "
           />
-          <TheImagePicker />
+          {/* <TheImagePicker /> */}
           <TextInput
             style={styles.description}
             padding={"5%"}
@@ -255,6 +280,10 @@ export default function AddToDo({ navigation }) {
             multiline={true}
             placeholder="Description"
           />
+          {image && <Text>Image: </Text>}
+          {image && <Image source={{ uri: image }} style={{ width: 200, height: 200 }} />}
+          {image && <Text onPress={pickImage}>Change</Text> }
+          {image && <Text onPress={deleteImage}>Delete</Text>}
           
         </View>
 
@@ -306,6 +335,11 @@ export default function AddToDo({ navigation }) {
           color="#293462"
           showBackground={false}
           onPressItem={(name) => {
+            if(name = "bt_gallery"){
+              pickImage()
+            }else {
+
+            }
             console.log(`selected button: ${name}`);
           }}
         />
@@ -436,7 +470,8 @@ const styles = StyleSheet.create({
   description: {
     // padding: "5%",
     minWidth: "100%",
-    height: "100%",
+    // height: "100%",
+    marginBottom: "10%",
     textAlignVertical: "top",
     fontSize: 20,
     fontFamily: "Poppins_400Regular",
