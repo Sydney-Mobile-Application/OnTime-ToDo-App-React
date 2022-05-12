@@ -1,13 +1,21 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { StyleSheet, View, Text, ScrollView, Pressable } from "react-native";
 import { MaterialIcons } from "@expo/vector-icons";
+
+import { useSelector } from "react-redux";
 
 export default function ToDoPriority(props) {
   function capitalizeFirstLetter(string) {
     return string.charAt(0).toUpperCase() + string.slice(1);
   }
 
-  console.log("props toDoData", props.route.params.toDoData);
+  const toDoData = useSelector((state) => state.toDoDataReducer.data);
+
+  console.log("toDoData", toDoData);
+
+  // useEffect(() => {
+  //   console.log("props toDoData", props.route.params.toDoData);
+  // }, [props.route.params]);
 
   let dummyData = {
     data: [

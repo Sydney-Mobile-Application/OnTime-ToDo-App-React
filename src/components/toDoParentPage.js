@@ -16,6 +16,10 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { getDocs, collection, query, where } from "firebase/firestore";
 import { db } from "../config/firebase";
 
+// Redux
+import { useSelector, useDispatch } from "react-redux";
+import { setToDoData } from "../redux/actions";
+
 import * as CallBack from "../index";
 
 // Icon
@@ -37,13 +41,15 @@ function MyTabs({ navigation, upcoming }) {
     }
   }
 
+  const dispatch = useDispatch();
+  const toDoData = useSelector((state) => state.toDoDataReducer.data);
+
   const [state, setState] = useState({
     userData: [],
-    toDoData: [],
+    // toDoData: [],
   });
 
   let userDataObj = [];
-  let toDoDataObj = [];
 
   const getSavedUserData = async () => {
     try {
@@ -71,26 +77,35 @@ function MyTabs({ navigation, upcoming }) {
           where("userId", "==", userDataObj.uid.toString())
         )
       ).then((querySnapshot) => {
+        let dataCollection = [];
+
         if (querySnapshot.empty) {
           Alert.alert("Not Found", "Notes Not Found");
         }
-        querySnapshot.forEach((doc) => {
-          // // doc.data() is never undefined for query doc snapshots
-          console.log(doc.id, " => ", doc.data());
-          try {
-            const toDoData = Object.assign({ uid: doc.id }, doc.data());
-            // const value = JSON.stringify(toDoData);
+        try {
+          querySnapshot.forEach((doc) => {
+            console.log("forEach", doc.data());
 
-            toDoDataObj = toDoData;
+            // // doc.data() is never undefined for query doc snapshots
+            // console.log(doc.id, " => ", doc.data());
 
-            setState((prevState) => ({
-              ...prevState,
-              toDoData: toDoData,
-            }));
-          } catch (err) {
-            console.log("Error Msg :", err);
-          }
-        });
+            const toDoData = JSON.parse(
+              Object.assign({ uid: doc.id }, doc.data())
+            );
+
+            dataCollection.push(toDoData);
+
+            console.log("datacollection", dataCollection);
+
+            dispatch(setToDoData(dataCollection));
+            // setState((prevState) => ({
+            //   ...prevState,
+            //   toDoData: dataCollection,
+            // }));
+          });
+        } catch (err) {
+          console.log("Error Msg :", err);
+        }
       });
     }
   };
@@ -123,7 +138,6 @@ function MyTabs({ navigation, upcoming }) {
         <Tab.Screen
           name="Priority"
           component={CallBack.ToDoPriority}
-          // initialParams={{ toDoData: state.toDoData }}
           initialParams={{ toDoData: state?.toDoData }}
           options={{ tabBarLabel: "Priority" }}
         />
