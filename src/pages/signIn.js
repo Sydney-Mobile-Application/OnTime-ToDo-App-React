@@ -189,7 +189,7 @@ const styles = StyleSheet.create({
     // marginBottom: 12,
   },
   inlineText: {
-    backgroundColor: "#000",
+    // backgroundColor: "#000",
     fontFamily: "Poppins_600SemiBold",
     flexDirection: "row",
     flexWrap: "wrap",
