@@ -207,9 +207,9 @@ export default function AddToDo({ navigation }) {
       // aspect: [4, 3],
       quality: 1,
     });
-
+    console.log("Height:" + result.height);
     console.log(result);
-
+    
 
 
     if (!result.cancelled) {
@@ -315,8 +315,8 @@ export default function AddToDo({ navigation }) {
               <Text onPress={pickImage} style={{marginTop: "5%"}}>Change</Text>
               <Text onPress={deleteImage} style={{marginTop: "5%"}}>Delete</Text>
             </View>
-            <Lightbox style={{width: "50%", height: 150,}}>
-              <Image source={{ uri: image }} style={{width: "100%", height: 300, alignItems: "flex-start", justifyContent: "flex-start", flexDirection: "column" }} />
+            <Lightbox style={{maxWidth: "50%", height: 300, flex: 1 }}>
+              <Image source={{ uri: image }} resizeMethod="resize" resizeMode="contain" style={{width: "100%" , height: "100%", alignItems: "flex-start", justifyContent: "flex-start", flexDirection: "column" }} />
             </Lightbox>
           </View>
           </>
