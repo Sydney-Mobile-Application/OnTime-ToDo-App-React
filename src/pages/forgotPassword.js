@@ -10,7 +10,7 @@ import {
   ActivityIndicator
 } from "react-native";
 // import { useAuth } from '../contexts/AuthContext';
-import auth from '@react-native-firebase/auth';
+// import auth from '@react-native-firebase/auth';
 
 
 import {

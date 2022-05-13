@@ -109,12 +109,14 @@ export default function SignIn({ navigation }) {
           style={styles.inputSignIn}
           onChangeText={onChangeTextEmail}
           placeholder="Username"
+          placeholderTextColor="#a9b0ba"
         />
         <TextInput
           style={styles.inputSignIn}
           onChangeText={onChangeTextPassword}
           secureTextEntry={true}
           placeholder="Password"
+          placeholderTextColor="#a9b0ba"
         />
         <View style={styles.forgotPassword}>
           {/* <Pressable onPress={() => navigation.navigate("Register")}> */}

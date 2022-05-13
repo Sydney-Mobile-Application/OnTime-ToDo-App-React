@@ -108,24 +108,28 @@ export default function Register({ navigation }) {
           style={styles.inputRegister}
           onChangeText={onChangeTextUsername}
           placeholder="Username"
+          placeholderTextColor="#a9b0ba"
         />
         <TextInput
           style={styles.inputRegister}
           onChangeText={onChangeTextPhone}
           placeholder="Phone Number (ex:81267714878)"
           keyboardType={"phone-pad"}
+          placeholderTextColor="#a9b0ba"
         />
         <TextInput
           style={styles.inputRegister}
           onChangeText={onChangeTextPassword1}
           secureTextEntry={true}
           placeholder="Password"
+          placeholderTextColor="#a9b0ba"
         />
         <TextInput
           style={styles.inputRegister}
           onChangeText={onChangeTextPassword2}
           secureTextEntry={true}
           placeholder="Confirm Password"
+          placeholderTextColor="#a9b0ba"
         />
         <View style={styles.inlineText}>
           <Text style={{ fontFamily: "Poppins_300Light" }}>
