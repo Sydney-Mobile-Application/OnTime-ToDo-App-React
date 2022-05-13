@@ -13,6 +13,7 @@ import {
   Image,
   ScrollView,
 } from "react-native";
+import Prompt from "react-native-input-prompt";
 import Lightbox from 'react-native-lightbox';
 import { MaterialIcons } from "@expo/vector-icons";
 import { Feather } from "@expo/vector-icons";
@@ -198,7 +199,10 @@ export default function AddToDo({ navigation }) {
       }
     }
   };
+
   const [image, setImage] = useState(null);
+  const [link, setLink] = useState(null);
+
   const pickImage = async () => {
     // No permissions request is necessary for launching the image library
     let result = await ImagePicker.launchImageLibraryAsync({
@@ -238,6 +242,14 @@ export default function AddToDo({ navigation }) {
   const deleteImage = async () => {
     let result = null
     setImage(result)
+  };
+
+  const takeLink = async () => {
+    
+      Alert.prompt("Url", "Insert your link here", );
+    
+    let result = null
+    // setImage(result)
   };
 
   useEffect(() => {
@@ -297,6 +309,17 @@ export default function AddToDo({ navigation }) {
             onChangeText={onChangeTextTitle}
             placeholder="Title "
           />
+          <Prompt
+              visible={true}
+              title="Say Something"
+              placeholder="Type Something"
+              onCancel={() =>
+                  console.log("Cancelled")
+              }
+              onSubmit={text =>
+                console.log("Submit")
+              }
+            />
           {/* <TheLocationPicker/> */}
           {/* <TheImagePicker /> */}
           <TextInput
@@ -377,6 +400,8 @@ export default function AddToDo({ navigation }) {
               pickImage()
             }else if (name === "bt_camera") {
               takeCamImage()
+            }else if (name === "bt_link") {
+              
             }
             console.log(`selected button: ${name}`);
           }}
