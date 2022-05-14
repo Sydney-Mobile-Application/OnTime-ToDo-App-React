@@ -145,6 +145,8 @@ export default function AddToDo({ navigation }) {
     setModalCalendarVisible(false);
     onChangeTextDesc("");
     onChangeTextTitle("");
+    setURL(null);
+    setImage(null);
   };
 
   const onChangeTime = (time) => {
