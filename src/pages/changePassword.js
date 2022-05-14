@@ -85,18 +85,21 @@ export default function ChangePassword({ navigation }) {
           onChangeText={onChangeTextPassword}
           secureTextEntry={true}
           placeholder="Old Password"
+          placeholderTextColor="#a9b0ba"
         />
         <TextInput
           style={styles.inputPassword}
           onChangeText={onChangeTextPassword}
           secureTextEntry={true}
           placeholder="New Password"
+          placeholderTextColor="#a9b0ba"
         />
         <TextInput
           style={styles.inputPassword}
           onChangeText={onChangeTextPassword}
           secureTextEntry={true}
           placeholder="Confirm New Password"
+          placeholderTextColor="#a9b0ba"
         />
         <Pressable
           style={styles.changePassword}
