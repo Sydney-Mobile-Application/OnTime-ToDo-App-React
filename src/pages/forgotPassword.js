@@ -97,6 +97,7 @@ export default function ForgotPassword({ navigation }) {
           placeholder={"Email"}
           autoCapitalize={'none'}
           keyboardType={'email-address'}
+          placeholderTextColor="#a9b0ba"
         />
 
         <Pressable
