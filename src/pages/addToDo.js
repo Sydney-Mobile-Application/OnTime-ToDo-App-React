@@ -1,4 +1,4 @@
-import React, { useState, useEffect, Component } from "react";
+import React, { useState, useEffect, Component, useCallback } from "react";
 import {
   StyleSheet,
   View,
@@ -12,6 +12,8 @@ import {
   IconButton,
   Image,
   ScrollView,
+  Button,
+  Linking
 } from "react-native";
 import Prompt from "react-native-input-prompt";
 import Lightbox from 'react-native-lightbox';
@@ -92,7 +94,7 @@ export default function AddToDo({ navigation }) {
   const [modalCalendarVisible, setModalCalendarVisible] = useState(false);
   const [date, setDate] = useState(new Date());
   const [show, setShow] = useState(false);
-  const [selected, setSelected] = useState(false);
+  const [textLink, onChangeLink] = useState("");
   const [priority, setPriority] = useState(false);
 
   // setTaskImage = (image) => {
@@ -201,7 +203,22 @@ export default function AddToDo({ navigation }) {
   };
 
   const [image, setImage] = useState(null);
-  const [link, setLink] = useState(null);
+  const [linkURL, setURL] = useState(null);
+  const [link, setLink] = useState(false);
+  const linkTask = () => {
+    setLink(!link);
+  };
+  const takeLink = (textLink) => {
+    onChangeLink(textLink);
+    setURL(textLink);
+    setLink(!link);
+  };
+  const deleteLink = () => {
+    let noLink = null
+    onChangeLink(noLink);
+    setURL(noLink);
+  };
+
 
   const pickImage = async () => {
     // No permissions request is necessary for launching the image library
@@ -244,13 +261,22 @@ export default function AddToDo({ navigation }) {
     setImage(result)
   };
 
-  const takeLink = async () => {
-    
-      Alert.prompt("Url", "Insert your link here", );
-    
-    let result = null
-    // setImage(result)
-  };
+
+const OpenURLButton = ({ url, linkURL }) => {
+  const handlePress = useCallback(async () => {
+    // Checking if the link is supported for links with custom URL scheme.
+    const supported = await Linking.canOpenURL(url);
+
+    if (supported) {
+      // Opening the link with some app, if the URL scheme is "http" the web link should be opened
+      // by some browser in the mobile
+      await Linking.openURL(url);
+    } else {
+      Alert.alert(`Don't know how to open this URL: ${url}`);
+    }
+  }, [url]);
+  return <Button title={"Go to URL"} onPress={handlePress} />;
+};
 
   useEffect(() => {
     clearData();
@@ -310,14 +336,15 @@ export default function AddToDo({ navigation }) {
             placeholder="Title "
           />
           <Prompt
-              visible={true}
-              title="Say Something"
+              visible={link ? true : false}
+              title="Enter your URL"
               placeholder="Type Something"
-              onCancel={() =>
-                  console.log("Cancelled")
+              onCancel={() => setLink(!link)
+                  // console.log("Cancelled")
               }
-              onSubmit={text =>
-                console.log("Submit")
+              onSubmit={textLink => takeLink(textLink)
+                
+                // console.log("Submit")
               }
             />
           {/* <TheLocationPicker/> */}
@@ -338,10 +365,20 @@ export default function AddToDo({ navigation }) {
               <Text onPress={pickImage} style={{marginTop: "5%"}}>Change</Text>
               <Text onPress={deleteImage} style={{marginTop: "5%"}}>Delete</Text>
             </View>
-            <Lightbox style={{maxWidth: "50%", height: 300, flex: 1 }}>
+            <Lightbox style={{Width: "50%", height: 150, flex: 1 }}>
               <Image source={{ uri: image }} resizeMethod="resize" resizeMode="contain" style={{width: "100%" , height: "100%", alignItems: "flex-start", justifyContent: "flex-start", flexDirection: "column" }} />
             </Lightbox>
           </View>
+          </>
+          }
+          {linkURL && 
+          <>
+            <Text style={{marginTop: "10%"}}>Link: </Text>
+            <OpenURLButton url={linkURL}>{linkURL}</OpenURLButton>
+            <View style={styles.containerBottom}>
+              <Text onPress={linkTask} style={{marginLeft: "5%", }}>Change</Text>
+              <Text onPress={deleteLink} style={{marginLeft: "5%"}}>Delete</Text>
+            </View>
           </>
           }
 
@@ -401,7 +438,7 @@ export default function AddToDo({ navigation }) {
             }else if (name === "bt_camera") {
               takeCamImage()
             }else if (name === "bt_link") {
-              
+              linkTask()
             }
             console.log(`selected button: ${name}`);
           }}
@@ -479,6 +516,7 @@ const styles = StyleSheet.create({
   },
   containerBottom: {
     flex: 1,
+    paddingTop: "5%",
     // marginTop: windowHeight * 0.05,
     backgroundColor: "#fff",
     alignItems: "flex-start",
