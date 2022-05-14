@@ -103,6 +103,7 @@ export default function Register({ navigation }) {
           style={styles.inputRegister}
           onChangeText={onChangeTextEmail}
           placeholder="Email"
+          placeholderTextColor="#a9b0ba"
         />
         <TextInput
           style={styles.inputRegister}
