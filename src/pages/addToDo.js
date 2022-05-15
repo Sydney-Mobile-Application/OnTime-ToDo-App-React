@@ -46,7 +46,7 @@ import {
   collection,
   Timestamp,
 } from "firebase/firestore";
-import { db } from "../config/firebase";
+import { db, app } from "../config/firebase";
 import { backgroundColor } from "react-native/Libraries/Components/View/ReactNativeStyleAttributes";
 
 
@@ -166,7 +166,7 @@ export default function AddToDo({ navigation }) {
       dateTime: time.nativeEvent.timestamp.toString(),
     }));
     // const currentDate = selectedDate || time;
-    // setShow(Platform.OS === 'ios');
+    // setShow(Platform.OS === 'ios');state.userData
     // setDate(currentDate);
     // console.log(date)
   };
@@ -178,7 +178,17 @@ export default function AddToDo({ navigation }) {
       } else if (textTitle === "" || textDesc === "") {
         Alert.alert("Error", "Title and Description Cannot Empty !");
       } else {
+        uploadImage(imageURI)
+        .then(() => {
+          Alert.alert("Success");
+        })
+        .catch((error) => {
+          Alert.alert(error.message);
+          console.log(error.message);
+        });
+
         const myDoc = doc(collection(db, "notes"));
+        
 
         const dataPost = {
           date: Timestamp.fromDate(new Date(state.dateTime)),
@@ -189,8 +199,9 @@ export default function AddToDo({ navigation }) {
           type: "Upcoming",
           done: false,
           userId: state.userData.uid,
+          url: linkURL,
+          imageURL: "images/" + (state.userData.uid+textTitle+"-image")
         };
-
         setDoc(myDoc, dataPost)
           .then(() => {
             clearData();
@@ -207,6 +218,36 @@ export default function AddToDo({ navigation }) {
   const [image, setImage] = useState(null);
   const [linkURL, setURL] = useState(null);
   const [link, setLink] = useState(false);
+  const [imageURI, dataImage] = useState("");
+
+   
+  uploadImage = async (imageURI) => {
+    // Why are we using XMLHttpRequest? See:
+  // https://github.com/expo/expo/issues/2402#issuecomment-443726662
+  const blob = await new Promise((resolve, reject) => {
+    const xhr = new XMLHttpRequest();
+    xhr.onload = function() {
+      resolve(xhr.response);
+    };
+    xhr.onerror = function(e) {
+      console.log(e);
+      reject(new TypeError('Network request failed'));
+    };
+    xhr.responseType = 'blob';
+    xhr.open('GET', imageURI, true);
+    xhr.send(null);
+  });
+
+  const ref = app.storage().ref("images/" + (state.userData.uid+textTitle+"-image"));
+  const snapshot = await ref.put(blob);
+
+  // We're done with the blob, close and release it
+  blob.close();
+
+  return await snapshot.ref.getDownloadURL();
+  }
+
+
   const linkTask = () => {
     setLink(!link);
   };
@@ -237,6 +278,7 @@ export default function AddToDo({ navigation }) {
 
     if (!result.cancelled) {
       setImage(result.uri);
+      dataImage(result.uri);
     }
   };
 
@@ -255,12 +297,14 @@ export default function AddToDo({ navigation }) {
 
     if (!result.cancelled) {
       setImage(result.uri);
+      dataImage(result.uri);
     }
   };
 
   const deleteImage = async () => {
     let result = null
     setImage(result)
+    dataImage(result)
   };
 
 
