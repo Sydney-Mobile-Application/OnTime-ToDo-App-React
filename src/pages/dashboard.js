@@ -367,7 +367,7 @@ const styles = StyleSheet.create({
   },
   Head: {
     fontWeight: "bold",
-    // marginLeft: 20,
+    marginBottom: "5%",
     // alignSelf: "flex-start",
     justifyContent: "center",
     // marginLeft: -20,
@@ -376,7 +376,7 @@ const styles = StyleSheet.create({
   priority: {
     fontFamily: "Poppins_700Bold",
     fontSize: 16,
-    marginBottom: "5%",
+    // marginBottom: "5%",
     alignSelf: "flex-start",
     alignItems: "flex-start",
     justifyContent: "flex-start",
@@ -396,7 +396,7 @@ const styles = StyleSheet.create({
   upcoming: {
     fontFamily: "Poppins_700Bold",
     fontSize: 16,
-    marginBottom: "5%",
+    // marginBottom: "5%",
     // marginLeft: 20,
     alignSelf: "flex-start",
     alignItems: "flex-start",

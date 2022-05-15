@@ -318,7 +318,7 @@ const OpenURLButton = ({ url, linkURL }) => {
       // by some browser in the mobile
       await Linking.openURL(url);
     } else {
-      Alert.alert(`Don't know how to open this URL: ${url}`);
+      Alert.alert(`Couldn't find URL: ${url}`);
     }
   }, [url]);
   return <Button title={"Go to URL"} onPress={handlePress} />;
@@ -405,64 +405,79 @@ const OpenURLButton = ({ url, linkURL }) => {
           {image && 
           <>
           <View style={styles.containerBottom}>
-            <View style={{width: "40%"}}>
-              <Text>Image: </Text>
-              <Text onPress={takeCamImage} style={{marginTop: "10%"}}>Camera</Text>
-              <Text onPress={pickImage} style={{marginTop: "5%"}}>Change</Text>
-              <Text onPress={deleteImage} style={{marginTop: "5%"}}>Delete</Text>
-            </View>
             <Lightbox style={{Width: "50%", height: 150, flex: 1 }}>
-              <Image source={{ uri: image }} resizeMethod="resize" resizeMode="contain" style={{width: "100%" , height: "100%", alignItems: "flex-start", justifyContent: "flex-start", flexDirection: "column" }} />
+              <Image source={{ uri: image }} resizeMethod="resize" resizeMode="contain" style={{width: "100%" , height: "100%", alignItems: "flex-start", justifyContent: "flex-start", flexDirection: "column"}} />
             </Lightbox>
+            <View style={{width: "40%"}}>
+              <Text style={{fontFamily: "Poppins_600SemiBold", padding: "3%"}}>Image </Text>
+              <Text onPress={takeCamImage} style={{marginTop: "10%", fontFamily: "Poppins_400Regular", padding: "3%"}}>Camera</Text>
+              <View style={{flexDirection: 'row', alignItems: "center"}}>
+                <Pressable onPress={pickImage}>
+                <MaterialIcons
+                  name='edit'
+                  size={20}
+                  color="#293462"
+                  style={styles.editButton}
+                />
+              </Pressable>
+              <Text onPress={pickImage} style={styles.imageButton}>Change</Text>
+              </View>
+              <View style={{flexDirection: 'row', alignItems: "center"}}>
+                <Pressable onPress={deleteImage}>
+                <MaterialIcons
+                  name='delete'
+                  size={20}
+                  color="#293462"
+                  style={styles.deleteButton}
+                />
+              </Pressable>
+              <Text onPress={deleteImage} style={styles.imageButton}>Delete</Text>
+              </View>
+            </View>
           </View>
           </>
           }
           {linkURL && 
           <>
-            <Text style={{marginTop: "10%"}}>Link: </Text>
+            <View style={{justifyContent: "center", alignItems: "center"}}>
+              <Text style={{fontFamily: "Poppins_600SemiBold", marginTop: "10%", marginBottom: "3%"}}>Link</Text>
             <OpenURLButton url={linkURL}>{linkURL}</OpenURLButton>
             <View style={styles.containerBottom}>
-              <Text onPress={linkTask} style={{marginLeft: "5%", }}>Change</Text>
-              <Text onPress={deleteLink} style={{marginLeft: "5%"}}>Delete</Text>
+            <View style={{flexDirection: 'row'}}>
+                <Pressable onPress={linkTask}>
+                <MaterialIcons
+                  name='edit'
+                  size={20}
+                  color="#293462"
+                  style={styles.editButton}
+                />
+              </Pressable>
+              <Text onPress={linkTask} style={styles.linkButton}>Change</Text>
+            </View>
+              <View style={{flexDirection: 'row'}}>
+                <Pressable onPress={deleteLink}>
+                <MaterialIcons
+                  name='delete'
+                  size={20}
+                  color="#293462"
+                  style={styles.deleteButton}
+                />
+              </Pressable>
+              <Text onPress={deleteLink} style={styles.linkButton}>Delete</Text>
+              </View>
+            </View>
             </View>
           </>
           }
-
-          
         </ScrollView>
 
           <View style={styles.containerBottom}>
-{/* -------------------------------------------------------------------------------------- */}
-          
-          
-          {/* <Pressable
-          style={({pressed}) =>[{color: pressed? '#EC9B3B' : 'grey'},styles.star]}>
-          {({pressed}) => (
-            <MaterialIcons style={{color: pressed ? '#EC9B3B' : 'grey'}}
-            name="star"
-            size={25}
-            color="#293462"
-            />
-          )}
-          </Pressable> */}
-{/* haven't fixed */}
-          {/* <Pressable onPress={() => setSelected(!selected)}
-            style={{backgroundColor: selected ? '#EC9B3B' : 'rgba(0,0,0,0.12)',
-            marginLeft: windowWidth * 0.1,
-            height: 25,}}>
-            <MaterialIcons 
-            name="star"
-            color='rgba(0,0,0,0.12)'
-            size={25}
-            />
-          </Pressable> */}
-{/* -------------------------------------------------------------------------------------- */}
           <MaterialIcons
             onPress={() => setModalCalendarVisible(true)}
             name="calendar-today"
             size={25}
             color="#293462"
-            style={styles.font}
+            style={styles.calendar}
           />
           <Pressable onPress={()=>priorityTask()}>
             <MaterialIcons
@@ -562,7 +577,7 @@ const styles = StyleSheet.create({
   },
   containerBottom: {
     flex: 1,
-    paddingTop: "5%",
+    // paddingTop: "5%",
     // marginTop: windowHeight * 0.05,
     backgroundColor: "#fff",
     alignItems: "flex-start",
@@ -629,7 +644,7 @@ const styles = StyleSheet.create({
     // maxHeight: windowHeight*0.8,
   },
 
-  font: {
+  calendar: {
     alignSelf: "flex-start",
     justifyContent: "flex-start",
     alignItems: "flex-start",
@@ -692,5 +707,27 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.5,
     shadowRadius: 2,
     elevation: 5,
+  },
+  imageButton: {
+    marginTop: "5%",
+    marginLeft: "3%",
+    padding: "3%",
+    alignItems: "center",
+    fontFamily: "Poppins_400Regular",
+  },
+
+  editButton: {
+    marginTop: "5%",
+    paddingTop: "3%",
+  },
+  deleteButton: {
+    marginTop: "5%",
+    paddingTop: "3%",
+  },
+  linkButton: {
+    marginTop: "5%",
+    marginLeft: "3%",
+    padding: "3%",
+    fontFamily: "Poppins_400Regular",
   },
 });

@@ -101,11 +101,11 @@ export default function EditProfile({ navigation }) {
     return <AppLoading />;
   } else {
     return (
-      <View>
-        <ScrollView
-        showsVerticalScrollIndicator={false}
-        showsHorizontalScrollIndicator={false}
-        >
+      // <View>
+      //   <ScrollView
+      //   showsVerticalScrollIndicator={false}
+      //   showsHorizontalScrollIndicator={false}
+      //   >
       <View style={styles.container}>
         
         <View style={styles.back}>
@@ -179,13 +179,13 @@ export default function EditProfile({ navigation }) {
             onSubmitData();
           }}
         >
-          <Text style={{ color: "white", fontFamily: "Poppins_600SemiBold" }}>
+          <Text style={{ color: "white", fontFamily: "Poppins_600SemiBold"}}>
             Save
           </Text>
         </Pressable>
         </View>
-        </ScrollView>
-      </View>
+      //   </ScrollView>
+      // </View>
     );
   }
 }
@@ -256,7 +256,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     marginTop: 30,
-    marginBottom: "5%"
   },
 
   signOut: {
