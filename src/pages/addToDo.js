@@ -70,19 +70,19 @@ const actions = [
     name: "bt_camera",
     position: 2,
   },
-  {
-    text: "Location",
-    color: "#293462",
-    icon: require("../../assets/images/map.png"),
-    name: "bt_location",
-    position: 3,
-  },
+  // {
+  //   text: "Location",
+  //   color: "#293462",
+  //   icon: require("../../assets/images/map.png"),
+  //   name: "bt_location",
+  //   position: 3,
+  // },
   {
     text: "URL",
     color: "#293462",
     icon: require("../../assets/images/url.png"),
     name: "bt_link",
-    position: 4,
+    position: 3,
   },
 ];
 
