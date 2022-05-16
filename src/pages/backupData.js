@@ -85,7 +85,8 @@ const styles = StyleSheet.create({
   left: {
     fontSize: 18,
     lineHeight: 40,
-    fontFamily: 'Poppins_400Regular'
+    fontFamily: 'Poppins_400Regular',
+    marginRight: "5%"
   },
 
   right: {

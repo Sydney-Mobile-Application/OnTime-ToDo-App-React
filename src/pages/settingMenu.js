@@ -120,7 +120,7 @@ export default function SettingMenu({ navigation }) {
           <View style={styles.right}>
             <Pressable onPress={() => navigation.navigate("Profile")}>
               <Text style={styles.profileSetting}>
-                Setting{" "}
+                Settings{""}
                 <MaterialIcons name="arrow-forward-ios" size={10} />
               </Text>
               <Image

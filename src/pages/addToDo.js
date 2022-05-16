@@ -328,7 +328,8 @@ const OpenURLButton = ({ url, linkURL }) => {
       Alert.alert(`Couldn't find URL: ${url}`);
     }
   }, [url]);
-  return <Button title={"Go to URL"} onPress={handlePress} />;
+  return <Text style={{marginLeft:"2%", marginBottom: "3%", color: "#007AFF"}} onPress={handlePress}> Go To URL </Text>
+  {/* <Button title={"Go to URL"} onPress={handlePress}/> */}
 };
 
   useEffect(() => {
@@ -456,9 +457,9 @@ const OpenURLButton = ({ url, linkURL }) => {
           {linkURL && 
           <>
             <View style={{justifyContent: "flex-start", alignItems: "flex-start"}}>
-              <Text style={{fontFamily: "Poppins_600SemiBold", marginTop: "10%", marginBottom: "3%"}}>Link</Text>
+              <Text style={{fontFamily: "Poppins_600SemiBold", marginTop: "10%", marginBottom: "3%",paddingLeft: "3%"}}>Link</Text>
             <OpenURLButton url={linkURL}>{linkURL}</OpenURLButton>
-            <Text>{linkURL}</Text>
+            <Text style={{paddingLeft: "3%", textDecorationLine: "underline"}}>{linkURL}</Text>
             <View style={styles.containerBottom}>
             <View style={{flexDirection: 'row'}}>
                 <Pressable onPress={linkTask}>
@@ -595,7 +596,8 @@ const styles = StyleSheet.create({
   },
   containerBottom: {
     flex: 1,
-    paddingTop: "5%",
+    paddingTop: "3%",
+    paddingLeft: "3%",
     // marginTop: windowHeight * 0.05,
     backgroundColor: "#fff",
     alignItems: "flex-start",
@@ -639,7 +641,7 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 30,
-    // padding: "5%",
+    paddingLeft: "3%",
     minWidth: "100%",
     textAlignVertical: "top",
     alignSelf: "flex-start",
@@ -659,6 +661,7 @@ const styles = StyleSheet.create({
     justifyContent: "flex-start",
     alignItems: "flex-start",
     paddingBottom: "5%",
+    paddingLeft: "3%",
     
     // backgroundColor: "#000"
     // position: "absolute",

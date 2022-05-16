@@ -580,8 +580,8 @@ const styles = StyleSheet.create({
     alignSelf: "flex-start",
   },
   dateText: {
-    fontFamily: "Poppins_700Bold",
-    marginLeft: "5%",
+    fontFamily: "Poppins_600SemiBold",
+    // marginLeft: "5%",
     borderRadius: 15,
     paddingLeft: "5%",
     paddingRight: "5%",

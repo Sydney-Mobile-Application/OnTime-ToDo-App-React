@@ -2,6 +2,13 @@ import React, { useState } from "react";
 import { Alert, Modal, StyleSheet, Text, Pressable, View } from "react-native";
 import { MaterialIcons } from "@expo/vector-icons";
 import { useLinkProps } from "@react-navigation/native";
+import {
+  Poppins_300Light,
+  Poppins_400Regular,
+  Poppins_600SemiBold,
+  Poppins_700Bold,
+  Poppins_800ExtraBold,
+} from '@expo-google-fonts/poppins';
 
 const App = ({ closeModal, userData }) => {
   return (
@@ -75,6 +82,7 @@ const styles = StyleSheet.create({
   modalText: {
     fontSize: 20,
     textAlign: "center",
+    fontFamily: 'Poppins_400Regular'
   },
   modalPic: {
     marginBottom: 10,
