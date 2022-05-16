@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, Component, useCallback } from "react";
 import {
   StyleSheet,
   View,
@@ -7,6 +7,13 @@ import {
   TextInput,
   Pressable,
   Modal,
+  Alert,
+  TouchableOpacity,
+  IconButton,
+  Image,
+  ScrollView,
+  Button,
+  Linking
 } from "react-native";
 import { MaterialIcons } from "@expo/vector-icons";
 import { Feather } from "@expo/vector-icons";
@@ -14,6 +21,8 @@ import { AntDesign } from "@expo/vector-icons";
 import { FloatingAction } from "react-native-floating-action";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import AddToDoCalendar from "./addToDoCalendar";
+import Prompt from "react-native-input-prompt";
+import Lightbox from 'react-native-lightbox';
 import {
   Poppins_300Light,
   Poppins_400Regular,
@@ -42,30 +51,37 @@ const actions = [
     name: "bt_camera",
     position: 2,
   },
-  {
-    text: "Location",
-    color: "#293462",
-    icon: require("../../assets/images/map.png"),
-    name: "bt_location",
-    position: 3,
-  },
+  // {
+  //   text: "Location",
+  //   color: "#293462",
+  //   icon: require("../../assets/images/map.png"),
+  //   name: "bt_location",
+  //   position: 3,
+  // },
   {
     text: "URL",
     color: "#293462",
     icon: require("../../assets/images/url.png"),
     name: "bt_link",
-    position: 4,
+    position: 3,
   },
 ];
 
 export default function EditToDo({ navigation }) {
-  const [textEmail, onChangeTextEmail] = useState("");
+  const [textTitle, onChangeTextTitle] = useState("DEADLINE PAM DEKAT");//pre-filled*
+  const [textDesc, onChangeTextDesc] = useState("Deadline tanggal 23 Mei 2022");//pre-filled*
   const [oldDate, newDate] = useState("Select Date Time");
   const [oldTime, newTime] = useState("0:00");
   const [modalCalendarVisible, setModalCalendarVisible] = useState(false);
   const [date, setDate] = useState(new Date());
   const [show, setShow] = useState(false);
-  const [priority, setPriority] = useState(false);
+  const [textLink, onChangeLink] = useState("");//pre-filled*
+  const [priority, setPriority] = useState(true); //pre-filled*
+  const [image, setImage] = useState(null);//pre-filled*
+  const [linkURL, setURL] = useState("https://www.instagram.com/tv/CdnLruJlj47/?utm_source=ig_web_copy_link");//pre-filled*
+  const [link, setLink] = useState(false);//pre-filled*
+  const [imageURI, dataImage] = useState("");//pre-filled*
+
   const priorityTask = () => {
     setPriority(!priority);
   };
@@ -91,6 +107,13 @@ export default function EditToDo({ navigation }) {
     setShow(true);
   };
 
+  const [heightDesc, setHeightDesc] = useState({
+    height: 100 , //initializing the content text height
+  });
+  const [heightTitle, setHeightTitle] = useState({
+    height: 100 , //initializing the content text height
+  });
+
   const onChangeTime = (time) => {
     setShow(Platform.OS === "ios");
     let timenow = String(time.nativeEvent.timestamp);
@@ -108,6 +131,112 @@ export default function EditToDo({ navigation }) {
     // setDate(currentDate);
     // console.log(date)
   };
+
+  
+
+  const uploadImage = async (imageURI) => {
+    // Why are we using XMLHttpRequest? See:
+  // https://github.com/expo/expo/issues/2402#issuecomment-443726662
+  const blob = await new Promise((resolve, reject) => {
+    const xhr = new XMLHttpRequest();
+    xhr.onload = function() {
+      resolve(xhr.response);
+    };
+    xhr.onerror = function(e) {
+      console.log(e);
+      reject(new TypeError('Network request failed'));
+    };
+    xhr.responseType = 'blob';
+    xhr.open('GET', imageURI, true);
+    xhr.send(null);
+  });
+
+  const ref = app.storage().ref("images/" + (state.userData.uid+textTitle+"-image"));
+  const snapshot = await ref.put(blob);
+
+  // We're done with the blob, close and release it
+  blob.close();
+
+  return await snapshot.ref.getDownloadURL();
+  }
+
+
+  const linkTask = () => {
+    setLink(!link);
+  };
+  const takeLink = (textLink) => {
+    onChangeLink(textLink);
+    setURL(textLink);
+    setLink(!link);
+  };
+  const deleteLink = () => {
+    let noLink = null
+    onChangeLink(noLink);
+    setURL(noLink);
+  };
+
+
+  const pickImage = async () => {
+    // No permissions request is necessary for launching the image library
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.Images,
+      allowsEditing: true,
+      // aspect: [4, 3],
+      quality: 1,
+    });
+    console.log("Height:" + result.height);
+    console.log(result);
+    
+
+
+    if (!result.cancelled) {
+      setImage(result.uri);
+      dataImage(result.uri);
+    }
+  };
+
+  const takeCamImage = async () => {
+    // No permissions request is necessary for launching the image library
+    let result = await ImagePicker.launchCameraAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.Images,
+      allowsEditing: true,
+      // aspect: [4, 3],
+      quality: 1,
+    });
+
+    console.log(result);
+
+
+
+    if (!result.cancelled) {
+      setImage(result.uri);
+      dataImage(result.uri);
+    }
+  };
+
+  const deleteImage = async () => {
+    let result = null
+    setImage(result)
+    dataImage(result)
+  };
+
+
+const OpenURLButton = ({ url, linkURL }) => {
+  const handlePress = useCallback(async () => {
+    // Checking if the link is supported for links with custom URL scheme.
+    const supported = await Linking.canOpenURL(url);
+
+    if (supported) {
+      // Opening the link with some app, if the URL scheme is "http" the web link should be opened
+      // by some browser in the mobile
+      await Linking.openURL(url);
+    } else {
+      Alert.alert(`Couldn't find URL: ${url}`);
+    }
+  }, [url]);
+  return <Button title={"Go to URL"} onPress={handlePress} />;
+};
+
   if (!fontsLoaded) {
     return <AppLoading />;
   } else {
@@ -120,9 +249,7 @@ export default function EditToDo({ navigation }) {
             </Pressable>
           </View>
           <View style={styles.settings}>
-            <Text style={styles.dateInfo}>
-              {oldDate} - {oldTime}
-            </Text>
+            
             <Pressable onPress={() => navigation.navigate("Dashboard")}>
               <Feather
                 style={styles.saveButton}
@@ -142,22 +269,135 @@ export default function EditToDo({ navigation }) {
             {/* <MaterialIcons  name='settings' size={30} color='#293462'/> */}
           </View>
         </View>
-        <View style={styles.task}>
-          <TextInput
-            multiline={true}
-            style={styles.title }
-            padding={"5%"}
-            onChangeText={onChangeTextEmail}
-            placeholder="Meeting with project team "
-          />
-          <TextInput
-            style={styles.description}
-            padding={"5%"}
-            onChangeText={onChangeTextEmail}
-            multiline={true}
-            placeholder="Discussing CRUD Function for OnTime App "
-          />
+        <View style={[{alignSelf: "flex-end", marginRight: "10%", marginTop: "5%"}]}>
+          <Text style={styles.dateInfo}>
+              {oldDate} - {oldTime}
+          </Text>
         </View>
+        <ScrollView 
+        showsVerticalScrollIndicator={false}
+        showsHorizontalScrollIndicator={false}
+        style={styles.task}>
+        
+          <TextInput
+            style={[styles.title,{height: Math.max(44, heightTitle.height)}]}
+            padding={"5%"}
+            multiline={true}
+            onChangeText={(val) => {
+              onChangeTextTitle((prevState) => ({
+                ...prevState,
+                textTitle: val,
+              }));
+            }}
+            defaultValue={textTitle}
+            placeholder="Title"
+            onContentSizeChange={(event) => {
+              setHeightTitle({height: event.nativeEvent.contentSize.height});
+            }}
+          />
+          <Prompt
+              visible={link ? true : false}
+              title="Enter your URL"
+              placeholder="Type Something"
+              onCancel={() => setLink(!link)
+                  // console.log("Cancelled")
+              }
+              onSubmit={textLink => takeLink(textLink)
+                
+                // console.log("Submit")
+              }
+            />
+          {/* <TheLocationPicker/> */}
+          {/* <TheImagePicker /> */}
+          <TextInput
+            style={[styles.description,{height: Math.max(44, heightDesc.height)}]}
+            padding={"5%"}
+            onChangeText={(val) => {
+              onChangeTextDesc((prevState) => ({
+                ...prevState,
+                textDesc: val,
+              }));
+            }}
+            defaultValue={textDesc}
+            multiline={true}
+            placeholder="Description"
+            onContentSizeChange={(event) => {
+              setHeightDesc({height: event.nativeEvent.contentSize.height});
+            }}
+          />
+          <View>
+          {image && 
+          <>
+          <Text style={{fontFamily: "Poppins_600SemiBold", padding: "3%"}}>Image </Text>
+          <View style={styles.containerBottom}>
+          
+            <Lightbox style={{Width: "50%", height: 150, flex: 1 }}>
+              <Image source={{ uri: image }} resizeMethod="resize" resizeMode="contain" style={{width: "100%" , height: "100%", alignItems: "flex-start", justifyContent: "flex-start", flexDirection: "column"}} />
+            </Lightbox>
+            <View style={{width: "40%"}}>
+              
+              <Text onPress={takeCamImage} style={{marginTop: "10%", fontFamily: "Poppins_400Regular", padding: "3%"}}>Camera</Text>
+              <View style={{flexDirection: 'row', alignItems: "center"}}>
+                <Pressable onPress={pickImage}>
+                <MaterialIcons
+                  name='edit'
+                  size={20}
+                  color="#293462"
+                  style={styles.editButton}
+                />
+              </Pressable>
+              <Text onPress={pickImage} style={styles.imageButton}>Change</Text>
+              </View>
+              <View style={{flexDirection: 'row', alignItems: "center"}}>
+                <Pressable onPress={deleteImage}>
+                <MaterialIcons
+                  name='delete'
+                  size={20}
+                  color="#293462"
+                  style={styles.deleteButton}
+                />
+              </Pressable>
+              <Text onPress={deleteImage} style={styles.imageButton}>Delete</Text>
+              </View>
+            </View>
+          </View>
+          </>
+          }
+          {linkURL && 
+          <>
+            <View style={{justifyContent: "flex-start", alignItems: "flex-start"}}>
+              <Text style={{fontFamily: "Poppins_600SemiBold", marginTop: "10%", marginBottom: "3%"}}>Link</Text>
+            <OpenURLButton url={linkURL}>{linkURL}</OpenURLButton>
+            <Text>{linkURL}</Text>
+            <View style={styles.containerBottom}>
+            <View style={{flexDirection: 'row'}}>
+                <Pressable onPress={linkTask}>
+                <MaterialIcons
+                  name='edit'
+                  size={20}
+                  color="#293462"
+                  style={styles.editButton}
+                />
+              </Pressable>
+              <Text onPress={linkTask} style={styles.linkButton}>Change</Text>
+            </View>
+              <View style={{flexDirection: 'row'}}>
+                <Pressable onPress={deleteLink}>
+                <MaterialIcons
+                  name='delete'
+                  size={20}
+                  color="#293462"
+                  style={styles.deleteButton}
+                />
+              </Pressable>
+              <Text onPress={deleteLink} style={styles.linkButton}>Delete</Text>
+              </View>
+            </View>
+            </View>
+          </>
+          }
+          </View>
+        </ScrollView>
 
         <View style={styles.containerBottom}>
           <MaterialIcons
@@ -182,6 +422,13 @@ export default function EditToDo({ navigation }) {
           color="#293462"
           showBackground={false}
           onPressItem={(name) => {
+            if(name === "bt_gallery"){
+              pickImage()
+            }else if (name === "bt_camera") {
+              takeCamImage()
+            }else if (name === "bt_link") {
+              linkTask()
+            }
             console.log(`selected button: ${name}`);
           }}
         />
@@ -257,8 +504,9 @@ const styles = StyleSheet.create({
     // justifyContent: "center",
   },
   containerBottom: {
-    // flex: 1,
-    marginTop: windowHeight * 0.05,
+    flex: 1,
+    paddingTop: "5%",
+    // marginTop: windowHeight * 0.05,
     backgroundColor: "#fff",
     alignItems: "flex-start",
     justifyContent: "flex-start",
@@ -292,15 +540,18 @@ const styles = StyleSheet.create({
   task: {
     alignSelf: "flex-start",
     marginTop: windowHeight * 0.05,
-    marginBottom: windowWidth * 0.05,
+    // marginBottom: windowWidth * 0.05,
     marginLeft: windowWidth * 0.12,
     marginRight: windowWidth * 0.08,
     height: windowHeight * 0.6,
     width: windowWidth * 0.8,
+    // backgroundColor:'#000'
   },
   title: {
-    // padding: "5%",
     fontSize: 30,
+    // padding: "5%",
+    minWidth: "100%",
+    textAlignVertical: "top",
     alignSelf: "flex-start",
     justifyContent: "flex-start",
     alignItems: "flex-start",
@@ -308,15 +559,19 @@ const styles = StyleSheet.create({
     fontFamily: "Poppins_600SemiBold",
   },
   description: {
-    // padding: "5%",
-    // paddingTop: windowHeight * 0.01,
-    textAlignVertical: "center",
+    minWidth: "100%",
+    // height: "60%",
+    marginBottom: "10%",
+    textAlignVertical: "top",
     fontSize: 20,
     fontFamily: "Poppins_400Regular",
     alignSelf: "flex-start",
     justifyContent: "flex-start",
     alignItems: "flex-start",
-    // marginBottom: windowHeight * 0.02,
+    paddingBottom: "5%",
+    
+    // backgroundColor: "#000"
+    // position: "absolute",
     // maxHeight: windowHeight*0.8,
   },
 
@@ -383,5 +638,27 @@ font: {
     shadowOpacity: 0.5,
     shadowRadius: 2,
     elevation: 5,
+  },
+  imageButton: {
+    marginTop: "5%",
+    marginLeft: "3%",
+    padding: "3%",
+    alignItems: "center",
+    fontFamily: "Poppins_400Regular",
+  },
+
+  editButton: {
+    marginTop: "5%",
+    paddingTop: "3%",
+  },
+  deleteButton: {
+    marginTop: "5%",
+    paddingTop: "3%",
+  },
+  linkButton: {
+    marginTop: "5%",
+    marginLeft: "3%",
+    padding: "3%",
+    fontFamily: "Poppins_400Regular",
   },
 });

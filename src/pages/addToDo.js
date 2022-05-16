@@ -207,7 +207,7 @@ export default function AddToDo({ navigation }) {
           done: false,
           userId: state.userData.uid,
           url: linkURL,
-          imageURL: "images/" + (state.userData.uid+textTitle+"-image")
+          imageURL: "noteImages/" + (state.userData.uid+textTitle+"-image")
         };
         setDoc(myDoc, dataPost)
           .then(() => {

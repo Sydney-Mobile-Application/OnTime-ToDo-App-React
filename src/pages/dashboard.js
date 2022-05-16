@@ -94,7 +94,7 @@ export default function Dashboard({ navigation }) {
                     marginLeft: "5%"
                   }}
                 >
-                  Meeting with project team
+                  Deadline PAM Sudah Dekat
                 </Text>
               </View>
               <View style={styles.time}>
@@ -107,9 +107,9 @@ export default function Dashboard({ navigation }) {
                     size={15}
                     color="#EC9B3B"
                   />
-                  <Text style={styles.notifSmall}>02.45 PM</Text>
+                  <Text style={styles.notifSmall}>00.00 AM</Text>
                 </View>
-                <Text style={styles.notifSmall}>10 minutes left</Text>
+                <Text style={styles.notifSmall}>7 days left</Text>
               </View>
             </View>
             <MaterialIcons name="done" size={25} color="#50C671" />
