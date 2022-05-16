@@ -97,6 +97,13 @@ export default function AddToDo({ navigation }) {
   const [textLink, onChangeLink] = useState("");
   const [priority, setPriority] = useState(false);
 
+  const [heightDesc, setHeightDesc] = useState({
+    height: 100 , //initializing the content text height
+  });
+  const [heightTitle, setHeightTitle] = useState({
+    height: 100 , //initializing the content text height
+  });
+
   // setTaskImage = (image) => {
   //   props.setFieldValue('imageUri', image.uri);
   // }
@@ -221,7 +228,7 @@ export default function AddToDo({ navigation }) {
   const [imageURI, dataImage] = useState("");
 
    
-  uploadImage = async (imageURI) => {
+  const uploadImage = async (imageURI) => {
     // Why are we using XMLHttpRequest? See:
   // https://github.com/expo/expo/issues/2402#issuecomment-443726662
   const blob = await new Promise((resolve, reject) => {
@@ -375,11 +382,14 @@ const OpenURLButton = ({ url, linkURL }) => {
         style={styles.task}>
         
           <TextInput
-            style={styles.title}
+            style={[styles.title,{height: Math.max(44, heightTitle.height)}]}
             padding={"5%"}
             multiline={true}
             onChangeText={onChangeTextTitle}
-            placeholder="Title "
+            placeholder="Title"
+            onContentSizeChange={(event) => {
+              setHeightTitle({height: event.nativeEvent.contentSize.height});
+            }}
           />
           <Prompt
               visible={link ? true : false}
@@ -396,20 +406,26 @@ const OpenURLButton = ({ url, linkURL }) => {
           {/* <TheLocationPicker/> */}
           {/* <TheImagePicker /> */}
           <TextInput
-            style={styles.description}
+            style={[styles.description,{height: Math.max(44, heightDesc.height)}]}
             padding={"5%"}
             onChangeText={onChangeTextDesc}
             multiline={true}
             placeholder="Description"
+            onContentSizeChange={(event) => {
+              setHeightDesc({height: event.nativeEvent.contentSize.height});
+            }}
           />
+          <View>
           {image && 
           <>
+          <Text style={{fontFamily: "Poppins_600SemiBold", padding: "3%"}}>Image </Text>
           <View style={styles.containerBottom}>
+          
             <Lightbox style={{Width: "50%", height: 150, flex: 1 }}>
               <Image source={{ uri: image }} resizeMethod="resize" resizeMode="contain" style={{width: "100%" , height: "100%", alignItems: "flex-start", justifyContent: "flex-start", flexDirection: "column"}} />
             </Lightbox>
             <View style={{width: "40%"}}>
-              <Text style={{fontFamily: "Poppins_600SemiBold", padding: "3%"}}>Image </Text>
+              
               <Text onPress={takeCamImage} style={{marginTop: "10%", fontFamily: "Poppins_400Regular", padding: "3%"}}>Camera</Text>
               <View style={{flexDirection: 'row', alignItems: "center"}}>
                 <Pressable onPress={pickImage}>
@@ -439,9 +455,10 @@ const OpenURLButton = ({ url, linkURL }) => {
           }
           {linkURL && 
           <>
-            <View style={{justifyContent: "center", alignItems: "center"}}>
+            <View style={{justifyContent: "flex-start", alignItems: "flex-start"}}>
               <Text style={{fontFamily: "Poppins_600SemiBold", marginTop: "10%", marginBottom: "3%"}}>Link</Text>
             <OpenURLButton url={linkURL}>{linkURL}</OpenURLButton>
+            <Text>{linkURL}</Text>
             <View style={styles.containerBottom}>
             <View style={{flexDirection: 'row'}}>
                 <Pressable onPress={linkTask}>
@@ -469,6 +486,7 @@ const OpenURLButton = ({ url, linkURL }) => {
             </View>
           </>
           }
+          </View>
         </ScrollView>
 
           <View style={styles.containerBottom}>
@@ -577,7 +595,7 @@ const styles = StyleSheet.create({
   },
   containerBottom: {
     flex: 1,
-    // paddingTop: "5%",
+    paddingTop: "5%",
     // marginTop: windowHeight * 0.05,
     backgroundColor: "#fff",
     alignItems: "flex-start",
@@ -631,9 +649,8 @@ const styles = StyleSheet.create({
     fontFamily: "Poppins_600SemiBold",
   },
   description: {
-    // padding: "5%",
     minWidth: "100%",
-    // height: "100%",
+    // height: "60%",
     marginBottom: "10%",
     textAlignVertical: "top",
     fontSize: 20,
@@ -641,6 +658,10 @@ const styles = StyleSheet.create({
     alignSelf: "flex-start",
     justifyContent: "flex-start",
     alignItems: "flex-start",
+    paddingBottom: "5%",
+    
+    // backgroundColor: "#000"
+    // position: "absolute",
     // maxHeight: windowHeight*0.8,
   },
 
