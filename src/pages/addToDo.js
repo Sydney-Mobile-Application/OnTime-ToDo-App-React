@@ -36,6 +36,7 @@ import { useFonts } from "expo-font";
 import AppLoading from "expo-app-loading";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import * as ImagePicker from 'expo-image-picker';  // not react-image-picker
+import { RFPercentage, RFValue } from "react-native-responsive-fontsize";
 
 // Firebase
 import {
@@ -640,7 +641,7 @@ const styles = StyleSheet.create({
     // backgroundColor:'#000'
   },
   title: {
-    fontSize: 30,
+    fontSize: RFPercentage(4),
     paddingLeft: "3%",
     minWidth: "100%",
     textAlignVertical: "top",
@@ -655,7 +656,7 @@ const styles = StyleSheet.create({
     // height: "60%",
     marginBottom: "10%",
     textAlignVertical: "top",
-    fontSize: 20,
+    fontSize: RFPercentage(3),
     fontFamily: "Poppins_400Regular",
     alignSelf: "flex-start",
     justifyContent: "flex-start",

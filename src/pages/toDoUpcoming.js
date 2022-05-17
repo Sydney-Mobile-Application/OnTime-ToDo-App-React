@@ -11,6 +11,7 @@ import {
 } from "@expo-google-fonts/poppins";
 import { useFonts } from "expo-font";
 import AppLoading from "expo-app-loading";
+import { RFPercentage, RFValue } from "react-native-responsive-fontsize";
 
 const windowWidth = Dimensions.get("window").width;
 const windowHeight = Dimensions.get("window").height;
@@ -204,10 +205,12 @@ const styles = StyleSheet.create({
   taskText: {
     color: "#FFFFFF",
     fontFamily: "Poppins_400Regular",
+    fontSize: RFPercentage(2),
+
   },
   taskDate: {
     color: "#FFFFFF",
-    fontSize: 22,
+    fontSize: RFPercentage(3),
     fontFamily: "Poppins_700Bold",
     alignSelf: "flex-start",
     marginTop: 10,

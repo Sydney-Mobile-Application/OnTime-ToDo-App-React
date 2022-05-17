@@ -3,6 +3,7 @@ import { StyleSheet, View, Text, Pressable, Alert } from 'react-native';
 // import {Calendar, CalendarList, Agenda} from 'react-native-calendars';
 import CalendarPicker from 'react-native-calendar-picker';
 // import AddToDoTime from './addToDoTime';
+import { RFPercentage, RFValue } from "react-native-responsive-fontsize";
 
 export default function TermAndCondition ({closeCalendarModal, receiveDate}) {
   
@@ -102,7 +103,7 @@ const styles = StyleSheet.create({
   },
   textTitleSave: {
     fontWeight: 'bold',
-    fontSize: 18,
+    fontSize: RFPercentage(2),
     marginBottom: 10
   },
   scrollViewSave: {

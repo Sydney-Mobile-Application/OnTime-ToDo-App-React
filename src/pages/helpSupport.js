@@ -10,6 +10,7 @@ import {
 } from '@expo-google-fonts/poppins';
 import {useFonts} from 'expo-font';
 import AppLoading from 'expo-app-loading';
+import { RFPercentage, RFValue } from "react-native-responsive-fontsize";
 
 const windowWidth = Dimensions.get("window").width;
 const windowHeight = Dimensions.get("window").height;
@@ -48,13 +49,7 @@ export default function HelpSupport ({ navigation }) {
           <Text style={styles.description}>+12-345-678-900</Text>
        </View>
 
-       <View style={styles.helpSupportContainer}>
-          <Text style={styles.description}>Read our docs</Text>
-          <Text style={styles.description}>
-
-            *masukin pop up docs*
-          </Text>
-       </View>
+       
     </View>
     </View>
   );
@@ -72,7 +67,7 @@ const styles = StyleSheet.create({
   },
 
   helpSupportTitle: {
-    fontSize: 25,
+    fontSize: RFPercentage(3),
     alignSelf: 'flex-start',
     paddingTop: 20,
     marginBottom: 20,
@@ -82,7 +77,7 @@ const styles = StyleSheet.create({
 
   helpSupportContainer: {
     width: windowWidth *0.84 ,
-    height: windowHeight * 0.1,
+    height: windowHeight * 0.12,
     borderRadius: 25,
     backgroundColor: '#FFECBF',
     paddingLeft: windowHeight * 0.03,
@@ -92,6 +87,7 @@ const styles = StyleSheet.create({
 
   description:{
     lineHeight: 25,
+    fontSize: RFPercentage(2),
     fontFamily: 'Poppins_400Regular'
   },
 });

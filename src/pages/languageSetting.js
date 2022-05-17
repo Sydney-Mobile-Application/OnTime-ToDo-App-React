@@ -10,6 +10,7 @@ import {
 } from '@expo-google-fonts/poppins';
 import {useFonts} from 'expo-font';
 import AppLoading from 'expo-app-loading';
+import { RFPercentage, RFValue } from "react-native-responsive-fontsize";
 
 const windowWidth = Dimensions.get("window").width;
 const windowHeight = Dimensions.get("window").height;
@@ -34,31 +35,32 @@ export default function LanguageSetting ({ navigation }) {
     </View>
       <Text style={styles.languageTitle}>Language Setting </Text>
       <Text style={styles.languageDescOff}>
-      <Image style={styles.profilePicture} source={require("../../assets/englishflag.jpg")}/>
+      <Image style={styles.flag} source={require("../../assets/englishflag.jpg")}/>
        English (UK)
       </Text>
       <Text style={styles.languageDescOff}>
-      <Image style={styles.profilePicture} source={require("../../assets/indonesiaflag.png")} />
+      <Image style={styles.flag} source={require("../../assets/indonesiaflag.png")} />
          Bahasa Indonesia
       </Text>
       <Text style={styles.languageDescOff}>
-      <Image style={styles.profilePicture} source={require("../../assets/deutschflag.png")}/>
+      <Image style={styles.flag} source={require("../../assets/deutschflag.png")}/>
         Deutsch
       </Text>
       <Text style={styles.languageDescOff}>
-      <Image style={styles.profilePicture} source={require("../../assets/espanolflag.png")}/>
+      <Image style={styles.flag} source={require("../../assets/espanolflag.png")}/>
         Espanol
       </Text>
       <Text style={styles.languageDescOff}>
-      <Image style={styles.profilePicture} source={require("../../assets/hindiflag.png")}/>
+      <Image style={styles.flag} source={require("../../assets/hindiflag.png")}/>
         Hindi
       </Text>
       <Text style={styles.languageDescOff}>
-      <Image style={styles.profilePicture} source={require("../../assets/filipinoflag.png")}/>
+      <Image style={styles.flag} source={require("../../assets/filipinoflag.png")}/>
         Filipino
       </Text>
+      
       <Text style={styles.languageDescOff}>
-      <Image style={styles.profilePicture} source={require("../../assets/chineseflag.png")}/>
+      <Image style={styles.flag} source={require("../../assets/chineseflag.png")}/>
         Chinese Simplified (简体中文)
       </Text>
 
@@ -99,26 +101,32 @@ const styles = StyleSheet.create({
   },
 
   languageDescOn: {
-    fontSize: 20,
+    fontSize: RFPercentage(5),
     lineHeight: 40,
     marginLeft: windowHeight * 0.01,
     fontFamily: 'Poppins_400Regular'
   },
-  profilePicture: {
+  flag: {
     width: 30,
     height: 20,
     borderRadius: 50,
     position: "relative",
+    marginLeft : 3,
+
+
+   
   },
 
   languageDescOff: {
-    fontSize: 18,
+    fontSize: RFPercentage(1.5),
     lineHeight: 40,
     marginLeft: windowHeight * 0.01,
-    paddingHorizontal: 15,
+    paddingLeft : 3,
+    paddingHorizontal: 12,
     color: 'rgba(108, 122, 137, 1)',
     fontFamily: 'Poppins_400Regular',
-    height: 35,
+    height: 37,
+    textAlign : "left" ,
   },
 
 

@@ -11,6 +11,7 @@ import {
 import {useFonts} from 'expo-font';
 import AppLoading from 'expo-app-loading';
 import { CurrentRenderContext } from '@react-navigation/native';
+import { RFPercentage, RFValue } from "react-native-responsive-fontsize";
 
 const windowWidth = Dimensions.get("window").width;
 const windowHeight = Dimensions.get("window").height;
@@ -71,7 +72,7 @@ const styles = StyleSheet.create({
   },
   
   aboutTitle: {
-    fontSize: 25,
+    fontSize: RFPercentage(3),
     alignSelf: 'flex-start',
     paddingTop: 20,
     marginBottom: 30,
@@ -85,7 +86,7 @@ const styles = StyleSheet.create({
   },
   
   aboutDescription: {
-    fontSize: 18,
+    fontSize: RFPercentage(2),
     lineHeight: 40,
     fontFamily: 'Poppins_400Regular',
     textAlign: 'justify',
@@ -93,7 +94,7 @@ const styles = StyleSheet.create({
   },
 
   aboutfooter: {
-    fontSize: 15,
+    fontSize: RFPercentage(1.5),
     lineHeight: 30,
     fontFamily: 'Poppins_400Regular',
     textAlign: 'justify',

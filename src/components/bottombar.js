@@ -1,6 +1,7 @@
 import React from 'react';
 import { StyleSheet } from 'react-native';
 import { BottomNavigation, Text } from 'react-native-paper';
+import { RFPercentage, RFValue } from "react-native-responsive-fontsize";
 
 export default function BottomBar () {
   const MusicRoute = () => <Text></Text>;
