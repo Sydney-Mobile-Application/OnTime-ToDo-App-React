@@ -141,6 +141,26 @@ export default function AddToDo({ navigation }) {
     setShow(true);
   };
 
+  const editTask = async () => {
+    Alert.alert(
+      "Save this changes?",
+      "This task will be updated",
+      [
+        {
+          text: "Cancel",
+          onPress: () => console.log("Cancel Pressed"),
+          style: "cancel"
+        },
+        {
+          text: "Discard",
+          onPress: () => navigation.navigate("Dashboard"),
+          style: "cancel"
+        },
+        { text: "OK", onPress: () => navigation.navigate("Dashboard")}
+      ]
+    );
+  };
+
   const [state, setState] = useState({
     userData: [],
     dateTime: null,
@@ -357,7 +377,7 @@ const OpenURLButton = ({ url, linkURL }) => {
       <View style={styles.container}>
         <View style={styles.containertop}>
           <View style={styles.back}>
-            <Pressable onPress={() => navigation.navigate("Dashboard")}>
+            <Pressable onPress={editTask}>
               <MaterialIcons name="arrow-back" size={30} color="#293462" />
             </Pressable>
           </View>
