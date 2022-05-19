@@ -501,7 +501,7 @@ const OpenURLButton = ({ url, linkURL }) => {
           <Pressable onPress={()=>priorityTask()}>
             <MaterialIcons
               name='star'
-              size={30}
+              size={25}
               color={priority ? '#EC9B3B' : 'grey'}
               style={styles.priorityStar}
               value={priority? 0 : 1}
@@ -678,7 +678,7 @@ const styles = StyleSheet.create({
 
   priorityStar: {
     alignSelf: "flex-start",
-    marginTop: "-5%",
+    // marginTop: "-5%",
     justifyContent: "flex-start",
     alignItems: "flex-start",
     marginLeft: windowWidth * 0.1,
