@@ -132,8 +132,6 @@ export default function EditToDo({ navigation }) {
     // console.log(date)
   };
 
-  
-
   const uploadImage = async (imageURI) => {
     // Why are we using XMLHttpRequest? See:
   // https://github.com/expo/expo/issues/2402#issuecomment-443726662
@@ -220,6 +218,33 @@ export default function EditToDo({ navigation }) {
     dataImage(result)
   };
 
+  const onDoneData = () => {
+    const myDoc = doc(db, "users", state.userData.uid);
+
+    const dataPost = {
+      done: true
+    };
+
+    console.log("datapost", dataPost);
+
+    updateDoc(myDoc, dataPost)
+      .then(() => {
+        try {
+          const userData = Object.assign({ uid: state.userData.uid }, dataPost);
+          const value = JSON.stringify(userData);
+          AsyncStorage.setItem("@userData", value);
+        } catch (err) {
+          console.log("Error Msg :", err);
+        }
+
+        Alert.alert("Success", "Task mark as Done !");
+        navigation.navigate("Dashboard");
+      })
+      .catch((error) => {
+        Alert.alert("Error", error.message);
+      });
+  };
+
   const markAsDone = async () => {
     Alert.alert(
       "Mark this task as done?",
@@ -230,7 +255,7 @@ export default function EditToDo({ navigation }) {
           onPress: () => console.log("Cancel Pressed"),
           style: "cancel"
         },
-        { text: "OK", onPress: () => console.log("OK Pressed") }
+        { text: "OK", onPress: () => navigation.navigate("Dashboard") } //function onDoneData
       ]
     );
 
