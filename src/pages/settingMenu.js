@@ -9,6 +9,7 @@ import {
   Dimensions,
   Alert,
   Switch,
+  ScrollView,
 } from "react-native";
 import { MaterialIcons } from "@expo/vector-icons";
 import {
@@ -22,7 +23,7 @@ import { useFonts } from "expo-font";
 import AppLoading from "expo-app-loading";
 
 import AsyncStorage from "@react-native-async-storage/async-storage";
-
+import { RFPercentage, RFValue } from "react-native-responsive-fontsize";
 
 import CalendarPicker from 'react-native-calendar-picker';
 // import AddToDoTime from './addToDoTime';
@@ -86,13 +87,15 @@ export default function SettingMenu({ navigation }) {
     return <AppLoading />;
   } else {
     return (
+
+      
       <View style={styles.container}>
+        
         <View style={{ width: "80%" }}>
           <View style={styles.headerContainer}>
             <Text style={styles.headerContent}>Settings</Text>
           </View>
         </View>
-
         <View style={styles.viewTop}>
           {/* <View>
         <Image style={styles.profileContainer} source={require('../../assets/profileContainer.png')} />
@@ -102,7 +105,7 @@ export default function SettingMenu({ navigation }) {
               <MaterialIcons name="bookmark" size={25} color="#082032" />
             </TouchableOpacity>
           </View> */}
-
+        
           <View style={styles.left}>
             <View style={styles.today}>
               <Text style={{ fontFamily: "Poppins_400Regular" }}> 
@@ -256,7 +259,8 @@ const styles = StyleSheet.create({
     alignSelf: "flex-start",
     justifyContent: "flex-start",
     fontFamily: "Poppins_600SemiBold",
-    fontSize: 30,
+    fontSize: RFPercentage(3),
+
   },
 
   viewTop: {
@@ -307,7 +311,8 @@ const styles = StyleSheet.create({
   username: {
     marginTop: windowHeight * 0.02,
     fontFamily: "Poppins_600SemiBold",
-    fontSize: 20,
+    fontSize: RFPercentage(2),
+
     width: windowHeight * 0.18,
   },
 
@@ -335,12 +340,12 @@ const styles = StyleSheet.create({
   },
 
   profileSetting: {
-    fontSize: 14,
+    fontSize: RFPercentage(2),
     fontFamily: "Poppins_400Regular",
     color: "#293462",
     position: "absolute",
-    marginTop: windowHeight * 0.1,
-    marginLeft: windowHeight * 0.22,
+    marginTop: windowHeight * 0.11,
+    marginLeft: windowHeight * 0.15,
   },
 
   taskList: {
@@ -352,17 +357,15 @@ const styles = StyleSheet.create({
   },
 
   taskTitle: {
-    fontSize: 14,
-    padding: windowWidth * 0.02,
-    // width: 72,
-    fontFamily: "Poppins_400Regular",
-    justifyContent: "center",
-    alignItems: "center",
+   
+    fontSize: RFPercentage(1.5),
+    textAlign: "center",
+    margin: 10,
     
   },
 
   taskDetail: {
-    fontSize: 0,
+    fontSize: RFPercentage(1.5),
     color: "#293462",
     alignContent: "flex-start",
     justifyContent: "flex-start",
@@ -373,7 +376,7 @@ const styles = StyleSheet.create({
   },
 
   textInline: {
-    fontSize: 10,
+    fontSize: RFPercentage(1.5),
     alignItems: "center",
     justifyContent: "flex-end",
     marginVertical: 6,
@@ -419,7 +422,7 @@ const styles = StyleSheet.create({
   bottomText: {
     marginTop: 20,
     color: "#293462",
-    fontSize: 14,
+    fontSize: RFPercentage(2),
     fontWeight: "bold",
     flexDirection: "column",
   },
@@ -429,7 +432,7 @@ const styles = StyleSheet.create({
   },
 
   bottomDetail: {
-    fontSize: 20,
+    fontSize: RFPercentage(2),
     lineHeight: 45,
     fontFamily: "Poppins_400Regular",
   },

@@ -18,6 +18,7 @@ import {
 } from "@expo-google-fonts/poppins";
 import { useFonts } from "expo-font";
 import AppLoading from "expo-app-loading";
+import { RFPercentage, RFValue } from "react-native-responsive-fontsize";
 
 import { useSelector } from "react-redux";
 import moment from "moment";
@@ -121,7 +122,7 @@ const styles = StyleSheet.create({
   task: {
     borderRadius: 20,
     marginTop: "5%",
-    marginLeft: windowWidth * 0.06,
+    marginLeft: windowWidth * 0.1,
     flexDirection: "row",
     alignSelf: "center",
     justifyContent: "center",
@@ -135,30 +136,31 @@ const styles = StyleSheet.create({
     paddingLeft: "15%",
     paddingRight: "15%",
     alignSelf: "flex-end",
-    alignItems: "center",
+    // alignItems: "center",
     justifyContent: "center",
     backgroundColor: "#FFEDBF",
   },
   delete: {
     marginLeft: windowWidth * 0.02,
-    marginTop: windowHeight * 0.05,
+    marginTop: windowHeight * 0.06,
     justifyContent: "center",
   },
   star: {
-    marginLeft: windowWidth * 0.02,
+    marginLeft: windowWidth * 0.0,
     marginTop: windowHeight * 0.01,
     justifyContent: "center",
   },
   taskText: {
     fontFamily: "Poppins_400Regular",
     color: "#293462",
+    fontSize: RFPercentage(2),
   },
   taskDate: {
     marginTop: 10,
     color: "#293462",
     alignSelf: "flex-start",
     fontFamily: "Poppins_700Bold",
-    fontSize: 22,
+    fontSize: RFPercentage(3),
     // paddingLeft: 15,
   },
 });

@@ -12,6 +12,7 @@ import {
   ScrollView,
   Modal,
   TouchableHighlight,
+  Alert
 } from "react-native";
 import {
   useFont,
@@ -28,8 +29,9 @@ import Swipeable from "react-native-swipeable";
 import { TouchableWithoutFeedback } from "react-native-web";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import Successfully from "./signInSuccessfully";
+import { RFPercentage, RFValue } from "react-native-responsive-fontsize";
 
-const width_name = "60%";
+const width_name = "80%";
 const width_highlight = "75%";
 const windowWidth = Dimensions.get("window").width;
 const windowHeight = Dimensions.get("window").height;
@@ -47,10 +49,28 @@ export default function Dashboard({ navigation }) {
   const [state, setState] = useState({
     userData: "",
   });
+  
+  const markAsDone = async () => {
+    Alert.alert(
+      "Mark this task as done?",
+      "You can see this task on Done Task",
+      [
+        {
+          text: "Cancel",
+          onPress: () => console.log("Cancel Pressed"),
+          style: "cancel"
+        },
+        { text: "OK", onPress: () => console.log("OK Pressed") }
+      ]
+    );
+  };
 
   const rightButtons = [
-    <TouchableOpacity style={[styles.swipeTextRight]}>
-      <Text style={styles.swipeTextContent}>
+    
+    <TouchableOpacity 
+    style={[styles.swipeTextRight]} 
+    onPress={markAsDone}>
+      <Text style={styles.swipeTextContent} onPress={markAsDone}>
         Done
         {/* <MaterialIcons name="done" size={25} color="#000" /> */}
       </Text>
@@ -88,7 +108,7 @@ export default function Dashboard({ navigation }) {
                 <Text
                   style={{
                     textAlignVertical: "center",
-                    fontSize: 17,
+                    fontSize: RFPercentage(1.5),
                     fontFamily: "Poppins_600SemiBold",
                     marginLeft: "5%",
                   }}
@@ -131,6 +151,7 @@ export default function Dashboard({ navigation }) {
       console.log("error msg : ", err);
     }
   };
+
 
   useEffect(() => {
     getSavedUserData();
@@ -352,6 +373,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
     alignItems: "center",
     justifyContent: "center",
+   
   },
   containerhighlight: {
     // backgroundColor: "#000",
@@ -374,16 +396,16 @@ const styles = StyleSheet.create({
   },
   priority: {
     fontFamily: "Poppins_700Bold",
-    fontSize: 16,
+    fontSize: RFPercentage(3),
     // marginBottom: "5%",
     alignSelf: "flex-start",
     alignItems: "flex-start",
     justifyContent: "flex-start",
-    marginRight: windowWidth * 0.25,
+    marginRight: windowWidth * 0.19,
   },
   seeall: {
     fontFamily: "Poppins_400Regular",
-    fontSize: 10,
+    fontSize: RFPercentage(2),
     marginBottom: "5%",
     alignSelf: "flex-end",
     alignItems: "flex-end",
@@ -394,7 +416,7 @@ const styles = StyleSheet.create({
   },
   upcoming: {
     fontFamily: "Poppins_700Bold",
-    fontSize: 16,
+    fontSize: RFPercentage(3),
     // marginBottom: "5%",
     // marginLeft: 20,
     alignSelf: "flex-start",
@@ -411,8 +433,8 @@ const styles = StyleSheet.create({
     flexDirection: "row",
   },
   task: {
-    maxWidth: 131,
-    maxHeight: 131,
+    maxWidth: "32%",
+    maxHeight: "100%",
     borderRadius: 20,
     marginRight: "5%",
     flexDirection: "row",
@@ -491,13 +513,17 @@ const styles = StyleSheet.create({
   taskText: {
     fontFamily: "Poppins_400Regular",
     color: "#FFFFFF",
+    fontSize: RFPercentage(2.),
+ 
+    
   },
   taskDate: {
     marginTop: "5%",
     color: "#FFFFFF",
     alignSelf: "flex-start",
     fontFamily: "Poppins_700Bold",
-    fontSize: 22,
+    fontSize: RFPercentage(2),
+
     // paddingLeft: "11%",
   },
   taskDate2: {
@@ -505,7 +531,8 @@ const styles = StyleSheet.create({
     color: "#FFFFFF",
     alignSelf: "flex-start",
     fontWeight: "bold",
-    fontSize: 22,
+    fontSize: RFPercentage(2),
+
   },
   avatar: {
     width: 55,
@@ -518,13 +545,14 @@ const styles = StyleSheet.create({
   notif: {
     fontFamily: "Poppins_400Regular",
     marginLeft: "5%",
-    fontSize: 12,
+    fontSize: RFPercentage(2),
     color: "#000000",
     opacity: 0.57,
   },
   notifSmall: {
     fontFamily: "Poppins_400Regular",
-    fontSize: 9,
+    fontSize: RFPercentage(1),
+
     color: "#000000",
     opacity: 0.57,
   },
@@ -568,14 +596,15 @@ const styles = StyleSheet.create({
     marginLeft: "13%",
     width: width_name,
     fontFamily: "Poppins_700Bold",
-    fontSize: 17,
+    fontSize: RFPercentage(2),
+
     alignSelf: "flex-start",
   },
   taskp: {
     alignItems: "flex-end",
     fontFamily: "Poppins_400Regular",
     justifyContent: "flex-end",
-    fontSize: 12,
+    fontSize: RFPercentage(2),
     alignSelf: "flex-start",
   },
   dateText: {

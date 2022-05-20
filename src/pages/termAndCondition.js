@@ -9,6 +9,7 @@ import { useFont,
 } from '@expo-google-fonts/poppins';
 import {useFonts} from 'expo-font';
 import AppLoading from 'expo-app-loading';
+import { RFPercentage, RFValue } from "react-native-responsive-fontsize";
 
 export default function TermAndCondition ({closeModal}) {
   let [fontsLoaded] = useFonts({

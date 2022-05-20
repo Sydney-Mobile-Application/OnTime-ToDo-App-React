@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect, Component, useCallback } from "react";
 import {
   StyleSheet,
   View,
@@ -7,6 +7,7 @@ import {
   Pressable,
   Dimensions,
 } from "react-native";
+
 import { MaterialIcons } from "@expo/vector-icons";
 import {
   useFont,
@@ -18,6 +19,7 @@ import {
 } from "@expo-google-fonts/poppins";
 import { useFonts } from "expo-font";
 import AppLoading from "expo-app-loading";
+import { RFPercentage, RFValue } from "react-native-responsive-fontsize";
 
 import { useSelector } from "react-redux";
 import moment from "moment";
@@ -26,6 +28,10 @@ const windowWidth = Dimensions.get("window").width;
 const windowHeight = Dimensions.get("window").height;
 
 export default function toDoUpcoming() {
+  const [priority, setPriority] = useState(false);
+  const priorityTask = () => {
+    setPriority(!priority);
+  };
   let [fontsLoaded] = useFonts({
     Poppins_300Light,
     Poppins_400Regular,
@@ -33,6 +39,7 @@ export default function toDoUpcoming() {
     Poppins_700Bold,
     Poppins_800ExtraBold,
   });
+
   function capitalizeFirstLetter(string) {
     return string.charAt(0).toUpperCase() + string.slice(1);
   }
@@ -136,7 +143,7 @@ const styles = StyleSheet.create({
     paddingLeft: "15%",
     paddingRight: "15%",
     alignSelf: "flex-end",
-    alignItems: "center",
+    // alignItems: "center",
     justifyContent: "center",
     backgroundColor: "#5089C6",
   },
@@ -153,12 +160,13 @@ const styles = StyleSheet.create({
   taskText: {
     color: "#FFFFFF",
     fontFamily: "Poppins_400Regular",
+    fontSize: RFPercentage(2),
   },
   taskDate: {
     color: "#FFFFFF",
-    fontSize: 22,
+    fontSize: RFPercentage(3),
     fontFamily: "Poppins_700Bold",
     alignSelf: "flex-start",
-    marginTop: 10,
+    marginTop: "10%",
   },
 });

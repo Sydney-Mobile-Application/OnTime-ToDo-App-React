@@ -36,6 +36,7 @@ import { useFonts } from "expo-font";
 import AppLoading from "expo-app-loading";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import * as ImagePicker from "expo-image-picker"; // not react-image-picker
+import { RFPercentage, RFValue } from "react-native-responsive-fontsize";
 
 // Firebase
 import {
@@ -135,6 +136,22 @@ export default function AddToDo({ navigation }) {
   const receiveDate = (index) => {
     newDate(String(index));
     setShow(true);
+  };
+
+  const editTask = async () => {
+    Alert.alert("Save this changes?", "This task will be updated", [
+      {
+        text: "Cancel",
+        onPress: () => console.log("Cancel Pressed"),
+        style: "cancel",
+      },
+      {
+        text: "Discard",
+        onPress: () => navigation.navigate("Dashboard"),
+        style: "cancel",
+      },
+      { text: "OK", onPress: () => navigation.navigate("Dashboard") },
+    ]);
   };
 
   const [state, setState] = useState({
@@ -356,7 +373,7 @@ export default function AddToDo({ navigation }) {
       <View style={styles.container}>
         <View style={styles.containertop}>
           <View style={styles.back}>
-            <Pressable onPress={() => navigation.navigate("Dashboard")}>
+            <Pressable onPress={editTask}>
               <MaterialIcons name="arrow-back" size={30} color="#293462" />
             </Pressable>
           </View>
@@ -560,7 +577,7 @@ export default function AddToDo({ navigation }) {
           <Pressable onPress={() => priorityTask()}>
             <MaterialIcons
               name="star"
-              size={30}
+              size={25}
               color={priority ? "#EC9B3B" : "grey"}
               style={styles.priorityStar}
               value={priority ? 0 : 1}
@@ -699,7 +716,7 @@ const styles = StyleSheet.create({
     // backgroundColor:'#000'
   },
   title: {
-    fontSize: 30,
+    fontSize: RFPercentage(4),
     paddingLeft: "3%",
     minWidth: "100%",
     textAlignVertical: "top",
@@ -714,7 +731,7 @@ const styles = StyleSheet.create({
     // height: "60%",
     marginBottom: "10%",
     textAlignVertical: "top",
-    fontSize: 20,
+    fontSize: RFPercentage(3),
     fontFamily: "Poppins_400Regular",
     alignSelf: "flex-start",
     justifyContent: "flex-start",
@@ -737,7 +754,7 @@ const styles = StyleSheet.create({
 
   priorityStar: {
     alignSelf: "flex-start",
-    marginTop: "-5%",
+    // marginTop: "-5%",
     justifyContent: "flex-start",
     alignItems: "flex-start",
     marginLeft: windowWidth * 0.1,

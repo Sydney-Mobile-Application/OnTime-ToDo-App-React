@@ -11,6 +11,7 @@ import {
 import {useFonts} from 'expo-font';
 import AppLoading from 'expo-app-loading';
 import { CurrentRenderContext } from '@react-navigation/native';
+import { RFPercentage, RFValue } from "react-native-responsive-fontsize";
 
 const windowWidth = Dimensions.get("window").width;
 const windowHeight = Dimensions.get("window").height;
@@ -36,9 +37,9 @@ export default function About ({ navigation }) {
       </View>
 
       <Image
-                style={styles.profilePicture}
-                source={require("../../assets/getstart.png")}
-              />
+        style={styles.iconGetStarted}
+        source={require('../../assets/getstart.png')}
+      />
 
       <View style={styles.aboutDetail}>
       <Text style={styles.aboutDescription}>ToDoApp is an application designed to assist users in completing daily tasks on time {"\n"}</Text>
@@ -60,18 +61,15 @@ const styles = StyleSheet.create({
     paddingTop: 50,
   },
 
-  profilePicture:{
-    width: windowWidth *0.5,
-    height: windowHeight * 0.2 ,
-    borderRadius: 50,
-    position: "relative",
-    marginLeft: windowHeight * 0.08,
-    marginBottom : windowHeight * 0.03,
-
+  iconGetStarted : {
+    width: 250,
+    height: 250,
+    alignSelf: 'center',
+    marginLeft: -windowHeight * 0.05,
   },
   
   aboutTitle: {
-    fontSize: 25,
+    fontSize: RFPercentage(3),
     alignSelf: 'flex-start',
     paddingTop: 20,
     marginBottom: 30,
@@ -85,7 +83,7 @@ const styles = StyleSheet.create({
   },
   
   aboutDescription: {
-    fontSize: 18,
+    fontSize: RFPercentage(2),
     lineHeight: 40,
     fontFamily: 'Poppins_400Regular',
     textAlign: 'justify',
@@ -93,7 +91,7 @@ const styles = StyleSheet.create({
   },
 
   aboutfooter: {
-    fontSize: 15,
+    fontSize: RFPercentage(1.5),
     lineHeight: 30,
     fontFamily: 'Poppins_400Regular',
     textAlign: 'justify',

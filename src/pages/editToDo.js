@@ -67,7 +67,7 @@ const actions = [
   },
 ];
 
-export default function EditToDo({ navigation, noteId }) {
+export default function EditToDo({ navigation }) {
   const [textTitle, onChangeTextTitle] = useState("DEADLINE PAM DEKAT"); //pre-filled*
   const [textDesc, onChangeTextDesc] = useState("Deadline tanggal 23 Mei 2022"); //pre-filled*
   const [oldDate, newDate] = useState("Select Date Time");
@@ -216,6 +216,75 @@ export default function EditToDo({ navigation, noteId }) {
     dataImage(result);
   };
 
+  const onDoneData = () => {
+    const myDoc = doc(db, "users", state.userData.uid);
+
+    const dataPost = {
+      done: true,
+    };
+
+    console.log("datapost", dataPost);
+
+    updateDoc(myDoc, dataPost)
+      .then(() => {
+        try {
+          const userData = Object.assign({ uid: state.userData.uid }, dataPost);
+          const value = JSON.stringify(userData);
+          AsyncStorage.setItem("@userData", value);
+        } catch (err) {
+          console.log("Error Msg :", err);
+        }
+
+        Alert.alert("Success", "Task mark as Done !");
+        navigation.navigate("Dashboard");
+      })
+      .catch((error) => {
+        Alert.alert("Error", error.message);
+      });
+  };
+
+  const markAsDone = async () => {
+    Alert.alert(
+      "Mark this task as done?",
+      "You can see this task on Done Task",
+      [
+        {
+          text: "Cancel",
+          onPress: () => console.log("Cancel Pressed"),
+          style: "cancel",
+        },
+        { text: "OK", onPress: () => navigation.navigate("Dashboard") }, //function onDoneData
+      ]
+    );
+  };
+
+  const deleteTask = async () => {
+    Alert.alert("Delete this task?", "This task will be deleted", [
+      {
+        text: "Cancel",
+        onPress: () => console.log("Cancel Pressed"),
+        style: "cancel",
+      },
+      { text: "OK", onPress: () => navigation.navigate("Dashboard") },
+    ]);
+  };
+
+  const editTask = async () => {
+    Alert.alert("Save this changes?", "This task will be updated", [
+      {
+        text: "Cancel",
+        onPress: () => console.log("Cancel Pressed"),
+        style: "cancel",
+      },
+      {
+        text: "Discard",
+        onPress: () => navigation.navigate("Dashboard"),
+        style: "cancel",
+      },
+      { text: "OK", onPress: () => navigation.navigate("Dashboard") },
+    ]);
+  };
+
   const OpenURLButton = ({ url, linkURL }) => {
     const handlePress = useCallback(async () => {
       // Checking if the link is supported for links with custom URL scheme.
@@ -241,8 +310,6 @@ export default function EditToDo({ navigation, noteId }) {
     // <Button title={"Go to URL"} onPress={handlePress} />;
   };
 
-  console.log("noteid", noteId);
-
   if (!fontsLoaded) {
     return <AppLoading />;
   } else {
@@ -250,12 +317,12 @@ export default function EditToDo({ navigation, noteId }) {
       <View style={styles.container}>
         <View style={styles.containertop}>
           <View style={styles.back}>
-            <Pressable onPress={() => navigation.navigate("Dashboard")}>
+            <Pressable onPress={editTask}>
               <MaterialIcons name="arrow-back" size={30} color="#293462" />
             </Pressable>
           </View>
           <View style={styles.settings}>
-            <Pressable onPress={() => navigation.navigate("Dashboard")}>
+            <Pressable onPress={editTask}>
               <Feather
                 style={styles.saveButton}
                 name="check"
@@ -263,7 +330,7 @@ export default function EditToDo({ navigation, noteId }) {
                 color="#293462"
               />
             </Pressable>
-            <Pressable onPress={() => navigation.navigate("Dashboard")}>
+            <Pressable onPress={deleteTask}>
               <AntDesign
                 style={styles.saveButton}
                 name="delete"
@@ -467,24 +534,36 @@ export default function EditToDo({ navigation, noteId }) {
             )}
           </View>
         </ScrollView>
-
-        <View style={styles.containerBottom}>
-          <MaterialIcons
-            onPress={() => setModalCalendarVisible(true)}
-            name="calendar-today"
-            size={25}
-            color="#293462"
-            style={styles.font}
-          />
-          <Pressable onPress={() => priorityTask()}>
+        <View style={{ flex: 1 }}>
+          <View style={styles.containerBottom}>
             <MaterialIcons
-              name="star"
-              size={30}
-              color={priority ? "#EC9B3B" : "grey"}
-              style={styles.priorityStar}
-              value={priority ? 0 : 1}
+              onPress={() => setModalCalendarVisible(true)}
+              name="calendar-today"
+              size={25}
+              color="#293462"
+              style={styles.font}
             />
-          </Pressable>
+            <Pressable onPress={() => priorityTask()}>
+              <MaterialIcons
+                name="star"
+                size={25}
+                color={priority ? "#EC9B3B" : "grey"}
+                style={styles.priorityStar}
+                value={priority ? 0 : 1}
+              />
+            </Pressable>
+          </View>
+          <TouchableOpacity style={styles.markDone} onPress={markAsDone}>
+            <Text style={{ fontFamily: "Poppins_600SemiBold" }}>
+              Mark as Done
+            </Text>
+            <Feather
+              style={{ marginLeft: "5%", textAlignVertical: "center" }}
+              name="check"
+              size={15}
+              color="#00ab66"
+            />
+          </TouchableOpacity>
         </View>
         <FloatingAction
           actions={actions}
@@ -501,6 +580,7 @@ export default function EditToDo({ navigation, noteId }) {
             console.log(`selected button: ${name}`);
           }}
         />
+
         <Modal
           animationType="slide"
           transparent={true}
@@ -573,14 +653,15 @@ const styles = StyleSheet.create({
     // justifyContent: "center",
   },
   containerBottom: {
-    flex: 1,
-    paddingTop: "3%",
+    // flex: 1,
+    paddingTop: "1%",
     paddingLeft: "3%",
     // marginTop: windowHeight * 0.05,
     backgroundColor: "#fff",
     alignItems: "flex-start",
     justifyContent: "flex-start",
     flexDirection: "row",
+    // backgroundColor: "#000",
     // height: windowHeight,
   },
   containertop: {
@@ -613,7 +694,7 @@ const styles = StyleSheet.create({
     // marginBottom: windowWidth * 0.05,
     marginLeft: windowWidth * 0.12,
     marginRight: windowWidth * 0.08,
-    height: windowHeight * 0.6,
+    height: windowHeight * 0.5,
     width: windowWidth * 0.8,
     // backgroundColor:'#000'
   },
@@ -656,7 +737,8 @@ const styles = StyleSheet.create({
 
   priorityStar: {
     alignSelf: "flex-start",
-    marginTop: "-5%",
+    // marginTop: "-5%",
+    // paddingBottom: "5%",
     justifyContent: "flex-start",
     alignItems: "flex-start",
     marginLeft: windowWidth * 0.1,
@@ -731,5 +813,24 @@ const styles = StyleSheet.create({
     marginLeft: "3%",
     padding: "3%",
     fontFamily: "Poppins_400Regular",
+  },
+  markDone: {
+    fontFamily: "Poppins_600SemiBold",
+    marginTop: "5%",
+    marginLeft: "10%",
+    borderRadius: 15,
+    paddingLeft: "5%",
+    paddingRight: "5%",
+    paddingTop: "4%",
+    paddingBottom: "3%",
+    backgroundColor: "#fff",
+    fontSize: 13,
+    width: "40%",
+    flexDirection: "row",
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.5,
+    shadowRadius: 2,
+    elevation: 5,
   },
 });

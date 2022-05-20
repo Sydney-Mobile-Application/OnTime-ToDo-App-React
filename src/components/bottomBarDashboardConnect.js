@@ -3,12 +3,13 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { createMaterialBottomTabNavigator } from "@react-navigation/material-bottom-tabs";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import * as CallBack from "../index";
+import { RFPercentage, RFValue } from "react-native-responsive-fontsize";
 
 const Tab = createMaterialBottomTabNavigator();
 
 const MyTabs = ({ navigation }) => {
   return (
-    <Tab.Navigator
+    <Tab.Navigator 
       screenOptions={({ route }) => ({
         headerShown: false,
         tabBarIcon: ({ focused, color, size }) => {
@@ -34,7 +35,7 @@ const MyTabs = ({ navigation }) => {
       barStyle={{ backgroundColor: "#293462" }}
       initialRouteName="false"
     >
-      <Tab.Screen name="Dashboard" component={CallBack.Dashboard} />
+      <Tab.Screen name="Dashboard"  component={CallBack.Dashboard} />
       <Tab.Screen name="Add To Do" component={CallBack.AddToDo} />
       <Tab.Screen name="Setting Menu" component={CallBack.SettingMenu} />
     </Tab.Navigator>
