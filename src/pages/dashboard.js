@@ -445,8 +445,8 @@ const styles = StyleSheet.create({
     flexDirection: "row",
   },
   task: {
-    maxWidth: 131,
-    maxHeight: 131,
+    maxWidth: 130,
+    maxHeight: 120,
     borderRadius: 20,
     marginRight: "5%",
     flexDirection: "row",
@@ -467,8 +467,8 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   taskNear: {
-    width: "100%",
-    height: "100%",
+    width: 130,
+    height: 120,
     // marginRight: "5%",
     // marginTop: 20,
     borderRadius: 20,
@@ -482,8 +482,8 @@ const styles = StyleSheet.create({
     backgroundColor: "#293462",
   },
   taskNear2: {
-    width: "100%",
-    height: "100%",
+    width: 130,
+    height: 120,
     marginLeft: "13%",
     borderRadius: 20,
     paddingTop: "20%",
@@ -496,8 +496,8 @@ const styles = StyleSheet.create({
     backgroundColor: "#EE6F57",
   },
   taskCommon: {
-    width: "100%",
-    height: "100%",
+    width: 130,
+    height: 120,
     borderRadius: 20,
     paddingTop: "20%",
     paddingBottom: "12%",
@@ -509,8 +509,8 @@ const styles = StyleSheet.create({
     backgroundColor: "#5089C6",
   },
   taskCommon2: {
-    width: "100%",
-    height: "100%",
+    width: 130,
+    height: 120,
     marginLeft: "13%",
     borderRadius: 20,
     paddingTop: "20%",
@@ -525,8 +525,8 @@ const styles = StyleSheet.create({
   taskText: {
     fontFamily: "Poppins_400Regular",
     color: "#FFFFFF",
+    alignItems: "flex-start"
     // fontSize: RFPercentage(2.),
- 
     
   },
   taskDate: {
@@ -542,7 +542,7 @@ const styles = StyleSheet.create({
     marginTop: "5%",
     color: "#FFFFFF",
     alignSelf: "flex-start",
-    fontWeight: "bold",
+    fontFamily: "Poppins_700Bold",
     fontSize: 22,
 
   },
@@ -612,13 +612,13 @@ const styles = StyleSheet.create({
 
     alignSelf: "flex-start",
   },
-  taskp: {
-    alignItems: "flex-end",
-    fontFamily: "Poppins_400Regular",
-    justifyContent: "flex-end",
-    fontSize: 12,
-    alignSelf: "flex-start",
-  },
+  // task: {
+  //   alignItems: "flex-end",
+  //   fontFamily: "Poppins_400Regular",
+  //   justifyContent: "flex-end",
+  //   fontSize: 12,
+  //   alignSelf: "flex-start",
+  // },
   dateText: {
     fontFamily: "Poppins_600SemiBold",
     // marginLeft: "5%",
