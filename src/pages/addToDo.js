@@ -228,7 +228,7 @@ export default function AddToDo({ navigation }) {
           done: false,
           userId: state.userData.uid,
           url: linkURL,
-          imageURL: "noteImages/" + (state.userData.uid+textTitle+"-image")
+          imageURL: "noteImages/" + (state.userData.uid+textTitle+imageURI+"-image")
         };
         setDoc(myDoc, dataPost)
           .then(() => {
@@ -266,7 +266,7 @@ export default function AddToDo({ navigation }) {
     xhr.send(null);
   });
 
-  const ref = app.storage().ref("images/" + (state.userData.uid+textTitle+"-image"));
+  const ref = app.storage().ref("noteImages/" + (state.userData.uid+textTitle+imageURI+"-image"));
   const snapshot = await ref.put(blob);
 
   // We're done with the blob, close and release it
