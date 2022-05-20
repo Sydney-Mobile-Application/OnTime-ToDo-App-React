@@ -220,11 +220,10 @@ const styles = StyleSheet.create({
   },
   taskText: {
     color: "#FFFFFF",
-    fontSize: RFPercentage(2),
   },
   taskDate: {
     color: "#FFFFFF",
-    fontSize: RFPercentage(3),
+    fontSize: 22,
     fontFamily: "Poppins_700Bold",
     alignSelf: "flex-start",
     marginTop: 10,
