@@ -122,7 +122,7 @@ const styles = StyleSheet.create({
   task: {
     borderRadius: 20,
     marginTop: "5%",
-    marginLeft: windowWidth * 0.1,
+    // marginLeft: windowWidth * 0.1,
     flexDirection: "row",
     alignSelf: "center",
     justifyContent: "center",

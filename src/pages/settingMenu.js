@@ -229,20 +229,25 @@ export default function SettingMenu({ navigation }) {
           </Pressable>
 
           <Pressable onPress={() => navigation.navigate("Sign In")}>
-            <View style={[styles.bottomTitle,{justifyContent: "flex-end",marginTop: "10%"}]}>
+            <View style={[styles.bottomTitle,{
+              justifyContent: "center",
+              marginTop: "10%", 
+              borderRadius: 20, 
+              backgroundColor: "#b23b3b", 
+              width: "45%",
+              alignSelf: "flex-end"
+              }]}>
               <Text 
               style={[
               {
-              color: "#b23b3b",
+              color: "#fff",
               fontSize: 20,
               lineHeight: 45,
               fontFamily: "Poppins_400Regular",
-              borderRadius: 30,
-              paddingLeft: "5%",
-              paddingRight: "5%",
-              paddingTop: "3%",
-              paddingBottom: "1%",
-              backgroundColor: "#fff",
+              // paddingLeft: "5%",
+              // paddingRight: "5%",
+              // paddingTop: "3%",
+              // paddingBottom: "1%",
               alignSelf: "flex-end",
               shadowColor: "#000",
               shadowOffset: { width: 0, height: 1 },
@@ -286,7 +291,7 @@ const styles = StyleSheet.create({
     alignContent: "space-between",
     justifyContent: "space-between",
     borderRadius: 25,
-    marginTop: 20,
+    marginTop: "5%",
     flexDirection: "row",
     position: "relative",
     backgroundColor: "#FBFBFB",
@@ -319,24 +324,6 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     
   },
-  // today: {
-  //   backgroundColor: "#FFFFFF",
-  //   width: windowHeight * 0.15,
-  //   height: windowWidth * 0.09,
-  //   justifyContent: "center",
-  //   alignItems: "center",
-  //   borderRadius: 20,
-  //   fontWeight: "500",
-  //   shadowColor: "#000",
-  //   shadowOffset: {
-  //     width: 0,
-  //     height: 1,
-  //   },
-  //   shadowOpacity: 0.23,
-  //   shadowRadius: 2.62,
-  //   elevation: 4,
-  //   flexDirection: "row",
-  // },
 
   username: {
     marginBottom: windowHeight * 0.02,
@@ -384,7 +371,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "center",
     alignItems: "center",
-    marginTop: 15,
+    marginTop: "10%",
     width: "80%",
   },
 
@@ -454,7 +441,7 @@ const styles = StyleSheet.create({
   },
 
   bottomText: {
-    marginTop: 20,
+    marginTop: "10%",
     color: "#293462",
     fontSize: 14,
     fontWeight: "bold",
@@ -476,6 +463,7 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     // alignContent: 'space-between',
     width: windowWidth * 0.8,
+    borderRadius: 40,
   },
   dateText: {
     marginTop: "3%",
