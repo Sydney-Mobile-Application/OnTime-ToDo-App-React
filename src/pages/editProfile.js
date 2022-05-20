@@ -65,9 +65,6 @@ export default function EditProfile({ navigation }) {
       phone: state.phone ? state.phone : phone,
     };
 
-    console.log("datapost", dataPost);
-    console.log("email", email);
-
     updateDoc(myDoc, dataPost)
       .then(() => {
         try {
@@ -107,7 +104,6 @@ export default function EditProfile({ navigation }) {
       //   showsHorizontalScrollIndicator={false}
       //   >
       <View style={styles.container}>
-        
         <View style={styles.back}>
           <Pressable onPress={() => navigation.navigate("Profile")}>
             <MaterialIcons name="arrow-back" size={30} color="#293462" />
@@ -179,11 +175,11 @@ export default function EditProfile({ navigation }) {
             onSubmitData();
           }}
         >
-          <Text style={{ color: "white", fontFamily: "Poppins_600SemiBold"}}>
+          <Text style={{ color: "white", fontFamily: "Poppins_600SemiBold" }}>
             Save
           </Text>
         </Pressable>
-        </View>
+      </View>
       //   </ScrollView>
       // </View>
     );

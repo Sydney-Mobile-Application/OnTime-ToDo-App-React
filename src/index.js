@@ -34,11 +34,10 @@ import Permission from "./pages/permission";
 import About from "./pages/about";
 import DashboardConnection from "./components/bottomBarDashboardConnect";
 import ToDoParentPage from "./components/toDoParentPage";
-import ChangePassword from "./pages/changePassword";  
+import ChangePassword from "./pages/changePassword";
 import ForgotPassword from "./pages/forgotPassword";
 import VerifyEmail from "./pages/verifyEmail";
 import VerifyOnEmail from "./pages/verifyOnEmail";
- 
 
 export {
   GetStarted,
