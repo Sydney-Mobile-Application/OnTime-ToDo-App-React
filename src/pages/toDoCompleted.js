@@ -124,7 +124,7 @@ export default function toDoCompleted() {
                     </View>
                   </Pressable>
                   <View>
-                    <View>
+                    {/* <View>
                       <Pressable onPress={() => console.log("Delete Note")}>
                         <MaterialIcons
                           name="delete"
@@ -133,8 +133,8 @@ export default function toDoCompleted() {
                           style={styles.delete}
                         />
                       </Pressable>
-                    </View>
-                    <View>
+                    </View> */}
+                    {/* <View>
                       <Pressable onPress={() => console.log("Add To Priority")}>
                         <MaterialIcons
                           name="star"
@@ -143,7 +143,7 @@ export default function toDoCompleted() {
                           style={styles.star}
                         />
                       </Pressable>
-                    </View>
+                    </View> */}
                   </View>
                 </View>
               );
@@ -171,7 +171,7 @@ const styles = StyleSheet.create({
   task: {
     borderRadius: 20,
     marginTop: "5%",
-    marginLeft: windowWidth*0.06,
+    marginLeft: windowWidth*0.1,
     flexDirection: "row",
     alignSelf: "center",
     justifyContent: "center",
@@ -185,17 +185,17 @@ const styles = StyleSheet.create({
     paddingLeft: "15%",
     paddingRight: "15%",
     alignSelf: "flex-end",
-    alignItems: "center",
+    // alignItems: "center",
     justifyContent: "center",
     backgroundColor: "#FFEDBF",
   },
   delete: {
     marginLeft: windowWidth*0.02,
-    marginTop: windowHeight*0.05,
+    marginTop: windowHeight*0.06,
     justifyContent: "center",
   },
   star: {
-    marginLeft: windowWidth*0.02,
+    marginLeft: windowWidth*0.0,
     marginTop: windowHeight*0.01,
     justifyContent: "center",
   },

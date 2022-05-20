@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect, Component, useCallback } from "react";
 import { StyleSheet, View, Text, ScrollView, Pressable, Dimensions } from "react-native";
 import { MaterialIcons } from "@expo/vector-icons";
 import {
@@ -16,6 +16,10 @@ const windowWidth = Dimensions.get("window").width;
 const windowHeight = Dimensions.get("window").height;
 
 export default function toDoUpcoming() {
+  const [priority, setPriority] = useState(false);
+  const priorityTask = () => {
+    setPriority(!priority);
+  };
   let [fontsLoaded] = useFonts({
     Poppins_300Light,
     Poppins_400Regular,
@@ -23,6 +27,7 @@ export default function toDoUpcoming() {
     Poppins_700Bold,
     Poppins_800ExtraBold,
   });
+
   function capitalizeFirstLetter(string) {
     return string.charAt(0).toUpperCase() + string.slice(1);
   }
@@ -76,7 +81,7 @@ export default function toDoUpcoming() {
       },
       {
         id: "10",
-        title: "Jangan Lupa Matiin Air",
+        title: "Jangan Lupa Matiin Air sssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss",
         date: "12 Oct",
       },
       {
@@ -117,7 +122,7 @@ export default function toDoUpcoming() {
                 <View style={styles.task}>
                   <Pressable onPress={() => console.log("Note Details")}>
                     <View style={styles.taskNear2}>
-                      <Text style={styles.taskText}>
+                      <Text numberOfLines={3} ellipsizeMode='tail' style={styles.taskText}>
                         {capitalizeFirstLetter(x.title)}
                       </Text>
                       <Text style={styles.taskDate}>{x.date}</Text>
@@ -135,7 +140,7 @@ export default function toDoUpcoming() {
                       </Pressable>
                     </View>
                     <View>
-                      <Pressable
+                      {/* <Pressable
                         onPress={() => console.log("Add To Favourite")}
                       >
                         <MaterialIcons
@@ -143,6 +148,15 @@ export default function toDoUpcoming() {
                           size={16}
                           color="rgba(0,0,0,0.12)"
                           style={styles.star}
+                        />
+                      </Pressable> */}
+                        <Pressable onPress={()=>priorityTask()}>
+                        <MaterialIcons
+                          name='star'
+                          size={16}
+                          color={priority ? '#EC9B3B' : 'grey'}
+                          style={styles.star}
+                          value={priority? 0 : 1}
                         />
                       </Pressable>
                     </View>
@@ -187,7 +201,7 @@ const styles = StyleSheet.create({
     paddingLeft: "15%",
     paddingRight: "15%",
     alignSelf: "flex-end",
-    alignItems: "center",
+    // alignItems: "center",
     justifyContent: "center",
     backgroundColor: "#5089C6",
   },
@@ -210,6 +224,7 @@ const styles = StyleSheet.create({
     fontSize: 22,
     fontFamily: "Poppins_700Bold",
     alignSelf: "flex-start",
-    marginTop: 10,
+    marginTop: "10%",
+    
   },
 });

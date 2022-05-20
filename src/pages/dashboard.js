@@ -432,8 +432,8 @@ const styles = StyleSheet.create({
     flexDirection: "row",
   },
   task: {
-    maxWidth: 131,
-    maxHeight: 131,
+    maxWidth: "32%",
+    maxHeight: "100%",
     borderRadius: 20,
     marginRight: "5%",
     flexDirection: "row",
