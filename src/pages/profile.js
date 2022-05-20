@@ -18,6 +18,7 @@ import {
 import { useFonts } from "expo-font";
 import AppLoading from "expo-app-loading";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { RFPercentage, RFValue } from "react-native-responsive-fontsize";
 
 const windowWidth = Dimensions.get("window").width;
 const windowHeight = Dimensions.get("window").height;
@@ -137,7 +138,7 @@ const styles = StyleSheet.create({
   },
 
   name: {
-    fontSize: 30,
+    fontSize: RFPercentage(2.5),
     fontFamily: "Poppins_600SemiBold",
   },
 
@@ -151,14 +152,14 @@ const styles = StyleSheet.create({
   },
 
   left: {
-    fontSize: 18,
+    fontSize: RFPercentage(2),
     // marginRight: "2%",
     lineHeight: 40,
     fontFamily: "Poppins_400Regular",
   },
 
   right: {
-    fontSize: 18,
+    fontSize: RFPercentage(2),
     lineHeight: 40,
     fontFamily: "Poppins_400Regular",
   },
