@@ -49,7 +49,16 @@ export default function Dashboard({ navigation }) {
   const [state, setState] = useState({
     userData: "",
   });
-  
+  const deleteTask = async () => {
+    Alert.alert("Delete this task?", "This task will be deleted", [
+      {
+        text: "Cancel",
+        onPress: () => console.log("Cancel Pressed"),
+        style: "cancel",
+      },
+      { text: "OK", onPress: () => navigation.navigate("Dashboard") },
+    ]);
+  };
   const markAsDone = async () => {
     Alert.alert(
       "Mark this task as done?",
@@ -90,6 +99,8 @@ export default function Dashboard({ navigation }) {
     </TouchableOpacity>,
   ];
 
+  
+
   function MyListItem() {
     if (!fontsLoaded) {
       return <AppLoading />;
@@ -118,7 +129,7 @@ export default function Dashboard({ navigation }) {
                 </Text>
               </View>
               <View style={styles.time}>
-                <MaterialIcons name="delete" size={12} color="#ABACF7" />
+                <MaterialIcons name="delete" size={12} color="#ABACF7" onPress={deleteTask}/>
                 <MaterialIcons name="access-time" size={45} color="#EC9B3B" />
 
                 <View style={styles.detail}>
@@ -236,7 +247,7 @@ export default function Dashboard({ navigation }) {
                     <Text numberOfLines={2} style={styles.taskDate}>20 Sep</Text>
                   </View>
                   <View>
-                    <TouchableOpacity>
+                    <TouchableOpacity onPress={deleteTask}>
                       <MaterialIcons
                         name="delete"
                         size={15}
@@ -260,7 +271,7 @@ export default function Dashboard({ navigation }) {
                     <Text numberOfLines={2} style={styles.taskDate2}>26 Sep</Text>
                   </View>
                   <View>
-                    <TouchableOpacity>
+                    <TouchableOpacity onPress={deleteTask}>
                       <MaterialIcons
                         name="delete"
                         size={15}
@@ -300,7 +311,7 @@ export default function Dashboard({ navigation }) {
                     <Text numberOfLines={2} style={styles.taskDate}>28 Sep</Text>
                   </View>
                   <View>
-                    <TouchableOpacity>
+                    <TouchableOpacity onPress={deleteTask}>
                       <MaterialIcons
                         name="delete"
                         size={15}
@@ -324,7 +335,7 @@ export default function Dashboard({ navigation }) {
                     <Text numberOfLines={2} style={styles.taskDate2}>27 Sep</Text>
                   </View>
                   <View>
-                    <TouchableOpacity>
+                    <TouchableOpacity onPress={deleteTask}>
                       <MaterialIcons
                         name="delete"
                         size={15}
