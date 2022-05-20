@@ -9,6 +9,7 @@ import {
   Dimensions,
   Alert,
   Switch,
+  ScrollView,
 } from "react-native";
 import { MaterialIcons } from "@expo/vector-icons";
 import {
@@ -22,7 +23,7 @@ import { useFonts } from "expo-font";
 import AppLoading from "expo-app-loading";
 
 import AsyncStorage from "@react-native-async-storage/async-storage";
-
+// import { RFPercentage, RFValue } from "react-native-responsive-fontsize";
 
 import CalendarPicker from 'react-native-calendar-picker';
 // import AddToDoTime from './addToDoTime';
@@ -86,13 +87,15 @@ export default function SettingMenu({ navigation }) {
     return <AppLoading />;
   } else {
     return (
+
+      
       <View style={styles.container}>
+        
         <View style={{ width: "80%" }}>
           <View style={styles.headerContainer}>
             <Text style={styles.headerContent}>Settings</Text>
           </View>
         </View>
-
         <View style={styles.viewTop}>
           {/* <View>
         <Image style={styles.profileContainer} source={require('../../assets/profileContainer.png')} />
@@ -102,16 +105,15 @@ export default function SettingMenu({ navigation }) {
               <MaterialIcons name="bookmark" size={25} color="#082032" />
             </TouchableOpacity>
           </View> */}
-
+        
           <View style={styles.left}>
             <View style={styles.today}>
-            <MaterialIcons 
-              name="bookmark" 
-              size={30} 
-              color="#082032"
-              style={{}}
-            />
-            <Text style={styles.dateText}> 20 Jun</Text>
+              <Text style={{ fontFamily: "Poppins_400Regular" }}> 
+              
+             15 Ap
+           
+              
+               </Text>
             </View>
             <View>
               <Text style={styles.username}>{state.userData.username}</Text>
@@ -121,7 +123,7 @@ export default function SettingMenu({ navigation }) {
           <View style={styles.right}>
             <Pressable onPress={() => navigation.navigate("Profile")}>
               <Text style={styles.profileSetting}>
-                Edit Profile{""}
+                Settings{""}
                 <MaterialIcons name="arrow-forward-ios" size={10} />
               </Text>
               <Image
@@ -156,21 +158,16 @@ export default function SettingMenu({ navigation }) {
               {/* <Text style={styles.textInline}>Manage your task</Text> */}
             </View>
           </Pressable>
-          {/* <Pressable
-          onPress={() =>
-            navigation.navigate("To Do Completed", { done: true })
-          }> */}
+
           <View style={styles.doneTask}>
             <Text style={styles.taskTitle}>Done Task</Text>
             {/* <Text style={styles.taskDetail}>3</Text> */}
             {/* <Text style={styles.textInline}>Manage your task</Text> */}
           </View>
-          {/* </Pressable> */}
         </View>
-        
 
         <View style={styles.bottomText}>
-          {/* <View style={styles.bottomTitle}>
+          <View style={styles.bottomTitle}>
             <Text style={styles.bottomDetail}>Dark Mode</Text>
             <Switch
               // rol
@@ -178,28 +175,33 @@ export default function SettingMenu({ navigation }) {
               style={styles.switch}
               onValueChange={toggleSwitch}
               value={switchValue}
+              
+              
             />
-          </View> */}
+
+        
+
+          </View>
 
 
 
-          {/* <Pressable onPress={() => navigation.navigate("Language Setting")}>
+          <Pressable onPress={() => navigation.navigate("Language Setting")}>
             <View style={styles.bottomTitle}>
               <Text style={styles.bottomDetail}>Language</Text>
               <Text style={styles.bottomDetail}>
                 English <MaterialIcons name="arrow-forward-ios" size={12} />
               </Text>
             </View>
-          </Pressable> */}
+          </Pressable>
 
-          {/* <Pressable onPress={() => navigation.navigate("Backup Data")}>
+          <Pressable onPress={() => navigation.navigate("Backup Data")}>
             <View style={styles.bottomTitle}>
               <Text style={styles.bottomDetail}>Backup Data</Text>
               <Text style={styles.bottomDetail}>
                 <MaterialIcons name="arrow-forward-ios" size={12} />
               </Text>
             </View>
-          </Pressable> */}
+          </Pressable>
 
           <Pressable onPress={() => navigation.navigate("Help Support")}>
             <View style={styles.bottomTitle}>
@@ -210,14 +212,14 @@ export default function SettingMenu({ navigation }) {
             </View>
           </Pressable>
 
-          {/* <Pressable onPress={() => navigation.navigate("Permission")}>
+          <Pressable onPress={() => navigation.navigate("Permission")}>
             <View style={styles.bottomTitle}>
               <Text style={styles.bottomDetail}>Permission</Text>
               <Text style={styles.bottomDetail}>
                 <MaterialIcons name="arrow-forward-ios" size={12} />
               </Text>
             </View>
-          </Pressable> */}
+          </Pressable>
 
           <Pressable onPress={() => navigation.navigate("About")}>
             <View style={styles.bottomTitle}>
@@ -229,33 +231,8 @@ export default function SettingMenu({ navigation }) {
           </Pressable>
 
           <Pressable onPress={() => navigation.navigate("Sign In")}>
-            <View style={[styles.bottomTitle,{
-              justifyContent: "center",
-              marginTop: "10%", 
-              borderRadius: 20, 
-              backgroundColor: "#b23b3b", 
-              width: "45%",
-              alignSelf: "flex-end"
-              }]}>
-              <Text 
-              style={[
-              {
-              color: "#fff",
-              fontSize: 20,
-              lineHeight: 45,
-              fontFamily: "Poppins_400Regular",
-              // paddingLeft: "5%",
-              // paddingRight: "5%",
-              // paddingTop: "3%",
-              // paddingBottom: "1%",
-              alignSelf: "flex-end",
-              shadowColor: "#000",
-              shadowOffset: { width: 0, height: 1 },
-              shadowOpacity: 0.5,
-              shadowRadius: 2,
-              elevation: 5,}]}>
-                Sign Out
-                </Text>
+            <View style={styles.bottomTitle}>
+              <Text style={styles.bottomDetail}>Sign Out</Text>
               
             </View>
           </Pressable>
@@ -282,16 +259,17 @@ const styles = StyleSheet.create({
     alignSelf: "flex-start",
     justifyContent: "flex-start",
     fontFamily: "Poppins_600SemiBold",
-    fontSize: 30,
+    fontSize: RFPercentage(3),
+
   },
 
   viewTop: {
-    width: windowWidth * 0.8,
+    // width: windowWidth * 0.8,
     height: windowHeight * 0.15,
     alignContent: "space-between",
     justifyContent: "space-between",
     borderRadius: 25,
-    marginTop: "5%",
+    marginTop: 20,
     flexDirection: "row",
     position: "relative",
     backgroundColor: "#FBFBFB",
@@ -313,7 +291,7 @@ const styles = StyleSheet.create({
   },
 
   today: {
-    // backgroundColor: "#FFFFFF",
+    backgroundColor: "#FFFFFF",
     width: windowHeight * 0.15,
     height: windowWidth * 0.09,
     justifyContent: "center",
@@ -321,16 +299,20 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     fontWeight: "500",
     shadowColor: "#000",
-    flexDirection: "row",
-    
+    shadowOffset: {
+      width: 0,
+      height: 1,
+    },
+    shadowOpacity: 0.23,
+    shadowRadius: 2.62,
+    elevation: 4,
   },
 
   username: {
-    marginBottom: windowHeight * 0.02,
-    marginLeft: windowHeight * 0.02,
     marginTop: windowHeight * 0.02,
     fontFamily: "Poppins_600SemiBold",
-    fontSize: 20,
+    fontSize: RFPercentage(2),
+
     width: windowHeight * 0.18,
   },
 
@@ -353,40 +335,37 @@ const styles = StyleSheet.create({
     height: 50,
     borderRadius: 50,
     position: "relative",
-    // alignSelf: "flex-end",
     marginLeft: windowHeight * 0.25,
     marginTop: windowHeight * 0.025,
   },
 
   profileSetting: {
-    fontSize: 14,
+    fontSize: RFPercentage(2),
     fontFamily: "Poppins_400Regular",
     color: "#293462",
     position: "absolute",
     marginTop: windowHeight * 0.11,
-    marginLeft: windowHeight * 0.21,
+    marginLeft: windowHeight * 0.15,
   },
 
   taskList: {
     flexDirection: "row",
     justifyContent: "center",
     alignItems: "center",
-    marginTop: "10%",
+    marginTop: 15,
     width: "80%",
   },
 
   taskTitle: {
-    fontSize: 14,
-    padding: windowWidth * 0.02,
-    // width: 72,
-    fontFamily: "Poppins_400Regular",
-    justifyContent: "center",
-    alignItems: "center",
+   
+    fontSize: RFPercentage(1.5),
+    textAlign: "center",
+    margin: 10,
     
   },
 
   taskDetail: {
-    fontSize: 0,
+    fontSize: RFPercentage(1.5),
     color: "#293462",
     alignContent: "flex-start",
     justifyContent: "flex-start",
@@ -397,7 +376,7 @@ const styles = StyleSheet.create({
   },
 
   textInline: {
-    fontSize: 10,
+    fontSize: RFPercentage(1.5),
     alignItems: "center",
     justifyContent: "flex-end",
     marginVertical: 6,
@@ -441,9 +420,9 @@ const styles = StyleSheet.create({
   },
 
   bottomText: {
-    marginTop: "10%",
+    marginTop: 20,
     color: "#293462",
-    fontSize: 14,
+    fontSize: RFPercentage(2),
     fontWeight: "bold",
     flexDirection: "column",
   },
@@ -453,7 +432,7 @@ const styles = StyleSheet.create({
   },
 
   bottomDetail: {
-    fontSize: 20,
+    fontSize: RFPercentage(2),
     lineHeight: 45,
     fontFamily: "Poppins_400Regular",
   },
@@ -463,25 +442,6 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     // alignContent: 'space-between',
     width: windowWidth * 0.8,
-    borderRadius: 40,
-  },
-  dateText: {
-    marginTop: "3%",
-    fontFamily: "Poppins_600SemiBold",
-    marginLeft: "5%",
-    borderRadius: 15,
-    paddingLeft: "5%",
-    paddingRight: "5%",
-    paddingTop: "5%",
-    paddingBottom: "3%",
-    backgroundColor: "#fff",
-    fontSize: 13,
-    alignSelf: "flex-start",
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.5,
-    shadowRadius: 2,
-    elevation: 5,
   },
   // leftText: {
   //   justifyContent: 'flex-start',

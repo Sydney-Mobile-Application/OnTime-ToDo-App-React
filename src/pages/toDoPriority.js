@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import {
   StyleSheet,
   View,
@@ -6,10 +6,18 @@ import {
   ScrollView,
   Pressable,
   Dimensions,
+  RefreshControl,
 } from "react-native";
 import { MaterialIcons } from "@expo/vector-icons";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
-import { useSelector } from "react-redux";
+// Firebase Conn
+import { getDocs, collection, query, where } from "firebase/firestore";
+import { db } from "../config/firebase";
+
+// Redux
+import { useSelector, useDispatch } from "react-redux";
+import { setPriorityData } from "../redux/actions";
 
 import moment from "moment";
 import { RFPercentage, RFValue } from "react-native-responsive-fontsize";
@@ -17,14 +25,77 @@ import { RFPercentage, RFValue } from "react-native-responsive-fontsize";
 const windowWidth = Dimensions.get("window").width;
 const windowHeight = Dimensions.get("window").height;
 
-export default function ToDoPriority(props) {
+const wait = (timeout) => {
+  return new Promise((resolve) => setTimeout(resolve, timeout));
+};
+
+export default function ToDoPriority({ navigation }) {
+  const dispatch = useDispatch();
+
+  const [refreshing, setRefreshing] = React.useState(false);
+
   function capitalizeFirstLetter(string) {
     return string.charAt(0).toUpperCase() + string.slice(1);
   }
 
-  const toDoData = useSelector((state) => state.toDoDataReducer.data);
+  const toDoPriority = useSelector(
+    (state) => state.toDoDataReducer.dataPriority
+  );
 
-  console.log("todoData", toDoData);
+  let userDataObj = [];
+
+  const getSavedUserData = async () => {
+    try {
+      const userData = await AsyncStorage.getItem("@userData");
+      if (userData !== null) {
+        userDataObj = JSON.parse(userData);
+
+        getToDoDataPriority();
+      }
+    } catch (err) {
+      console.log("error msg : ", err);
+    }
+  };
+
+  const getToDoDataPriority = async () => {
+    if (!userDataObj.length) {
+      getDocs(
+        query(
+          collection(db, "notes"),
+          where("userId", "==", userDataObj.uid.toString()),
+          where("priority", "==", true)
+        )
+      ).then((querySnapshot) => {
+        let dataCollection = [];
+
+        if (querySnapshot.empty) {
+          dispatch(setPriorityData([]));
+        }
+
+        try {
+          querySnapshot.forEach((doc) => {
+            // // doc.data() is never undefined for query doc snapshots
+            // console.log(doc.id, " => ", doc.data());
+            const toDoData = Object.assign({ uid: doc.id }, doc.data());
+
+            dataCollection.push(toDoData);
+          });
+
+          dispatch(setPriorityData(dataCollection));
+        } catch (err) {
+          console.log("Error Msg :", err);
+        }
+      });
+    }
+  };
+
+  const onRefresh = React.useCallback(() => {
+    setRefreshing(true);
+    getSavedUserData();
+    wait(1000).then(() => setRefreshing(false));
+  }, []);
+
+  let i = 0;
 
   return (
     <View style={styles.container}>
@@ -32,50 +103,71 @@ export default function ToDoPriority(props) {
         // horizontal={true}
         // showsHorizontalScrollIndicator={false}
         contentContainerStyle={styles.scrollView}
+        refreshControl={
+          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+        }
       >
         <View style={styles.row}>
-          {toDoData.map((x) => {
-            return (
-              <View style={styles.task}>
-                <Pressable onPress={() => console.log("Note Details")}>
-                  <View style={styles.taskNear2}>
-                    <Text
-                      ellipsizeMode="tail"
-                      numberOfLines={4}
-                      style={styles.taskText}
-                    >
-                      {capitalizeFirstLetter(x.title)}
-                    </Text>
-                    <Text style={styles.taskDate}>
-                      {moment(new Date(x.date.seconds * 1000)).format("DD/MMM")}
-                    </Text>
-                  </View>
-                </Pressable>
-                <View>
+          {toDoPriority ? (
+            toDoPriority.map((x) => {
+              i++;
+              return (
+                <View style={styles.task} key={i}>
+                  <Pressable
+                    onPress={() =>
+                      navigation.navigate({
+                        name: "Edit To Do",
+                        params: { noteId: x.uid },
+                      })
+                    }
+                  >
+                    <View style={styles.taskNear2}>
+                      <Text
+                        ellipsizeMode="tail"
+                        numberOfLines={4}
+                        style={styles.taskText}
+                      >
+                        {capitalizeFirstLetter(x.title)}
+                      </Text>
+                      <Text style={styles.taskDate}>
+                        {moment(new Date(x.date.seconds * 1000)).format(
+                          "DD/MMM"
+                        )}
+                      </Text>
+                    </View>
+                  </Pressable>
                   <View>
-                    <Pressable onPress={() => console.log("Delete Note")}>
-                      <MaterialIcons
-                        name="delete"
-                        size={16}
-                        color="#ABACF7"
-                        style={styles.delete}
-                      />
-                    </Pressable>
-                  </View>
-                  <View>
-                    <Pressable onPress={() => console.log("Add To Favourite")}>
-                      <MaterialIcons
-                        name="star"
-                        size={16}
-                        color="#EC9B3B"
-                        style={styles.star}
-                      />
-                    </Pressable>
+                    <View>
+                      <Pressable onPress={() => console.log("Delete Note")}>
+                        <MaterialIcons
+                          name="delete"
+                          size={16}
+                          color="#ABACF7"
+                          style={styles.delete}
+                        />
+                      </Pressable>
+                    </View>
+                    <View>
+                      <Pressable
+                        onPress={() => console.log("Add To Favourite")}
+                      >
+                        <MaterialIcons
+                          name="star"
+                          size={16}
+                          color="#EC9B3B"
+                          style={styles.star}
+                        />
+                      </Pressable>
+                    </View>
                   </View>
                 </View>
-              </View>
-            );
-          })}
+              );
+            })
+          ) : (
+            <View style={styles.task}>
+              <Text style={styles.taskText}>No Priority Task</Text>
+            </View>
+          )}
         </View>
       </ScrollView>
     </View>
@@ -128,11 +220,10 @@ const styles = StyleSheet.create({
   },
   taskText: {
     color: "#FFFFFF",
-    fontSize: RFPercentage(2),
   },
   taskDate: {
     color: "#FFFFFF",
-    fontSize: RFPercentage(3),
+    fontSize: 22,
     fontFamily: "Poppins_700Bold",
     alignSelf: "flex-start",
     marginTop: 10,

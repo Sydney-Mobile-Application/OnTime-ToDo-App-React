@@ -1,5 +1,14 @@
-import React, { useState, useEffect, Component, useCallback } from "react";
-import { StyleSheet, View, Text, ScrollView, Pressable, Dimensions } from "react-native";
+import React, { useState } from "react";
+import {
+  StyleSheet,
+  View,
+  Text,
+  ScrollView,
+  Pressable,
+  Dimensions,
+  RefreshControl,
+} from "react-native";
+
 import { MaterialIcons } from "@expo/vector-icons";
 import {
   useFont,
@@ -13,10 +22,26 @@ import { useFonts } from "expo-font";
 import AppLoading from "expo-app-loading";
 import { RFPercentage, RFValue } from "react-native-responsive-fontsize";
 
+import AsyncStorage from "@react-native-async-storage/async-storage";
+
+// Firebase Conn
+import { getDocs, collection, query, where } from "firebase/firestore";
+import { db } from "../config/firebase";
+
+// Redux
+import { useSelector, useDispatch } from "react-redux";
+import { setToDoData } from "../redux/actions";
+
+import moment from "moment";
+
 const windowWidth = Dimensions.get("window").width;
 const windowHeight = Dimensions.get("window").height;
 
-export default function toDoUpcoming() {
+const wait = (timeout) => {
+  return new Promise((resolve) => setTimeout(resolve, timeout));
+};
+
+export default function toDoUpcoming({ navigation }) {
   const [priority, setPriority] = useState(false);
   const priorityTask = () => {
     setPriority(!priority);
@@ -29,84 +54,70 @@ export default function toDoUpcoming() {
     Poppins_800ExtraBold,
   });
 
+  const dispatch = useDispatch();
+
+  const [refreshing, setRefreshing] = useState(false);
+
   function capitalizeFirstLetter(string) {
     return string.charAt(0).toUpperCase() + string.slice(1);
   }
 
-  let dummyData = {
-    data: [
-      {
-        id: "1",
-        title: "kerjakan tugas PAM",
-        date: "26 Sept",
-      },
-      {
-        id: "2",
-        title: "kerjakan tugas Metpen",
-        date: "27 Sept",
-      },
-      {
-        id: "3",
-        title: "kerjakan tugas B.Indo",
-        date: "28 Sept",
-      },
-      {
-        id: "4",
-        title: "kerjakan tugas MASI",
-        date: "29 Sept",
-      },
-      {
-        id: "5",
-        title: "Beli Dog Food untuk Doggy",
-        date: "30 Sept",
-      },
-      {
-        id: "6",
-        title: "Meeting With Project Team",
-        date: "1 Oct",
-      },
-      {
-        id: "7",
-        title: "Kerjain Progress KP",
-        date: "5 Oct",
-      },
-      {
-        id: "8",
-        title: "Beli Batagor Nagoya",
-        date: "7 Oct",
-      },
-      {
-        id: "9",
-        title: "Jangan Lupa Siram Tanaman",
-        date: "9 Oct",
-      },
-      {
-        id: "10",
-        title: "Jangan Lupa Matiin Air sssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss",
-        date: "12 Oct",
-      },
-      {
-        id: "11",
-        title: "Jangan Lupa Matiin Listrik",
-        date: "20 Oct",
-      },
-      {
-        id: "12",
-        title: "Cuci Almamater UIB",
-        date: "20 Oct",
-      },
-      {
-        id: "13",
-        title: "Beli Saham Indomaret",
-        date: "27 Oct",
-      },
-      {
-        id: "14",
-        title: "Tidur di Tempat Kerja",
-        date: "14 Nov",
-      },
-    ],
+  const toDoUpcoming = useSelector((state) => state.toDoDataReducer.data);
+
+  let userDataObj = [];
+
+  const getSavedUserData = async () => {
+    try {
+      const userData = await AsyncStorage.getItem("@userData");
+      if (userData !== null) {
+        userDataObj = JSON.parse(userData);
+
+        getToDoData();
+      }
+    } catch (err) {
+      console.log("error msg : ", err);
+    }
   };
+
+  const getToDoData = async () => {
+    if (!userDataObj.length) {
+      getDocs(
+        query(
+          collection(db, "notes"),
+          where("userId", "==", userDataObj.uid.toString()),
+          where("priority", "==", false),
+          where("done", "==", false)
+        )
+      ).then((querySnapshot) => {
+        let dataCollection = [];
+
+        if (querySnapshot.empty) {
+          dispatch(setToDoData([]));
+        }
+
+        try {
+          querySnapshot.forEach((doc) => {
+            // // doc.data() is never undefined for query doc snapshots
+            // console.log(doc.id, " => ", doc.data());
+            const toDoData = Object.assign({ uid: doc.id }, doc.data());
+
+            dataCollection.push(toDoData);
+          });
+
+          dispatch(setToDoData(dataCollection));
+        } catch (err) {
+          console.log("Error Msg :", err);
+        }
+      });
+    }
+  };
+
+  const onRefresh = React.useCallback(() => {
+    setRefreshing(true);
+    getSavedUserData();
+    wait(1000).then(() => setRefreshing(false));
+  }, []);
+
   if (!fontsLoaded) {
     return <AppLoading />;
   } else {
@@ -116,55 +127,67 @@ export default function toDoUpcoming() {
           // horizontal={true}
           // showsHorizontalScrollIndicator={false}
           contentContainerStyle={styles.scrollView}
+          refreshControl={
+            <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+          }
         >
           <View style={styles.row}>
-            {dummyData.data.map((x) => {
-              return (
-                <View style={styles.task}>
-                  <Pressable onPress={() => console.log("Note Details")}>
-                    <View style={styles.taskNear2}>
-                      <Text numberOfLines={3} ellipsizeMode='tail' style={styles.taskText}>
-                        {capitalizeFirstLetter(x.title)}
-                      </Text>
-                      <Text style={styles.taskDate}>{x.date}</Text>
-                    </View>
-                  </Pressable>
-                  <View>
+            {toDoUpcoming.length > 0 ? (
+              toDoUpcoming.map((x) => {
+                return (
+                  <View style={styles.task}>
+                    <Pressable
+                      onPress={() =>
+                        navigation.navigate({
+                          name: "Edit To Do",
+                          params: { noteId: x.uid },
+                        })
+                      }
+                    >
+                      <View style={styles.taskNear2}>
+                        <Text style={styles.taskText}>
+                          {capitalizeFirstLetter(x.title)}
+                        </Text>
+
+                        <Text style={styles.taskDate}>
+                          {moment(new Date(x.date.seconds * 1000)).format(
+                            "DD/MMM"
+                          )}
+                        </Text>
+                      </View>
+                    </Pressable>
                     <View>
-                      <Pressable onPress={() => console.log("Delete Note")}>
-                        <MaterialIcons
-                          name="delete"
-                          size={16}
-                          color="#ABACF7"
-                          style={styles.delete}
-                        />
-                      </Pressable>
-                    </View>
-                    <View>
-                      {/* <Pressable
-                        onPress={() => console.log("Add To Favourite")}
-                      >
-                        <MaterialIcons
-                          name="star"
-                          size={16}
-                          color="rgba(0,0,0,0.12)"
-                          style={styles.star}
-                        />
-                      </Pressable> */}
-                        <Pressable onPress={()=>priorityTask()}>
-                        <MaterialIcons
-                          name='star'
-                          size={16}
-                          color={priority ? '#EC9B3B' : 'grey'}
-                          style={styles.star}
-                          value={priority? 0 : 1}
-                        />
-                      </Pressable>
+                      <View>
+                        <Pressable onPress={() => console.log("Delete Note")}>
+                          <MaterialIcons
+                            name="delete"
+                            size={16}
+                            color="#ABACF7"
+                            style={styles.delete}
+                          />
+                        </Pressable>
+                      </View>
+                      <View>
+                        <Pressable
+                          onPress={() => console.log("Add To Favourite")}
+                        >
+                          <MaterialIcons
+                            name="star"
+                            size={16}
+                            color="rgba(0,0,0,0.12)"
+                            style={styles.star}
+                          />
+                        </Pressable>
+                      </View>
                     </View>
                   </View>
-                </View>
-              );
-            })}
+                );
+              })
+            ) : (
+              <View style={styles.task}>
+                <Text style={styles.taskText}>No Upcoming Task</Text>
+              </View>
+            )}
           </View>
         </ScrollView>
       </View>
@@ -174,7 +197,7 @@ export default function toDoUpcoming() {
 
 const styles = StyleSheet.create({
   scrollView: {
-    marginVertical: windowHeight*0.02,
+    marginVertical: windowHeight * 0.02,
   },
   row: {
     display: "flex",
@@ -188,14 +211,14 @@ const styles = StyleSheet.create({
   task: {
     borderRadius: 20,
     marginTop: "5%",
-    marginLeft: windowWidth*0.06,
+    marginLeft: windowWidth * 0.06,
     flexDirection: "row",
     alignSelf: "center",
     justifyContent: "center",
   },
   taskNear2: {
-    width: windowWidth*0.35,
-    height: windowHeight*0.15,
+    width: windowWidth * 0.35,
+    height: windowHeight * 0.15,
     borderRadius: 20,
     paddingTop: "10%",
     paddingBottom: "10%",
@@ -207,27 +230,24 @@ const styles = StyleSheet.create({
     backgroundColor: "#5089C6",
   },
   delete: {
-    marginLeft: windowWidth*0.02,
-    marginTop: windowHeight*0.05,
+    marginLeft: windowWidth * 0.02,
+    marginTop: windowHeight * 0.05,
     justifyContent: "center",
   },
   star: {
-    marginLeft: windowWidth*0.02,
-    marginTop: windowHeight*0.01,
+    marginLeft: windowWidth * 0.02,
+    marginTop: windowHeight * 0.01,
     justifyContent: "center",
   },
   taskText: {
     color: "#FFFFFF",
     fontFamily: "Poppins_400Regular",
-    fontSize: RFPercentage(2),
-
   },
   taskDate: {
     color: "#FFFFFF",
-    fontSize: RFPercentage(3),
+    fontSize: 22,
     fontFamily: "Poppins_700Bold",
     alignSelf: "flex-start",
     marginTop: "10%",
-    
   },
 });
