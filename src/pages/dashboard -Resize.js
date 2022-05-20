@@ -29,13 +29,14 @@ import Swipeable from "react-native-swipeable";
 import { TouchableWithoutFeedback } from "react-native-web";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import Successfully from "./signInSuccessfully";
-// import { RFPercentage, RFValue } from "react-native-responsive-fontsize";
+import { RFPercentage, RFValue } from "react-native-responsive-fontsize";
 
-const width_name = "60%";
+const width_name = "80%";
 const width_highlight = "75%";
 const windowWidth = Dimensions.get("window").width;
 const windowHeight = Dimensions.get("window").height;
 const image = { uri: "../../assets/profileContainer.png" };
+
 
 export default function Dashboard({ navigation }) {
   let [fontsLoaded] = useFonts({
@@ -49,16 +50,7 @@ export default function Dashboard({ navigation }) {
   const [state, setState] = useState({
     userData: "",
   });
-  const deleteTask = async () => {
-    Alert.alert("Delete this task?", "This task will be deleted", [
-      {
-        text: "Cancel",
-        onPress: () => console.log("Cancel Pressed"),
-        style: "cancel",
-      },
-      { text: "OK", onPress: () => navigation.navigate("Dashboard") },
-    ]);
-  };
+  
   const markAsDone = async () => {
     Alert.alert(
       "Mark this task as done?",
@@ -99,8 +91,6 @@ export default function Dashboard({ navigation }) {
     </TouchableOpacity>,
   ];
 
-  
-
   function MyListItem() {
     if (!fontsLoaded) {
       return <AppLoading />;
@@ -117,19 +107,18 @@ export default function Dashboard({ navigation }) {
             <View style={styles.highlight}>
               <View style={styles.highlight_text}>
                 <Text
-                numberOfLines={2}
                   style={{
                     textAlignVertical: "center",
-                    fontSize: 17,
+                    fontSize: RFPercentage(2),
                     fontFamily: "Poppins_600SemiBold",
-                    marginLeft: "5%",
+                    marginLeft: "5%"
                   }}
                 >
                   Deadline PAM Sudah Dekat
                 </Text>
               </View>
               <View style={styles.time}>
-                <MaterialIcons name="delete" size={12} color="#ABACF7" onPress={deleteTask}/>
+                <MaterialIcons name="delete" size={12} color="#ABACF7" />
                 <MaterialIcons name="access-time" size={45} color="#EC9B3B" />
 
                 <View style={styles.detail}>
@@ -225,9 +214,9 @@ export default function Dashboard({ navigation }) {
               </View> */}
 
               <View style={styles.Head}>
-                <View>
-                  <Text style={styles.priority}>Priority</Text>
-                </View>
+              <View>
+                <Text style={styles.priority}>Priority</Text>
+              </View>
 
                 <Pressable
                   onPress={() =>
@@ -241,51 +230,51 @@ export default function Dashboard({ navigation }) {
               <View style={styles.priorityCont}>
                 <View style={styles.task}>
                   <View style={styles.taskNear}>
-                    <Text numberOfLines={2} style={styles.taskText}>
+                    <Text style={styles.taskText}>
                       Meeting with Project Team
                     </Text>
-                    <Text numberOfLines={2} style={styles.taskDate}>20 Sep</Text>
+                    <Text style={styles.taskDate}>20 Sep</Text>
                   </View>
                   <View>
-                    <TouchableOpacity onPress={deleteTask}>
-                      <MaterialIcons
-                        name="delete"
-                        size={15}
-                        color="#ABACF7"
-                        style={styles.delete}
-                      />
+                  <TouchableOpacity>
+                    <MaterialIcons
+                      name="delete"
+                      size={15}
+                      color="#ABACF7"
+                      style={styles.delete}
+                    />
                     </TouchableOpacity>
                     <TouchableOpacity>
-                      <MaterialIcons
-                        name="star"
-                        size={15}
-                        color="#EC9B3B"
-                        style={styles.star}
-                      />
+                    <MaterialIcons
+                      name="star"
+                      size={15}
+                      color="#EC9B3B"
+                      style={styles.star}
+                    />
                     </TouchableOpacity>
                   </View>
                 </View>
                 <View style={styles.task}>
                   <View style={styles.taskNear2}>
-                    <Text numberOfLines={2} style={styles.taskText}>Kerjakan Tugas PAM</Text>
-                    <Text numberOfLines={2} style={styles.taskDate2}>26 Sep</Text>
+                    <Text style={styles.taskText}>Kerjakan Tugas PAM</Text>
+                    <Text style={styles.taskDate2}>26 Sep</Text>
                   </View>
                   <View>
-                    <TouchableOpacity onPress={deleteTask}>
-                      <MaterialIcons
-                        name="delete"
-                        size={15}
-                        color="#ABACF7"
-                        style={styles.delete}
-                      />
+                  <TouchableOpacity>
+                    <MaterialIcons
+                      name="delete"
+                      size={15}
+                      color="#ABACF7"
+                      style={styles.delete}
+                    />
                     </TouchableOpacity>
                     <TouchableOpacity>
-                      <MaterialIcons
-                        name="star"
-                        size={15}
-                        color="#EC9B3B"
-                        style={styles.star}
-                      />
+                    <MaterialIcons
+                      name="star"
+                      size={15}
+                      color="#EC9B3B"
+                      style={styles.star}
+                    />
                     </TouchableOpacity>
                   </View>
                 </View>
@@ -305,51 +294,51 @@ export default function Dashboard({ navigation }) {
               <View style={styles.upcomingCont}>
                 <View style={styles.task}>
                   <View style={styles.taskCommon}>
-                    <Text numberOfLines={2} style={styles.taskText}>
+                    <Text style={styles.taskText}>
                       Meeting with Project Team
                     </Text>
-                    <Text numberOfLines={2} style={styles.taskDate}>28 Sep</Text>
+                    <Text style={styles.taskDate}>28 Sep</Text>
                   </View>
                   <View>
-                    <TouchableOpacity onPress={deleteTask}>
-                      <MaterialIcons
-                        name="delete"
-                        size={15}
-                        color="#ABACF7"
-                        style={styles.delete}
-                      />
+                  <TouchableOpacity>
+                    <MaterialIcons
+                      name="delete"
+                      size={15}
+                      color="#ABACF7"
+                      style={styles.delete}
+                    />
                     </TouchableOpacity>
                     <TouchableOpacity>
-                      <MaterialIcons
-                        name="star"
-                        size={15}
-                        color="#E5E5E5"
-                        style={styles.star}
-                      />
+                    <MaterialIcons
+                      name="star"
+                      size={15}
+                      color="#E5E5E5"
+                      style={styles.star}
+                    />
                     </TouchableOpacity>
                   </View>
                 </View>
                 <View style={styles.task}>
                   <View style={styles.taskCommon2}>
-                    <Text numberOfLines={2} style={styles.taskText}>Kerjakan Tugas PAM</Text>
-                    <Text numberOfLines={2} style={styles.taskDate2}>27 Sep</Text>
+                    <Text style={styles.taskText}>Kerjakan Tugas PAM</Text>
+                    <Text style={styles.taskDate2}>27 Sep</Text>
                   </View>
                   <View>
-                    <TouchableOpacity onPress={deleteTask}>
-                      <MaterialIcons
-                        name="delete"
-                        size={15}
-                        color="#ABACF7"
-                        style={styles.delete}
-                      />
+                    <TouchableOpacity>
+                    <MaterialIcons
+                      name="delete"
+                      size={15}
+                      color="#ABACF7"
+                      style={styles.delete}
+                    />
                     </TouchableOpacity>
                     <TouchableOpacity>
-                      <MaterialIcons
-                        name="star"
-                        size={15}
-                        color="#E5E5E5"
-                        style={styles.star}
-                      />
+                    <MaterialIcons
+                      name="star"
+                      size={15}
+                      color="#E5E5E5"
+                      style={styles.star}
+                    />
                     </TouchableOpacity>
                   </View>
                 </View>
@@ -408,16 +397,16 @@ const styles = StyleSheet.create({
   },
   priority: {
     fontFamily: "Poppins_700Bold",
-    fontSize: 16,
+    fontSize: RFPercentage(3),
     // marginBottom: "5%",
     alignSelf: "flex-start",
     alignItems: "flex-start",
     justifyContent: "flex-start",
-    marginRight: windowWidth * 0.25,
+    marginRight: windowWidth * 0.19,
   },
   seeall: {
     fontFamily: "Poppins_400Regular",
-    fontSize: 10,
+    fontSize: RFPercentage(2),
     marginBottom: "5%",
     alignSelf: "flex-end",
     alignItems: "flex-end",
@@ -428,7 +417,7 @@ const styles = StyleSheet.create({
   },
   upcoming: {
     fontFamily: "Poppins_700Bold",
-    fontSize: 16,
+    fontSize: RFPercentage(3),
     // marginBottom: "5%",
     // marginLeft: 20,
     alignSelf: "flex-start",
@@ -445,8 +434,8 @@ const styles = StyleSheet.create({
     flexDirection: "row",
   },
   task: {
-    maxWidth: 131,
-    maxHeight: 131,
+    maxWidth: "32%",
+    maxHeight: "100%",
     borderRadius: 20,
     marginRight: "5%",
     flexDirection: "row",
@@ -525,7 +514,7 @@ const styles = StyleSheet.create({
   taskText: {
     fontFamily: "Poppins_400Regular",
     color: "#FFFFFF",
-    // fontSize: RFPercentage(2.),
+    fontSize: RFPercentage(2.),
  
     
   },
@@ -534,7 +523,7 @@ const styles = StyleSheet.create({
     color: "#FFFFFF",
     alignSelf: "flex-start",
     fontFamily: "Poppins_700Bold",
-    fontSize: 22,
+    fontSize: RFPercentage(2),
 
     // paddingLeft: "11%",
   },
@@ -543,7 +532,7 @@ const styles = StyleSheet.create({
     color: "#FFFFFF",
     alignSelf: "flex-start",
     fontWeight: "bold",
-    fontSize: 22,
+    fontSize: RFPercentage(2),
 
   },
   avatar: {
@@ -557,13 +546,13 @@ const styles = StyleSheet.create({
   notif: {
     fontFamily: "Poppins_400Regular",
     marginLeft: "5%",
-    fontSize: 12,
+    fontSize: RFPercentage(2),
     color: "#000000",
     opacity: 0.57,
   },
   notifSmall: {
     fontFamily: "Poppins_400Regular",
-    fontSize: 9,
+    fontSize: RFPercentage(1),
 
     color: "#000000",
     opacity: 0.57,
@@ -608,7 +597,7 @@ const styles = StyleSheet.create({
     marginLeft: "13%",
     width: width_name,
     fontFamily: "Poppins_700Bold",
-    fontSize: 17,
+    fontSize: RFPercentage(2),
 
     alignSelf: "flex-start",
   },
@@ -616,7 +605,7 @@ const styles = StyleSheet.create({
     alignItems: "flex-end",
     fontFamily: "Poppins_400Regular",
     justifyContent: "flex-end",
-    fontSize: 12,
+    fontSize: RFPercentage(2),
     alignSelf: "flex-start",
   },
   dateText: {
@@ -698,10 +687,10 @@ const styles = StyleSheet.create({
     // paddingRight: 20,
     marginBottom: "5%",
   },
-  swipeTextContent: {
-    // backgroundColor:"#000",
-    marginBottom: "10%",
-    fontFamily: "Poppins_600SemiBold",
-    // fontWeight: "bold",
-  },
+    swipeTextContent: {
+      // backgroundColor:"#000",
+      marginBottom: "10%",
+      fontFamily: "Poppins_600SemiBold",
+      // fontWeight: "bold",
+    },
 });

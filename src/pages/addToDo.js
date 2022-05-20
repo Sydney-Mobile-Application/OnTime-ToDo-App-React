@@ -172,6 +172,11 @@ export default function AddToDo({ navigation }) {
   const onChangeTime = (time) => {
     setShow(Platform.OS === "ios");
     let timenow = String(time.nativeEvent.timestamp);
+    if(timenow === "undefined"){
+      Alert.alert("Invalid Date Input", "You have submitted invalid date", [
+        { text: "OK"},
+      ]);
+    } else {
     if (Number(Number(timenow.substring(16, 18)) - 6) < 0) {
       var hour = Number(timenow.substring(16, 18)) + 18;
     } else {
@@ -190,6 +195,7 @@ export default function AddToDo({ navigation }) {
     // setDate(currentDate);
     // console.log(date)
   };
+}
 
   // Function for Save Data
   const onSaveData = () => {
@@ -218,7 +224,7 @@ export default function AddToDo({ navigation }) {
           done: false,
           userId: state.userData.uid,
           url: linkURL,
-          imageURL: "noteImages/" + (state.userData.uid + textTitle + "-image"),
+          imageURL: "noteImages/" + (state.userData.uid+textTitle+imageURI+"-image")
         };
 
         setDoc(myDoc, dataPost)
@@ -256,10 +262,8 @@ export default function AddToDo({ navigation }) {
       xhr.send(null);
     });
 
-    const ref = app
-      .storage()
-      .ref("images/" + (state.userData.uid + textTitle + "-image"));
-    const snapshot = await ref.put(blob);
+  const ref = app.storage().ref("noteImages/" + (state.userData.uid+textTitle+imageURI+"-image"));
+  const snapshot = await ref.put(blob);
 
     // We're done with the blob, close and release it
     blob.close();
