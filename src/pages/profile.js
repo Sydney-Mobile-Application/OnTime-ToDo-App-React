@@ -140,6 +140,9 @@ const styles = StyleSheet.create({
   name: {
     fontSize: RFPercentage(2.5),
     fontFamily: "Poppins_600SemiBold",
+    marginRight :"10%",
+    marginLeft :"10%",
+    textAlign : "center",
   },
 
   profileDetail: {
