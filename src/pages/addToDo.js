@@ -402,6 +402,7 @@ export default function AddToDo({ navigation }) {
             style={[styles.title, { height: Math.max(44, heightTitle.height) }]}
             padding={"5%"}
             multiline={true}
+            value={textTitle}
             onChangeText={onChangeTextTitle}
             placeholder="Title"
             onContentSizeChange={(event) => {
@@ -430,6 +431,7 @@ export default function AddToDo({ navigation }) {
               { height: Math.max(44, heightDesc.height) },
             ]}
             padding={"5%"}
+            value={textDesc}
             onChangeText={onChangeTextDesc}
             multiline={true}
             placeholder="Description"

@@ -33,6 +33,18 @@ import {
 import { useFonts } from "expo-font";
 import AppLoading from "expo-app-loading";
 
+import moment from "moment";
+
+// Firebase
+import {
+  getDoc,
+  doc,
+  updateDoc,
+  deleteDoc,
+  Timestamp,
+} from "firebase/firestore";
+import { db } from "../config/firebase";
+
 const windowWidth = Dimensions.get("window").width;
 const windowHeight = Dimensions.get("window").height;
 
@@ -67,20 +79,18 @@ const actions = [
   },
 ];
 
-export default function EditToDo({ navigation }) {
-  const [textTitle, onChangeTextTitle] = useState("DEADLINE PAM DEKAT"); //pre-filled*
-  const [textDesc, onChangeTextDesc] = useState("Deadline tanggal 23 Mei 2022"); //pre-filled*
+export default function EditToDo({ navigation, route }) {
+  const [textTitle, onChangeTextTitle] = useState(""); //pre-filled*
+  const [textDesc, onChangeTextDesc] = useState(""); //pre-filled*
   const [oldDate, newDate] = useState("Select Date Time");
   const [oldTime, newTime] = useState("0:00");
   const [modalCalendarVisible, setModalCalendarVisible] = useState(false);
   const [date, setDate] = useState(new Date());
   const [show, setShow] = useState(false);
   const [textLink, onChangeLink] = useState(""); //pre-filled*
-  const [priority, setPriority] = useState(true); //pre-filled*
+  const [priority, setPriority] = useState(false); //pre-filled*
   const [image, setImage] = useState(null); //pre-filled*
-  const [linkURL, setURL] = useState(
-    "https://www.instagram.com/tv/CdnLruJlj47/?utm_source=ig_web_copy_link"
-  ); //pre-filled*
+  const [linkURL, setURL] = useState(null); //pre-filled*
   const [link, setLink] = useState(false); //pre-filled*
   const [imageURI, dataImage] = useState(""); //pre-filled*
 
@@ -116,22 +126,70 @@ export default function EditToDo({ navigation }) {
     height: 100, //initializing the content text height
   });
 
+  const [state, setState] = useState({
+    selectedData: [],
+    noteId: null,
+    updatedDate: null,
+  });
+
+  const getSelectedNotes = async (noteId) => {
+    const docRef = doc(db, "notes", noteId);
+    const docSnap = await getDoc(docRef);
+
+    if (docSnap) {
+      setState((prevState) => ({
+        ...prevState,
+        userData: docSnap.data(),
+        noteId: noteId,
+      }));
+    } else {
+      console.log("no data found");
+    }
+  };
+
+  useEffect(() => {
+    getSelectedNotes(route.params.noteId);
+  }, [route.params?.noteId]);
+
+  useEffect(() => {
+    console.log("state.userdata", state.userData);
+    onChangeTextTitle(state.userData?.title);
+    onChangeTextDesc(state.userData?.description);
+    setURL(state.userData?.url);
+    setPriority(state.userData?.priority);
+    newDate(
+      moment(new Date(state.userData?.date?.seconds * 1000))
+        .format("DD MMM YYYY")
+        .toString()
+    );
+    newTime(
+      moment(new Date(state.userData?.date?.seconds * 1000))
+        .format("hh:mm")
+        .toString()
+    );
+  }, [state.userData]);
+
   const onChangeTime = (time) => {
     setShow(Platform.OS === "ios");
     let timenow = String(time.nativeEvent.timestamp);
-    if (Number(Number(timenow.substring(16, 18)) - 6) < 0) {
-      var hour = Number(timenow.substring(16, 18)) + 18;
+
+    setState((prevState) => ({
+      ...prevState,
+      updatedDate: timenow,
+    }));
+
+    if (timenow === "undefined") {
+      console.log("date time invalid");
     } else {
-      var hour = Number(timenow.substring(16, 18)) - 6;
+      if (Number(Number(timenow.substring(16, 18)) - 6) < 0) {
+        var hour = Number(timenow.substring(16, 18)) + 18;
+      } else {
+        var hour = Number(timenow.substring(16, 18)) - 6;
+      }
+      var minute = timenow.substring(19, 21);
+
+      newTime(hour + ":" + minute);
     }
-    var minute = timenow.substring(19, 21);
-    // receiveDate(String(time._i.hour) + " : " + String(time._i.minute));
-    console.log(hour + ":" + minute);
-    newTime(hour + ":" + minute);
-    // const currentDate = selectedDate || time;
-    // setShow(Platform.OS === 'ios');
-    // setDate(currentDate);
-    // console.log(date)
   };
 
   const uploadImage = async (imageURI) => {
@@ -217,30 +275,62 @@ export default function EditToDo({ navigation }) {
   };
 
   const onDoneData = () => {
-    const myDoc = doc(db, "users", state.userData.uid);
+    const myDoc = doc(db, "notes", state.noteId);
 
     const dataPost = {
       done: true,
+      priority: false,
     };
-
-    console.log("datapost", dataPost);
 
     updateDoc(myDoc, dataPost)
       .then(() => {
-        try {
-          const userData = Object.assign({ uid: state.userData.uid }, dataPost);
-          const value = JSON.stringify(userData);
-          AsyncStorage.setItem("@userData", value);
-        } catch (err) {
-          console.log("Error Msg :", err);
-        }
-
         Alert.alert("Success", "Task mark as Done !");
         navigation.navigate("Dashboard");
       })
       .catch((error) => {
         Alert.alert("Error", error.message);
       });
+  };
+
+  const onUpdateData = () => {
+    const myDoc = doc(db, "notes", state.noteId);
+
+    let dataPost = {};
+
+    state.updatedDate
+      ? (dataPost = {
+          date: Timestamp.fromDate(new Date(state.updatedDate)),
+          title: textTitle,
+          description: textDesc,
+          priority: priority,
+          url: linkURL,
+          imageURL: "noteImages/" + (state.userData.uid + textTitle + "-image"),
+        })
+      : (dataPost = {
+          title: textTitle,
+          description: textDesc,
+          priority: priority,
+          url: linkURL,
+          imageURL: "noteImages/" + (state.userData.uid + textTitle + "-image"),
+        });
+
+    updateDoc(myDoc, dataPost)
+      .then(() => {
+        Alert.alert("Success", "Task Updated !");
+        navigation.navigate("Dashboard");
+      })
+      .catch((error) => {
+        Alert.alert("Error", error.message);
+      });
+  };
+
+  const onDeleteData = async () => {
+    const deleteData = deleteDoc(doc(db, "notes", state.noteId));
+
+    if (deleteData) {
+      Alert.alert("Success", "Task deleted !");
+      navigation.navigate("Dashboard");
+    }
   };
 
   const markAsDone = async () => {
@@ -253,7 +343,12 @@ export default function EditToDo({ navigation }) {
           onPress: () => console.log("Cancel Pressed"),
           style: "cancel",
         },
-        { text: "OK", onPress: () => navigation.navigate("Dashboard") }, //function onDoneData
+        {
+          text: "OK",
+          onPress: () => {
+            onDoneData();
+          },
+        }, //function onDoneData
       ]
     );
   };
@@ -265,7 +360,12 @@ export default function EditToDo({ navigation }) {
         onPress: () => console.log("Cancel Pressed"),
         style: "cancel",
       },
-      { text: "OK", onPress: () => navigation.navigate("Dashboard") },
+      {
+        text: "OK",
+        onPress: () => {
+          onDeleteData();
+        },
+      },
     ]);
   };
 
@@ -281,7 +381,12 @@ export default function EditToDo({ navigation }) {
         onPress: () => navigation.navigate("Dashboard"),
         style: "cancel",
       },
-      { text: "OK", onPress: () => navigation.navigate("Dashboard") },
+      {
+        text: "OK",
+        onPress: () => {
+          onUpdateData();
+        },
+      },
     ]);
   };
 
@@ -359,13 +464,8 @@ export default function EditToDo({ navigation }) {
             style={[styles.title, { height: Math.max(44, heightTitle.height) }]}
             padding={"5%"}
             multiline={true}
-            onChangeText={(val) => {
-              onChangeTextTitle((prevState) => ({
-                ...prevState,
-                textTitle: val,
-              }));
-            }}
-            defaultValue={textTitle}
+            onChangeText={onChangeTextTitle}
+            value={textTitle}
             placeholder="Title"
             onContentSizeChange={(event) => {
               setHeightTitle({ height: event.nativeEvent.contentSize.height });
@@ -393,13 +493,8 @@ export default function EditToDo({ navigation }) {
               { height: Math.max(44, heightDesc.height) },
             ]}
             padding={"5%"}
-            onChangeText={(val) => {
-              onChangeTextDesc((prevState) => ({
-                ...prevState,
-                textDesc: val,
-              }));
-            }}
-            defaultValue={textDesc}
+            value={textDesc}
+            onChangeText={onChangeTextDesc}
             multiline={true}
             placeholder="Description"
             onContentSizeChange={(event) => {

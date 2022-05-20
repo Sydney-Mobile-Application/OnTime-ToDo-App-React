@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   StyleSheet,
   View,
@@ -6,7 +6,9 @@ import {
   ScrollView,
   Pressable,
   Dimensions,
+  RefreshControl,
 } from "react-native";
+
 import { MaterialIcons } from "@expo/vector-icons";
 import {
   useFont,
@@ -20,13 +22,26 @@ import { useFonts } from "expo-font";
 import AppLoading from "expo-app-loading";
 import { RFPercentage, RFValue } from "react-native-responsive-fontsize";
 
-import { useSelector } from "react-redux";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+
+// Firebase Conn
+import { getDocs, collection, query, where } from "firebase/firestore";
+import { db } from "../config/firebase";
+
+// Redux
+import { useSelector, useDispatch } from "react-redux";
+import { setToDoData } from "../redux/actions";
+
 import moment from "moment";
 
 const windowWidth = Dimensions.get("window").width;
 const windowHeight = Dimensions.get("window").height;
 
-export default function toDoCompleted() {
+const wait = (timeout) => {
+  return new Promise((resolve) => setTimeout(resolve, timeout));
+};
+
+export default function toDoCompleted({ navigation }) {
   let [fontsLoaded] = useFonts({
     Poppins_300Light,
     Poppins_400Regular,
@@ -34,11 +49,69 @@ export default function toDoCompleted() {
     Poppins_700Bold,
     Poppins_800ExtraBold,
   });
+
+  const dispatch = useDispatch();
+
+  const [refreshing, setRefreshing] = useState(false);
+
   function capitalizeFirstLetter(string) {
     return string.charAt(0).toUpperCase() + string.slice(1);
   }
 
   const toDoDone = useSelector((state) => state.toDoDataReducer.dataDone);
+
+  let userDataObj = [];
+
+  const getSavedUserData = async () => {
+    try {
+      const userData = await AsyncStorage.getItem("@userData");
+      if (userData !== null) {
+        userDataObj = JSON.parse(userData);
+
+        getToDoDataDone();
+      }
+    } catch (err) {
+      console.log("error msg : ", err);
+    }
+  };
+
+  const getToDoDataDone = async () => {
+    if (!userDataObj.length) {
+      getDocs(
+        query(
+          collection(db, "notes"),
+          where("userId", "==", userDataObj.uid.toString()),
+          where("done", "==", true)
+        )
+      ).then((querySnapshot) => {
+        let dataCollection = [];
+
+        if (querySnapshot.empty) {
+          dispatch(setDoneData([]));
+        }
+
+        try {
+          querySnapshot.forEach((doc) => {
+            // // doc.data() is never undefined for query doc snapshots
+            // console.log(doc.id, " => ", doc.data());
+            const toDoData = Object.assign({ uid: doc.id }, doc.data());
+
+            dataCollection.push(toDoData);
+          });
+
+          dispatch(setDoneData(dataCollection));
+        } catch (err) {
+          console.log("Error Msg :", err);
+        }
+      });
+    }
+  };
+
+  const onRefresh = React.useCallback(() => {
+    setRefreshing(true);
+    getSavedUserData();
+    wait(1000).then(() => setRefreshing(false));
+  }, []);
 
   if (!fontsLoaded) {
     return <AppLoading />;
@@ -49,13 +122,16 @@ export default function toDoCompleted() {
           // horizontal={true}
           // showsHorizontalScrollIndicator={false}
           contentContainerStyle={styles.scrollView}
+          refreshControl={
+            <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+          }
         >
           <View style={styles.row}>
             {toDoDone.length > 0 ? (
               toDoDone.map((x) => {
                 return (
                   <View style={styles.task}>
-                    <Pressable onPress={() => console.log("Note Details")}>
+                    <Pressable onPress={() => console.log("Done Note")}>
                       <View style={styles.taskNear2}>
                         <Text style={styles.taskText}>
                           {capitalizeFirstLetter(x.title)}

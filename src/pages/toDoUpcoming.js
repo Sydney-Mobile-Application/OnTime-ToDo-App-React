@@ -1,4 +1,4 @@
-import React, { useState, useEffect, Component, useCallback } from "react";
+import React, { useState } from "react";
 import {
   StyleSheet,
   View,
@@ -6,6 +6,7 @@ import {
   ScrollView,
   Pressable,
   Dimensions,
+  RefreshControl,
 } from "react-native";
 
 import { MaterialIcons } from "@expo/vector-icons";
@@ -21,13 +22,26 @@ import { useFonts } from "expo-font";
 import AppLoading from "expo-app-loading";
 import { RFPercentage, RFValue } from "react-native-responsive-fontsize";
 
-import { useSelector } from "react-redux";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+
+// Firebase Conn
+import { getDocs, collection, query, where } from "firebase/firestore";
+import { db } from "../config/firebase";
+
+// Redux
+import { useSelector, useDispatch } from "react-redux";
+import { setToDoData } from "../redux/actions";
+
 import moment from "moment";
 
 const windowWidth = Dimensions.get("window").width;
 const windowHeight = Dimensions.get("window").height;
 
-export default function toDoUpcoming() {
+const wait = (timeout) => {
+  return new Promise((resolve) => setTimeout(resolve, timeout));
+};
+
+export default function toDoUpcoming({ navigation }) {
   const [priority, setPriority] = useState(false);
   const priorityTask = () => {
     setPriority(!priority);
@@ -40,11 +54,69 @@ export default function toDoUpcoming() {
     Poppins_800ExtraBold,
   });
 
+  const dispatch = useDispatch();
+
+  const [refreshing, setRefreshing] = useState(false);
+
   function capitalizeFirstLetter(string) {
     return string.charAt(0).toUpperCase() + string.slice(1);
   }
 
   const toDoUpcoming = useSelector((state) => state.toDoDataReducer.data);
+
+  let userDataObj = [];
+
+  const getSavedUserData = async () => {
+    try {
+      const userData = await AsyncStorage.getItem("@userData");
+      if (userData !== null) {
+        userDataObj = JSON.parse(userData);
+
+        getToDoData();
+      }
+    } catch (err) {
+      console.log("error msg : ", err);
+    }
+  };
+
+  const getToDoData = async () => {
+    if (!userDataObj.length) {
+      getDocs(
+        query(
+          collection(db, "notes"),
+          where("userId", "==", userDataObj.uid.toString()),
+          where("priority", "==", false),
+          where("done", "==", false)
+        )
+      ).then((querySnapshot) => {
+        let dataCollection = [];
+
+        if (querySnapshot.empty) {
+          dispatch(setToDoData([]));
+        }
+
+        try {
+          querySnapshot.forEach((doc) => {
+            // // doc.data() is never undefined for query doc snapshots
+            // console.log(doc.id, " => ", doc.data());
+            const toDoData = Object.assign({ uid: doc.id }, doc.data());
+
+            dataCollection.push(toDoData);
+          });
+
+          dispatch(setToDoData(dataCollection));
+        } catch (err) {
+          console.log("Error Msg :", err);
+        }
+      });
+    }
+  };
+
+  const onRefresh = React.useCallback(() => {
+    setRefreshing(true);
+    getSavedUserData();
+    wait(1000).then(() => setRefreshing(false));
+  }, []);
 
   if (!fontsLoaded) {
     return <AppLoading />;
@@ -55,13 +127,23 @@ export default function toDoUpcoming() {
           // horizontal={true}
           // showsHorizontalScrollIndicator={false}
           contentContainerStyle={styles.scrollView}
+          refreshControl={
+            <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+          }
         >
           <View style={styles.row}>
             {toDoUpcoming.length > 0 ? (
               toDoUpcoming.map((x) => {
                 return (
                   <View style={styles.task}>
-                    <Pressable onPress={() => console.log("Note Details")}>
+                    <Pressable
+                      onPress={() =>
+                        navigation.navigate({
+                          name: "Edit To Do",
+                          params: { noteId: x.uid },
+                        })
+                      }
+                    >
                       <View style={styles.taskNear2}>
                         <Text style={styles.taskText}>
                           {capitalizeFirstLetter(x.title)}
