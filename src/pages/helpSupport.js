@@ -70,7 +70,7 @@ const styles = StyleSheet.create({
     fontSize: RFPercentage(3),
     alignSelf: 'flex-start',
     paddingTop: 20,
-    marginBottom: 20,
+    marginBottom: "10%",
     marginLeft: windowHeight * 0.01,
     fontFamily: 'Poppins_600SemiBold'
   },
@@ -78,15 +78,15 @@ const styles = StyleSheet.create({
   helpSupportContainer: {
     width: windowWidth *0.84 ,
     height: windowHeight * 0.12,
-    borderRadius: 25,
+    borderRadius: 20,
     backgroundColor: '#FFECBF',
     paddingLeft: windowHeight * 0.03,
     paddingTop: windowWidth * 0.04,
-    marginBottom: 20 
+    marginBottom: "5%" 
   },
 
   description:{
-    lineHeight: 25,
+    lineHeight: 30,
     fontSize: RFPercentage(2),
     fontFamily: 'Poppins_400Regular'
   },

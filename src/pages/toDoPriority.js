@@ -21,6 +21,7 @@ import { setPriorityData } from "../redux/actions";
 
 import moment from "moment";
 import { RFPercentage, RFValue } from "react-native-responsive-fontsize";
+import { backgroundColor } from "react-native/Libraries/Components/View/ReactNativeStyleAttributes";
 
 const windowWidth = Dimensions.get("window").width;
 const windowHeight = Dimensions.get("window").height;
@@ -124,14 +125,14 @@ export default function ToDoPriority({ navigation }) {
                     <View style={styles.taskNear2}>
                       <Text
                         ellipsizeMode="tail"
-                        numberOfLines={4}
+                        numberOfLines={2}
                         style={styles.taskText}
                       >
                         {capitalizeFirstLetter(x.title)}
                       </Text>
                       <Text style={styles.taskDate}>
                         {moment(new Date(x.date.seconds * 1000)).format(
-                          "DD/MMM"
+                          "DD MMM"
                         )}
                       </Text>
                     </View>
@@ -190,14 +191,14 @@ const styles = StyleSheet.create({
   task: {
     borderRadius: 20,
     marginTop: "5%",
-    marginLeft: windowWidth * 0.06,
+    // marginLeft: windowWidth * 0.06,
     flexDirection: "row",
     alignSelf: "center",
     justifyContent: "center",
   },
   taskNear2: {
-    width: windowWidth * 0.35,
-    height: windowHeight * 0.15,
+    width: 130,
+    height: 120,
     borderRadius: 20,
     paddingTop: "10%",
     paddingBottom: "10%",
@@ -220,6 +221,8 @@ const styles = StyleSheet.create({
   },
   taskText: {
     color: "#FFFFFF",
+    fontFamily: "Poppins_400Regular",
+    alignContent: "flex-start"
   },
   taskDate: {
     color: "#FFFFFF",
