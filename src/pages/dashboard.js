@@ -35,7 +35,6 @@ const windowWidth = Dimensions.get("window").width;
 const windowHeight = Dimensions.get("window").height;
 const image = { uri: "../../assets/profileContainer.png" };
 
-
 export default function Dashboard({ navigation }) {
   let [fontsLoaded] = useFonts({
     Poppins_300Light,
@@ -91,7 +90,7 @@ export default function Dashboard({ navigation }) {
                     textAlignVertical: "center",
                     fontSize: 17,
                     fontFamily: "Poppins_600SemiBold",
-                    marginLeft: "5%"
+                    marginLeft: "5%",
                   }}
                 >
                   Deadline PAM Sudah Dekat
@@ -193,9 +192,9 @@ export default function Dashboard({ navigation }) {
               </View> */}
 
               <View style={styles.Head}>
-              <View>
-                <Text style={styles.priority}>Priority</Text>
-              </View>
+                <View>
+                  <Text style={styles.priority}>Priority</Text>
+                </View>
 
                 <Pressable
                   onPress={() =>
@@ -215,21 +214,21 @@ export default function Dashboard({ navigation }) {
                     <Text style={styles.taskDate}>20 Sep</Text>
                   </View>
                   <View>
-                  <TouchableOpacity>
-                    <MaterialIcons
-                      name="delete"
-                      size={15}
-                      color="#ABACF7"
-                      style={styles.delete}
-                    />
+                    <TouchableOpacity>
+                      <MaterialIcons
+                        name="delete"
+                        size={15}
+                        color="#ABACF7"
+                        style={styles.delete}
+                      />
                     </TouchableOpacity>
                     <TouchableOpacity>
-                    <MaterialIcons
-                      name="star"
-                      size={15}
-                      color="#EC9B3B"
-                      style={styles.star}
-                    />
+                      <MaterialIcons
+                        name="star"
+                        size={15}
+                        color="#EC9B3B"
+                        style={styles.star}
+                      />
                     </TouchableOpacity>
                   </View>
                 </View>
@@ -239,21 +238,21 @@ export default function Dashboard({ navigation }) {
                     <Text style={styles.taskDate2}>26 Sep</Text>
                   </View>
                   <View>
-                  <TouchableOpacity>
-                    <MaterialIcons
-                      name="delete"
-                      size={15}
-                      color="#ABACF7"
-                      style={styles.delete}
-                    />
+                    <TouchableOpacity>
+                      <MaterialIcons
+                        name="delete"
+                        size={15}
+                        color="#ABACF7"
+                        style={styles.delete}
+                      />
                     </TouchableOpacity>
                     <TouchableOpacity>
-                    <MaterialIcons
-                      name="star"
-                      size={15}
-                      color="#EC9B3B"
-                      style={styles.star}
-                    />
+                      <MaterialIcons
+                        name="star"
+                        size={15}
+                        color="#EC9B3B"
+                        style={styles.star}
+                      />
                     </TouchableOpacity>
                   </View>
                 </View>
@@ -279,21 +278,21 @@ export default function Dashboard({ navigation }) {
                     <Text style={styles.taskDate}>28 Sep</Text>
                   </View>
                   <View>
-                  <TouchableOpacity>
-                    <MaterialIcons
-                      name="delete"
-                      size={15}
-                      color="#ABACF7"
-                      style={styles.delete}
-                    />
+                    <TouchableOpacity>
+                      <MaterialIcons
+                        name="delete"
+                        size={15}
+                        color="#ABACF7"
+                        style={styles.delete}
+                      />
                     </TouchableOpacity>
                     <TouchableOpacity>
-                    <MaterialIcons
-                      name="star"
-                      size={15}
-                      color="#E5E5E5"
-                      style={styles.star}
-                    />
+                      <MaterialIcons
+                        name="star"
+                        size={15}
+                        color="#E5E5E5"
+                        style={styles.star}
+                      />
                     </TouchableOpacity>
                   </View>
                 </View>
@@ -304,20 +303,20 @@ export default function Dashboard({ navigation }) {
                   </View>
                   <View>
                     <TouchableOpacity>
-                    <MaterialIcons
-                      name="delete"
-                      size={15}
-                      color="#ABACF7"
-                      style={styles.delete}
-                    />
+                      <MaterialIcons
+                        name="delete"
+                        size={15}
+                        color="#ABACF7"
+                        style={styles.delete}
+                      />
                     </TouchableOpacity>
                     <TouchableOpacity>
-                    <MaterialIcons
-                      name="star"
-                      size={15}
-                      color="#E5E5E5"
-                      style={styles.star}
-                    />
+                      <MaterialIcons
+                        name="star"
+                        size={15}
+                        color="#E5E5E5"
+                        style={styles.star}
+                      />
                     </TouchableOpacity>
                   </View>
                 </View>
@@ -658,10 +657,10 @@ const styles = StyleSheet.create({
     // paddingRight: 20,
     marginBottom: "5%",
   },
-    swipeTextContent: {
-      // backgroundColor:"#000",
-      marginBottom: "10%",
-      fontFamily: "Poppins_600SemiBold",
-      // fontWeight: "bold",
-    },
+  swipeTextContent: {
+    // backgroundColor:"#000",
+    marginBottom: "10%",
+    fontFamily: "Poppins_600SemiBold",
+    // fontWeight: "bold",
+  },
 });

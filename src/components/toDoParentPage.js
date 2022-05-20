@@ -18,7 +18,7 @@ import { db } from "../config/firebase";
 
 // Redux
 import { useSelector, useDispatch } from "react-redux";
-import { setToDoData } from "../redux/actions";
+import { setToDoData, setPriorityData, setDoneData } from "../redux/actions";
 
 import * as CallBack from "../index";
 
@@ -30,7 +30,7 @@ const windowHeight = Dimensions.get("window").height;
 
 const Tab = createMaterialTopTabNavigator();
 
-function MyTabs({ navigation, upcoming }) {
+export default function MyTabs({ navigation, upcoming }) {
   function checkerUpcoming() {
     if (upcoming) {
       const saver = "Upcoming";
@@ -62,6 +62,8 @@ function MyTabs({ navigation, upcoming }) {
         userDataObj = JSON.parse(userData);
 
         getToDoData();
+        getToDoDataPriority();
+        getToDoDataDone();
       }
     } catch (err) {
       console.log("error msg : ", err);
@@ -73,25 +75,91 @@ function MyTabs({ navigation, upcoming }) {
       getDocs(
         query(
           collection(db, "notes"),
-          where("userId", "==", userDataObj.uid.toString())
+          where("userId", "==", userDataObj.uid.toString()),
+          where("priority", "==", false),
+          where("done", "==", false)
         )
       ).then((querySnapshot) => {
         let dataCollection = [];
 
         if (querySnapshot.empty) {
-          Alert.alert("Not Found", "Notes Not Found");
+          dispatch(setToDoData([]));
         }
+
         try {
           querySnapshot.forEach((doc) => {
             // // doc.data() is never undefined for query doc snapshots
             // console.log(doc.id, " => ", doc.data());
-
             const toDoData = Object.assign({ uid: doc.id }, doc.data());
 
             dataCollection.push(toDoData);
-
-            dispatch(setToDoData(dataCollection));
           });
+
+          dispatch(setToDoData(dataCollection));
+        } catch (err) {
+          console.log("Error Msg :", err);
+        }
+      });
+    }
+  };
+
+  const getToDoDataPriority = async () => {
+    if (!userDataObj.length) {
+      getDocs(
+        query(
+          collection(db, "notes"),
+          where("userId", "==", userDataObj.uid.toString()),
+          where("priority", "==", true)
+        )
+      ).then((querySnapshot) => {
+        let dataCollection = [];
+
+        if (querySnapshot.empty) {
+          dispatch(setPriorityData([]));
+        }
+
+        try {
+          querySnapshot.forEach((doc) => {
+            // // doc.data() is never undefined for query doc snapshots
+            // console.log(doc.id, " => ", doc.data());
+            const toDoData = Object.assign({ uid: doc.id }, doc.data());
+
+            dataCollection.push(toDoData);
+          });
+
+          dispatch(setPriorityData(dataCollection));
+        } catch (err) {
+          console.log("Error Msg :", err);
+        }
+      });
+    }
+  };
+
+  const getToDoDataDone = async () => {
+    if (!userDataObj.length) {
+      getDocs(
+        query(
+          collection(db, "notes"),
+          where("userId", "==", userDataObj.uid.toString()),
+          where("done", "==", true)
+        )
+      ).then((querySnapshot) => {
+        let dataCollection = [];
+
+        if (querySnapshot.empty) {
+          dispatch(setDoneData([]));
+        }
+
+        try {
+          querySnapshot.forEach((doc) => {
+            // // doc.data() is never undefined for query doc snapshots
+            // console.log(doc.id, " => ", doc.data());
+            const toDoData = Object.assign({ uid: doc.id }, doc.data());
+
+            dataCollection.push(toDoData);
+          });
+
+          dispatch(setDoneData(dataCollection));
         } catch (err) {
           console.log("Error Msg :", err);
         }
@@ -118,16 +186,11 @@ function MyTabs({ navigation, upcoming }) {
         screenOptions={{
           tabBarActiveTintColor: "#000000",
           tabBarLabelStyle: { fontSize: 12 },
-          // tabBarStyle: {
-          //   // backgroundColor: "powderblue",
-          //   // marginTop: 50,
-          // },
         }}
       >
         <Tab.Screen
           name="Priority"
           component={CallBack.ToDoPriority}
-          initialParams={{ toDoData: state?.toDoData }}
           options={{ tabBarLabel: "Priority" }}
         />
         <Tab.Screen
@@ -142,15 +205,6 @@ function MyTabs({ navigation, upcoming }) {
         />
       </Tab.Navigator>
     </>
-  );
-}
-
-export default function ToDoPriority({ route, navigation }) {
-  const { upcoming } = route.params;
-  return (
-    <NavigationContainer independent={true}>
-      <MyTabs upcoming={upcoming} navigation={navigation} />
-    </NavigationContainer>
   );
 }
 

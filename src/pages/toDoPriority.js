@@ -16,14 +16,15 @@ import moment from "moment";
 const windowWidth = Dimensions.get("window").width;
 const windowHeight = Dimensions.get("window").height;
 
-export default function ToDoPriority(props) {
+export default function ToDoPriority({ navigation }) {
   function capitalizeFirstLetter(string) {
     return string.charAt(0).toUpperCase() + string.slice(1);
   }
 
-  const toDoData = useSelector((state) => state.toDoDataReducer.data);
-
-  console.log("todoData", toDoData);
+  const toDoPriority = useSelector(
+    (state) => state.toDoDataReducer.dataPriority
+  );
+  let i = 0;
 
   return (
     <View style={styles.container}>
@@ -33,48 +34,59 @@ export default function ToDoPriority(props) {
         contentContainerStyle={styles.scrollView}
       >
         <View style={styles.row}>
-          {toDoData.map((x) => {
-            return (
-              <View style={styles.task}>
-                <Pressable onPress={() => console.log("Note Details")}>
-                  <View style={styles.taskNear2}>
-                    <Text
-                      ellipsizeMode="tail"
-                      numberOfLines={4}
-                      style={styles.taskText}
-                    >
-                      {capitalizeFirstLetter(x.title)}
-                    </Text>
-                    <Text style={styles.taskDate}>
-                      {moment(new Date(x.date.seconds * 1000)).format("DD/MMM")}
-                    </Text>
-                  </View>
-                </Pressable>
-                <View>
+          {toDoPriority ? (
+            toDoPriority.map((x) => {
+              i++;
+              return (
+                <View style={styles.task} key={i}>
+                  <Pressable onPress={() => navigation.navigate("Edit To Do")}>
+                    <View style={styles.taskNear2}>
+                      <Text
+                        ellipsizeMode="tail"
+                        numberOfLines={4}
+                        style={styles.taskText}
+                      >
+                        {capitalizeFirstLetter(x.title)}
+                      </Text>
+                      <Text style={styles.taskDate}>
+                        {moment(new Date(x.date.seconds * 1000)).format(
+                          "DD/MMM"
+                        )}
+                      </Text>
+                    </View>
+                  </Pressable>
                   <View>
-                    <Pressable onPress={() => console.log("Delete Note")}>
-                      <MaterialIcons
-                        name="delete"
-                        size={16}
-                        color="#ABACF7"
-                        style={styles.delete}
-                      />
-                    </Pressable>
-                  </View>
-                  <View>
-                    <Pressable onPress={() => console.log("Add To Favourite")}>
-                      <MaterialIcons
-                        name="star"
-                        size={16}
-                        color="#EC9B3B"
-                        style={styles.star}
-                      />
-                    </Pressable>
+                    <View>
+                      <Pressable onPress={() => console.log("Delete Note")}>
+                        <MaterialIcons
+                          name="delete"
+                          size={16}
+                          color="#ABACF7"
+                          style={styles.delete}
+                        />
+                      </Pressable>
+                    </View>
+                    <View>
+                      <Pressable
+                        onPress={() => console.log("Add To Favourite")}
+                      >
+                        <MaterialIcons
+                          name="star"
+                          size={16}
+                          color="#EC9B3B"
+                          style={styles.star}
+                        />
+                      </Pressable>
+                    </View>
                   </View>
                 </View>
-              </View>
-            );
-          })}
+              );
+            })
+          ) : (
+            <View style={styles.task}>
+              <Text style={styles.taskText}>No Priority Task </Text>
+            </View>
+          )}
         </View>
       </ScrollView>
     </View>

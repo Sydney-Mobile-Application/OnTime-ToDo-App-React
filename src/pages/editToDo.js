@@ -13,7 +13,7 @@ import {
   Image,
   ScrollView,
   Button,
-  Linking
+  Linking,
 } from "react-native";
 import { MaterialIcons } from "@expo/vector-icons";
 import { Feather } from "@expo/vector-icons";
@@ -22,7 +22,7 @@ import { FloatingAction } from "react-native-floating-action";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import AddToDoCalendar from "./addToDoCalendar";
 import Prompt from "react-native-input-prompt";
-import Lightbox from 'react-native-lightbox';
+import Lightbox from "react-native-lightbox";
 import {
   Poppins_300Light,
   Poppins_400Regular,
@@ -67,20 +67,22 @@ const actions = [
   },
 ];
 
-export default function EditToDo({ navigation }) {
-  const [textTitle, onChangeTextTitle] = useState("DEADLINE PAM DEKAT");//pre-filled*
-  const [textDesc, onChangeTextDesc] = useState("Deadline tanggal 23 Mei 2022");//pre-filled*
+export default function EditToDo({ navigation, noteId }) {
+  const [textTitle, onChangeTextTitle] = useState("DEADLINE PAM DEKAT"); //pre-filled*
+  const [textDesc, onChangeTextDesc] = useState("Deadline tanggal 23 Mei 2022"); //pre-filled*
   const [oldDate, newDate] = useState("Select Date Time");
   const [oldTime, newTime] = useState("0:00");
   const [modalCalendarVisible, setModalCalendarVisible] = useState(false);
   const [date, setDate] = useState(new Date());
   const [show, setShow] = useState(false);
-  const [textLink, onChangeLink] = useState("");//pre-filled*
+  const [textLink, onChangeLink] = useState(""); //pre-filled*
   const [priority, setPriority] = useState(true); //pre-filled*
-  const [image, setImage] = useState(null);//pre-filled*
-  const [linkURL, setURL] = useState("https://www.instagram.com/tv/CdnLruJlj47/?utm_source=ig_web_copy_link");//pre-filled*
-  const [link, setLink] = useState(false);//pre-filled*
-  const [imageURI, dataImage] = useState("");//pre-filled*
+  const [image, setImage] = useState(null); //pre-filled*
+  const [linkURL, setURL] = useState(
+    "https://www.instagram.com/tv/CdnLruJlj47/?utm_source=ig_web_copy_link"
+  ); //pre-filled*
+  const [link, setLink] = useState(false); //pre-filled*
+  const [imageURI, dataImage] = useState(""); //pre-filled*
 
   const priorityTask = () => {
     setPriority(!priority);
@@ -108,10 +110,10 @@ export default function EditToDo({ navigation }) {
   };
 
   const [heightDesc, setHeightDesc] = useState({
-    height: 100 , //initializing the content text height
+    height: 100, //initializing the content text height
   });
   const [heightTitle, setHeightTitle] = useState({
-    height: 100 , //initializing the content text height
+    height: 100, //initializing the content text height
   });
 
   const onChangeTime = (time) => {
@@ -132,34 +134,33 @@ export default function EditToDo({ navigation }) {
     // console.log(date)
   };
 
-  
-
   const uploadImage = async (imageURI) => {
     // Why are we using XMLHttpRequest? See:
-  // https://github.com/expo/expo/issues/2402#issuecomment-443726662
-  const blob = await new Promise((resolve, reject) => {
-    const xhr = new XMLHttpRequest();
-    xhr.onload = function() {
-      resolve(xhr.response);
-    };
-    xhr.onerror = function(e) {
-      console.log(e);
-      reject(new TypeError('Network request failed'));
-    };
-    xhr.responseType = 'blob';
-    xhr.open('GET', imageURI, true);
-    xhr.send(null);
-  });
+    // https://github.com/expo/expo/issues/2402#issuecomment-443726662
+    const blob = await new Promise((resolve, reject) => {
+      const xhr = new XMLHttpRequest();
+      xhr.onload = function () {
+        resolve(xhr.response);
+      };
+      xhr.onerror = function (e) {
+        console.log(e);
+        reject(new TypeError("Network request failed"));
+      };
+      xhr.responseType = "blob";
+      xhr.open("GET", imageURI, true);
+      xhr.send(null);
+    });
 
-  const ref = app.storage().ref("images/" + (state.userData.uid+textTitle+"-image"));
-  const snapshot = await ref.put(blob);
+    const ref = app
+      .storage()
+      .ref("images/" + (state.userData.uid + textTitle + "-image"));
+    const snapshot = await ref.put(blob);
 
-  // We're done with the blob, close and release it
-  blob.close();
+    // We're done with the blob, close and release it
+    blob.close();
 
-  return await snapshot.ref.getDownloadURL();
-  }
-
+    return await snapshot.ref.getDownloadURL();
+  };
 
   const linkTask = () => {
     setLink(!link);
@@ -170,11 +171,10 @@ export default function EditToDo({ navigation }) {
     setLink(!link);
   };
   const deleteLink = () => {
-    let noLink = null
+    let noLink = null;
     onChangeLink(noLink);
     setURL(noLink);
   };
-
 
   const pickImage = async () => {
     // No permissions request is necessary for launching the image library
@@ -186,8 +186,6 @@ export default function EditToDo({ navigation }) {
     });
     console.log("Height:" + result.height);
     console.log(result);
-    
-
 
     if (!result.cancelled) {
       setImage(result.uri);
@@ -206,8 +204,6 @@ export default function EditToDo({ navigation }) {
 
     console.log(result);
 
-
-
     if (!result.cancelled) {
       setImage(result.uri);
       dataImage(result.uri);
@@ -215,28 +211,37 @@ export default function EditToDo({ navigation }) {
   };
 
   const deleteImage = async () => {
-    let result = null
-    setImage(result)
-    dataImage(result)
+    let result = null;
+    setImage(result);
+    dataImage(result);
   };
 
+  const OpenURLButton = ({ url, linkURL }) => {
+    const handlePress = useCallback(async () => {
+      // Checking if the link is supported for links with custom URL scheme.
+      const supported = await Linking.canOpenURL(url);
 
-const OpenURLButton = ({ url, linkURL }) => {
-  const handlePress = useCallback(async () => {
-    // Checking if the link is supported for links with custom URL scheme.
-    const supported = await Linking.canOpenURL(url);
+      if (supported) {
+        // Opening the link with some app, if the URL scheme is "http" the web link should be opened
+        // by some browser in the mobile
+        await Linking.openURL(url);
+      } else {
+        Alert.alert(`Couldn't find URL: ${url}`);
+      }
+    }, [url]);
+    return (
+      <Text
+        style={{ marginLeft: "2%", marginBottom: "3%", color: "#007AFF" }}
+        onPress={handlePress}
+      >
+        {" "}
+        Go To URL{" "}
+      </Text>
+    );
+    // <Button title={"Go to URL"} onPress={handlePress} />;
+  };
 
-    if (supported) {
-      // Opening the link with some app, if the URL scheme is "http" the web link should be opened
-      // by some browser in the mobile
-      await Linking.openURL(url);
-    } else {
-      Alert.alert(`Couldn't find URL: ${url}`);
-    }
-  }, [url]);
-  return <Text style={{marginLeft:"2%", marginBottom: "3%", color: "#007AFF"}} onPress={handlePress}> Go To URL </Text>
-  // <Button title={"Go to URL"} onPress={handlePress} />;
-};
+  console.log("noteid", noteId);
 
   if (!fontsLoaded) {
     return <AppLoading />;
@@ -250,7 +255,6 @@ const OpenURLButton = ({ url, linkURL }) => {
             </Pressable>
           </View>
           <View style={styles.settings}>
-            
             <Pressable onPress={() => navigation.navigate("Dashboard")}>
               <Feather
                 style={styles.saveButton}
@@ -270,18 +274,22 @@ const OpenURLButton = ({ url, linkURL }) => {
             {/* <MaterialIcons  name='settings' size={30} color='#293462'/> */}
           </View>
         </View>
-        <View style={[{alignSelf: "flex-end", marginRight: "10%", marginTop: "5%"}]}>
+        <View
+          style={[
+            { alignSelf: "flex-end", marginRight: "10%", marginTop: "5%" },
+          ]}
+        >
           <Text style={styles.dateInfo}>
-              {oldDate} - {oldTime}
+            {oldDate} - {oldTime}
           </Text>
         </View>
-        <ScrollView 
-        showsVerticalScrollIndicator={false}
-        showsHorizontalScrollIndicator={false}
-        style={styles.task}>
-        
+        <ScrollView
+          showsVerticalScrollIndicator={false}
+          showsHorizontalScrollIndicator={false}
+          style={styles.task}
+        >
           <TextInput
-            style={[styles.title,{height: Math.max(44, heightTitle.height)}]}
+            style={[styles.title, { height: Math.max(44, heightTitle.height) }]}
             padding={"5%"}
             multiline={true}
             onChangeText={(val) => {
@@ -293,25 +301,30 @@ const OpenURLButton = ({ url, linkURL }) => {
             defaultValue={textTitle}
             placeholder="Title"
             onContentSizeChange={(event) => {
-              setHeightTitle({height: event.nativeEvent.contentSize.height});
+              setHeightTitle({ height: event.nativeEvent.contentSize.height });
             }}
           />
           <Prompt
-              visible={link ? true : false}
-              title="Enter your URL"
-              placeholder="Type Something"
-              onCancel={() => setLink(!link)
-                  // console.log("Cancelled")
-              }
-              onSubmit={textLink => takeLink(textLink)
-                
-                // console.log("Submit")
-              }
-            />
+            visible={link ? true : false}
+            title="Enter your URL"
+            placeholder="Type Something"
+            onCancel={
+              () => setLink(!link)
+              // console.log("Cancelled")
+            }
+            onSubmit={
+              (textLink) => takeLink(textLink)
+
+              // console.log("Submit")
+            }
+          />
           {/* <TheLocationPicker/> */}
           {/* <TheImagePicker /> */}
           <TextInput
-            style={[styles.description,{height: Math.max(44, heightDesc.height)}]}
+            style={[
+              styles.description,
+              { height: Math.max(44, heightDesc.height) },
+            ]}
             padding={"5%"}
             onChangeText={(val) => {
               onChangeTextDesc((prevState) => ({
@@ -323,80 +336,135 @@ const OpenURLButton = ({ url, linkURL }) => {
             multiline={true}
             placeholder="Description"
             onContentSizeChange={(event) => {
-              setHeightDesc({height: event.nativeEvent.contentSize.height});
+              setHeightDesc({ height: event.nativeEvent.contentSize.height });
             }}
           />
           <View>
-          {image && 
-          <>
-          <Text style={{fontFamily: "Poppins_600SemiBold", padding: "3%"}}>Image </Text>
-          <View style={styles.containerBottom}>
-          
-            <Lightbox style={{Width: "50%", height: 150, flex: 1 }}>
-              <Image source={{ uri: image }} resizeMethod="resize" resizeMode="contain" style={{width: "100%" , height: "100%", alignItems: "flex-start", justifyContent: "flex-start", flexDirection: "column"}} />
-            </Lightbox>
-            <View style={{width: "40%"}}>
-              
-              <Text onPress={takeCamImage} style={{marginTop: "10%", fontFamily: "Poppins_400Regular", padding: "3%"}}>Camera</Text>
-              <View style={{flexDirection: 'row', alignItems: "center"}}>
-                <Pressable onPress={pickImage}>
-                <MaterialIcons
-                  name='edit'
-                  size={20}
-                  color="#293462"
-                  style={styles.editButton}
-                />
-              </Pressable>
-              <Text onPress={pickImage} style={styles.imageButton}>Change</Text>
-              </View>
-              <View style={{flexDirection: 'row', alignItems: "center"}}>
-                <Pressable onPress={deleteImage}>
-                <MaterialIcons
-                  name='delete'
-                  size={20}
-                  color="#293462"
-                  style={styles.deleteButton}
-                />
-              </Pressable>
-              <Text onPress={deleteImage} style={styles.imageButton}>Delete</Text>
-              </View>
-            </View>
-          </View>
-          </>
-          }
-          {linkURL && 
-          <>
-            <View style={{justifyContent: "flex-start", alignItems: "flex-start"}}>
-              <Text style={{fontFamily: "Poppins_600SemiBold", marginTop: "10%", marginBottom: "3%", paddingLeft: "3%"}}>Link</Text>
-            <OpenURLButton url={linkURL}>{linkURL}</OpenURLButton>
-            <Text style={{paddingLeft: "3%", textDecorationLine: "underline"}}>{linkURL}</Text>
-            <View style={styles.containerBottom}>
-            <View style={{flexDirection: 'row'}}>
-                <Pressable onPress={linkTask}>
-                <MaterialIcons
-                  name='edit'
-                  size={20}
-                  color="#293462"
-                  style={styles.editButton}
-                />
-              </Pressable>
-              <Text onPress={linkTask} style={styles.linkButton}>Change</Text>
-            </View>
-              <View style={{flexDirection: 'row'}}>
-                <Pressable onPress={deleteLink}>
-                <MaterialIcons
-                  name='delete'
-                  size={20}
-                  color="#293462"
-                  style={styles.deleteButton}
-                />
-              </Pressable>
-              <Text onPress={deleteLink} style={styles.linkButton}>Delete</Text>
-              </View>
-            </View>
-            </View>
-          </>
-          }
+            {image && (
+              <>
+                <Text
+                  style={{ fontFamily: "Poppins_600SemiBold", padding: "3%" }}
+                >
+                  Image{" "}
+                </Text>
+                <View style={styles.containerBottom}>
+                  <Lightbox style={{ Width: "50%", height: 150, flex: 1 }}>
+                    <Image
+                      source={{ uri: image }}
+                      resizeMethod="resize"
+                      resizeMode="contain"
+                      style={{
+                        width: "100%",
+                        height: "100%",
+                        alignItems: "flex-start",
+                        justifyContent: "flex-start",
+                        flexDirection: "column",
+                      }}
+                    />
+                  </Lightbox>
+                  <View style={{ width: "40%" }}>
+                    <Text
+                      onPress={takeCamImage}
+                      style={{
+                        marginTop: "10%",
+                        fontFamily: "Poppins_400Regular",
+                        padding: "3%",
+                      }}
+                    >
+                      Camera
+                    </Text>
+                    <View
+                      style={{ flexDirection: "row", alignItems: "center" }}
+                    >
+                      <Pressable onPress={pickImage}>
+                        <MaterialIcons
+                          name="edit"
+                          size={20}
+                          color="#293462"
+                          style={styles.editButton}
+                        />
+                      </Pressable>
+                      <Text onPress={pickImage} style={styles.imageButton}>
+                        Change
+                      </Text>
+                    </View>
+                    <View
+                      style={{ flexDirection: "row", alignItems: "center" }}
+                    >
+                      <Pressable onPress={deleteImage}>
+                        <MaterialIcons
+                          name="delete"
+                          size={20}
+                          color="#293462"
+                          style={styles.deleteButton}
+                        />
+                      </Pressable>
+                      <Text onPress={deleteImage} style={styles.imageButton}>
+                        Delete
+                      </Text>
+                    </View>
+                  </View>
+                </View>
+              </>
+            )}
+            {linkURL && (
+              <>
+                <View
+                  style={{
+                    justifyContent: "flex-start",
+                    alignItems: "flex-start",
+                  }}
+                >
+                  <Text
+                    style={{
+                      fontFamily: "Poppins_600SemiBold",
+                      marginTop: "10%",
+                      marginBottom: "3%",
+                      paddingLeft: "3%",
+                    }}
+                  >
+                    Link
+                  </Text>
+                  <OpenURLButton url={linkURL}>{linkURL}</OpenURLButton>
+                  <Text
+                    style={{
+                      paddingLeft: "3%",
+                      textDecorationLine: "underline",
+                    }}
+                  >
+                    {linkURL}
+                  </Text>
+                  <View style={styles.containerBottom}>
+                    <View style={{ flexDirection: "row" }}>
+                      <Pressable onPress={linkTask}>
+                        <MaterialIcons
+                          name="edit"
+                          size={20}
+                          color="#293462"
+                          style={styles.editButton}
+                        />
+                      </Pressable>
+                      <Text onPress={linkTask} style={styles.linkButton}>
+                        Change
+                      </Text>
+                    </View>
+                    <View style={{ flexDirection: "row" }}>
+                      <Pressable onPress={deleteLink}>
+                        <MaterialIcons
+                          name="delete"
+                          size={20}
+                          color="#293462"
+                          style={styles.deleteButton}
+                        />
+                      </Pressable>
+                      <Text onPress={deleteLink} style={styles.linkButton}>
+                        Delete
+                      </Text>
+                    </View>
+                  </View>
+                </View>
+              </>
+            )}
           </View>
         </ScrollView>
 
@@ -408,13 +476,13 @@ const OpenURLButton = ({ url, linkURL }) => {
             color="#293462"
             style={styles.font}
           />
-          <Pressable onPress={()=>priorityTask()}>
+          <Pressable onPress={() => priorityTask()}>
             <MaterialIcons
-              name='star'
+              name="star"
               size={30}
-              color={priority ? '#EC9B3B' : 'grey'}
+              color={priority ? "#EC9B3B" : "grey"}
               style={styles.priorityStar}
-              value={priority? 0 : 1}
+              value={priority ? 0 : 1}
             />
           </Pressable>
         </View>
@@ -423,12 +491,12 @@ const OpenURLButton = ({ url, linkURL }) => {
           color="#293462"
           showBackground={false}
           onPressItem={(name) => {
-            if(name === "bt_gallery"){
-              pickImage()
-            }else if (name === "bt_camera") {
-              takeCamImage()
-            }else if (name === "bt_link") {
-              linkTask()
+            if (name === "bt_gallery") {
+              pickImage();
+            } else if (name === "bt_camera") {
+              takeCamImage();
+            } else if (name === "bt_link") {
+              linkTask();
             }
             console.log(`selected button: ${name}`);
           }}
@@ -572,13 +640,13 @@ const styles = StyleSheet.create({
     alignItems: "flex-start",
     paddingBottom: "5%",
     paddingLeft: "3%",
-    
+
     // backgroundColor: "#000"
     // position: "absolute",
     // maxHeight: windowHeight*0.8,
   },
 
-font: {
+  font: {
     alignSelf: "flex-start",
     justifyContent: "flex-start",
     alignItems: "flex-start",
@@ -600,7 +668,7 @@ font: {
     justifyContent: "flex-start",
     alignItems: "flex-start",
     marginLeft: windowWidth * 0.1,
-    color: '#EE6F57',
+    color: "#EE6F57",
   },
 
   saveButton: {
