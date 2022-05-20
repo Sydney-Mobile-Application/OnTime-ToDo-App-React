@@ -37,9 +37,9 @@ export default function About ({ navigation }) {
       </View>
 
       <Image
-                style={styles.profilePicture}
-                source={require("../../assets/getstart.png")}
-              />
+        style={styles.iconGetStarted}
+        source={require('../../assets/getstart.png')}
+      />
 
       <View style={styles.aboutDetail}>
       <Text style={styles.aboutDescription}>ToDoApp is an application designed to assist users in completing daily tasks on time {"\n"}</Text>
@@ -61,14 +61,11 @@ const styles = StyleSheet.create({
     paddingTop: 50,
   },
 
-  profilePicture:{
-    width: windowWidth *0.5,
-    height: windowHeight * 0.2 ,
-    borderRadius: 50,
-    position: "relative",
-    marginLeft: windowHeight * 0.08,
-    marginBottom : windowHeight * 0.03,
-
+  iconGetStarted : {
+    width: 250,
+    height: 250,
+    alignSelf: 'center',
+    marginLeft: -windowHeight * 0.05,
   },
   
   aboutTitle: {

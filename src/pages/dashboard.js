@@ -12,6 +12,7 @@ import {
   ScrollView,
   Modal,
   TouchableHighlight,
+  Alert
 } from "react-native";
 import {
   useFont,
@@ -49,10 +50,28 @@ export default function Dashboard({ navigation }) {
   const [state, setState] = useState({
     userData: "",
   });
+  
+  const markAsDone = async () => {
+    Alert.alert(
+      "Mark this task as done?",
+      "You can see this task on Done Task",
+      [
+        {
+          text: "Cancel",
+          onPress: () => console.log("Cancel Pressed"),
+          style: "cancel"
+        },
+        { text: "OK", onPress: () => console.log("OK Pressed") }
+      ]
+    );
+  };
 
   const rightButtons = [
-    <TouchableOpacity style={[styles.swipeTextRight]}>
-      <Text style={styles.swipeTextContent}>
+    
+    <TouchableOpacity 
+    style={[styles.swipeTextRight]} 
+    onPress={markAsDone}>
+      <Text style={styles.swipeTextContent} onPress={markAsDone}>
         Done
         {/* <MaterialIcons name="done" size={25} color="#000" /> */}
       </Text>
@@ -133,6 +152,7 @@ export default function Dashboard({ navigation }) {
       console.log("error msg : ", err);
     }
   };
+
 
   useEffect(() => {
     getSavedUserData();
@@ -414,8 +434,8 @@ const styles = StyleSheet.create({
     flexDirection: "row",
   },
   task: {
-    maxWidth: 131,
-    maxHeight: 131,
+    maxWidth: "32%",
+    maxHeight: "100%",
     borderRadius: 20,
     marginRight: "5%",
     flexDirection: "row",

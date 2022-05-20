@@ -164,7 +164,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   headerContent: {
-    marginTop: '10%',
+    // marginTop: '10%',
     width: "80%",
   },
   textTopFSignIn: {
