@@ -172,6 +172,11 @@ export default function AddToDo({ navigation }) {
   const onChangeTime = (time) => {
     setShow(Platform.OS === "ios");
     let timenow = String(time.nativeEvent.timestamp);
+    if(timenow === "undefined"){
+      Alert.alert("Invalid Date Input", "You have submitted invalid date", [
+        { text: "OK"},
+      ]);
+    } else {
     if (Number(Number(timenow.substring(16, 18)) - 6) < 0) {
       var hour = Number(timenow.substring(16, 18)) + 18;
     } else {
@@ -190,6 +195,7 @@ export default function AddToDo({ navigation }) {
     // setDate(currentDate);
     // console.log(date)
   };
+}
 
   // Function for Save Data
   const onSaveData = () => {
