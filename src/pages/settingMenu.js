@@ -1,4 +1,4 @@
-import React, { useState,Component, useEffect} from "react";
+import React, { useState, Component, useEffect } from "react";
 import {
   StyleSheet,
   View,
@@ -23,8 +23,8 @@ import AppLoading from "expo-app-loading";
 
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-
-import CalendarPicker from 'react-native-calendar-picker';
+import CalendarPicker from "react-native-calendar-picker";
+import moment from "moment";
 // import AddToDoTime from './addToDoTime';
 
 //import {AppearanceProvider} from 'react-native-appearance';
@@ -32,11 +32,6 @@ import CalendarPicker from 'react-native-calendar-picker';
 
 const windowWidth = Dimensions.get("window").width;
 const windowHeight = Dimensions.get("window").height;
-
-
-
-
-
 
 export default function SettingMenu({ navigation }) {
   const [switchValue, setswitchValue] = useState(false);
@@ -47,10 +42,6 @@ export default function SettingMenu({ navigation }) {
   const [state, setState] = useState({
     userData: "",
   });
-
-
-
-
 
   const getSavedUserData = async () => {
     try {
@@ -78,10 +69,6 @@ export default function SettingMenu({ navigation }) {
     Poppins_800ExtraBold,
   });
 
-
-
-
-
   if (!fontsLoaded) {
     return <AppLoading />;
   } else {
@@ -105,13 +92,15 @@ export default function SettingMenu({ navigation }) {
 
           <View style={styles.left}>
             <View style={styles.today}>
-            <MaterialIcons 
-              name="bookmark" 
-              size={30} 
-              color="#082032"
-              style={{}}
-            />
-            <Text style={styles.dateText}> 20 Jun</Text>
+              <MaterialIcons
+                name="bookmark"
+                size={30}
+                color="#082032"
+                style={{}}
+              />
+              <Text style={styles.dateText}>
+                {moment(new Date()).format("DD MMM")}
+              </Text>
             </View>
             <View>
               <Text style={styles.username}>{state.userData.username}</Text>
@@ -167,7 +156,6 @@ export default function SettingMenu({ navigation }) {
           </View>
           {/* </Pressable> */}
         </View>
-        
 
         <View style={styles.bottomText}>
           {/* <View style={styles.bottomTitle}>
@@ -180,8 +168,6 @@ export default function SettingMenu({ navigation }) {
               value={switchValue}
             />
           </View> */}
-
-
 
           {/* <Pressable onPress={() => navigation.navigate("Language Setting")}>
             <View style={styles.bottomTitle}>
@@ -229,34 +215,41 @@ export default function SettingMenu({ navigation }) {
           </Pressable>
 
           <Pressable onPress={() => navigation.navigate("Sign In")}>
-            <View style={[styles.bottomTitle,{
-              justifyContent: "center",
-              marginTop: "10%", 
-              borderRadius: 20, 
-              backgroundColor: "#b23b3b", 
-              width: "45%",
-              alignSelf: "flex-end"
-              }]}>
-              <Text 
+            <View
               style={[
-              {
-              color: "#fff",
-              fontSize: 20,
-              lineHeight: 45,
-              fontFamily: "Poppins_400Regular",
-              // paddingLeft: "5%",
-              // paddingRight: "5%",
-              // paddingTop: "3%",
-              // paddingBottom: "1%",
-              alignSelf: "flex-end",
-              shadowColor: "#000",
-              shadowOffset: { width: 0, height: 1 },
-              shadowOpacity: 0.5,
-              shadowRadius: 2,
-              elevation: 5,}]}>
+                styles.bottomTitle,
+                {
+                  justifyContent: "center",
+                  marginTop: "10%",
+                  borderRadius: 20,
+                  backgroundColor: "#b23b3b",
+                  width: "45%",
+                  alignSelf: "flex-end",
+                },
+              ]}
+            >
+              <Text
+                style={[
+                  {
+                    color: "#fff",
+                    fontSize: 20,
+                    lineHeight: 45,
+                    fontFamily: "Poppins_400Regular",
+                    // paddingLeft: "5%",
+                    // paddingRight: "5%",
+                    // paddingTop: "3%",
+                    // paddingBottom: "1%",
+                    alignSelf: "flex-end",
+                    shadowColor: "#000",
+                    shadowOffset: { width: 0, height: 1 },
+                    shadowOpacity: 0.5,
+                    shadowRadius: 2,
+                    elevation: 5,
+                  },
+                ]}
+              >
                 Sign Out
-                </Text>
-              
+              </Text>
             </View>
           </Pressable>
         </View>
@@ -322,7 +315,6 @@ const styles = StyleSheet.create({
     fontWeight: "500",
     shadowColor: "#000",
     flexDirection: "row",
-    
   },
 
   username: {
@@ -382,7 +374,6 @@ const styles = StyleSheet.create({
     fontFamily: "Poppins_400Regular",
     justifyContent: "center",
     alignItems: "center",
-    
   },
 
   taskDetail: {

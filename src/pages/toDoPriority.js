@@ -191,7 +191,7 @@ const styles = StyleSheet.create({
   task: {
     borderRadius: 20,
     marginTop: "5%",
-    // marginLeft: windowWidth * 0.06,
+    marginLeft: windowWidth * 0.08,
     flexDirection: "row",
     alignSelf: "center",
     justifyContent: "center",
@@ -222,7 +222,7 @@ const styles = StyleSheet.create({
   taskText: {
     color: "#FFFFFF",
     fontFamily: "Poppins_400Regular",
-    alignContent: "flex-start"
+    alignContent: "flex-start",
   },
   taskDate: {
     color: "#FFFFFF",
