@@ -190,11 +190,25 @@ export default function toDoUpcoming({ navigation }) {
                 );
               })
             ) : (
-              <View style={styles.task}>
-               <Image
+              <View style={styles.blank}>
+                <Image
                   style={styles.notask}
                   source={require("../../assets/notask.png")}
                 />
+                  <Text
+                    style={{
+                      opacity: 0.2,
+                      textAlignVertical: "center",
+                      fontSize: 13,
+                      fontFamily: "Poppins_400Regular",
+                      marginVertical: "10%",
+                      marginHorizontal: "20%"
+                      // maxPaddingBottom: windowHeight,
+                    }}
+                  >
+                    Looks like you currently have no priority task 
+                  </Text> 
+               
               </View>
             )}
           </View>
@@ -212,21 +226,33 @@ const styles = StyleSheet.create({
     display: "flex",
     flexWrap: "wrap",
     flexDirection: "row",
+    // alignContent: "space-between"
   },
   container: {
     alignItems: "center",
     paddingBottom: 12,
   },
   task: {
+    maxWidth: 120,
+    maxHeight: 120,
     borderRadius: 20,
-    marginTop: "5%",
-    marginLeft: windowWidth * 0.08,
+    marginRight: "9%",
     flexDirection: "row",
+    marginBottom: "5%",
+    // alignSelf: "flex-start",
+    marginLeft: "7%",
+    // justifyContent: "center",
+    // backgroundColor: "#EC9B3B",
+  },
+  blank: {
+    marginTop: "100%",
+    borderRadius: 20,
+    flexDirection: "column",
     alignSelf: "center",
     justifyContent: "center",
   },
   taskNear2: {
-    width: 130,
+    width: 120,
     height: 120,
     borderRadius: 20,
     paddingTop: "10%",
@@ -244,12 +270,10 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   notask :{
-    width: 150,
-    height: 150,
+    width: 100,
+    height: 100,
     opacity : 0.2,
-    marginRight : "10%",
-    marginTop:"150%",
-
+    marginLeft: "35%",
   },
   star: {
     marginLeft: windowWidth * 0.02,

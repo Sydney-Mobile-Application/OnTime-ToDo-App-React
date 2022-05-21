@@ -176,12 +176,25 @@ export default function toDoCompleted({ navigation }) {
                 );
               })
             ) : (
-              <View style={styles.task}>
+              <View style={styles.blank}>
                 <Image
                   style={styles.notask}
                   source={require("../../assets/notask.png")}
                 />
-
+                  <Text
+                    style={{
+                      opacity: 0.2,
+                      textAlignVertical: "center",
+                      fontSize: 13,
+                      fontFamily: "Poppins_400Regular",
+                      marginVertical: "10%",
+                      marginHorizontal: "20%"
+                      // maxPaddingBottom: windowHeight,
+                    }}
+                  >
+                    Looks like you currently have no priority task 
+                  </Text> 
+               
               </View>
             )}
           </View>
@@ -205,15 +218,26 @@ const styles = StyleSheet.create({
     paddingBottom: 12,
   },
   task: {
+    maxWidth: 120,
+    maxHeight: 120,
     borderRadius: 20,
-    marginTop: "5%",
-    marginLeft: windowWidth * 0.08,
+    marginRight: "9%",
     flexDirection: "row",
+    marginBottom: "5%",
+    // alignSelf: "flex-start",
+    marginLeft: "7%",
+    // justifyContent: "center",
+    // backgroundColor: "#EC9B3B",
+  },
+  blank: {
+    marginTop: "100%",
+    borderRadius: 20,
+    flexDirection: "column",
     alignSelf: "center",
     justifyContent: "center",
   },
   taskNear2: {
-    width: 130,
+    width: 120,
     height: 120,
     borderRadius: 20,
     paddingTop: "10%",
