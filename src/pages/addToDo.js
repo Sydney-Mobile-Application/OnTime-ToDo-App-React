@@ -47,8 +47,25 @@ import {
   collection,
   Timestamp,
 } from "firebase/firestore";
-import { db, app } from "../config/firebase";
+import { db, app, } from "../config/firebase";
+import { getApps, initializeApp } from "firebase/app";
+import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { backgroundColor } from "react-native/Libraries/Components/View/ReactNativeStyleAttributes";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyBzfGyrTOPd4_S0MRyFbpiMVWKRlOpRl60",
+  authDomain: "todoapp-813f2.firebaseapp.com",
+  databaseURL:
+    "https://todoapp-813f2-default-rtdb.asia-southeast1.firebasedatabase.app",
+  projectId: "todoapp-813f2",
+  storageBucket: "todoapp-813f2.appspot.com",
+  messagingSenderId: "532708203730",
+  appId: "1:532708203730:web:bb80d5bec14d58c741610b",
+  measurementId: "G-Y054Z4FKQ1",
+};
+if (!getApps().length) {
+  initializeApp(firebaseConfig);
+}
 
 const windowWidth = Dimensions.get("window").width;
 const windowHeight = Dimensions.get("window").height;
@@ -198,21 +215,24 @@ export default function AddToDo({ navigation }) {
 }
 
   // Function for Save Data
-  const onSaveData = () => {
+  const onSaveData =  () => {
     if (state.userData.length != 0) {
       if (state.dateTime === null) {
         Alert.alert("Error", "Date Time Cannot Empty !");
       } else if (textTitle === "" || textDesc === "") {
         Alert.alert("Error", "Title and Description Cannot Empty !");
       } else {
-        uploadImage(imageURI)
-          .then(() => {
-            Alert.alert("Success");
-          })
-          .catch((error) => {
-            Alert.alert(error.message);
-            console.log(error.message);
-          });
+        const uploadImageURL =  uploadImage(imageURI)
+        
+        let ImageFBURL = "gs://"+firebaseConfig.storageBucket +"/" +new Date().toISOString()
+        console.log("URL: " + ImageFBURL)
+          // .then(() => {
+          //   let ImageFBURL = uploadImageURL
+          // })
+          // .catch((error) => {
+          //   Alert.alert(error.message);
+          //   console.log(error.message);
+          // });
 
         const myDoc = doc(collection(db, "notes"));
 
@@ -224,7 +244,7 @@ export default function AddToDo({ navigation }) {
           done: false,
           userId: state.userData.uid,
           url: linkURL,
-          imageURL: "noteImages/" + (state.userData.uid+textTitle+imageURI+"-image")
+          imageURL: String(ImageFBURL)
         };
 
         setDoc(myDoc, dataPost)
@@ -261,14 +281,15 @@ export default function AddToDo({ navigation }) {
       xhr.open("GET", imageURI, true);
       xhr.send(null);
     });
+    const fileRef = ref(getStorage(), new Date().toISOString());
+    const result = await uploadBytes(fileRef, blob);
+  // const ref = storageRef;
+  // console.log(ref)
+  // const snapshot = await ref.put(blob);
 
-  const ref = app.storage().ref("noteImages/" + (state.userData.uid+textTitle+imageURI+"-image"));
-  const snapshot = await ref.put(blob);
-
-    // We're done with the blob, close and release it
-    blob.close();
-
-    return await snapshot.ref.getDownloadURL();
+  blob.close();
+    console.log("URL" + getDownloadURL(fileRef))
+  return new Date().toISOString();
   };
 
   const linkTask = () => {
