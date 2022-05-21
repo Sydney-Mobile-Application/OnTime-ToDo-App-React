@@ -204,11 +204,11 @@ export default function SettingMenu({ navigation }) {
           <Pressable onPress={() => navigation.navigate("Help Support")}>
             <View style={styles.bottomTitle}>
               <MaterialIcons 
-                name="help" 
+                name="support" 
                 size={25} 
                 color="#293462"
                 style={{alignSelf: "center", marginRight: "5%"}}/>
-                <Text style={styles.bottomDetail}>Help & Support</Text>
+                <Text style={styles.bottomDetail}>Help Center</Text>
               {/* <Text style={styles.bottomDetail}>
                 <MaterialIcons name="arrow-forward-ios" size={12} />
               </Text> */}

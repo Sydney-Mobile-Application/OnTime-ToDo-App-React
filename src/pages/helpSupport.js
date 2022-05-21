@@ -37,17 +37,43 @@ export default function HelpSupport ({ navigation }) {
 
     <View style={styles.helpSupportDetail}>
         <View style={styles.helpSupportContainer}>
-          <Text style={styles.description}>Email Us</Text>
-          <Text style={styles.description}>todoappuib@gmail.com</Text>
+          <View style={styles.helpDetail}>
+            <Text style={{marginRight: "5%"}}>
+            <MaterialIcons 
+              name="email" 
+              size={25} 
+              color="#293462"
+              />
+            </Text>
+          <Text style={styles.description1}>ontimeapp@gmail.com</Text>
+          </View>
        </View>
        <View style={styles.helpSupportContainer}>
-          <Text style={styles.description}>Call Us</Text>
-          <Text style={styles.description}>+12-345-678-900</Text>
+          <View style={styles.helpDetail}>
+            <Text style={{marginRight: "5%"}}>
+            <MaterialIcons 
+              name="phone" 
+              size={25} 
+              color="#293462"
+              />
+            </Text>
+          <Text style={styles.description1}>+12-345-678-900</Text>
+          </View>
        </View>
-       <View style={styles.helpSupportContainer}>
-          <Text style={styles.description}>WhatsApp Support</Text>
-          <Text style={styles.description}>+12-345-678-900</Text>
+       <Pressable>
+         <View style={styles.helpSupportContainer}>
+          <View style={styles.helpDetail}>
+            <Text style={{marginRight: "5%"}}>
+            <MaterialIcons 
+              name="auto-stories" 
+              size={25} 
+              color="#293462"
+              />
+            </Text>
+          <Text style={styles.description1}>Tap to guide</Text>
+          </View>
        </View>
+       </Pressable>
 
        
     </View>
@@ -76,18 +102,31 @@ const styles = StyleSheet.create({
   },
 
   helpSupportContainer: {
-    width: windowWidth *0.84 ,
-    height: windowHeight * 0.12,
+    width: windowWidth *0.8 ,
+    height: windowHeight * 0.1,
     borderRadius: 20,
     backgroundColor: '#FFECBF',
     paddingLeft: windowHeight * 0.03,
-    paddingTop: windowWidth * 0.04,
-    marginBottom: "5%" 
+    // paddingTop: windowWidth * 0.04,
+    marginBottom: "5%" ,
+    alignItems: "flex-start",
+    justifyContent: "center"
   },
 
   description:{
     lineHeight: 30,
     fontSize: RFPercentage(2),
-    fontFamily: 'Poppins_400Regular'
+    fontFamily: 'Poppins_400Regular',
+  },
+
+  description1:{
+    // lineHeight: 30,
+    fontSize: RFPercentage(2),
+    fontFamily: 'Poppins_600SemiBold',
+  },
+
+  helpDetail: {
+    flexDirection: 'row',
+    alignItems: 'center',
   },
 });
