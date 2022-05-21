@@ -8,6 +8,7 @@ import {
   Dimensions,
   RefreshControl,
   Image,
+  Alert,
 } from "react-native";
 
 import { MaterialIcons } from "@expo/vector-icons";
@@ -26,12 +27,19 @@ import { RFPercentage, RFValue } from "react-native-responsive-fontsize";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 // Firebase Conn
-import { getDocs, collection, query, where } from "firebase/firestore";
+import {
+  getDocs,
+  collection,
+  query,
+  where,
+  deleteDoc,
+  doc,
+} from "firebase/firestore";
 import { db } from "../config/firebase";
 
 // Redux
 import { useSelector, useDispatch } from "react-redux";
-import { setToDoData } from "../redux/actions";
+import { setPriorityData } from "../redux/actions";
 
 import moment from "moment";
 import { backgroundColor } from "react-native/Libraries/Components/View/ReactNativeStyleAttributes";
@@ -64,7 +72,9 @@ export default function toDoPriority({ navigation }) {
     return string.charAt(0).toUpperCase() + string.slice(1);
   }
 
-  const toDoPriority = useSelector((state) => state.toDoDataReducer.dataPriority);
+  const toDoPriority = useSelector(
+    (state) => state.toDoDataReducer.dataPriority
+  );
 
   let userDataObj = [];
 
@@ -87,7 +97,7 @@ export default function toDoPriority({ navigation }) {
         query(
           collection(db, "notes"),
           where("userId", "==", userDataObj.uid.toString()),
-          where("priority", "==", true),
+          where("priority", "==", true)
         )
       ).then((querySnapshot) => {
         let dataCollection = [];
@@ -111,6 +121,26 @@ export default function toDoPriority({ navigation }) {
         }
       });
     }
+  };
+
+  const onDeleteData = async (noteId) => {
+    const deleteData = deleteDoc(doc(db, "notes", noteId));
+
+    if (deleteData) {
+      Alert.alert("Success", "Task deleted !");
+      onRefresh();
+    }
+  };
+
+  const deleteTask = async (noteId) => {
+    Alert.alert("Delete this task?", "This task will be deleted", [
+      {
+        text: "Cancel",
+        onPress: () => console.log("Cancel Pressed"),
+        style: "cancel",
+      },
+      { text: "OK", onPress: () => onDeleteData(noteId) },
+    ]);
   };
 
   const onRefresh = React.useCallback(() => {
@@ -163,24 +193,12 @@ export default function toDoPriority({ navigation }) {
                     </Pressable>
                     <View>
                       <View>
-                        <Pressable onPress={() => console.log("Delete Note")}>
+                        <Pressable onPress={() => deleteTask(x.uid)}>
                           <MaterialIcons
                             name="delete"
                             size={16}
                             color="#ABACF7"
                             style={styles.delete}
-                          />
-                        </Pressable>
-                      </View>
-                      <View>
-                        <Pressable
-                          onPress={() => console.log("Add To Favourite")}
-                        >
-                          <MaterialIcons
-                            name="star"
-                            size={16}
-                            color="#FF7D26"
-                            style={styles.star}
                           />
                         </Pressable>
                       </View>
@@ -190,7 +208,7 @@ export default function toDoPriority({ navigation }) {
               })
             ) : (
               <View style={styles.task}>
-               <Image
+                <Image
                   style={styles.notask}
                   source={require("../../assets/notask.png")}
                 />
@@ -237,13 +255,12 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     backgroundColor: "#EE6F57",
   },
-  notask :{
+  notask: {
     width: 150,
     height: 150,
-    opacity : 0.2,
-    marginRight : "10%",
-    marginTop:"150%",
-
+    opacity: 0.2,
+    marginRight: "10%",
+    marginTop: "150%",
   },
   delete: {
     marginLeft: windowWidth * 0.02,

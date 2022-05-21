@@ -46,6 +46,7 @@ import {
   orderBy,
   limit,
   Timestamp,
+  deleteDoc,
 } from "firebase/firestore";
 import { db } from "../config/firebase";
 
@@ -104,6 +105,17 @@ export default function Dashboard({ navigation }) {
       });
   };
 
+  const onDeleteData = async () => {
+    const deleteData = deleteDoc(
+      doc(db, "notes", toDoPriorityDashboard[0].uid)
+    );
+
+    if (deleteData) {
+      Alert.alert("Success", "Task deleted !");
+      onRefresh();
+    }
+  };
+
   const deleteTask = async () => {
     Alert.alert("Delete this task?", "This task will be deleted", [
       {
@@ -111,7 +123,7 @@ export default function Dashboard({ navigation }) {
         onPress: () => console.log("Cancel Pressed"),
         style: "cancel",
       },
-      { text: "OK", onPress: () => navigation.navigate("Dashboard") },
+      { text: "OK", onPress: () => onDeleteData() },
     ]);
   };
 
@@ -236,15 +248,12 @@ export default function Dashboard({ navigation }) {
           </Swipeable>
         );
       } else {
-      return  <Image
-      //style={styles.notask}
-     //source={require("../../assets/notask.png")}
-    />
-
-   
-    ;
-
-  
+        return (
+          <Image
+          //style={styles.notask}
+          //source={require("../../assets/notask.png")}
+          />
+        );
       }
     }
   }
@@ -449,7 +458,7 @@ export default function Dashboard({ navigation }) {
   const toDoPriority = state.toDoPriority;
 
   useEffect(() => {
-    getSavedUserData();
+    onRefresh();
     setModalVisible(true);
     setTimeout(() => {
       setModalVisible(false);
@@ -570,10 +579,9 @@ export default function Dashboard({ navigation }) {
                   })
                 ) : (
                   <Image
-                        style={styles.notask}
-                        source={require("../../assets/notask.png")}
-                      />
-                    
+                    style={styles.notask}
+                    source={require("../../assets/notask.png")}
+                  />
                 )}
               </View>
 
@@ -627,9 +635,9 @@ export default function Dashboard({ navigation }) {
                   })
                 ) : (
                   <Image
-      style={styles.notask}
-      source={require("../../assets/notask.png")}
-    />
+                    style={styles.notask}
+                    source={require("../../assets/notask.png")}
+                  />
                 )}
               </View>
             </View>
@@ -651,8 +659,6 @@ export default function Dashboard({ navigation }) {
 }
 
 const styles = StyleSheet.create({
-
- 
   containertop: {
     paddingTop: "2%",
     // paddingTop: 30,
@@ -667,14 +673,11 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
 
-  notask :{
+  notask: {
     width: 50,
     height: 50,
-    opacity : 0.2,
-   
-
+    opacity: 0.2,
   },
-
 
   containerhighlight: {
     // backgroundColor: "#000",
@@ -703,8 +706,6 @@ const styles = StyleSheet.create({
     alignItems: "flex-start",
     justifyContent: "flex-start",
     marginRight: windowWidth * 0.25,
-    
-    
   },
   seeall: {
     fontFamily: "Poppins_400Regular",

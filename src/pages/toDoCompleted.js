@@ -31,7 +31,7 @@ import { db } from "../config/firebase";
 
 // Redux
 import { useSelector, useDispatch } from "react-redux";
-import { setToDoData } from "../redux/actions";
+import { setDoneData } from "../redux/actions";
 
 import moment from "moment";
 
@@ -148,8 +148,8 @@ export default function toDoCompleted({ navigation }) {
                         </Text>
                       </View>
                     </Pressable>
-                    <View>
-                      <View>
+                    {/* <View> */}
+                    {/* <View>
                         <Pressable onPress={() => console.log("Delete Note")}>
                           <MaterialIcons
                             name="delete"
@@ -170,8 +170,8 @@ export default function toDoCompleted({ navigation }) {
                             style={styles.star}
                           />
                         </Pressable>
-                      </View>
-                    </View>
+                      </View> */}
+                    {/* </View> */}
                   </View>
                 );
               })
@@ -181,7 +181,6 @@ export default function toDoCompleted({ navigation }) {
                   style={styles.notask}
                   source={require("../../assets/notask.png")}
                 />
-
               </View>
             )}
           </View>
@@ -207,7 +206,7 @@ const styles = StyleSheet.create({
   task: {
     borderRadius: 20,
     marginTop: "5%",
-    marginLeft: windowWidth * 0.08,
+    marginLeft: windowWidth * 0.11,
     flexDirection: "row",
     alignSelf: "center",
     justifyContent: "center",
@@ -246,13 +245,12 @@ const styles = StyleSheet.create({
     alignContent: "flex-start",
   },
 
-  notask :{
+  notask: {
     width: 150,
     height: 150,
-    opacity : 0.2,
-    marginRight : "10%",
-    marginTop:"150%",
-
+    opacity: 0.2,
+    marginRight: "10%",
+    marginTop: "150%",
   },
   taskDate: {
     marginTop: 10,
