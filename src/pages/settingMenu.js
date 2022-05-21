@@ -233,15 +233,15 @@ export default function SettingMenu({ navigation }) {
               justifyContent: "center",
               marginTop: "10%", 
               borderRadius: 20, 
-              backgroundColor: "#b23b3b", 
-              width: "45%",
-              alignSelf: "flex-end"
+              backgroundColor: "#082032", 
+              width: "30%",
+              alignSelf: "flex-start"
               }]}>
               <Text 
               style={[
               {
               color: "#fff",
-              fontSize: 20,
+              fontSize: 16,
               lineHeight: 45,
               fontFamily: "Poppins_400Regular",
               // paddingLeft: "5%",
@@ -330,7 +330,7 @@ const styles = StyleSheet.create({
     marginLeft: windowHeight * 0.02,
     marginTop: windowHeight * 0.02,
     fontFamily: "Poppins_600SemiBold",
-    fontSize: 20,
+    fontSize: 16,
     width: windowHeight * 0.18,
   },
 
@@ -376,7 +376,7 @@ const styles = StyleSheet.create({
   },
 
   taskTitle: {
-    fontSize: 14,
+    fontSize: 13,
     padding: windowWidth * 0.02,
     // width: 72,
     fontFamily: "Poppins_400Regular",

@@ -31,7 +31,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import Successfully from "./signInSuccessfully";
 // import { RFPercentage, RFValue } from "react-native-responsive-fontsize";
 
-const width_name = "60%";
+const width_name = "80%";
 const width_highlight = "75%";
 const windowWidth = Dimensions.get("window").width;
 const windowHeight = Dimensions.get("window").height;

@@ -233,7 +233,7 @@ const styles = StyleSheet.create({
   taskText: {
     fontFamily: "Poppins_400Regular",
     color: "#293462",
-    alignContent: "flex-start"
+    // alignContent: "flex-start"
   },
   taskDate: {
     marginTop: 10,
