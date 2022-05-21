@@ -229,15 +229,36 @@ export default function Dashboard({ navigation }) {
           </Swipeable>
         );
       } else {
-      return  <Image
-      //style={styles.notask}
-     //source={require("../../assets/notask.png")}
-    />
-
-   
-    ;
-
-  
+        return (
+          <Swipeable
+            leftButtons={leftButtons}
+            leftButtonWidth={100}
+            rightButtonWidth={30}
+            rightButtons={rightButtons}
+          >
+            <View style={styles.containerhighlight}>
+              {/* <MaterialIcons name="more-time" size={25} color="#EC9B3B" /> */}
+              <View style={styles.highlight}>
+                <View style={styles.highlight_text}>
+                  <Text
+                    numberOfLines={2}
+                    style={{
+                      textAlignVertical: "center",
+                      fontSize: 17,
+                      fontFamily: "Poppins_600SemiBold",
+                      margin: "5%",
+                     
+                    }}
+                  >
+                    You don't have any active task right now
+                  </Text>
+                </View>
+                
+              </View>
+              {/* <MaterialIcons name="done" size={25} color="#50C671" /> */}
+            </View>
+          </Swipeable>
+        );
       }
     }
   }
@@ -456,10 +477,18 @@ export default function Dashboard({ navigation }) {
     return <AppLoading />;
   } else {
     return (
-      <View>
+      <View
+      style={{
+        backgroundColor: "#fff"
+      }}
+      >
         <ScrollView
           showsVerticalScrollIndicator={false}
           showsHorizontalScrollIndicator={false}
+          contentContainerStyle={{
+            backgroundColor: "#fff",
+            
+          }}
         >
           <View style={styles.containertop}>
             <ImageBackground
@@ -469,7 +498,7 @@ export default function Dashboard({ navigation }) {
               <View style={styles.top}>
                 <View style={styles.left}>
                   <Text style={styles.name}>
-                    Welcome, {state.userData.username}
+                    Welcome, {"\n"}{state.userData.username}
                   </Text>
 
                   <View style={styles.date}>
@@ -497,7 +526,7 @@ export default function Dashboard({ navigation }) {
               </View>
             </ImageBackground>
 
-            <View style={styles.container}>
+            <View style={[styles.container]}>
               <MyListItem />
 
               <View style={styles.Head}>
@@ -552,10 +581,27 @@ export default function Dashboard({ navigation }) {
                     );
                   })
                 ) : (
-                  <Image
-                        style={styles.notask}
-                        source={require("../../assets/notask.png")}
-                      />
+                  [
+                  
+                    <Image
+                      style={[styles.notask,{marginLeft:"50%"}]}
+                      source={require("../../assets/notask.png")}
+                    />,
+                    <Text
+                      style={{
+                        opacity: 0.2,
+                        textAlignVertical: "center",
+                        fontSize: 13,
+                        fontFamily: "Poppins_400Regular",
+                        marginLeft: "5%",
+                        marginRight: "50%"
+                      }}
+                    >
+                      You can add priority task by clicking star on adding task!
+                      
+                    </Text> 
+                  
+                  ]
                     
                 )}
               </View>
@@ -608,11 +654,29 @@ export default function Dashboard({ navigation }) {
                       </View>
                     );
                   })
-                ) : (
+                ) : ([
+                  
                   <Image
-      style={styles.notask}
-      source={require("../../assets/notask.png")}
-    />
+                    style={[styles.notask,{marginLeft:"50%"}]}
+                    source={require("../../assets/notask.png")}
+                  />,
+                  <Text
+                    style={{
+                      opacity: 0.2,
+                      textAlignVertical: "center",
+                      fontSize: 13,
+                      fontFamily: "Poppins_400Regular",
+                      marginLeft: "5%",
+                      marginRight: "50%",
+                      // maxPaddingBottom: windowHeight,
+                      paddingBottom: "25%"
+                    }}
+                  >
+                    You can add upcoming task on adding task!
+                    
+                  </Text> 
+                
+                ]
                 )}
               </View>
             </View>
@@ -654,8 +718,6 @@ const styles = StyleSheet.create({
     width: 50,
     height: 50,
     opacity : 0.2,
-   
-
   },
 
 
