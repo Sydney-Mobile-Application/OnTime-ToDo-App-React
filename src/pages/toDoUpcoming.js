@@ -7,6 +7,7 @@ import {
   Pressable,
   Dimensions,
   RefreshControl,
+  Image,
 } from "react-native";
 
 import { MaterialIcons } from "@expo/vector-icons";
@@ -190,7 +191,10 @@ export default function toDoUpcoming({ navigation }) {
               })
             ) : (
               <View style={styles.task}>
-                <Text style={styles.taskText1}>No Upcoming Task</Text>
+               <Image
+                  style={styles.notask}
+                  source={require("../../assets/notask.png")}
+                />
               </View>
             )}
           </View>
@@ -238,6 +242,14 @@ const styles = StyleSheet.create({
     marginLeft: windowWidth * 0.02,
     marginTop: windowHeight * 0.05,
     justifyContent: "center",
+  },
+  notask :{
+    width: 150,
+    height: 150,
+    opacity : 0.2,
+    marginRight : "10%",
+    marginTop:"150%",
+
   },
   star: {
     marginLeft: windowWidth * 0.02,

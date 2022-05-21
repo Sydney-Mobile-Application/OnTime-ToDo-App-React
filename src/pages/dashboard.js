@@ -236,7 +236,15 @@ export default function Dashboard({ navigation }) {
           </Swipeable>
         );
       } else {
-        return <Text>No Task</Text>;
+      return  <Image
+      //style={styles.notask}
+     //source={require("../../assets/notask.png")}
+    />
+
+   
+    ;
+
+  
       }
     }
   }
@@ -561,7 +569,11 @@ export default function Dashboard({ navigation }) {
                     );
                   })
                 ) : (
-                  <Text>No Priority Task</Text>
+                  <Image
+                        style={styles.notask}
+                        source={require("../../assets/notask.png")}
+                      />
+                    
                 )}
               </View>
 
@@ -614,7 +626,10 @@ export default function Dashboard({ navigation }) {
                     );
                   })
                 ) : (
-                  <Text>No Upcoming Task</Text>
+                  <Image
+      style={styles.notask}
+      source={require("../../assets/notask.png")}
+    />
                 )}
               </View>
             </View>
@@ -636,6 +651,8 @@ export default function Dashboard({ navigation }) {
 }
 
 const styles = StyleSheet.create({
+
+ 
   containertop: {
     paddingTop: "2%",
     // paddingTop: 30,
@@ -649,6 +666,16 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
+
+  notask :{
+    width: 50,
+    height: 50,
+    opacity : 0.2,
+   
+
+  },
+
+
   containerhighlight: {
     // backgroundColor: "#000",
     // paddingLeft: 30,
@@ -676,6 +703,8 @@ const styles = StyleSheet.create({
     alignItems: "flex-start",
     justifyContent: "flex-start",
     marginRight: windowWidth * 0.25,
+    
+    
   },
   seeall: {
     fontFamily: "Poppins_400Regular",

@@ -70,7 +70,7 @@ export default function HelpSupport ({ navigation }) {
               color="#293462"
               />
             </Text>
-          <Text style={styles.description1}>Tap to guide</Text>
+          <Text style={styles.description1}>Tap to FAQ</Text>
           </View>
        </View>
        </Pressable>

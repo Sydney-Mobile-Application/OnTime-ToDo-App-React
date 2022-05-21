@@ -6,6 +6,7 @@ import {
   ScrollView,
   Pressable,
   Dimensions,
+  Image,
   RefreshControl,
 } from "react-native";
 
@@ -176,7 +177,11 @@ export default function toDoCompleted({ navigation }) {
               })
             ) : (
               <View style={styles.task}>
-                <Text style={styles.taskText1}>No Task is Done</Text>
+                <Image
+                  style={styles.notask}
+                  source={require("../../assets/notask.png")}
+                />
+
               </View>
             )}
           </View>
@@ -239,6 +244,15 @@ const styles = StyleSheet.create({
     color: "#293462",
     fontFamily: "Poppins_400Regular",
     alignContent: "flex-start",
+  },
+
+  notask :{
+    width: 150,
+    height: 150,
+    opacity : 0.2,
+    marginRight : "10%",
+    marginTop:"150%",
+
   },
   taskDate: {
     marginTop: 10,
