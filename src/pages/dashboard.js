@@ -249,10 +249,32 @@ export default function Dashboard({ navigation }) {
         );
       } else {
         return (
-          <Image
-          //style={styles.notask}
-          //source={require("../../assets/notask.png")}
-          />
+          <Swipeable
+            leftButtons={leftButtons}
+            leftButtonWidth={100}
+            rightButtonWidth={30}
+            rightButtons={rightButtons}
+          >
+            <View style={styles.containerhighlight}>
+              {/* <MaterialIcons name="more-time" size={25} color="#EC9B3B" /> */}
+              <View style={styles.highlight}>
+                <View style={styles.highlight_text}>
+                  <Text
+                    numberOfLines={2}
+                    style={{
+                      textAlignVertical: "center",
+                      fontSize: 17,
+                      fontFamily: "Poppins_600SemiBold",
+                      margin: "5%",
+                    }}
+                  >
+                    You don't have any active task right now
+                  </Text>
+                </View>
+              </View>
+              {/* <MaterialIcons name="done" size={25} color="#50C671" /> */}
+            </View>
+          </Swipeable>
         );
       }
     }
@@ -479,10 +501,17 @@ export default function Dashboard({ navigation }) {
     return <AppLoading />;
   } else {
     return (
-      <View>
+      <View
+        style={{
+          backgroundColor: "#fff",
+        }}
+      >
         <ScrollView
           showsVerticalScrollIndicator={false}
           showsHorizontalScrollIndicator={false}
+          contentContainerStyle={{
+            backgroundColor: "#fff",
+          }}
           refreshControl={
             <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
           }
@@ -495,7 +524,8 @@ export default function Dashboard({ navigation }) {
               <View style={styles.top}>
                 <View style={styles.left}>
                   <Text style={styles.name}>
-                    Welcome, {state.userData.username}
+                    Welcome, {"\n"}
+                    {state.userData.username}
                   </Text>
 
                   <View style={styles.date}>
@@ -523,7 +553,7 @@ export default function Dashboard({ navigation }) {
               </View>
             </ImageBackground>
 
-            <View style={styles.container}>
+            <View style={[styles.container]}>
               <MyListItem />
 
               <View style={styles.Head}>
@@ -541,48 +571,71 @@ export default function Dashboard({ navigation }) {
               </View>
 
               <View style={styles.priorityCont}>
-                {toDoPriority.length > 0 ? (
-                  toDoPriority.map((x) => {
-                    return (
-                      <View style={styles.task}>
-                        <Pressable
-                          onPress={() =>
-                            navigation.navigate({
-                              name: "Edit To Do",
-                              params: { noteId: x.uid },
-                            })
-                          }
-                        >
-                          <View style={styles.taskNear2}>
-                            <Text numberOfLines={2} style={styles.taskText}>
-                              {x.title}
-                            </Text>
-                            <Text numberOfLines={2} style={styles.taskDate}>
-                              {moment(new Date(x.date.seconds * 1000)).format(
-                                "DD MMM"
-                              )}
-                            </Text>
-                          </View>
+                {toDoPriority.length > 0
+                  ? toDoPriority.map((x) => {
+                      return (
+                        <View style={styles.task}>
+                          <Pressable
+                            onPress={() =>
+                              navigation.navigate({
+                                name: "Edit To Do",
+                                params: { noteId: x.uid },
+                              })
+                            }
+                          >
+                            <View style={styles.taskNear2}>
+                              <Text numberOfLines={2} style={styles.taskText}>
+                                {x.title}
+                              </Text>
+                              <Text numberOfLines={2} style={styles.taskDate}>
+                                {moment(new Date(x.date.seconds * 1000)).format(
+                                  "DD MMM"
+                                )}
+                              </Text>
+                            </View>
+                          </Pressable>
                           <View>
-                            <TouchableOpacity onPress={deleteTask}>
+                            <View>
+                              <Pressable onPress={deleteTask}>
+                                <MaterialIcons
+                                  name="delete"
+                                  size={16}
+                                  color="#ABACF7"
+                                  style={styles.delete}
+                                />
+                              </Pressable>
+                            </View>
+                            <View>
                               <MaterialIcons
-                                name="delete"
-                                size={15}
-                                color="#ABACF7"
-                                style={styles.delete}
+                                name="star"
+                                size={16}
+                                color="#FF7D26"
+                                style={styles.star}
                               />
-                            </TouchableOpacity>
+                            </View>
                           </View>
-                        </Pressable>
-                      </View>
-                    );
-                  })
-                ) : (
-                  <Image
-                    style={styles.notask}
-                    source={require("../../assets/notask.png")}
-                  />
-                )}
+                        </View>
+                      );
+                    })
+                  : [
+                      <Image
+                        style={[styles.notask, { marginLeft: "50%" }]}
+                        source={require("../../assets/notask.png")}
+                      />,
+                      <Text
+                        style={{
+                          opacity: 0.2,
+                          textAlignVertical: "center",
+                          fontSize: 13,
+                          fontFamily: "Poppins_400Regular",
+                          marginLeft: "5%",
+                          marginRight: "50%",
+                        }}
+                      >
+                        You can add priority task by clicking star on adding
+                        task!
+                      </Text>,
+                    ]}
               </View>
 
               <View style={styles.Head}>
@@ -597,48 +650,72 @@ export default function Dashboard({ navigation }) {
               </View>
 
               <View style={styles.upcomingCont}>
-                {toDoUpcoming.length > 0 ? (
-                  toDoUpcoming.map((x) => {
-                    return (
-                      <View style={styles.task}>
-                        <Pressable
-                          onPress={() =>
-                            navigation.navigate({
-                              name: "Edit To Do",
-                              params: { noteId: x.uid },
-                            })
-                          }
-                        >
-                          <View style={styles.taskCommon}>
-                            <Text numberOfLines={2} style={styles.taskText}>
-                              {x.title}
-                            </Text>
-                            <Text numberOfLines={2} style={styles.taskDate}>
-                              {moment(new Date(x.date.seconds * 1000)).format(
-                                "DD MMM"
-                              )}
-                            </Text>
-                          </View>
+                {toDoUpcoming.length > 0
+                  ? toDoUpcoming.map((x) => {
+                      return (
+                        <View style={styles.task}>
+                          <Pressable
+                            onPress={() =>
+                              navigation.navigate({
+                                name: "Edit To Do",
+                                params: { noteId: x.uid },
+                              })
+                            }
+                          >
+                            <View style={styles.taskCommon}>
+                              <Text numberOfLines={2} style={styles.taskText}>
+                                {x.title}
+                              </Text>
+                              <Text numberOfLines={2} style={styles.taskDate}>
+                                {moment(new Date(x.date.seconds * 1000)).format(
+                                  "DD MMM"
+                                )}
+                              </Text>
+                            </View>
+                          </Pressable>
                           <View>
-                            <TouchableOpacity onPress={deleteTask}>
+                            <View>
+                              <Pressable onPress={deleteTask}>
+                                <MaterialIcons
+                                  name="delete"
+                                  size={16}
+                                  color="#ABACF7"
+                                  style={styles.delete}
+                                />
+                              </Pressable>
+                            </View>
+                            <View>
                               <MaterialIcons
-                                name="delete"
-                                size={15}
-                                color="#ABACF7"
-                                style={styles.delete}
+                                name="star"
+                                size={16}
+                                color="rgba(0,0,0,0.12)"
+                                style={styles.star}
                               />
-                            </TouchableOpacity>
+                            </View>
                           </View>
-                        </Pressable>
-                      </View>
-                    );
-                  })
-                ) : (
-                  <Image
-                    style={styles.notask}
-                    source={require("../../assets/notask.png")}
-                  />
-                )}
+                        </View>
+                      );
+                    })
+                  : [
+                      <Image
+                        style={[styles.notask, { marginLeft: "50%" }]}
+                        source={require("../../assets/notask.png")}
+                      />,
+                      <Text
+                        style={{
+                          opacity: 0.2,
+                          textAlignVertical: "center",
+                          fontSize: 13,
+                          fontFamily: "Poppins_400Regular",
+                          marginLeft: "5%",
+                          marginRight: "50%",
+                          // maxPaddingBottom: windowHeight,
+                          paddingBottom: "25%",
+                        }}
+                      >
+                        You can add upcoming task on adding task!
+                      </Text>,
+                    ]}
               </View>
             </View>
           </View>
