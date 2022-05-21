@@ -133,17 +133,17 @@ export default function toDoCompleted({ navigation }) {
                   <View style={styles.task}>
                     <Pressable onPress={() => console.log("Done Note")}>
                       <View style={styles.taskNear2}>
-                        <Text 
+                        <Text
                           ellipsizeMode="tail"
                           numberOfLines={2}
-                          style={styles.taskText}>
+                          style={styles.taskText}
+                        >
                           {capitalizeFirstLetter(x.title)}
                         </Text>
                         <Text style={styles.taskDate}>
                           {moment(new Date(x.date.seconds * 1000)).format(
                             "DD MMM"
                           )}
-                        <Text style={{fontSize: 12, fontFamily: "Poppins_300Light" }}> due </Text>
                         </Text>
                       </View>
                     </Pressable>
@@ -201,8 +201,8 @@ const styles = StyleSheet.create({
   },
   task: {
     borderRadius: 20,
-    margin: "3%",
-    // marginLeft: windowWidth * 0.1,
+    marginTop: "5%",
+    marginLeft: windowWidth * 0.08,
     flexDirection: "row",
     alignSelf: "center",
     justifyContent: "center",
@@ -226,14 +226,14 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   star: {
-    marginLeft: windowWidth * 0.0,
+    marginLeft: windowWidth * 0.02,
     marginTop: windowHeight * 0.01,
     justifyContent: "center",
   },
   taskText: {
     fontFamily: "Poppins_400Regular",
-    color: "#FFFFFF",
-    alignContent: "flex-start"
+    color: "#293462",
+    alignContent: "flex-start",
   },
   taskText1: {
     color: "#293462",

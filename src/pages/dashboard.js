@@ -12,7 +12,8 @@ import {
   ScrollView,
   Modal,
   TouchableHighlight,
-  Alert
+  Alert,
+  LogBox,
 } from "react-native";
 import {
   useFont,
@@ -31,13 +32,38 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import Successfully from "./signInSuccessfully";
 // import { RFPercentage, RFValue } from "react-native-responsive-fontsize";
 
+import moment from "moment";
+
+// Firebase
+import {
+  doc,
+  updateDoc,
+  getDocs,
+  query,
+  collection,
+  where,
+  orderBy,
+  limit,
+  Timestamp,
+} from "firebase/firestore";
+import { db } from "../config/firebase";
+
+// Redux
+import { useSelector, useDispatch } from "react-redux";
+import { setToDoData, setPriorityDashboardData } from "../redux/actions";
+
 const width_name = "80%";
 const width_highlight = "75%";
 const windowWidth = Dimensions.get("window").width;
 const windowHeight = Dimensions.get("window").height;
 const image = { uri: "../../assets/profileContainer.png" };
 
+//Ignore all log notifications
+LogBox.ignoreAllLogs();
+
 export default function Dashboard({ navigation }) {
+  const dispatch = useDispatch();
+
   let [fontsLoaded] = useFonts({
     Poppins_300Light,
     Poppins_400Regular,
@@ -48,7 +74,29 @@ export default function Dashboard({ navigation }) {
   const [modalVisible, setModalVisible] = useState(false);
   const [state, setState] = useState({
     userData: "",
+    toDoPriority: [],
+    toDoUpcoming: [],
+    countTask: 0,
   });
+
+  const onDoneData = () => {
+    const myDoc = doc(db, "notes", toDoPriorityDashboard[0].uid);
+
+    const dataPost = {
+      done: true,
+      priority: false,
+    };
+
+    updateDoc(myDoc, dataPost)
+      .then(() => {
+        Alert.alert("Success", "Task mark as Done !");
+        navigation.navigate("Dashboard");
+      })
+      .catch((error) => {
+        Alert.alert("Error", error.message);
+      });
+  };
+
   const deleteTask = async () => {
     Alert.alert("Delete this task?", "This task will be deleted", [
       {
@@ -59,6 +107,7 @@ export default function Dashboard({ navigation }) {
       { text: "OK", onPress: () => navigation.navigate("Dashboard") },
     ]);
   };
+
   const markAsDone = async () => {
     Alert.alert(
       "Mark this task as done?",
@@ -67,18 +116,20 @@ export default function Dashboard({ navigation }) {
         {
           text: "Cancel",
           onPress: () => console.log("Cancel Pressed"),
-          style: "cancel"
+          style: "cancel",
         },
-        { text: "OK", onPress: () => console.log("OK Pressed") }
+        {
+          text: "OK",
+          onPress: () => {
+            onDoneData();
+          },
+        },
       ]
     );
   };
 
   const rightButtons = [
-    
-    <TouchableOpacity 
-    style={[styles.swipeTextRight]} 
-    onPress={markAsDone}>
+    <TouchableOpacity style={[styles.swipeTextRight]} onPress={markAsDone}>
       <Text style={styles.swipeTextContent} onPress={markAsDone}>
         Done
         {/* <MaterialIcons name="done" size={25} color="#000" /> */}
@@ -90,7 +141,12 @@ export default function Dashboard({ navigation }) {
   const leftButtons = [
     <TouchableOpacity
       style={[styles.swipeTextLeft]}
-      onPress={() => navigation.navigate("Edit To Do", { upcoming: false })}
+      onPress={() => {
+        navigation.navigate({
+          name: "Edit To Do",
+          params: { noteId: toDoPriorityDashboard[0].uid },
+        });
+      }}
     >
       <Text style={styles.swipeTextContent}>
         Reschedule
@@ -99,56 +155,86 @@ export default function Dashboard({ navigation }) {
     </TouchableOpacity>,
   ];
 
-  
-
   function MyListItem() {
     if (!fontsLoaded) {
       return <AppLoading />;
     } else {
-      return (
-        <Swipeable
-          leftButtons={leftButtons}
-          leftButtonWidth={100}
-          rightButtonWidth={30}
-          rightButtons={rightButtons}
-        >
-          <View style={styles.containerhighlight}>
-            <MaterialIcons name="more-time" size={25} color="#EC9B3B" />
-            <View style={styles.highlight}>
-              <View style={styles.highlight_text}>
-                <Text
-                numberOfLines={2}
-                  style={{
-                    textAlignVertical: "center",
-                    fontSize: 17,
-                    fontFamily: "Poppins_600SemiBold",
-                    marginLeft: "5%",
-                  }}
-                >
-                  Deadline PAM Sudah Dekat
-                </Text>
-              </View>
-              <View style={styles.time}>
-                <MaterialIcons name="delete" size={12} color="#ABACF7" onPress={deleteTask}/>
-                <MaterialIcons name="access-time" size={45} color="#EC9B3B" />
-
-                <View style={styles.detail}>
-                  <MaterialIcons
-                    name="notifications"
-                    size={15}
-                    color="#EC9B3B"
-                  />
-                  <Text style={styles.notifSmall}>00.00 AM</Text>
+      if (toDoPriorityDashboard.length > 0) {
+        return (
+          <Swipeable
+            leftButtons={leftButtons}
+            leftButtonWidth={100}
+            rightButtonWidth={30}
+            rightButtons={rightButtons}
+          >
+            <View style={styles.containerhighlight}>
+              <MaterialIcons name="more-time" size={25} color="#EC9B3B" />
+              <View style={styles.highlight}>
+                <View style={styles.highlight_text}>
+                  <Text
+                    numberOfLines={2}
+                    style={{
+                      textAlignVertical: "center",
+                      fontSize: 17,
+                      fontFamily: "Poppins_600SemiBold",
+                      marginLeft: "5%",
+                    }}
+                  >
+                    {toDoPriorityDashboard !== "undefined"
+                      ? toDoPriorityDashboard[0].title
+                      : ""}
+                  </Text>
                 </View>
-                <Text style={styles.notifSmall}>7 days left</Text>
+                <View style={styles.time}>
+                  <MaterialIcons
+                    name="delete"
+                    size={12}
+                    color="#ABACF7"
+                    onPress={deleteTask}
+                  />
+                  <MaterialIcons name="access-time" size={45} color="#EC9B3B" />
+
+                  <View style={styles.detail}>
+                    <MaterialIcons
+                      name="notifications"
+                      size={15}
+                      color="#EC9B3B"
+                    />
+                    <Text style={styles.notifSmall}>
+                      {toDoPriorityDashboard
+                        ? moment(
+                            new Date(
+                              toDoPriorityDashboard[0].date.seconds * 1000
+                            )
+                          )
+                            .format("hh:mm A")
+                            .toString()
+                        : ""}
+                    </Text>
+                  </View>
+
+                  <Text style={styles.notifSmall}>
+                    {toDoPriorityDashboard
+                      ? moment(
+                          new Date(toDoPriorityDashboard[0].date.seconds * 1000)
+                        )
+                          .format("DD MMM yyyy")
+                          .toString()
+                      : ""}
+                  </Text>
+                </View>
               </View>
+              <MaterialIcons name="done" size={25} color="#50C671" />
             </View>
-            <MaterialIcons name="done" size={25} color="#50C671" />
-          </View>
-        </Swipeable>
-      );
+          </Swipeable>
+        );
+      } else {
+        return <Text>No Task</Text>;
+      }
     }
   }
+
+  let userDataObj = [];
 
   const getSavedUserData = async () => {
     try {
@@ -158,12 +244,194 @@ export default function Dashboard({ navigation }) {
           ...prevState,
           userData: JSON.parse(userData),
         }));
+        userDataObj = JSON.parse(userData);
+
+        getCountTask();
+        getToDoData();
+        getToDoDataPriority();
+        getToDoDataPriorityforDashboard();
       }
     } catch (err) {
       console.log("error msg : ", err);
     }
   };
 
+  const getCountTask = async () => {
+    if (!userDataObj.length) {
+      getDocs(
+        query(
+          collection(db, "notes"),
+          where("userId", "==", userDataObj.uid.toString()),
+          where("done", "==", false)
+        )
+      ).then((querySnapshot) => {
+        let dataCollection = [];
+
+        if (querySnapshot.empty) {
+          setState((prevState) => ({
+            ...prevState,
+            countTask: 0,
+          }));
+        }
+
+        try {
+          querySnapshot.forEach((doc) => {
+            // // doc.data() is never undefined for query doc snapshots
+            // console.log(doc.id, " => ", doc.data());
+            const toDoData = Object.assign({ uid: doc.id }, doc.data());
+
+            console.log("data", toDoData);
+            dataCollection.push(toDoData);
+          });
+
+          setState((prevState) => ({
+            ...prevState,
+            countTask: dataCollection.length,
+          }));
+
+          // dispatch(setToDoData(dataCollection));
+        } catch (err) {
+          console.log("Error Msg :", err);
+        }
+      });
+    }
+  };
+
+  const getToDoData = async () => {
+    if (!userDataObj.length) {
+      getDocs(
+        query(
+          collection(db, "notes"),
+          where("userId", "==", userDataObj.uid.toString()),
+          where("priority", "==", false),
+          where("done", "==", false),
+          orderBy("date", "asc"),
+          limit(2)
+        )
+      ).then((querySnapshot) => {
+        let dataCollection = [];
+
+        if (querySnapshot.empty) {
+          setState((prevState) => ({
+            ...prevState,
+            toDoUpcoming: [],
+          }));
+
+          // dispatch(setToDoData());
+        }
+
+        try {
+          querySnapshot.forEach((doc) => {
+            // // doc.data() is never undefined for query doc snapshots
+            // console.log(doc.id, " => ", doc.data());
+            const toDoData = Object.assign({ uid: doc.id }, doc.data());
+
+            dataCollection.push(toDoData);
+          });
+
+          setState((prevState) => ({
+            ...prevState,
+            toDoUpcoming: dataCollection,
+          }));
+
+          // dispatch(setToDoData(dataCollection));
+        } catch (err) {
+          console.log("Error Msg :", err);
+        }
+      });
+    }
+  };
+
+  const getToDoDataPriority = async () => {
+    if (!userDataObj.length) {
+      getDocs(
+        query(
+          collection(db, "notes"),
+          where("userId", "==", userDataObj.uid.toString()),
+          where("priority", "==", true),
+          where("done", "==", false),
+          where("priority", "==", true),
+          where("done", "==", false),
+          orderBy("date", "asc"),
+          limit(2)
+        )
+      ).then((querySnapshot) => {
+        let dataCollection = [];
+
+        if (querySnapshot.empty) {
+          setState((prevState) => ({
+            ...prevState,
+            toDoPriority: [],
+          }));
+
+          // dispatch(setPriorityData([]));
+        }
+
+        try {
+          querySnapshot.forEach((doc) => {
+            // // doc.data() is never undefined for query doc snapshots
+            // console.log(doc.id, " => ", doc.data());
+            const toDoData = Object.assign({ uid: doc.id }, doc.data());
+
+            dataCollection.push(toDoData);
+          });
+
+          setState((prevState) => ({
+            ...prevState,
+            toDoPriority: dataCollection,
+          }));
+
+          // dispatch(setPriorityData(dataCollection));
+        } catch (err) {
+          console.log("Error Msg :", err);
+        }
+      });
+    }
+  };
+
+  const getToDoDataPriorityforDashboard = async () => {
+    if (!userDataObj.length) {
+      getDocs(
+        query(
+          collection(db, "notes"),
+          where("userId", "==", userDataObj.uid.toString()),
+          where("priority", "==", true),
+          where("done", "==", false),
+          orderBy("date", "desc"),
+          limit(1)
+        )
+      ).then((querySnapshot) => {
+        let dataCollection = [];
+
+        if (querySnapshot.empty) {
+          dispatch(setPriorityDashboardData([]));
+        }
+
+        try {
+          querySnapshot.forEach((doc) => {
+            // // doc.data() is never undefined for query doc snapshots
+            // console.log(doc.id, " => ", doc.data());
+            const toDoData = Object.assign({ uid: doc.id }, doc.data());
+
+            dataCollection.push(toDoData);
+          });
+
+          dispatch(setPriorityDashboardData(dataCollection));
+        } catch (err) {
+          console.log("Error Msg :", err);
+        }
+      });
+    }
+  };
+
+  const toDoPriorityDashboard = useSelector(
+    (state) => state.toDoDataReducer.dataPriorityDashboard
+  );
+
+  // const toDoUpcoming = useSelector((state) => state.toDoDataReducer.data);
+  const toDoUpcoming = state.toDoUpcoming;
+
+  const toDoPriority = state.toDoPriority;
 
   useEffect(() => {
     getSavedUserData();
@@ -198,7 +466,9 @@ export default function Dashboard({ navigation }) {
 
                   <View style={styles.date}>
                     <MaterialIcons name="bookmark" size={30} color="#082032" />
-                    <Text style={styles.dateText}> 20 Jun</Text>
+                    <Text style={styles.dateText}>
+                      {moment(new Date()).format("DD MMM")}
+                    </Text>
                   </View>
                 </View>
 
@@ -211,7 +481,9 @@ export default function Dashboard({ navigation }) {
                   </Pressable>
                   <View style={styles.date}>
                     <MaterialIcons name="check-box" size={15} color="#082032" />
-                    <Text style={styles.notif}>20 tasks to do today</Text>
+                    <Text style={styles.notif}>
+                      {state.countTask} tasks to do left
+                    </Text>
                   </View>
                 </View>
               </View>
@@ -219,10 +491,6 @@ export default function Dashboard({ navigation }) {
 
             <View style={styles.container}>
               <MyListItem />
-              {/* <View style={styles.containerhighlight}>
-                <Text style={styles.reschedule}>Swipe here to reschedule</Text>
-                <Text style={styles.markdone}>Swipe here to mark as done</Text>
-              </View> */}
 
               <View style={styles.Head}>
                 <View>
@@ -239,56 +507,45 @@ export default function Dashboard({ navigation }) {
               </View>
 
               <View style={styles.priorityCont}>
-                <View style={styles.task}>
-                  <View style={styles.taskNear}>
-                    <Text numberOfLines={2} style={styles.taskText}>
-                      Meeting with Project Team
-                    </Text>
-                    <Text numberOfLines={2} style={styles.taskDate}>20 Sep</Text>
-                  </View>
-                  <View>
-                    <TouchableOpacity onPress={deleteTask}>
-                      <MaterialIcons
-                        name="delete"
-                        size={15}
-                        color="#ABACF7"
-                        style={styles.delete}
-                      />
-                    </TouchableOpacity>
-                    <TouchableOpacity>
-                      <MaterialIcons
-                        name="star"
-                        size={15}
-                        color="#EC9B3B"
-                        style={styles.star}
-                      />
-                    </TouchableOpacity>
-                  </View>
-                </View>
-                <View style={styles.task}>
-                  <View style={styles.taskNear2}>
-                    <Text numberOfLines={2} style={styles.taskText}>Kerjakan Tugas PAM</Text>
-                    <Text numberOfLines={2} style={styles.taskDate2}>26 Sep</Text>
-                  </View>
-                  <View>
-                    <TouchableOpacity onPress={deleteTask}>
-                      <MaterialIcons
-                        name="delete"
-                        size={15}
-                        color="#ABACF7"
-                        style={styles.delete}
-                      />
-                    </TouchableOpacity>
-                    <TouchableOpacity>
-                      <MaterialIcons
-                        name="star"
-                        size={15}
-                        color="#EC9B3B"
-                        style={styles.star}
-                      />
-                    </TouchableOpacity>
-                  </View>
-                </View>
+                {toDoPriority.length > 0 ? (
+                  toDoPriority.map((x) => {
+                    return (
+                      <View style={styles.task}>
+                        <Pressable
+                          onPress={() =>
+                            navigation.navigate({
+                              name: "Edit To Do",
+                              params: { noteId: x.uid },
+                            })
+                          }
+                        >
+                          <View style={styles.taskNear2}>
+                            <Text numberOfLines={2} style={styles.taskText}>
+                              {x.title}
+                            </Text>
+                            <Text numberOfLines={2} style={styles.taskDate}>
+                              {moment(new Date(x.date.seconds * 1000)).format(
+                                "DD MMM"
+                              )}
+                            </Text>
+                          </View>
+                          <View>
+                            <TouchableOpacity onPress={deleteTask}>
+                              <MaterialIcons
+                                name="delete"
+                                size={15}
+                                color="#ABACF7"
+                                style={styles.delete}
+                              />
+                            </TouchableOpacity>
+                          </View>
+                        </Pressable>
+                      </View>
+                    );
+                  })
+                ) : (
+                  <Text>No Priority Task</Text>
+                )}
               </View>
 
               <View style={styles.Head}>
@@ -303,56 +560,45 @@ export default function Dashboard({ navigation }) {
               </View>
 
               <View style={styles.upcomingCont}>
-                <View style={styles.task}>
-                  <View style={styles.taskCommon}>
-                    <Text numberOfLines={2} style={styles.taskText}>
-                      Meeting with Project Team
-                    </Text>
-                    <Text numberOfLines={2} style={styles.taskDate}>28 Sep</Text>
-                  </View>
-                  <View>
-                    <TouchableOpacity onPress={deleteTask}>
-                      <MaterialIcons
-                        name="delete"
-                        size={15}
-                        color="#ABACF7"
-                        style={styles.delete}
-                      />
-                    </TouchableOpacity>
-                    <TouchableOpacity>
-                      <MaterialIcons
-                        name="star"
-                        size={15}
-                        color="#E5E5E5"
-                        style={styles.star}
-                      />
-                    </TouchableOpacity>
-                  </View>
-                </View>
-                <View style={styles.task}>
-                  <View style={styles.taskCommon2}>
-                    <Text numberOfLines={2} style={styles.taskText}>Kerjakan Tugas PAM</Text>
-                    <Text numberOfLines={2} style={styles.taskDate2}>27 Sep</Text>
-                  </View>
-                  <View>
-                    <TouchableOpacity onPress={deleteTask}>
-                      <MaterialIcons
-                        name="delete"
-                        size={15}
-                        color="#ABACF7"
-                        style={styles.delete}
-                      />
-                    </TouchableOpacity>
-                    <TouchableOpacity>
-                      <MaterialIcons
-                        name="star"
-                        size={15}
-                        color="#E5E5E5"
-                        style={styles.star}
-                      />
-                    </TouchableOpacity>
-                  </View>
-                </View>
+                {toDoUpcoming.length > 0 ? (
+                  toDoUpcoming.map((x) => {
+                    return (
+                      <View style={styles.task}>
+                        <Pressable
+                          onPress={() =>
+                            navigation.navigate({
+                              name: "Edit To Do",
+                              params: { noteId: x.uid },
+                            })
+                          }
+                        >
+                          <View style={styles.taskCommon}>
+                            <Text numberOfLines={2} style={styles.taskText}>
+                              {x.title}
+                            </Text>
+                            <Text numberOfLines={2} style={styles.taskDate}>
+                              {moment(new Date(x.date.seconds * 1000)).format(
+                                "DD MMM"
+                              )}
+                            </Text>
+                          </View>
+                          <View>
+                            <TouchableOpacity onPress={deleteTask}>
+                              <MaterialIcons
+                                name="delete"
+                                size={15}
+                                color="#ABACF7"
+                                style={styles.delete}
+                              />
+                            </TouchableOpacity>
+                          </View>
+                        </Pressable>
+                      </View>
+                    );
+                  })
+                ) : (
+                  <Text>No Upcoming Task</Text>
+                )}
               </View>
             </View>
           </View>
@@ -385,7 +631,6 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
     alignItems: "center",
     justifyContent: "center",
-   
   },
   containerhighlight: {
     // backgroundColor: "#000",
@@ -451,6 +696,7 @@ const styles = StyleSheet.create({
     marginRight: "5%",
     flexDirection: "row",
     alignSelf: "flex-start",
+    marginLeft: "3%",
     // justifyContent: "center",
     // backgroundColor: "#EC9B3B",
   },
@@ -479,12 +725,11 @@ const styles = StyleSheet.create({
     alignSelf: "flex-start",
     alignItems: "center",
     justifyContent: "flex-start",
-    backgroundColor: "#293462",
+    backgroundColor: "#EE6F57",
   },
   taskNear2: {
     width: 130,
     height: 120,
-    marginLeft: "13%",
     borderRadius: 20,
     paddingTop: "20%",
     paddingBottom: "20%",
@@ -511,7 +756,6 @@ const styles = StyleSheet.create({
   taskCommon2: {
     width: 130,
     height: 120,
-    marginLeft: "13%",
     borderRadius: 20,
     paddingTop: "20%",
     paddingBottom: "20%",
@@ -525,9 +769,8 @@ const styles = StyleSheet.create({
   taskText: {
     fontFamily: "Poppins_400Regular",
     color: "#FFFFFF",
-    alignItems: "flex-start"
+    alignItems: "flex-start",
     // fontSize: RFPercentage(2.),
-    
   },
   taskDate: {
     marginTop: "5%",
@@ -544,7 +787,6 @@ const styles = StyleSheet.create({
     alignSelf: "flex-start",
     fontFamily: "Poppins_700Bold",
     fontSize: 22,
-
   },
   avatar: {
     width: 55,
@@ -564,7 +806,6 @@ const styles = StyleSheet.create({
   notifSmall: {
     fontFamily: "Poppins_400Regular",
     fontSize: 9,
-
     color: "#000000",
     opacity: 0.57,
   },

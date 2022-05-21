@@ -1,4 +1,4 @@
-import React, { useState,Component, useEffect} from "react";
+import React, { useState, Component, useEffect } from "react";
 import {
   StyleSheet,
   View,
@@ -23,8 +23,8 @@ import AppLoading from "expo-app-loading";
 
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-
-import CalendarPicker from 'react-native-calendar-picker';
+import CalendarPicker from "react-native-calendar-picker";
+import moment from "moment";
 // import AddToDoTime from './addToDoTime';
 
 //import {AppearanceProvider} from 'react-native-appearance';
@@ -32,11 +32,6 @@ import CalendarPicker from 'react-native-calendar-picker';
 
 const windowWidth = Dimensions.get("window").width;
 const windowHeight = Dimensions.get("window").height;
-
-
-
-
-
 
 export default function SettingMenu({ navigation }) {
   const [switchValue, setswitchValue] = useState(false);
@@ -47,10 +42,6 @@ export default function SettingMenu({ navigation }) {
   const [state, setState] = useState({
     userData: "",
   });
-
-
-
-
 
   const getSavedUserData = async () => {
     try {
@@ -78,10 +69,6 @@ export default function SettingMenu({ navigation }) {
     Poppins_800ExtraBold,
   });
 
-
-
-
-
   if (!fontsLoaded) {
     return <AppLoading />;
   } else {
@@ -105,13 +92,15 @@ export default function SettingMenu({ navigation }) {
 
           <View style={styles.left}>
             <View style={styles.today}>
-            <MaterialIcons 
-              name="bookmark" 
-              size={30} 
-              color="#082032"
-              style={{}}
-            />
-            <Text style={styles.dateText}> 20 Jun</Text>
+              <MaterialIcons
+                name="bookmark"
+                size={30}
+                color="#082032"
+                style={{}}
+              />
+              <Text style={styles.dateText}>
+                {moment(new Date()).format("DD MMM")}
+              </Text>
             </View>
             <View>
               <Text style={styles.username}>{state.userData.username}</Text>
@@ -161,13 +150,12 @@ export default function SettingMenu({ navigation }) {
             navigation.navigate("To Do Completed", { done: true })
           }> */}
           <View style={styles.doneTask}>
-            <Text style={styles.taskTitle}>Done Task</Text>
+            <Text style={styles.taskTitle1}>Done Task</Text>
             {/* <Text style={styles.taskDetail}>3</Text> */}
             {/* <Text style={styles.textInline}>Manage your task</Text> */}
           </View>
           {/* </Pressable> */}
         </View>
-        
 
         <View style={styles.bottomText}>
           {/* <View style={styles.bottomTitle}>
@@ -180,8 +168,6 @@ export default function SettingMenu({ navigation }) {
               value={switchValue}
             />
           </View> */}
-
-
 
           {/* <Pressable onPress={() => navigation.navigate("Language Setting")}>
             <View style={styles.bottomTitle}>
@@ -203,12 +189,13 @@ export default function SettingMenu({ navigation }) {
 
           <Pressable onPress={() => navigation.navigate("Help Support")}>
             <View style={styles.bottomTitle}>
-              <MaterialIcons 
-                name="help" 
-                size={25} 
+              <MaterialIcons
+                name="support"
+                size={25}
                 color="#293462"
-                style={{alignSelf: "center", marginRight: "5%"}}/>
-                <Text style={styles.bottomDetail}>Help & Support</Text>
+                style={{ alignSelf: "center", marginRight: "5%" }}
+              />
+              <Text style={styles.bottomDetail}>Help Center</Text>
               {/* <Text style={styles.bottomDetail}>
                 <MaterialIcons name="arrow-forward-ios" size={12} />
               </Text> */}
@@ -226,11 +213,12 @@ export default function SettingMenu({ navigation }) {
 
           <Pressable onPress={() => navigation.navigate("About")}>
             <View style={styles.bottomTitle}>
-            <MaterialIcons 
-              name="info" 
-              size={25} 
-              color="#293462"
-              style={{alignSelf: "center", marginRight: "5%"}}/>
+              <MaterialIcons
+                name="info"
+                size={25}
+                color="#293462"
+                style={{ alignSelf: "center", marginRight: "5%" }}
+              />
               <Text style={styles.bottomDetail}>About</Text>
               {/* <Text style={styles.bottomDetail}>
                 <MaterialIcons name="arrow-forward-ios" size={12} />
@@ -240,11 +228,12 @@ export default function SettingMenu({ navigation }) {
 
           <Pressable onPress={() => navigation.navigate("Sign In")}>
             <View style={styles.bottomTitle}>
-            <MaterialIcons 
-              name="logout" 
-              size={25} 
-              color="#293462"
-              style={{alignSelf: "center", marginRight: "5%"}}/>
+              <MaterialIcons
+                name="logout"
+                size={25}
+                color="#293462"
+                style={{ alignSelf: "center", marginRight: "5%" }}
+              />
               <Text style={styles.bottomDetail}>Sign Out</Text>
             </View>
           </Pressable>
@@ -264,7 +253,7 @@ export default function SettingMenu({ navigation }) {
               size={25} 
               color="#293462"
               /> */}
-              {/* <Text 
+          {/* <Text 
               style={[
               {
               color: "#fff",
@@ -283,8 +272,8 @@ export default function SettingMenu({ navigation }) {
               elevation: 5,}]}>
                 Sign Out
                 </Text> */}
-              
-            {/* </View> */}
+
+          {/* </View> */}
           {/* </Pressable> */}
         </View>
       </View> //container
@@ -349,7 +338,6 @@ const styles = StyleSheet.create({
     fontWeight: "500",
     shadowColor: "#000",
     flexDirection: "row",
-    
   },
 
   username: {
@@ -409,7 +397,17 @@ const styles = StyleSheet.create({
     fontFamily: "Poppins_400Regular",
     justifyContent: "center",
     alignItems: "center",
-    
+    color: "#FFFFFF",
+  },
+
+  taskTitle1: {
+    fontSize: 13,
+    padding: windowWidth * 0.02,
+    // width: 72,
+    fontFamily: "Poppins_400Regular",
+    justifyContent: "center",
+    alignItems: "center",
+    color: "#082032",
   },
 
   taskDetail: {
@@ -435,7 +433,7 @@ const styles = StyleSheet.create({
   priorityTask: {
     width: windowWidth * 0.24,
     height: windowHeight * 0.1,
-    backgroundColor: "#BFE4FF",
+    backgroundColor: "#EE6F57",
     flexDirection: "column",
     borderRadius: 25,
     alignItems: "center",
@@ -447,7 +445,7 @@ const styles = StyleSheet.create({
   upcomingTask: {
     width: windowWidth * 0.24,
     height: windowHeight * 0.1,
-    backgroundColor: "#D3BFFF",
+    backgroundColor: "#5089C6",
     borderRadius: 25,
     alignItems: "center",
     justifyContent: "center",
@@ -458,7 +456,7 @@ const styles = StyleSheet.create({
   doneTask: {
     width: windowWidth * 0.24,
     height: windowHeight * 0.1,
-    backgroundColor: "#FFECBF",
+    backgroundColor: "#FFEDBF",
     borderRadius: 25,
     flexDirection: "column",
     alignItems: "center",

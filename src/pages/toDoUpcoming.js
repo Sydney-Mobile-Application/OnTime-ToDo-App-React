@@ -146,10 +146,11 @@ export default function toDoUpcoming({ navigation }) {
                       }
                     >
                       <View style={styles.taskNear2}>
-                        <Text 
+                        <Text
                           ellipsizeMode="tail"
                           numberOfLines={2}
-                          style={styles.taskText}>
+                          style={styles.taskText}
+                        >
                           {capitalizeFirstLetter(x.title)}
                         </Text>
 
@@ -157,7 +158,6 @@ export default function toDoUpcoming({ navigation }) {
                           {moment(new Date(x.date.seconds * 1000)).format(
                             "DD MMM"
                           )}
-                          <Text style={{fontSize: 12, fontFamily: "Poppins_300Light" }}> due </Text>
                         </Text>
                       </View>
                     </Pressable>
@@ -215,8 +215,8 @@ const styles = StyleSheet.create({
   },
   task: {
     borderRadius: 20,
-    margin: "3%",
-    // marginLeft: windowWidth * 0.06,
+    marginTop: "5%",
+    marginLeft: windowWidth * 0.08,
     flexDirection: "row",
     alignSelf: "center",
     justifyContent: "center",
@@ -247,7 +247,7 @@ const styles = StyleSheet.create({
   taskText: {
     color: "#FFFFFF",
     fontFamily: "Poppins_400Regular",
-    alignContent: "flex-start"
+    alignContent: "flex-start",
   },
   taskText1: {
     color: "#293462",

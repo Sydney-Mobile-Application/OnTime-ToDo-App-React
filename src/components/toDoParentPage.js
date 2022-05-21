@@ -109,7 +109,8 @@ export default function MyTabs({ navigation, upcoming }) {
         query(
           collection(db, "notes"),
           where("userId", "==", userDataObj.uid.toString()),
-          where("priority", "==", true)
+          where("priority", "==", true),
+          where("done", "==", false)
         )
       ).then((querySnapshot) => {
         let dataCollection = [];
