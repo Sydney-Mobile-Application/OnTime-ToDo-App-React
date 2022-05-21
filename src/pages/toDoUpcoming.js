@@ -8,6 +8,7 @@ import {
   Dimensions,
   RefreshControl,
   Image,
+  Alert,
 } from "react-native";
 
 import { MaterialIcons } from "@expo/vector-icons";
@@ -26,7 +27,14 @@ import { RFPercentage, RFValue } from "react-native-responsive-fontsize";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 // Firebase Conn
-import { getDocs, collection, query, where } from "firebase/firestore";
+import {
+  getDocs,
+  collection,
+  query,
+  where,
+  deleteDoc,
+  doc,
+} from "firebase/firestore";
 import { db } from "../config/firebase";
 
 // Redux
@@ -114,6 +122,26 @@ export default function toDoUpcoming({ navigation }) {
     }
   };
 
+  const onDeleteData = async (noteId) => {
+    const deleteData = deleteDoc(doc(db, "notes", noteId));
+
+    if (deleteData) {
+      Alert.alert("Success", "Task deleted !");
+      onRefresh();
+    }
+  };
+
+  const deleteTask = async (noteId) => {
+    Alert.alert("Delete this task?", "This task will be deleted", [
+      {
+        text: "Cancel",
+        onPress: () => console.log("Cancel Pressed"),
+        style: "cancel",
+      },
+      { text: "OK", onPress: () => onDeleteData(noteId) },
+    ]);
+  };
+
   const onRefresh = React.useCallback(() => {
     setRefreshing(true);
     getSavedUserData();
@@ -164,24 +192,12 @@ export default function toDoUpcoming({ navigation }) {
                     </Pressable>
                     <View>
                       <View>
-                        <Pressable onPress={() => console.log("Delete Note")}>
+                        <Pressable onPress={() => deleteTask(x.uid)}>
                           <MaterialIcons
                             name="delete"
                             size={16}
                             color="#ABACF7"
                             style={styles.delete}
-                          />
-                        </Pressable>
-                      </View>
-                      <View>
-                        <Pressable
-                          onPress={() => console.log("Add To Favourite")}
-                        >
-                          <MaterialIcons
-                            name="star"
-                            size={16}
-                            color="rgba(0,0,0,0.12)"
-                            style={styles.star}
                           />
                         </Pressable>
                       </View>

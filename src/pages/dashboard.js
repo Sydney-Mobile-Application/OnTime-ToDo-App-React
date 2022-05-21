@@ -46,6 +46,7 @@ import {
   orderBy,
   limit,
   Timestamp,
+  deleteDoc,
 } from "firebase/firestore";
 import { db } from "../config/firebase";
 
@@ -104,6 +105,17 @@ export default function Dashboard({ navigation }) {
       });
   };
 
+  const onDeleteData = async () => {
+    const deleteData = deleteDoc(
+      doc(db, "notes", toDoPriorityDashboard[0].uid)
+    );
+
+    if (deleteData) {
+      Alert.alert("Success", "Task deleted !");
+      onRefresh();
+    }
+  };
+
   const deleteTask = async () => {
     Alert.alert("Delete this task?", "This task will be deleted", [
       {
@@ -111,7 +123,7 @@ export default function Dashboard({ navigation }) {
         onPress: () => console.log("Cancel Pressed"),
         style: "cancel",
       },
-      { text: "OK", onPress: () => navigation.navigate("Dashboard") },
+      { text: "OK", onPress: () => onDeleteData() },
     ]);
   };
 
@@ -254,13 +266,11 @@ export default function Dashboard({ navigation }) {
                       fontSize: 17,
                       fontFamily: "Poppins_600SemiBold",
                       margin: "5%",
-                     
                     }}
                   >
                     You don't have any active task right now
                   </Text>
                 </View>
-                
               </View>
               {/* <MaterialIcons name="done" size={25} color="#50C671" /> */}
             </View>
@@ -470,7 +480,7 @@ export default function Dashboard({ navigation }) {
   const toDoPriority = state.toDoPriority;
 
   useEffect(() => {
-    getSavedUserData();
+    onRefresh();
     setModalVisible(true);
     setTimeout(() => {
       setModalVisible(false);
@@ -492,16 +502,15 @@ export default function Dashboard({ navigation }) {
   } else {
     return (
       <View
-      style={{
-        backgroundColor: "#fff"
-      }}
+        style={{
+          backgroundColor: "#fff",
+        }}
       >
         <ScrollView
           showsVerticalScrollIndicator={false}
           showsHorizontalScrollIndicator={false}
           contentContainerStyle={{
             backgroundColor: "#fff",
-            
           }}
           refreshControl={
             <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
@@ -515,7 +524,8 @@ export default function Dashboard({ navigation }) {
               <View style={styles.top}>
                 <View style={styles.left}>
                   <Text style={styles.name}>
-                    Welcome, {"\n"}{state.userData.username}
+                    Welcome, {"\n"}
+                    {state.userData.username}
                   </Text>
 
                   <View style={styles.date}>
@@ -561,78 +571,71 @@ export default function Dashboard({ navigation }) {
               </View>
 
               <View style={styles.priorityCont}>
-                {toDoPriority.length > 0 ? (
-                  toDoPriority.map((x) => {
-                    return (
-                      <View style={styles.task}>
-                        <Pressable
-                          onPress={() =>
-                            navigation.navigate({
-                              name: "Edit To Do",
-                              params: { noteId: x.uid },
-                            })
-                          }
-                        >
-                          <View style={styles.taskNear2}>
-                            <Text numberOfLines={2} style={styles.taskText}>
-                              {x.title}
-                            </Text>
-                            <Text numberOfLines={2} style={styles.taskDate}>
-                              {moment(new Date(x.date.seconds * 1000)).format(
-                                "DD MMM"
-                              )}
-                            </Text>
-                          </View>
-                        </Pressable>
-                        <View>
+                {toDoPriority.length > 0
+                  ? toDoPriority.map((x) => {
+                      return (
+                        <View style={styles.task}>
+                          <Pressable
+                            onPress={() =>
+                              navigation.navigate({
+                                name: "Edit To Do",
+                                params: { noteId: x.uid },
+                              })
+                            }
+                          >
+                            <View style={styles.taskNear2}>
+                              <Text numberOfLines={2} style={styles.taskText}>
+                                {x.title}
+                              </Text>
+                              <Text numberOfLines={2} style={styles.taskDate}>
+                                {moment(new Date(x.date.seconds * 1000)).format(
+                                  "DD MMM"
+                                )}
+                              </Text>
+                            </View>
+                          </Pressable>
                           <View>
-                            <Pressable onPress={deleteTask}>
-                              <MaterialIcons
-                                name="delete"
-                                size={16}
-                                color="#ABACF7"
-                                style={styles.delete}
-                              />
-                            </Pressable>
-                          </View>
-                          <View>
-                    
+                            <View>
+                              <Pressable onPress={deleteTask}>
+                                <MaterialIcons
+                                  name="delete"
+                                  size={16}
+                                  color="#ABACF7"
+                                  style={styles.delete}
+                                />
+                              </Pressable>
+                            </View>
+                            <View>
                               <MaterialIcons
                                 name="star"
                                 size={16}
                                 color="#FF7D26"
                                 style={styles.star}
                               />
+                            </View>
                           </View>
                         </View>
-                      </View>
-                    );
-                  })
-                ) : (
-                  [
-                  
-                    <Image
-                      style={[styles.notask,{marginLeft:"50%"}]}
-                      source={require("../../assets/notask.png")}
-                    />,
-                    <Text
-                      style={{
-                        opacity: 0.2,
-                        textAlignVertical: "center",
-                        fontSize: 13,
-                        fontFamily: "Poppins_400Regular",
-                        marginLeft: "5%",
-                        marginRight: "50%"
-                      }}
-                    >
-                      You can add priority task by clicking star on adding task!
-                      
-                    </Text> 
-                  
-                  ]
-                    
-                )}
-                
+                      );
+                    })
+                  : [
+                      <Image
+                        style={[styles.notask, { marginLeft: "50%" }]}
+                        source={require("../../assets/notask.png")}
+                      />,
+                      <Text
+                        style={{
+                          opacity: 0.2,
+                          textAlignVertical: "center",
+                          fontSize: 13,
+                          fontFamily: "Poppins_400Regular",
+                          marginLeft: "5%",
+                          marginRight: "50%",
+                        }}
+                      >
+                        You can add priority task by clicking star on adding
+                        task!
+                      </Text>,
+                    ]}
               </View>
 
               <View style={styles.Head}>
@@ -647,77 +650,72 @@ export default function Dashboard({ navigation }) {
               </View>
 
               <View style={styles.upcomingCont}>
-                {toDoUpcoming.length > 0 ? (
-                  toDoUpcoming.map((x) => {
-                    return (
-                      <View style={styles.task}>
-                        <Pressable
-                          onPress={() =>
-                            navigation.navigate({
-                              name: "Edit To Do",
-                              params: { noteId: x.uid },
-                            })
-                          }
-                        >
-                          <View style={styles.taskCommon}>
-                            <Text numberOfLines={2} style={styles.taskText}>
-                              {x.title}
-                            </Text>
-                            <Text numberOfLines={2} style={styles.taskDate}>
-                              {moment(new Date(x.date.seconds * 1000)).format(
-                                "DD MMM"
-                              )}
-                            </Text>
-                          </View>
-                        </Pressable>
-                        <View>
+                {toDoUpcoming.length > 0
+                  ? toDoUpcoming.map((x) => {
+                      return (
+                        <View style={styles.task}>
+                          <Pressable
+                            onPress={() =>
+                              navigation.navigate({
+                                name: "Edit To Do",
+                                params: { noteId: x.uid },
+                              })
+                            }
+                          >
+                            <View style={styles.taskCommon}>
+                              <Text numberOfLines={2} style={styles.taskText}>
+                                {x.title}
+                              </Text>
+                              <Text numberOfLines={2} style={styles.taskDate}>
+                                {moment(new Date(x.date.seconds * 1000)).format(
+                                  "DD MMM"
+                                )}
+                              </Text>
+                            </View>
+                          </Pressable>
                           <View>
-                            <Pressable onPress={deleteTask}>
-                              <MaterialIcons
-                                name="delete"
-                                size={16}
-                                color="#ABACF7"
-                                style={styles.delete}
-                              />
-                            </Pressable>
-                          </View>
-                          <View>
-                    
+                            <View>
+                              <Pressable onPress={deleteTask}>
+                                <MaterialIcons
+                                  name="delete"
+                                  size={16}
+                                  color="#ABACF7"
+                                  style={styles.delete}
+                                />
+                              </Pressable>
+                            </View>
+                            <View>
                               <MaterialIcons
                                 name="star"
                                 size={16}
                                 color="rgba(0,0,0,0.12)"
                                 style={styles.star}
                               />
+                            </View>
                           </View>
                         </View>
-                      </View>
-                    );
-                  })
-                ) : ([
-                  
-                  <Image
-                    style={[styles.notask,{marginLeft:"50%"}]}
-                    source={require("../../assets/notask.png")}
-                  />,
-                  <Text
-                    style={{
-                      opacity: 0.2,
-                      textAlignVertical: "center",
-                      fontSize: 13,
-                      fontFamily: "Poppins_400Regular",
-                      marginLeft: "5%",
-                      marginRight: "50%",
-                      // maxPaddingBottom: windowHeight,
-                      paddingBottom: "25%"
-                    }}
-                  >
-                    You can add upcoming task on adding task!
-                    
-                  </Text> 
-                
-                ]
-                )}
+                      );
+                    })
+                  : [
+                      <Image
+                        style={[styles.notask, { marginLeft: "50%" }]}
+                        source={require("../../assets/notask.png")}
+                      />,
+                      <Text
+                        style={{
+                          opacity: 0.2,
+                          textAlignVertical: "center",
+                          fontSize: 13,
+                          fontFamily: "Poppins_400Regular",
+                          marginLeft: "5%",
+                          marginRight: "50%",
+                          // maxPaddingBottom: windowHeight,
+                          paddingBottom: "25%",
+                        }}
+                      >
+                        You can add upcoming task on adding task!
+                      </Text>,
+                    ]}
               </View>
             </View>
           </View>
@@ -738,8 +736,6 @@ export default function Dashboard({ navigation }) {
 }
 
 const styles = StyleSheet.create({
-
- 
   containertop: {
     paddingTop: "2%",
     // paddingTop: 30,
@@ -754,12 +750,11 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
 
-  notask :{
+  notask: {
     width: 50,
     height: 50,
-    opacity : 0.2,
+    opacity: 0.2,
   },
-
 
   containerhighlight: {
     // backgroundColor: "#000",
@@ -788,8 +783,6 @@ const styles = StyleSheet.create({
     alignItems: "flex-start",
     justifyContent: "flex-start",
     marginRight: windowWidth * 0.25,
-    
-    
   },
   seeall: {
     fontFamily: "Poppins_400Regular",
