@@ -33,6 +33,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { setToDoData } from "../redux/actions";
 
 import moment from "moment";
+import { backgroundColor } from "react-native/Libraries/Components/View/ReactNativeStyleAttributes";
 
 const windowWidth = Dimensions.get("window").width;
 const windowHeight = Dimensions.get("window").height;
@@ -156,6 +157,7 @@ export default function toDoUpcoming({ navigation }) {
                           {moment(new Date(x.date.seconds * 1000)).format(
                             "DD MMM"
                           )}
+                          <Text style={{fontSize: 12, fontFamily: "Poppins_300Light" }}> due </Text>
                         </Text>
                       </View>
                     </Pressable>
@@ -188,7 +190,7 @@ export default function toDoUpcoming({ navigation }) {
               })
             ) : (
               <View style={styles.task}>
-                <Text style={styles.taskText}>No Upcoming Task</Text>
+                <Text style={styles.taskText1}>No Upcoming Task</Text>
               </View>
             )}
           </View>
@@ -213,8 +215,8 @@ const styles = StyleSheet.create({
   },
   task: {
     borderRadius: 20,
-    marginTop: "5%",
-    marginLeft: windowWidth * 0.06,
+    margin: "3%",
+    // marginLeft: windowWidth * 0.06,
     flexDirection: "row",
     alignSelf: "center",
     justifyContent: "center",
@@ -246,6 +248,11 @@ const styles = StyleSheet.create({
     color: "#FFFFFF",
     fontFamily: "Poppins_400Regular",
     alignContent: "flex-start"
+  },
+  taskText1: {
+    color: "#293462",
+    fontFamily: "Poppins_400Regular",
+    alignContent: "flex-start",
   },
   taskDate: {
     color: "#FFFFFF",

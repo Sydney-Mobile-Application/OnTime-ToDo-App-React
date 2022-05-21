@@ -134,6 +134,7 @@ export default function ToDoPriority({ navigation }) {
                         {moment(new Date(x.date.seconds * 1000)).format(
                           "DD MMM"
                         )}
+                        <Text style={{fontSize: 12, fontFamily: "Poppins_300Light" }}> due </Text>
                       </Text>
                     </View>
                   </Pressable>
@@ -166,7 +167,7 @@ export default function ToDoPriority({ navigation }) {
             })
           ) : (
             <View style={styles.task}>
-              <Text style={styles.taskText}>No Priority Task</Text>
+              <Text style={styles.taskText1}>No Priority Task</Text>
             </View>
           )}
         </View>
@@ -190,7 +191,7 @@ const styles = StyleSheet.create({
   },
   task: {
     borderRadius: 20,
-    marginTop: "5%",
+    margin: "3%",
     // marginLeft: windowWidth * 0.06,
     flexDirection: "row",
     alignSelf: "center",
@@ -224,11 +225,17 @@ const styles = StyleSheet.create({
     fontFamily: "Poppins_400Regular",
     alignContent: "flex-start"
   },
+  taskText1: {
+    color: "#293462",
+    fontFamily: "Poppins_400Regular",
+    alignContent: "flex-start"
+  },
   taskDate: {
     color: "#FFFFFF",
     fontSize: 22,
     fontFamily: "Poppins_700Bold",
     alignSelf: "flex-start",
+    justifyContent: "flex-start",
     marginTop: 10,
   },
 });

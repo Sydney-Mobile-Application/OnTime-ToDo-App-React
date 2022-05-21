@@ -143,6 +143,7 @@ export default function toDoCompleted({ navigation }) {
                           {moment(new Date(x.date.seconds * 1000)).format(
                             "DD MMM"
                           )}
+                        <Text style={{fontSize: 12, fontFamily: "Poppins_300Light" }}> due </Text>
                         </Text>
                       </View>
                     </Pressable>
@@ -200,7 +201,7 @@ const styles = StyleSheet.create({
   },
   task: {
     borderRadius: 20,
-    marginTop: "5%",
+    margin: "3%",
     // marginLeft: windowWidth * 0.1,
     flexDirection: "row",
     alignSelf: "center",
