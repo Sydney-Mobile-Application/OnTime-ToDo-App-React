@@ -109,6 +109,7 @@ export default function App() {
             name="Verify On Email"
             component={CallBack.VerifyOnEmail}
           />
+          <Stack.Screen name="Guide" component={CallBack.Guide} />
         </Stack.Navigator>
       </NavigationContainer>
     </Provider>

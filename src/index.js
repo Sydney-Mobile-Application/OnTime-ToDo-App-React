@@ -38,6 +38,7 @@ import ChangePassword from "./pages/changePassword";
 import ForgotPassword from "./pages/forgotPassword";
 import VerifyEmail from "./pages/verifyEmail";
 import VerifyOnEmail from "./pages/verifyOnEmail";
+import Guide from "./pages/guide";
 
 export {
   GetStarted,
@@ -69,4 +70,5 @@ export {
   ForgotPassword,
   VerifyEmail,
   VerifyOnEmail,
+  Guide,
 };

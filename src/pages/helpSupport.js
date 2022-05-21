@@ -32,8 +32,8 @@ export default function HelpSupport ({ navigation }) {
         <Pressable onPress={() => navigation.navigate("Dashboard")}>
           <MaterialIcons  name='arrow-back' size={30} color='#293462'/>
         </Pressable>
-      <Text style={styles.helpSupportTitle}>Help & Support</Text>
-    </View>
+        <Text style={styles.helpSupportTitle}>Help & Support</Text>
+      </View>
 
     <View style={styles.helpSupportDetail}>
         <View style={styles.helpSupportContainer}>
@@ -60,7 +60,7 @@ export default function HelpSupport ({ navigation }) {
           <Text style={styles.description1}>+12-345-678-900</Text>
           </View>
        </View>
-       <Pressable>
+       <Pressable onPress={() => navigation.navigate("Guide")}>
          <View style={styles.helpSupportContainer}>
           <View style={styles.helpDetail}>
             <Text style={{marginRight: "5%"}}>
