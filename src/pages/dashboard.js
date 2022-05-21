@@ -14,6 +14,7 @@ import {
   TouchableHighlight,
   Alert,
   LogBox,
+  RefreshControl,
 } from "react-native";
 import {
   useFont,
@@ -72,6 +73,12 @@ export default function Dashboard({ navigation }) {
     Poppins_800ExtraBold,
   });
   const [modalVisible, setModalVisible] = useState(false);
+  const [refreshing, setRefreshing] = useState(false);
+
+  const wait = (timeout) => {
+    return new Promise((resolve) => setTimeout(resolve, timeout));
+  };
+
   const [state, setState] = useState({
     userData: "",
     toDoPriority: [],
@@ -90,7 +97,7 @@ export default function Dashboard({ navigation }) {
     updateDoc(myDoc, dataPost)
       .then(() => {
         Alert.alert("Success", "Task mark as Done !");
-        navigation.navigate("Dashboard");
+        onRefresh();
       })
       .catch((error) => {
         Alert.alert("Error", error.message);
@@ -441,9 +448,16 @@ export default function Dashboard({ navigation }) {
     }, 5000);
   }, []);
 
+  const onRefresh = React.useCallback(() => {
+    setRefreshing(true);
+    getSavedUserData();
+    wait(1000).then(() => setRefreshing(false));
+  }, []);
+
   const closeModal = () => {
     setModalVisible(false);
   };
+
   if (!fontsLoaded) {
     return <AppLoading />;
   } else {
@@ -452,6 +466,9 @@ export default function Dashboard({ navigation }) {
         <ScrollView
           showsVerticalScrollIndicator={false}
           showsHorizontalScrollIndicator={false}
+          refreshControl={
+            <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+          }
         >
           <View style={styles.containertop}>
             <ImageBackground
