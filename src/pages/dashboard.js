@@ -583,17 +583,28 @@ export default function Dashboard({ navigation }) {
                               )}
                             </Text>
                           </View>
+                        </Pressable>
+                        <View>
                           <View>
-                            <TouchableOpacity onPress={deleteTask}>
+                            <Pressable onPress={deleteTask}>
                               <MaterialIcons
                                 name="delete"
-                                size={15}
+                                size={16}
                                 color="#ABACF7"
                                 style={styles.delete}
                               />
-                            </TouchableOpacity>
+                            </Pressable>
                           </View>
-                        </Pressable>
+                          <View>
+                    
+                              <MaterialIcons
+                                name="star"
+                                size={16}
+                                color="#FF7D26"
+                                style={styles.star}
+                              />
+                          </View>
+                        </View>
                       </View>
                     );
                   })
@@ -621,6 +632,7 @@ export default function Dashboard({ navigation }) {
                   ]
                     
                 )}
+                
               </View>
 
               <View style={styles.Head}>
@@ -657,17 +669,28 @@ export default function Dashboard({ navigation }) {
                               )}
                             </Text>
                           </View>
+                        </Pressable>
+                        <View>
                           <View>
-                            <TouchableOpacity onPress={deleteTask}>
+                            <Pressable onPress={deleteTask}>
                               <MaterialIcons
                                 name="delete"
-                                size={15}
+                                size={16}
                                 color="#ABACF7"
                                 style={styles.delete}
                               />
-                            </TouchableOpacity>
+                            </Pressable>
                           </View>
-                        </Pressable>
+                          <View>
+                    
+                              <MaterialIcons
+                                name="star"
+                                size={16}
+                                color="rgba(0,0,0,0.12)"
+                                style={styles.star}
+                              />
+                          </View>
+                        </View>
                       </View>
                     );
                   })
