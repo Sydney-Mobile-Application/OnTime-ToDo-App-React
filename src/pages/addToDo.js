@@ -47,7 +47,7 @@ import {
   collection,
   Timestamp,
 } from "firebase/firestore";
-import { db, app, } from "../config/firebase";
+import { db, app } from "../config/firebase";
 import { getApps, initializeApp } from "firebase/app";
 import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { backgroundColor } from "react-native/Libraries/Components/View/ReactNativeStyleAttributes";
@@ -189,50 +189,40 @@ export default function AddToDo({ navigation }) {
   const onChangeTime = (time) => {
     setShow(Platform.OS === "ios");
     let timenow = String(time.nativeEvent.timestamp);
-    if(timenow === "undefined"){
+    if (timenow === "undefined") {
       Alert.alert("Invalid Date Input", "You have submitted invalid date", [
-        { text: "OK"},
+        { text: "OK" },
       ]);
     } else {
-    if (Number(Number(timenow.substring(16, 18)) - 6) < 0) {
-      var hour = Number(timenow.substring(16, 18)) + 18;
-    } else {
-      var hour = Number(timenow.substring(16, 18)) - 6;
+      if (Number(Number(timenow.substring(16, 18)) - 6) < 0) {
+        var hour = Number(timenow.substring(16, 18)) + 18;
+      } else {
+        var hour = Number(timenow.substring(16, 18)) - 6;
+      }
+      var minute = timenow.substring(19, 21);
+      // receiveDate(String(time._i.hour) + " : " + String(time._i.minute));
+      // console.log(hour + ":" + minute);
+      newTime(hour + ":" + minute);
+      setState((prevState) => ({
+        ...prevState,
+        dateTime: time.nativeEvent.timestamp.toString(),
+      }));
+      // const currentDate = selectedDate || time;
+      // setShow(Platform.OS === 'ios');state.userData
+      // setDate(currentDate);
+      // console.log(date)
     }
-    var minute = timenow.substring(19, 21);
-    // receiveDate(String(time._i.hour) + " : " + String(time._i.minute));
-    // console.log(hour + ":" + minute);
-    newTime(hour + ":" + minute);
-    setState((prevState) => ({
-      ...prevState,
-      dateTime: time.nativeEvent.timestamp.toString(),
-    }));
-    // const currentDate = selectedDate || time;
-    // setShow(Platform.OS === 'ios');state.userData
-    // setDate(currentDate);
-    // console.log(date)
   };
-}
 
   // Function for Save Data
-  const onSaveData =  () => {
+  const onSaveData = async () => {
     if (state.userData.length != 0) {
       if (state.dateTime === null) {
         Alert.alert("Error", "Date Time Cannot Empty !");
       } else if (textTitle === "" || textDesc === "") {
         Alert.alert("Error", "Title and Description Cannot Empty !");
       } else {
-        const uploadImageURL =  uploadImage(imageURI)
-        
-        let ImageFBURL = "gs://"+firebaseConfig.storageBucket +"/" +new Date().toISOString()
-        console.log("URL: " + ImageFBURL)
-          // .then(() => {
-          //   let ImageFBURL = uploadImageURL
-          // })
-          // .catch((error) => {
-          //   Alert.alert(error.message);
-          //   console.log(error.message);
-          // });
+        const uploadImageURL = await uploadImage(imageURI);
 
         const myDoc = doc(collection(db, "notes"));
 
@@ -242,9 +232,9 @@ export default function AddToDo({ navigation }) {
           description: textDesc,
           priority: priority,
           done: false,
-          userId: state.userData.uid,
           url: linkURL,
-          imageURL: String(ImageFBURL)
+          imageURL: String(uploadImageURL),
+          userId: state.userData.uid,
         };
 
         setDoc(myDoc, dataPost)
@@ -283,13 +273,20 @@ export default function AddToDo({ navigation }) {
     });
     const fileRef = ref(getStorage(), new Date().toISOString());
     const result = await uploadBytes(fileRef, blob);
-  // const ref = storageRef;
-  // console.log(ref)
-  // const snapshot = await ref.put(blob);
+    // const ref = storageRef;
+    // console.log(fileRef);
+    // const snapshot = await ref.put(blob);
 
-  blob.close();
-    console.log("URL" + getDownloadURL(fileRef))
-  return new Date().toISOString();
+    await blob.close();
+
+    getDownloadURL(fileRef)
+      .then((url) => {
+        console.log("getDownloadURL", url);
+        return url;
+      })
+      .catch((error) => {
+        console.log("error get downloadurl", error);
+      });
   };
 
   const linkTask = () => {
