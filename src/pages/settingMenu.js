@@ -203,10 +203,15 @@ export default function SettingMenu({ navigation }) {
 
           <Pressable onPress={() => navigation.navigate("Help Support")}>
             <View style={styles.bottomTitle}>
-              <Text style={styles.bottomDetail}>Help & Support</Text>
-              <Text style={styles.bottomDetail}>
+              <MaterialIcons 
+                name="help" 
+                size={25} 
+                color="#293462"
+                style={{alignSelf: "center", marginRight: "5%"}}/>
+                <Text style={styles.bottomDetail}>Help & Support</Text>
+              {/* <Text style={styles.bottomDetail}>
                 <MaterialIcons name="arrow-forward-ios" size={12} />
-              </Text>
+              </Text> */}
             </View>
           </Pressable>
 
@@ -221,23 +226,45 @@ export default function SettingMenu({ navigation }) {
 
           <Pressable onPress={() => navigation.navigate("About")}>
             <View style={styles.bottomTitle}>
+            <MaterialIcons 
+              name="info" 
+              size={25} 
+              color="#293462"
+              style={{alignSelf: "center", marginRight: "5%"}}/>
               <Text style={styles.bottomDetail}>About</Text>
-              <Text style={styles.bottomDetail}>
+              {/* <Text style={styles.bottomDetail}>
                 <MaterialIcons name="arrow-forward-ios" size={12} />
-              </Text>
+              </Text> */}
             </View>
           </Pressable>
 
           <Pressable onPress={() => navigation.navigate("Sign In")}>
+            <View style={styles.bottomTitle}>
+            <MaterialIcons 
+              name="logout" 
+              size={25} 
+              color="#293462"
+              style={{alignSelf: "center", marginRight: "5%"}}/>
+              <Text style={styles.bottomDetail}>Sign Out</Text>
+            </View>
+          </Pressable>
+
+          {/* <Pressable onPress={() => navigation.navigate("Sign In")}>
             <View style={[styles.bottomTitle,{
-              justifyContent: "center",
+              justifyContent: "flex-start",
               marginTop: "10%", 
-              borderRadius: 20, 
-              backgroundColor: "#082032", 
-              width: "30%",
-              alignSelf: "flex-start"
+              lineHeight: 45,
+              // borderRadius: 20, 
+              // backgroundColor: "#293462", 
+              // width: "30%",
+              // alignSelf: "flex-start"
               }]}>
-              <Text 
+              <MaterialIcons 
+              name="logout" 
+              size={25} 
+              color="#293462"
+              /> */}
+              {/* <Text 
               style={[
               {
               color: "#fff",
@@ -255,10 +282,10 @@ export default function SettingMenu({ navigation }) {
               shadowRadius: 2,
               elevation: 5,}]}>
                 Sign Out
-                </Text>
+                </Text> */}
               
-            </View>
-          </Pressable>
+            {/* </View> */}
+          {/* </Pressable> */}
         </View>
       </View> //container
     );
@@ -386,7 +413,7 @@ const styles = StyleSheet.create({
   },
 
   taskDetail: {
-    fontSize: 0,
+    // fontSize: 0,
     color: "#293462",
     alignContent: "flex-start",
     justifyContent: "flex-start",
@@ -441,7 +468,7 @@ const styles = StyleSheet.create({
   },
 
   bottomText: {
-    marginTop: "10%",
+    marginTop: "8%",
     color: "#293462",
     fontSize: 14,
     fontWeight: "bold",
@@ -454,16 +481,20 @@ const styles = StyleSheet.create({
 
   bottomDetail: {
     fontSize: 20,
-    lineHeight: 45,
+    lineHeight: 60,
     fontFamily: "Poppins_400Regular",
+    alignItems: "baseline",
   },
 
   bottomTitle: {
     flexDirection: "row",
-    justifyContent: "space-between",
+    // justifyContent: "space-between",
     // alignContent: 'space-between',
     width: windowWidth * 0.8,
-    borderRadius: 40,
+    borderRadius: 10,
+    borderBottomWidth: 0.8,
+    borderColor: "#A9A9A9",
+    // margin: "1%"
   },
   dateText: {
     marginTop: "3%",

@@ -245,7 +245,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   taskText: {
-    color: "#293462",
+    color: "#FFFFFF",
     fontFamily: "Poppins_400Regular",
     alignContent: "flex-start"
   },
