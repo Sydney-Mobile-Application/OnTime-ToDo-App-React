@@ -145,17 +145,29 @@ export default function SettingMenu({ navigation }) {
               {/* <Text style={styles.textInline}>Manage your task</Text> */}
             </View>
           </Pressable>
-          {/* <Pressable
-          onPress={() =>
-            navigation.navigate("To Do Completed", { done: true })
-          }> */}
-          <View style={styles.doneTask}>
-            <Text style={styles.taskTitle1}>Done Task</Text>
-            {/* <Text style={styles.taskDetail}>3</Text> */}
-            {/* <Text style={styles.textInline}>Manage your task</Text> */}
-          </View>
-          {/* </Pressable> */}
+
+          
+        
+
+
+          
+        <Pressable
+            onPress={() =>
+              navigation.navigate("To Do Completed", { done: true })
+            }
+          >
+            <View style={styles.doneTask}>
+              <Text style={styles.taskTitle1}>Done Task</Text>
+              {/* <Text style={styles.taskDetail}>7</Text> */}
+              {/* <Text style={styles.textInline}>Manage your task</Text> */}
+            </View>
+          </Pressable>
+          
+
+
         </View>
+
+
 
         <View style={styles.bottomText}>
           {/* <View style={styles.bottomTitle}>
@@ -189,7 +201,7 @@ export default function SettingMenu({ navigation }) {
 
           <Pressable onPress={() => navigation.navigate("Help Support")}>
             <View style={styles.bottomTitle}>
-              <MaterialIcons
+             <MaterialIcons
                 name="support"
                 size={25}
                 color="#293462"

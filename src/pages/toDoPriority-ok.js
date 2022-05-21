@@ -1,28 +1,15 @@
-import React, { useState } from "react";
+import React from "react";
 import {
   StyleSheet,
   View,
   Text,
+  Image,
   ScrollView,
   Pressable,
   Dimensions,
   RefreshControl,
-  Image,
 } from "react-native";
-
 import { MaterialIcons } from "@expo/vector-icons";
-import {
-  useFont,
-  Poppins_300Light,
-  Poppins_400Regular,
-  Poppins_600SemiBold,
-  Poppins_700Bold,
-  Poppins_800ExtraBold,
-} from "@expo-google-fonts/poppins";
-import { useFonts } from "expo-font";
-import AppLoading from "expo-app-loading";
-import { RFPercentage, RFValue } from "react-native-responsive-fontsize";
-
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 // Firebase Conn
@@ -31,9 +18,10 @@ import { db } from "../config/firebase";
 
 // Redux
 import { useSelector, useDispatch } from "react-redux";
-import { setToDoData } from "../redux/actions";
+import { setPriorityData } from "../redux/actions";
 
 import moment from "moment";
+import { RFPercentage, RFValue } from "react-native-responsive-fontsize";
 import { backgroundColor } from "react-native/Libraries/Components/View/ReactNativeStyleAttributes";
 
 const windowWidth = Dimensions.get("window").width;
@@ -43,28 +31,18 @@ const wait = (timeout) => {
   return new Promise((resolve) => setTimeout(resolve, timeout));
 };
 
-export default function toDoPriority({ navigation }) {
-  const [priority, setPriority] = useState(false);
-  const priorityTask = () => {
-    setPriority(!priority);
-  };
-  let [fontsLoaded] = useFonts({
-    Poppins_300Light,
-    Poppins_400Regular,
-    Poppins_600SemiBold,
-    Poppins_700Bold,
-    Poppins_800ExtraBold,
-  });
-
+export default function ToDoPriority({ navigation }) {
   const dispatch = useDispatch();
 
-  const [refreshing, setRefreshing] = useState(false);
+  const [refreshing, setRefreshing] = React.useState(false);
 
   function capitalizeFirstLetter(string) {
     return string.charAt(0).toUpperCase() + string.slice(1);
   }
 
-  const toDoPriority = useSelector((state) => state.toDoDataReducer.dataPriority);
+  const toDoPriority = useSelector(
+    (state) => state.toDoDataReducer.dataPriority
+  );
 
   let userDataObj = [];
 
@@ -87,7 +65,7 @@ export default function toDoPriority({ navigation }) {
         query(
           collection(db, "notes"),
           where("userId", "==", userDataObj.uid.toString()),
-          where("priority", "==", true),
+          where("priority", "==", true)
         )
       ).then((querySnapshot) => {
         let dataCollection = [];
@@ -119,88 +97,87 @@ export default function toDoPriority({ navigation }) {
     wait(1000).then(() => setRefreshing(false));
   }, []);
 
-  if (!fontsLoaded) {
-    return <AppLoading />;
-  } else {
-    return (
-      <View style={styles.container}>
-        <ScrollView
-          // horizontal={true}
-          // showsHorizontalScrollIndicator={false}
-          contentContainerStyle={styles.scrollView}
-          refreshControl={
-            <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-          }
-        >
-          <View style={styles.row}>
-            {toDoPriority.length > 0 ? (
-              toDoPriority.map((x) => {
-                return (
-                  <View style={styles.task}>
-                    <Pressable
-                      onPress={() =>
-                        navigation.navigate({
-                          name: "Edit To Do",
-                          params: { noteId: x.uid },
-                        })
-                      }
-                    >
-                      <View style={styles.taskNear2}>
-                        <Text
-                          ellipsizeMode="tail"
-                          numberOfLines={2}
-                          style={styles.taskText}
-                        >
-                          {capitalizeFirstLetter(x.title)}
-                        </Text>
+  let i = 0;
 
-                        <Text style={styles.taskDate}>
-                          {moment(new Date(x.date.seconds * 1000)).format(
-                            "DD MMM"
-                          )}
-                        </Text>
-                      </View>
-                    </Pressable>
+  return (
+    <View style={styles.container}>
+      <ScrollView
+        // horizontal={true}
+        // showsHorizontalScrollIndicator={false}
+        contentContainerStyle={styles.scrollView}
+        refreshControl={
+          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+        }
+      >
+        <View style={styles.row}>
+          {toDoPriority ? (
+            toDoPriority.map((x) => {
+              i++;
+              return (
+                <View style={styles.task} key={i}>
+                  <Pressable
+                    onPress={() =>
+                      navigation.navigate({
+                        name: "Edit To Do",
+                        params: { noteId: x.uid },
+                      })
+                    }
+                  >
+                    <View style={styles.taskNear2}>
+                      <Text
+                        ellipsizeMode="tail"
+                        numberOfLines={2}
+                        style={styles.taskText}
+                      >
+                        {capitalizeFirstLetter(x.title)}
+                      </Text>
+                      <Text style={styles.taskDate}>
+                        {moment(new Date(x.date.seconds * 1000)).format(
+                          "DD MMM"
+                        )}
+                      </Text>
+                    </View>
+                  </Pressable>
+                  <View>
                     <View>
-                      <View>
-                        <Pressable onPress={() => console.log("Delete Note")}>
-                          <MaterialIcons
-                            name="delete"
-                            size={16}
-                            color="#ABACF7"
-                            style={styles.delete}
-                          />
-                        </Pressable>
-                      </View>
-                      <View>
-                        <Pressable
-                          onPress={() => console.log("Add To Favourite")}
-                        >
-                          <MaterialIcons
-                            name="star"
-                            size={16}
-                            color="#FF7D26"
-                            style={styles.star}
-                          />
-                        </Pressable>
-                      </View>
+                      <Pressable onPress={() => console.log("Delete Note")}>
+                        <MaterialIcons
+                          name="delete"
+                          size={16}
+                          color="#ABACF7"
+                          style={styles.delete}
+                        />
+                      </Pressable>
+                    </View>
+                    <View>
+                      <Pressable
+                        onPress={() => console.log("Add To Favourite")}
+                      >
+                        <MaterialIcons
+                          name="star"
+                          size={16}
+                          color="#EC9B3B"
+                          style={styles.star}
+                        />
+                      </Pressable>
                     </View>
                   </View>
-                );
-              })
-            ) : (
-              <View style={styles.task}>
-               <Image
+                </View>
+              );
+            })
+          ) : (
+            <View style={styles.task}>
+              
+             <Image
                   style={styles.notask}
                   source={require("../../assets/notask.png")}
                 />
-              </View>
-            )}
-          </View>
-        </ScrollView>
-      </View>
-    );
-  }
+            </View>
+          )}
+        </View>
+      </ScrollView>
+    </View>
+  );
 }
 
 const styles = StyleSheet.create({
@@ -238,11 +215,10 @@ const styles = StyleSheet.create({
     backgroundColor: "#EE6F57",
   },
   notask :{
-    width: 150,
-    height: 150,
+    width: 50,
+    height: 50,
     opacity : 0.2,
     marginRight : "10%",
-    marginTop:"150%",
 
   },
   delete: {
