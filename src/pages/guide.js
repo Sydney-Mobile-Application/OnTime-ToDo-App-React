@@ -124,7 +124,7 @@ export default class App extends Component {
             <Pressable onPress={() => this.props.navigation.navigate('Help Support')}>
             <MaterialIcons  name='arrow-back' size={30} color='#293462' style={{paddingLeft: windowHeight * 0.04}}/>
             </Pressable>
-            <Text style={styles.guideTitle}>Guide</Text>
+            <Text style={styles.guideTitle}>FAQ</Text>
       </View>
       {/* <View style={styles.container}>
         <ScrollView contentContainerStyle={{ paddingTop: 0 }}>
