@@ -161,7 +161,7 @@ export default function SettingMenu({ navigation }) {
             navigation.navigate("To Do Completed", { done: true })
           }> */}
           <View style={styles.doneTask}>
-            <Text style={styles.taskTitle}>Done Task</Text>
+            <Text style={styles.taskTitle1}>Done Task</Text>
             {/* <Text style={styles.taskDetail}>3</Text> */}
             {/* <Text style={styles.textInline}>Manage your task</Text> */}
           </View>
@@ -409,7 +409,17 @@ const styles = StyleSheet.create({
     fontFamily: "Poppins_400Regular",
     justifyContent: "center",
     alignItems: "center",
-    
+    color: "#FFFFFF"
+  },
+
+  taskTitle1: {
+    fontSize: 13,
+    padding: windowWidth * 0.02,
+    // width: 72,
+    fontFamily: "Poppins_400Regular",
+    justifyContent: "center",
+    alignItems: "center",
+    color: "#082032"
   },
 
   taskDetail: {
@@ -435,7 +445,7 @@ const styles = StyleSheet.create({
   priorityTask: {
     width: windowWidth * 0.24,
     height: windowHeight * 0.1,
-    backgroundColor: "#BFE4FF",
+    backgroundColor: "#EE6F57",
     flexDirection: "column",
     borderRadius: 25,
     alignItems: "center",
@@ -447,7 +457,7 @@ const styles = StyleSheet.create({
   upcomingTask: {
     width: windowWidth * 0.24,
     height: windowHeight * 0.1,
-    backgroundColor: "#D3BFFF",
+    backgroundColor: "#5089C6",
     borderRadius: 25,
     alignItems: "center",
     justifyContent: "center",
@@ -458,7 +468,7 @@ const styles = StyleSheet.create({
   doneTask: {
     width: windowWidth * 0.24,
     height: windowHeight * 0.1,
-    backgroundColor: "#FFECBF",
+    backgroundColor: "#FFEDBF",
     borderRadius: 25,
     flexDirection: "column",
     alignItems: "center",
