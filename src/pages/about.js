@@ -42,8 +42,8 @@ export default function About ({ navigation }) {
       />
 
       <View style={styles.aboutDetail}>
-      <Text style={styles.aboutDescription}>ToDoApp is an application designed to assist users in completing daily tasks on time {"\n"}</Text>
-      <Text style={styles.aboutfooter}>Version 1.0 Alpha</Text>
+      <Text style={styles.aboutDescription}>OnTime To Do App is an application designed to assist your day-to-day tasks on time and list everything that you want to do. It is helpful in planning your daily schedules. {"\n"}</Text>
+      <Text style={styles.aboutfooter}>Version 1.0</Text>
       <Text style={styles.aboutfooter}>Build 1.0032468</Text>
       </View>
     </View>
@@ -72,28 +72,28 @@ const styles = StyleSheet.create({
     fontSize: RFPercentage(3),
     alignSelf: 'flex-start',
     paddingTop: 20,
-    marginBottom: 30,
+    marginBottom: "10%",
     marginLeft: windowHeight * 0.01,
     fontFamily: 'Poppins_600SemiBold'
   },
   
   aboutDetail: {
     marginLeft: windowHeight * 0.01,
-    width: "85%"
+    width: "80%"
   },
   
   aboutDescription: {
     fontSize: RFPercentage(2),
-    lineHeight: 40,
+    lineHeight: 35,
     fontFamily: 'Poppins_400Regular',
     textAlign: 'justify',
     marginTop: 10,
   },
 
   aboutfooter: {
-    fontSize: RFPercentage(1.5),
+    fontSize: RFPercentage(1.8),
     lineHeight: 30,
-    fontFamily: 'Poppins_400Regular',
+    fontFamily: 'Poppins_600SemiBold',
     textAlign: 'justify',
     width: windowWidth * 0.78,
   }

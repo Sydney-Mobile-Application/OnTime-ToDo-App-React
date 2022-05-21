@@ -33,6 +33,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { setToDoData } from "../redux/actions";
 
 import moment from "moment";
+import { backgroundColor } from "react-native/Libraries/Components/View/ReactNativeStyleAttributes";
 
 const windowWidth = Dimensions.get("window").width;
 const windowHeight = Dimensions.get("window").height;
@@ -189,7 +190,7 @@ export default function toDoUpcoming({ navigation }) {
               })
             ) : (
               <View style={styles.task}>
-                <Text style={styles.taskText}>No Upcoming Task</Text>
+                <Text style={styles.taskText1}>No Upcoming Task</Text>
               </View>
             )}
           </View>
@@ -245,6 +246,11 @@ const styles = StyleSheet.create({
   },
   taskText: {
     color: "#FFFFFF",
+    fontFamily: "Poppins_400Regular",
+    alignContent: "flex-start",
+  },
+  taskText1: {
+    color: "#293462",
     fontFamily: "Poppins_400Regular",
     alignContent: "flex-start",
   },

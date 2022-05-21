@@ -176,7 +176,7 @@ export default function toDoCompleted({ navigation }) {
               })
             ) : (
               <View style={styles.task}>
-                <Text style={styles.taskText}>No Task is Done</Text>
+                <Text style={styles.taskText1}>No Task is Done</Text>
               </View>
             )}
           </View>
@@ -233,6 +233,11 @@ const styles = StyleSheet.create({
   taskText: {
     fontFamily: "Poppins_400Regular",
     color: "#293462",
+    alignContent: "flex-start",
+  },
+  taskText1: {
+    color: "#293462",
+    fontFamily: "Poppins_400Regular",
     alignContent: "flex-start",
   },
   taskDate: {

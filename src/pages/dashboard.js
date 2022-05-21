@@ -52,7 +52,7 @@ import { db } from "../config/firebase";
 import { useSelector, useDispatch } from "react-redux";
 import { setToDoData, setPriorityDashboardData } from "../redux/actions";
 
-const width_name = "60%";
+const width_name = "80%";
 const width_highlight = "75%";
 const windowWidth = Dimensions.get("window").width;
 const windowHeight = Dimensions.get("window").height;

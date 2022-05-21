@@ -150,7 +150,7 @@ export default function SettingMenu({ navigation }) {
             navigation.navigate("To Do Completed", { done: true })
           }> */}
           <View style={styles.doneTask}>
-            <Text style={styles.taskTitle}>Done Task</Text>
+            <Text style={styles.taskTitle1}>Done Task</Text>
             {/* <Text style={styles.taskDetail}>3</Text> */}
             {/* <Text style={styles.textInline}>Manage your task</Text> */}
           </View>
@@ -189,10 +189,16 @@ export default function SettingMenu({ navigation }) {
 
           <Pressable onPress={() => navigation.navigate("Help Support")}>
             <View style={styles.bottomTitle}>
-              <Text style={styles.bottomDetail}>Help & Support</Text>
-              <Text style={styles.bottomDetail}>
+              <MaterialIcons
+                name="support"
+                size={25}
+                color="#293462"
+                style={{ alignSelf: "center", marginRight: "5%" }}
+              />
+              <Text style={styles.bottomDetail}>Help Center</Text>
+              {/* <Text style={styles.bottomDetail}>
                 <MaterialIcons name="arrow-forward-ios" size={12} />
-              </Text>
+              </Text> */}
             </View>
           </Pressable>
 
@@ -207,51 +213,68 @@ export default function SettingMenu({ navigation }) {
 
           <Pressable onPress={() => navigation.navigate("About")}>
             <View style={styles.bottomTitle}>
+              <MaterialIcons
+                name="info"
+                size={25}
+                color="#293462"
+                style={{ alignSelf: "center", marginRight: "5%" }}
+              />
               <Text style={styles.bottomDetail}>About</Text>
-              <Text style={styles.bottomDetail}>
+              {/* <Text style={styles.bottomDetail}>
                 <MaterialIcons name="arrow-forward-ios" size={12} />
-              </Text>
+              </Text> */}
             </View>
           </Pressable>
 
           <Pressable onPress={() => navigation.navigate("Sign In")}>
-            <View
-              style={[
-                styles.bottomTitle,
-                {
-                  justifyContent: "center",
-                  marginTop: "10%",
-                  borderRadius: 20,
-                  backgroundColor: "#b23b3b",
-                  width: "45%",
-                  alignSelf: "flex-end",
-                },
-              ]}
-            >
-              <Text
-                style={[
-                  {
-                    color: "#fff",
-                    fontSize: 20,
-                    lineHeight: 45,
-                    fontFamily: "Poppins_400Regular",
-                    // paddingLeft: "5%",
-                    // paddingRight: "5%",
-                    // paddingTop: "3%",
-                    // paddingBottom: "1%",
-                    alignSelf: "flex-end",
-                    shadowColor: "#000",
-                    shadowOffset: { width: 0, height: 1 },
-                    shadowOpacity: 0.5,
-                    shadowRadius: 2,
-                    elevation: 5,
-                  },
-                ]}
-              >
-                Sign Out
-              </Text>
+            <View style={styles.bottomTitle}>
+              <MaterialIcons
+                name="logout"
+                size={25}
+                color="#293462"
+                style={{ alignSelf: "center", marginRight: "5%" }}
+              />
+              <Text style={styles.bottomDetail}>Sign Out</Text>
             </View>
           </Pressable>
+
+          {/* <Pressable onPress={() => navigation.navigate("Sign In")}>
+            <View style={[styles.bottomTitle,{
+              justifyContent: "flex-start",
+              marginTop: "10%", 
+              lineHeight: 45,
+              // borderRadius: 20, 
+              // backgroundColor: "#293462", 
+              // width: "30%",
+              // alignSelf: "flex-start"
+              }]}>
+              <MaterialIcons 
+              name="logout" 
+              size={25} 
+              color="#293462"
+              /> */}
+          {/* <Text 
+              style={[
+              {
+              color: "#fff",
+              fontSize: 16,
+              lineHeight: 45,
+              fontFamily: "Poppins_400Regular",
+              // paddingLeft: "5%",
+              // paddingRight: "5%",
+              // paddingTop: "3%",
+              // paddingBottom: "1%",
+              alignSelf: "flex-end",
+              shadowColor: "#000",
+              shadowOffset: { width: 0, height: 1 },
+              shadowOpacity: 0.5,
+              shadowRadius: 2,
+              elevation: 5,}]}>
+                Sign Out
+                </Text> */}
+
+          {/* </View> */}
+          {/* </Pressable> */}
         </View>
       </View> //container
     );
@@ -322,7 +345,7 @@ const styles = StyleSheet.create({
     marginLeft: windowHeight * 0.02,
     marginTop: windowHeight * 0.02,
     fontFamily: "Poppins_600SemiBold",
-    fontSize: 20,
+    fontSize: 16,
     width: windowHeight * 0.18,
   },
 
@@ -368,16 +391,27 @@ const styles = StyleSheet.create({
   },
 
   taskTitle: {
-    fontSize: 14,
+    fontSize: 13,
     padding: windowWidth * 0.02,
     // width: 72,
     fontFamily: "Poppins_400Regular",
     justifyContent: "center",
     alignItems: "center",
+    color: "#FFFFFF",
+  },
+
+  taskTitle1: {
+    fontSize: 13,
+    padding: windowWidth * 0.02,
+    // width: 72,
+    fontFamily: "Poppins_400Regular",
+    justifyContent: "center",
+    alignItems: "center",
+    color: "#082032",
   },
 
   taskDetail: {
-    fontSize: 0,
+    // fontSize: 0,
     color: "#293462",
     alignContent: "flex-start",
     justifyContent: "flex-start",
@@ -399,7 +433,7 @@ const styles = StyleSheet.create({
   priorityTask: {
     width: windowWidth * 0.24,
     height: windowHeight * 0.1,
-    backgroundColor: "#BFE4FF",
+    backgroundColor: "#EE6F57",
     flexDirection: "column",
     borderRadius: 25,
     alignItems: "center",
@@ -411,7 +445,7 @@ const styles = StyleSheet.create({
   upcomingTask: {
     width: windowWidth * 0.24,
     height: windowHeight * 0.1,
-    backgroundColor: "#D3BFFF",
+    backgroundColor: "#5089C6",
     borderRadius: 25,
     alignItems: "center",
     justifyContent: "center",
@@ -422,7 +456,7 @@ const styles = StyleSheet.create({
   doneTask: {
     width: windowWidth * 0.24,
     height: windowHeight * 0.1,
-    backgroundColor: "#FFECBF",
+    backgroundColor: "#FFEDBF",
     borderRadius: 25,
     flexDirection: "column",
     alignItems: "center",
@@ -432,7 +466,7 @@ const styles = StyleSheet.create({
   },
 
   bottomText: {
-    marginTop: "10%",
+    marginTop: "8%",
     color: "#293462",
     fontSize: 14,
     fontWeight: "bold",
@@ -445,16 +479,20 @@ const styles = StyleSheet.create({
 
   bottomDetail: {
     fontSize: 20,
-    lineHeight: 45,
+    lineHeight: 60,
     fontFamily: "Poppins_400Regular",
+    alignItems: "baseline",
   },
 
   bottomTitle: {
     flexDirection: "row",
-    justifyContent: "space-between",
+    // justifyContent: "space-between",
     // alignContent: 'space-between',
     width: windowWidth * 0.8,
-    borderRadius: 40,
+    borderRadius: 10,
+    borderBottomWidth: 0.8,
+    borderColor: "#A9A9A9",
+    // margin: "1%"
   },
   dateText: {
     marginTop: "3%",
