@@ -184,6 +184,7 @@ export default function AddToDo({ navigation }) {
     onChangeTextTitle("");
     setURL(null);
     setImage(null);
+    setPriority(false)
   };
 
   const onChangeTime = (time) => {
