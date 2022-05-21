@@ -330,7 +330,7 @@ const styles = StyleSheet.create({
     marginLeft: windowHeight * 0.02,
     marginTop: windowHeight * 0.02,
     fontFamily: "Poppins_600SemiBold",
-    fontSize: 20,
+    fontSize: 16,
     width: windowHeight * 0.18,
   },
 
@@ -376,7 +376,7 @@ const styles = StyleSheet.create({
   },
 
   taskTitle: {
-    fontSize: 14,
+    fontSize: 12,
     padding: windowWidth * 0.02,
     // width: 72,
     fontFamily: "Poppins_400Regular",
