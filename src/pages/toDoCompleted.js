@@ -26,7 +26,7 @@ import { RFPercentage, RFValue } from "react-native-responsive-fontsize";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 // Firebase Conn
-import { getDocs, collection, query, where } from "firebase/firestore";
+import { getDocs, collection, query, where, deleteDoc, doc, } from "firebase/firestore";
 import { db } from "../config/firebase";
 
 // Redux
@@ -108,6 +108,26 @@ export default function toDoCompleted({ navigation }) {
     }
   };
 
+  const onDeleteData = async (noteId) => {
+    const deleteData = deleteDoc(doc(db, "notes", noteId));
+
+    if (deleteData) {
+      Alert.alert("Success", "Task deleted !");
+      onRefresh();
+    }
+  };
+
+  const deleteTask = async (noteId) => {
+    Alert.alert("Delete this task?", "This task will be deleted", [
+      {
+        text: "Cancel",
+        onPress: () => console.log("Cancel Pressed"),
+        style: "cancel",
+      },
+      { text: "OK", onPress: () => onDeleteData(noteId) },
+    ]);
+  };
+
   const onRefresh = React.useCallback(() => {
     setRefreshing(true);
     getSavedUserData();
@@ -148,9 +168,9 @@ export default function toDoCompleted({ navigation }) {
                         </Text>
                       </View>
                     </Pressable>
-                    {/* <View> */}
-                    {/* <View>
-                        <Pressable onPress={() => console.log("Delete Note")}>
+                    <View>
+                    <View>
+                      <Pressable onPress={() => deleteTask(x.uid)}>
                           <MaterialIcons
                             name="delete"
                             size={16}
@@ -158,8 +178,8 @@ export default function toDoCompleted({ navigation }) {
                             style={styles.delete}
                           />
                         </Pressable>
-                      </View>
-                      <View>
+                    </View>
+                      {/* <View>
                         <Pressable
                           onPress={() => console.log("Add To Priority")}
                         >
@@ -171,7 +191,7 @@ export default function toDoCompleted({ navigation }) {
                           />
                         </Pressable>
                       </View> */}
-                    {/* </View> */}
+                    </View>
                   </View>
                 );
               })
@@ -192,7 +212,7 @@ export default function toDoCompleted({ navigation }) {
                       // maxPaddingBottom: windowHeight,
                     }}
                   >
-                    Looks like you currently have no priority task 
+                    Looks like you currently have no completed task 
                   </Text> 
                
               </View>

@@ -201,6 +201,14 @@ export default function toDoUpcoming({ navigation }) {
                           />
                         </Pressable>
                       </View>
+                      <View>
+                        <MaterialIcons
+                          name="star"
+                          size={16}
+                          color="rgba(0,0,0,0.12)"
+                          style={styles.star}
+                        />
+                      </View>
                     </View>
                   </View>
                 );
@@ -222,7 +230,7 @@ export default function toDoUpcoming({ navigation }) {
                       // maxPaddingBottom: windowHeight,
                     }}
                   >
-                    Looks like you currently have no priority task 
+                    Looks like you currently have no upcoming task 
                   </Text> 
                
               </View>

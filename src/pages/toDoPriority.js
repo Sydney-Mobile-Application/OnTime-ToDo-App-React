@@ -202,6 +202,14 @@ export default function toDoPriority({ navigation }) {
                           />
                         </Pressable>
                       </View>
+                      <View>
+                        <MaterialIcons
+                          name="star"
+                          size={16}
+                          color="#FF7D26"
+                          style={styles.star}
+                        />
+                      </View>
                     </View>
                   </View>
                 );
