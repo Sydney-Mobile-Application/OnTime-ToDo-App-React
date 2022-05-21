@@ -165,7 +165,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     alignContent: 'flex-start',
     justifyContent: 'flex-start',
-    paddingTop: 50
+    paddingTop: "20%"
   },
 
   guideTitle: {
@@ -184,9 +184,10 @@ const styles = StyleSheet.create({
   headerText: {
     textAlign: 'left',
     fontSize: 16,
-    paddingLeft: "12%",
+    paddingHorizontal: "12%",
     fontFamily: "Poppins_600SemiBold",
-    lineHeight: 50,
+    // lineHeight: 50,
+    marginBottom: "5%"
 
   },
   content: {
@@ -200,6 +201,7 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     alignContent: "space-between",
     flexDirection: "row",
+    // marginBottom: "2%"
   },
   contentText: {
     fontFamily: "Poppins_400Regular",
