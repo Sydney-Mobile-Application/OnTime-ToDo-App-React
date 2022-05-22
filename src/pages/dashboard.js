@@ -130,7 +130,7 @@ export default function Dashboard({ navigation }) {
   }, []);
 
   async function schedulePushNotification() {
-    if(state.countTask>0){
+    if (state.countTask > 0) {
       await Notifications.scheduleNotificationAsync({
         content: {
           title: "Don't Forget To Do Your Task ! 🔔",
@@ -140,15 +140,15 @@ export default function Dashboard({ navigation }) {
         trigger: { seconds: 2 },
       });
     } else {
-    await Notifications.scheduleNotificationAsync({
-      content: {
-        title: "You can relax now ! 🤸‍♂️",
-        body: `You have no task right now 🤳`,
-        data: { data: "goes here" },
-      },
-      trigger: { seconds: 2 },
-    });
-  }
+      await Notifications.scheduleNotificationAsync({
+        content: {
+          title: "You can relax now ! 🤸‍♂️",
+          body: `You have no task right now 🤳`,
+          data: { data: "goes here" },
+        },
+        trigger: { seconds: 2 },
+      });
+    }
   }
 
   async function registerForPushNotificationsAsync() {

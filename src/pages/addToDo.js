@@ -114,9 +114,9 @@ export default function AddToDo({ navigation }) {
   const [textDesc, onChangeTextDesc] = useState("");
   const [oldDate, newDate] = useState("Select Date Time");
   const [oldTime, newTime] = useState("0:00");
-  const [datePush,pushDate] = useState()
-  const [hourPush,pushHour] = useState()
-  const [minutePush,pushTime] = useState()
+  const [datePush, pushDate] = useState();
+  const [hourPush, pushHour] = useState();
+  const [minutePush, pushTime] = useState();
   const [modalCalendarVisible, setModalCalendarVisible] = useState(false);
   const [date, setDate] = useState(new Date());
   const [show, setShow] = useState(false);
@@ -161,14 +161,12 @@ export default function AddToDo({ navigation }) {
   // const callback = React.useCallback((date) => {
   //   newDate(date);
   // }, []);
-  const receiveDate = (index,date) => {
+  const receiveDate = (index, date) => {
     newDate(String(index));
     setShow(true);
-    pushDate(date)
-    
+    pushDate(date);
   };
 
-  
   // console.log(
   //   console.log("date nih",moment(datePush).format("YYYY-MM-DD").toString().concat(`T07:${hourPush}:${minutePush}.000Z`))
   // )
@@ -205,7 +203,6 @@ export default function AddToDo({ navigation }) {
     setImage(null);
     setPriority(false);
     deleteImage();
-    
   };
 
   const onChangeTime = (time) => {
@@ -217,37 +214,53 @@ export default function AddToDo({ navigation }) {
       ]);
     } else {
       if (Number(Number(timenow.substring(16, 18)) - 6) < 0) {
-        if(Number(timenow.substring(16, 18)) + 18 > 10){
-        var hour = Number(timenow.substring(16, 18)) + 18;
+        if (Number(timenow.substring(16, 18)) + 18 > 10) {
+          var hour = Number(timenow.substring(16, 18)) + 18;
         } else {
-        var hour = "0"+Number(timenow.substring(16, 18)) + 18;
+          var hour = "0" + Number(timenow.substring(16, 18)) + 18;
         }
       } else {
-          if(Number(timenow.substring(16, 18)) - 6 > 10){
+        if (Number(timenow.substring(16, 18)) - 6 > 10) {
           var hour = Number(timenow.substring(16, 18)) - 6;
-          } else {
-          var hour = "0"+Number(timenow.substring(16, 18)) - 6;
-          }
+        } else {
+          var hour = "0" + Number(timenow.substring(16, 18)) - 6;
+        }
         var hour = Number(timenow.substring(16, 18)) - 6;
       }
       var minute = timenow.substring(19, 21);
       // receiveDate(String(time._i.hour) + " : " + String(time._i.minute));
       // console.log(hour + ":" + minute);
       newTime(hour + ":" + minute);
-      if(Number(hour)<10){
+      if (Number(hour) < 10) {
         setState((prevState) => ({
           ...prevState,
-          dateTime: moment(datePush).format("YYYY-MM-DD").toString().concat(`T0${Number(hour)}:${minute}:00+07:00`),
+          dateTime: moment(datePush)
+            .format("YYYY-MM-DD")
+            .toString()
+            .concat(`T0${Number(hour)}:${minute}:00+07:00`),
         }));
-        console.log("dibawah 10: ",moment(datePush).format("YYYY-MM-DD").toString().concat(`T0${Number(hour)}:${minute}:00+07:00`))
+        console.log(
+          "dibawah 10: ",
+          moment(datePush)
+            .format("YYYY-MM-DD")
+            .toString()
+            .concat(`T0${Number(hour)}:${minute}:00+07:00`)
+        );
       } else {
         setState((prevState) => ({
           ...prevState,
-          dateTime: moment(datePush).format("YYYY-MM-DD").toString().concat(`T${Number(hour)}:${minute}:00+07:00`),
-          
+          dateTime: moment(datePush)
+            .format("YYYY-MM-DD")
+            .toString()
+            .concat(`T${Number(hour)}:${minute}:00+07:00`),
         }));
-        console.log("diatas 10: ",moment(datePush).format("YYYY-MM-DD").toString().concat(`T${Number(hour)}:${minute}:00+07:00`))
-        
+        console.log(
+          "diatas 10: ",
+          moment(datePush)
+            .format("YYYY-MM-DD")
+            .toString()
+            .concat(`T${Number(hour)}:${minute}:00+07:00`)
+        );
       }
       pushHour(hour);
       pushTime(minute);
@@ -267,7 +280,6 @@ export default function AddToDo({ navigation }) {
         Alert.alert("Error", "Title and Description Cannot Empty !");
       } else {
         let dataPost = {};
-        
 
         if (!imageURI) {
           dataPost = {
