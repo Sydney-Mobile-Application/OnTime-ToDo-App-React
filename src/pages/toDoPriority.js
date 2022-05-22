@@ -227,7 +227,8 @@ export default function toDoPriority({ navigation }) {
                       fontSize: 13,
                       fontFamily: "Poppins_400Regular",
                       marginVertical: "10%",
-                      marginHorizontal: "20%"
+                      marginHorizontal: "10%",
+                      alignItems: "center",
                       // maxPaddingBottom: windowHeight,
                     }}
                   >

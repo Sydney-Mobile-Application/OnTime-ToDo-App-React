@@ -223,10 +223,11 @@ export default function toDoUpcoming({ navigation }) {
                     style={{
                       opacity: 0.2,
                       textAlignVertical: "center",
-                      fontSize: 13,
                       fontFamily: "Poppins_400Regular",
+                      fontSize: 13,
                       marginVertical: "10%",
-                      marginHorizontal: "20%"
+                      marginHorizontal: "10%",
+                      alignItems: "center",
                       // maxPaddingBottom: windowHeight,
                     }}
                   >
@@ -274,6 +275,7 @@ const styles = StyleSheet.create({
     flexDirection: "column",
     alignSelf: "center",
     justifyContent: "center",
+    // alignItems: "center",
   },
   taskNear2: {
     width: 120,
