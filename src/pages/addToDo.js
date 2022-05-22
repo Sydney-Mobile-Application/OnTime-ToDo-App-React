@@ -49,7 +49,13 @@ import {
 } from "firebase/firestore";
 import { db, app } from "../config/firebase";
 import { getApps, initializeApp } from "firebase/app";
-import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
+import {
+  getStorage,
+  ref,
+  uploadBytes,
+  getDownloadURL,
+  uploadBytesResumable,
+} from "firebase/storage";
 import { backgroundColor } from "react-native/Libraries/Components/View/ReactNativeStyleAttributes";
 
 const firebaseConfig = {
@@ -174,6 +180,7 @@ export default function AddToDo({ navigation }) {
   const [state, setState] = useState({
     userData: [],
     dateTime: null,
+    downloadImageUrl: null,
   });
 
   const clearData = () => {
@@ -184,7 +191,7 @@ export default function AddToDo({ navigation }) {
     onChangeTextTitle("");
     setURL(null);
     setImage(null);
-    setPriority(false)
+    setPriority(false);
   };
 
   const onChangeTime = (time) => {
@@ -223,7 +230,7 @@ export default function AddToDo({ navigation }) {
       } else if (textTitle === "" || textDesc === "") {
         Alert.alert("Error", "Title and Description Cannot Empty !");
       } else {
-        const uploadImageURL = await uploadImage(imageURI);
+        await uploadImage(imageURI);
 
         const myDoc = doc(collection(db, "notes"));
 
@@ -234,8 +241,9 @@ export default function AddToDo({ navigation }) {
           priority: priority,
           done: false,
           url: linkURL,
-          imageURL: String(uploadImageURL),
+          imageURL: state.downloadImageUrl,
           userId: state.userData.uid,
+          createdDate: Timestamp.fromDate(new Date()),
         };
 
         setDoc(myDoc, dataPost)
@@ -273,21 +281,43 @@ export default function AddToDo({ navigation }) {
       xhr.send(null);
     });
     const fileRef = ref(getStorage(), new Date().toISOString());
-    const result = await uploadBytes(fileRef, blob);
+
+    const uploadTask = uploadBytesResumable(fileRef, blob);
+
+    uploadTask.on(
+      "state_changed",
+      (snapshot) => {
+        const progress =
+          (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+        console.log("Upload is " + progress + "% done");
+      },
+      (error) => {
+        console.log("uploadBytes Err : ", error);
+      },
+      () => {
+        getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+          setState((prevState) => ({
+            ...prevState,
+            downloadImageUrl: downloadURL,
+          }));
+        });
+
+        blob.close();
+      }
+    );
+
     // const ref = storageRef;
     // console.log(fileRef);
     // const snapshot = await ref.put(blob);
 
-    await blob.close();
-
-    getDownloadURL(fileRef)
-      .then((url) => {
-        console.log("getDownloadURL", url);
-        return url;
-      })
-      .catch((error) => {
-        console.log("error get downloadurl", error);
-      });
+    // getDownloadURL(fileRef)
+    //   .then((url) => {
+    //     console.log("getDownloadURL", url);
+    //     return url;
+    //   })
+    //   .catch((error) => {
+    //     console.log("error get downloadurl", error);
+    //   });
   };
 
   const linkTask = () => {
