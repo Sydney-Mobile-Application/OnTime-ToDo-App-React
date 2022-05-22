@@ -139,7 +139,6 @@ export default function Dashboard({ navigation }) {
         },
         trigger: { seconds: 2 },
       });
-      ToastAndroid.show("Notification Sent !", ToastAndroid.SHORT);
     } else {
     await Notifications.scheduleNotificationAsync({
       content: {
@@ -149,7 +148,6 @@ export default function Dashboard({ navigation }) {
       },
       trigger: { seconds: 2 },
     });
-    ToastAndroid.show("Notification Sent !", ToastAndroid.SHORT);
   }
   }
 
