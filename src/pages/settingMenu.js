@@ -1,4 +1,4 @@
-import React, { useState, Component, useEffect } from "react";
+import React, { useState, useEffect, useFocusEffect, useCallback } from "react";
 import {
   StyleSheet,
   View,
@@ -25,6 +25,10 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 
 import CalendarPicker from "react-native-calendar-picker";
 import moment from "moment";
+
+// Firebase
+import { getStorage, ref, getDownloadURL } from "firebase/storage";
+
 // import AddToDoTime from './addToDoTime';
 
 //import {AppearanceProvider} from 'react-native-appearance';
@@ -34,6 +38,8 @@ const windowWidth = Dimensions.get("window").width;
 const windowHeight = Dimensions.get("window").height;
 
 export default function SettingMenu({ navigation }) {
+  const [image, setImage] = useState(null);
+
   const [switchValue, setswitchValue] = useState(false);
   const toggleSwitch = (value) => {
     setswitchValue(value);
@@ -43,6 +49,13 @@ export default function SettingMenu({ navigation }) {
     userData: "",
   });
 
+  const getImageUrl = async (value) => {
+    const fileRef = ref(getStorage(), value);
+    await getDownloadURL(fileRef).then((downloadURL) => {
+      setImage(downloadURL);
+    });
+  };
+
   const getSavedUserData = async () => {
     try {
       const userData = await AsyncStorage.getItem("@userData");
@@ -51,6 +64,8 @@ export default function SettingMenu({ navigation }) {
           ...prevState,
           userData: JSON.parse(userData),
         }));
+
+        getImageUrl(JSON.parse(userData).profileUrl);
       }
     } catch (err) {
       console.log("error msg : ", err);
@@ -113,10 +128,14 @@ export default function SettingMenu({ navigation }) {
                 Edit Profile{""}
                 <MaterialIcons name="arrow-forward-ios" size={10} />
               </Text>
-              <Image
-                style={styles.profilePicture}
-                source={require("../../assets/profile1.jpeg")}
-              />
+              {image ? (
+                <Image style={styles.profilePicture} source={{ uri: image }} />
+              ) : (
+                <Image
+                  style={styles.profilePicture}
+                  source={require("../../assets/profile1.jpg")}
+                />
+              )}
             </Pressable>
           </View>
         </View>
@@ -146,12 +165,7 @@ export default function SettingMenu({ navigation }) {
             </View>
           </Pressable>
 
-          
-        
-
-
-          
-        <Pressable
+          <Pressable
             onPress={() =>
               navigation.navigate("To Do Completed", { done: true })
             }
@@ -162,12 +176,7 @@ export default function SettingMenu({ navigation }) {
               {/* <Text style={styles.textInline}>Manage your task</Text> */}
             </View>
           </Pressable>
-          
-
-
         </View>
-
-
 
         <View style={styles.bottomText}>
           {/* <View style={styles.bottomTitle}>
@@ -201,7 +210,7 @@ export default function SettingMenu({ navigation }) {
 
           <Pressable onPress={() => navigation.navigate("Help Support")}>
             <View style={styles.bottomTitle}>
-             <MaterialIcons
+              <MaterialIcons
                 name="support"
                 size={25}
                 color="#293462"

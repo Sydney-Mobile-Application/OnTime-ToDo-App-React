@@ -20,13 +20,25 @@ import AppLoading from "expo-app-loading";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { RFPercentage, RFValue } from "react-native-responsive-fontsize";
 
+// Firebase
+import { getStorage, ref, getDownloadURL } from "firebase/storage";
+
 const windowWidth = Dimensions.get("window").width;
 const windowHeight = Dimensions.get("window").height;
 
 export default function Profile({ navigation }) {
+  const [image, setImage] = useState(null);
+
   const [state, setState] = useState({
     userData: "",
   });
+
+  const getImageUrl = async (value) => {
+    const fileRef = ref(getStorage(), value);
+    await getDownloadURL(fileRef).then((downloadURL) => {
+      setImage(downloadURL);
+    });
+  };
 
   const getSavedUserData = async () => {
     try {
@@ -36,6 +48,8 @@ export default function Profile({ navigation }) {
           ...prevState,
           userData: JSON.parse(userData),
         }));
+
+        getImageUrl(JSON.parse(userData).profileUrl);
       }
     } catch (err) {
       console.log("error msg : ", err);
@@ -44,7 +58,7 @@ export default function Profile({ navigation }) {
 
   useEffect(() => {
     getSavedUserData();
-  }, []);
+  }, [route.params?.noteId]);
 
   let [fontsLoaded] = useFonts({
     Poppins_300Light,
@@ -64,10 +78,14 @@ export default function Profile({ navigation }) {
           </Pressable>
         </View>
         <View style={styles.top}>
-          <Image
-            style={styles.profilePicture}
-            source={require("../../assets/profile1.jpeg")}
-          />
+          {image ? (
+            <Image style={styles.profilePicture} source={{ uri: image }} />
+          ) : (
+            <Image
+              style={styles.profilePicture}
+              source={require("../../assets/profile1.jpg")}
+            />
+          )}
         </View>
 
         <View style={styles.topName}>
@@ -140,9 +158,9 @@ const styles = StyleSheet.create({
   name: {
     fontSize: RFPercentage(2.5),
     fontFamily: "Poppins_600SemiBold",
-    marginRight :"10%",
-    marginLeft :"10%",
-    textAlign : "center",
+    marginRight: "10%",
+    marginLeft: "10%",
+    textAlign: "center",
   },
 
   profileDetail: {

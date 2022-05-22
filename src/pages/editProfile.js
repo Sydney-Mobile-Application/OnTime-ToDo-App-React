@@ -22,21 +22,64 @@ import { useFonts } from "expo-font";
 import AppLoading from "expo-app-loading";
 import { SimpleLineIcons } from "@expo/vector-icons";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import * as ImagePicker from "expo-image-picker"; // not react-image-picker
+import uuid from "react-native-uuid";
 
 // Firebase Conn
-import { doc, updateDoc } from "firebase/firestore";
+import { getApps, initializeApp } from "firebase/app";
+import {
+  doc,
+  updateDoc,
+  getDoc,
+  setDoc,
+  add,
+  collection,
+  Timestamp,
+} from "firebase/firestore";
 import { db } from "../config/firebase";
+import {
+  getStorage,
+  ref,
+  uploadBytes,
+  getDownloadURL,
+  uploadBytesResumable,
+} from "firebase/storage";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyBzfGyrTOPd4_S0MRyFbpiMVWKRlOpRl60",
+  authDomain: "todoapp-813f2.firebaseapp.com",
+  databaseURL:
+    "https://todoapp-813f2-default-rtdb.asia-southeast1.firebasedatabase.app",
+  projectId: "todoapp-813f2",
+  storageBucket: "todoapp-813f2.appspot.com",
+  messagingSenderId: "532708203730",
+  appId: "1:532708203730:web:bb80d5bec14d58c741610b",
+  measurementId: "G-Y054Z4FKQ1",
+};
+if (!getApps().length) {
+  initializeApp(firebaseConfig);
+}
 
 const windowWidth = Dimensions.get("window").width;
 const windowHeight = Dimensions.get("window").height;
 
 export default function EditProfile({ navigation }) {
+  const [image, setImage] = useState(null);
+  const [imageURI, dataImage] = useState("");
+
   const [state, setState] = useState({
     userData: "",
     email: "",
     username: "",
     phone: "",
   });
+
+  const getImageUrl = async (value) => {
+    const fileRef = ref(getStorage(), value);
+    await getDownloadURL(fileRef).then((downloadURL) => {
+      setImage(downloadURL);
+    });
+  };
 
   const getSavedUserData = async () => {
     try {
@@ -46,6 +89,8 @@ export default function EditProfile({ navigation }) {
           ...prevState,
           userData: JSON.parse(userData),
         }));
+
+        getImageUrl(JSON.parse(userData).profileUrl);
       }
     } catch (err) {
       console.log("error msg : ", err);
@@ -56,14 +101,31 @@ export default function EditProfile({ navigation }) {
   const [username, onChangeUser] = [state.userData.username];
   const [phone, onChangePhone] = [state.userData.phone];
 
-  const onSubmitData = () => {
+  const onSubmitData = async () => {
     const myDoc = doc(db, "users", state.userData.uid);
 
-    const dataPost = {
-      email: state.email ? state.email.toLowerCase() : email,
-      username: state.username ? state.username : username,
-      phone: state.phone ? state.phone : phone,
-    };
+    let dataPost = {};
+
+    if (!imageURI) {
+      console.log("imageURI", imageURI);
+      dataPost = {
+        email: state.email ? state.email.toLowerCase() : email,
+        username: state.username ? state.username : username,
+        phone: state.phone ? state.phone : phone,
+        profileUrl: null,
+        createdDate: Timestamp.fromDate(new Date()),
+      };
+    } else {
+      await uploadImage(imageURI);
+
+      dataPost = {
+        email: state.email ? state.email.toLowerCase() : email,
+        username: state.username ? state.username : username,
+        phone: state.phone ? state.phone : phone,
+        profileUrl: state.downloadImageUrl,
+        createdDate: Timestamp.fromDate(new Date()),
+      };
+    }
 
     updateDoc(myDoc, dataPost)
       .then(() => {
@@ -83,7 +145,77 @@ export default function EditProfile({ navigation }) {
       });
   };
 
+  const pickImage = async () => {
+    // No permissions request is necessary for launching the image library
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.Images,
+      allowsEditing: true,
+      aspect: [3, 3],
+      quality: 1,
+    });
+    console.log("Height:" + result.height);
+    console.log(result);
+
+    if (!result.cancelled) {
+      setImage(result.uri);
+      dataImage(result.uri);
+    }
+  };
+
+  const uploadImage = async (imageURI) => {
+    // Why are we using XMLHttpRequest? See:
+    // https://github.com/expo/expo/issues/2402#issuecomment-443726662
+    const blob = await new Promise((resolve, reject) => {
+      const xhr = new XMLHttpRequest();
+      xhr.onload = function () {
+        resolve(xhr.response);
+      };
+      xhr.onerror = function (e) {
+        console.log(e);
+        reject(new TypeError("Network request failed"));
+      };
+      xhr.responseType = "blob";
+      xhr.open("GET", imageURI, true);
+      xhr.send(null);
+    });
+
+    const fileRef = ref(getStorage(), state.downloadImageUrl);
+
+    const uploadTask = uploadBytesResumable(fileRef, blob);
+
+    uploadTask.on(
+      "state_changed",
+      (snapshot) => {
+        const progress =
+          (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+        console.log("Upload is " + progress + "% done");
+      },
+      (error) => {
+        console.log("uploadBytes Err : ", error);
+      },
+      () => {
+        blob.close();
+
+        return true;
+        // getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+        // });
+      }
+    );
+  };
+
+  const generateUniqueId = () => {
+    let uniqueId = uuid.v4();
+
+    if (uniqueId) {
+      setState((prevState) => ({
+        ...prevState,
+        downloadImageUrl: uniqueId,
+      }));
+    }
+  };
+
   useEffect(() => {
+    generateUniqueId();
     getSavedUserData();
   }, []);
 
@@ -110,17 +242,23 @@ export default function EditProfile({ navigation }) {
           </Pressable>
         </View>
         <View style={styles.top}>
-          <Image
-            style={styles.profilePicture}
-            source={require("../../assets/profile1.jpeg")}
-          />
+          {image ? (
+            <Image style={styles.profilePicture} source={{ uri: image }} />
+          ) : (
+            <Image
+              style={styles.profilePicture}
+              source={require("../../assets/profile1.jpg")}
+            />
+          )}
 
-          <SimpleLineIcons
-            name="camera"
-            size={20}
-            color="#ABACF7"
-            style={styles.editPicture}
-          />
+          <Pressable onPress={() => pickImage()}>
+            <SimpleLineIcons
+              name="camera"
+              size={20}
+              color="#ABACF7"
+              style={styles.editPicture}
+            />
+          </Pressable>
         </View>
 
         {/* <View style={styles.topName}>

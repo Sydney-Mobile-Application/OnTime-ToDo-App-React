@@ -321,19 +321,6 @@ export default function AddToDo({ navigation }) {
         // });
       }
     );
-
-    // const ref = storageRef;
-    // console.log(fileRef);
-    // const snapshot = await ref.put(blob);
-
-    // getDownloadURL(fileRef)
-    //   .then((url) => {
-    //     console.log("getDownloadURL", url);
-    //     return url;
-    //   })
-    //   .catch((error) => {
-    //     console.log("error get downloadurl", error);
-    //   });
   };
 
   const linkTask = () => {

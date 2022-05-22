@@ -49,6 +49,7 @@ import {
   deleteDoc,
 } from "firebase/firestore";
 import { db } from "../config/firebase";
+import { getStorage, ref, getDownloadURL } from "firebase/storage";
 
 // Redux
 import { useSelector, useDispatch } from "react-redux";
@@ -64,6 +65,8 @@ const image = { uri: "../../assets/profileContainer.png" };
 LogBox.ignoreAllLogs();
 
 export default function Dashboard({ navigation }) {
+  const [image, setImage] = useState(null);
+
   const dispatch = useDispatch();
 
   let [fontsLoaded] = useFonts({
@@ -255,30 +258,37 @@ export default function Dashboard({ navigation }) {
           //   rightButtonWidth={30}
           //   rightButtons={rightButtons}
           // >
-            <View style={styles.containerhighlight}>
-              {/* <MaterialIcons name="more-time" size={25} color="#EC9B3B" /> */}
-              <View style={styles.highlight}>
-                <View style={styles.highlight_text}>
-                  <Text
-                    numberOfLines={2}
-                    style={{
-                      textAlignVertical: "center",
-                      fontSize: 17,
-                      fontFamily: "Poppins_600SemiBold",
-                      margin: "5%",
-                    }}
-                  >
-                    You don't have any active task right now
-                  </Text>
-                </View>
+          <View style={styles.containerhighlight}>
+            {/* <MaterialIcons name="more-time" size={25} color="#EC9B3B" /> */}
+            <View style={styles.highlight}>
+              <View style={styles.highlight_text}>
+                <Text
+                  numberOfLines={2}
+                  style={{
+                    textAlignVertical: "center",
+                    fontSize: 17,
+                    fontFamily: "Poppins_600SemiBold",
+                    margin: "5%",
+                  }}
+                >
+                  You don't have any active task right now
+                </Text>
               </View>
-              {/* <MaterialIcons name="done" size={25} color="#50C671" /> */}
             </View>
+            {/* <MaterialIcons name="done" size={25} color="#50C671" /> */}
+          </View>
           // </Swipeable>
         );
       }
     }
   }
+
+  const getImageUrl = async (value) => {
+    const fileRef = ref(getStorage(), value);
+    await getDownloadURL(fileRef).then((downloadURL) => {
+      setImage(downloadURL);
+    });
+  };
 
   let userDataObj = [];
 
@@ -291,6 +301,8 @@ export default function Dashboard({ navigation }) {
           userData: JSON.parse(userData),
         }));
         userDataObj = JSON.parse(userData);
+
+        getImageUrl(userDataObj.profileUrl);
 
         getCountTask();
         getToDoData();
@@ -537,10 +549,14 @@ export default function Dashboard({ navigation }) {
 
                 <View style={styles.right}>
                   <Pressable onPress={() => navigation.navigate("Profile")}>
-                    <Image
-                      style={styles.avatar}
-                      source={require("../../assets/profile1.jpeg")}
-                    />
+                    {image ? (
+                      <Image style={styles.avatar} source={{ uri: image }} />
+                    ) : (
+                      <Image
+                        style={styles.avatar}
+                        source={require("../../assets/profile1.jpg")}
+                      />
+                    )}
                   </Pressable>
                   <View style={styles.date}>
                     <MaterialIcons name="check-box" size={15} color="#082032" />
