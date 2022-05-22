@@ -225,7 +225,8 @@ export default function EditProfile({ navigation }) {
     Poppins_600SemiBold,
     Poppins_700Bold,
     Poppins_800ExtraBold,
-  });
+  })
+  ;
   if (!fontsLoaded) {
     return <AppLoading />;
   } else {
@@ -313,7 +314,7 @@ export default function EditProfile({ navigation }) {
             onSubmitData();
           }}
         >
-          <Text style={{ color: "white", fontFamily: "Poppins_600SemiBold", paddingHorizontal: "5%", paddingVertical: "5%", }}>
+          <Text style={{ color: "#fff", fontFamily: "Poppins_600SemiBold", }}>
             Save
           </Text>
         </Pressable>
@@ -383,11 +384,12 @@ const styles = StyleSheet.create({
 
   changePassword: {
     backgroundColor: "#293462",
-    color: "#293462",
-    // width: "50%",
-    paddingHorizontal: "5%",
-    paddingVertical: "5%",
+    // color: "#293462",
+    width: "40%",
+    // paddingHorizontal: "5%",
+    // paddingVertical: "5%",
     height: 40,
+    // marginVertical: "5%",
     borderRadius: 50,
     alignItems: "center",
     justifyContent: "center",
