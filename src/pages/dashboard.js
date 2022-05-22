@@ -130,15 +130,27 @@ export default function Dashboard({ navigation }) {
   }, []);
 
   async function schedulePushNotification() {
+    if(state.countTask>0){
+      await Notifications.scheduleNotificationAsync({
+        content: {
+          title: "Don't Forget To Do Your Task ! 🔔",
+          body: `You Still Have ${state.countTask} Task To Do !`,
+          data: { data: "goes here" },
+        },
+        trigger: { seconds: 2 },
+      });
+      ToastAndroid.show("Notification Sent !", ToastAndroid.SHORT);
+    } else {
     await Notifications.scheduleNotificationAsync({
       content: {
-        title: "Don't Forget To Do Your Task ! 🔔",
-        body: `You Still Have ${state.countTask} Task To Do !`,
+        title: "You can relax now ! 🤸‍♂️",
+        body: `You have no task right now 🤳`,
         data: { data: "goes here" },
       },
       trigger: { seconds: 2 },
     });
     ToastAndroid.show("Notification Sent !", ToastAndroid.SHORT);
+  }
   }
 
   async function registerForPushNotificationsAsync() {
