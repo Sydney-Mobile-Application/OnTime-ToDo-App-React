@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import {
   ImageBackground,
   StyleSheet,
@@ -61,6 +61,17 @@ const windowWidth = Dimensions.get("window").width;
 const windowHeight = Dimensions.get("window").height;
 const image = { uri: "../../assets/profileContainer.png" };
 
+import * as Device from "expo-device";
+import * as Notifications from "expo-notifications";
+
+Notifications.setNotificationHandler({
+  handleNotification: async () => ({
+    shouldShowAlert: true,
+    shouldPlaySound: false,
+    shouldSetBadge: false,
+  }),
+});
+
 //Ignore all log notifications
 LogBox.ignoreAllLogs();
 
@@ -89,6 +100,78 @@ export default function Dashboard({ navigation }) {
     toDoUpcoming: [],
     countTask: 0,
   });
+
+  const [expoPushToken, setExpoPushToken] = useState("");
+  const [notification, setNotification] = useState(false);
+  const notificationListener = useRef();
+  const responseListener = useRef();
+
+  useEffect(() => {
+    registerForPushNotificationsAsync().then((token) =>
+      setExpoPushToken(token)
+    );
+
+    notificationListener.current =
+      Notifications.addNotificationReceivedListener((notification) => {
+        setNotification(notification);
+      });
+
+    responseListener.current =
+      Notifications.addNotificationResponseReceivedListener((response) => {
+        console.log(response);
+      });
+
+    return () => {
+      Notifications.removeNotificationSubscription(
+        notificationListener.current
+      );
+      Notifications.removeNotificationSubscription(responseListener.current);
+    };
+  }, []);
+
+  async function schedulePushNotification() {
+    await Notifications.scheduleNotificationAsync({
+      content: {
+        title: "Don't Forget To Do Your Task ! 🔔",
+        body: `You Still Have ${state.countTask} Task To Do !`,
+        data: { data: "goes here" },
+      },
+      trigger: { seconds: 2 },
+    });
+    ToastAndroid.show("Notification Sent !", ToastAndroid.SHORT);
+  }
+
+  async function registerForPushNotificationsAsync() {
+    let token;
+    if (Device.isDevice) {
+      const { status: existingStatus } =
+        await Notifications.getPermissionsAsync();
+      let finalStatus = existingStatus;
+      if (existingStatus !== "granted") {
+        const { status } = await Notifications.requestPermissionsAsync();
+        finalStatus = status;
+      }
+      if (finalStatus !== "granted") {
+        alert("Failed to get push token for push notification!");
+        return;
+      }
+      token = (await Notifications.getExpoPushTokenAsync()).data;
+      console.log(token);
+    } else {
+      alert("Must use physical device for Push Notifications");
+    }
+
+    if (Platform.OS === "android") {
+      Notifications.setNotificationChannelAsync("default", {
+        name: "default",
+        importance: Notifications.AndroidImportance.MAX,
+        vibrationPattern: [0, 250, 250, 250],
+        lightColor: "#FF231F7C",
+      });
+    }
+
+    return token;
+  }
 
   const onDoneData = () => {
     const myDoc = doc(db, "notes", toDoPriorityDashboard[0].uid);
@@ -490,7 +573,8 @@ export default function Dashboard({ navigation }) {
 
   const toDoPriority = state.toDoPriority;
 
-  const onRefresh = React.useCallback(() => {
+  const onRefresh = React.useCallback(async () => {
+    await schedulePushNotification();
     setRefreshing(true);
     getSavedUserData();
     wait(1000).then(() => setRefreshing(false));

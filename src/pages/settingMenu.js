@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useFocusEffect, useCallback } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import {
   StyleSheet,
   View,
@@ -7,8 +7,7 @@ import {
   Image,
   Pressable,
   Dimensions,
-  Alert,
-  Switch,
+  ToastAndroid,
 } from "react-native";
 import { MaterialIcons } from "@expo/vector-icons";
 import {
@@ -25,6 +24,8 @@ import CalendarPicker from "react-native-calendar-picker";
 import moment from "moment";
 
 // Firebase
+import { db } from "../config/firebase";
+import { getDocs, query, collection, where } from "firebase/firestore";
 import { getStorage, ref, getDownloadURL } from "firebase/storage";
 
 // import AddToDoTime from './addToDoTime';
@@ -34,6 +35,17 @@ import { getStorage, ref, getDownloadURL } from "firebase/storage";
 
 const windowWidth = Dimensions.get("window").width;
 const windowHeight = Dimensions.get("window").height;
+
+import * as Device from "expo-device";
+import * as Notifications from "expo-notifications";
+
+Notifications.setNotificationHandler({
+  handleNotification: async () => ({
+    shouldShowAlert: true,
+    shouldPlaySound: false,
+    shouldSetBadge: false,
+  }),
+});
 
 export default function SettingMenu({ navigation }) {
   const [image, setImage] = useState(null);
@@ -45,7 +57,80 @@ export default function SettingMenu({ navigation }) {
 
   const [state, setState] = useState({
     userData: "",
+    taskCount: 0,
   });
+
+  const [expoPushToken, setExpoPushToken] = useState("");
+  const [notification, setNotification] = useState(false);
+  const notificationListener = useRef();
+  const responseListener = useRef();
+
+  useEffect(() => {
+    registerForPushNotificationsAsync().then((token) =>
+      setExpoPushToken(token)
+    );
+
+    notificationListener.current =
+      Notifications.addNotificationReceivedListener((notification) => {
+        setNotification(notification);
+      });
+
+    responseListener.current =
+      Notifications.addNotificationResponseReceivedListener((response) => {
+        console.log(response);
+      });
+
+    return () => {
+      Notifications.removeNotificationSubscription(
+        notificationListener.current
+      );
+      Notifications.removeNotificationSubscription(responseListener.current);
+    };
+  }, []);
+
+  async function schedulePushNotification() {
+    await Notifications.scheduleNotificationAsync({
+      content: {
+        title: "Don't Forget To Do Your Task ! 🔔",
+        body: `You Still Have ${state.taskCount} Task To Do !`,
+        data: { data: "goes here" },
+      },
+      trigger: { seconds: 2 },
+    });
+    ToastAndroid.show("Notification Sent !", ToastAndroid.SHORT);
+  }
+
+  async function registerForPushNotificationsAsync() {
+    let token;
+    if (Device.isDevice) {
+      const { status: existingStatus } =
+        await Notifications.getPermissionsAsync();
+      let finalStatus = existingStatus;
+      if (existingStatus !== "granted") {
+        const { status } = await Notifications.requestPermissionsAsync();
+        finalStatus = status;
+      }
+      if (finalStatus !== "granted") {
+        alert("Failed to get push token for push notification!");
+        return;
+      }
+      token = (await Notifications.getExpoPushTokenAsync()).data;
+      console.log(token);
+    } else {
+      alert("Must use physical device for Push Notifications");
+    }
+
+    if (Platform.OS === "android") {
+      Notifications.setNotificationChannelAsync("default", {
+        name: "default",
+        importance: Notifications.AndroidImportance.MAX,
+        vibrationPattern: [0, 250, 250, 250],
+        lightColor: "#FF231F7C",
+      });
+    }
+
+    return token;
+  }
 
   const onLogout = async () => {
     try {
@@ -64,12 +149,55 @@ export default function SettingMenu({ navigation }) {
     }
   };
 
+  const getToDoData = async () => {
+    if (!userDataObj.length) {
+      getDocs(
+        query(
+          collection(db, "notes"),
+          where("userId", "==", userDataObj.uid.toString()),
+          where("done", "==", false)
+        )
+      ).then((querySnapshot) => {
+        let dataCollection = [];
+
+        if (querySnapshot.empty) {
+          setState((prevState) => ({
+            ...prevState,
+            taskCount: 0,
+          }));
+        }
+
+        try {
+          querySnapshot.forEach((doc) => {
+            // // doc.data() is never undefined for query doc snapshots
+            // console.log(doc.id, " => ", doc.data());
+            const toDoData = Object.assign({ uid: doc.id }, doc.data());
+            dataCollection.push(toDoData);
+          });
+
+          console.log("datacollection", dataCollection);
+
+          setState((prevState) => ({
+            ...prevState,
+            taskCount: dataCollection.length,
+          }));
+
+          // dispatch(setToDoData(dataCollection));
+        } catch (err) {
+          console.log("Error Msg :", err);
+        }
+      });
+    }
+  };
+
   const getImageUrl = async (value) => {
     const fileRef = ref(getStorage(), value);
     await getDownloadURL(fileRef).then((downloadURL) => {
       setImage(downloadURL);
     });
   };
+
+  let userDataObj = [];
 
   const getSavedUserData = async () => {
     try {
@@ -79,6 +207,10 @@ export default function SettingMenu({ navigation }) {
           ...prevState,
           userData: JSON.parse(userData),
         }));
+
+        userDataObj = JSON.parse(userData);
+
+        getToDoData();
 
         getImageUrl(JSON.parse(userData).profileUrl);
       }
@@ -265,6 +397,21 @@ export default function SettingMenu({ navigation }) {
                 style={{ alignSelf: "center", marginRight: "5%" }}
               />
               <Text style={styles.bottomDetail}>About</Text>
+              {/* <Text style={styles.bottomDetail}>
+                <MaterialIcons name="arrow-forward-ios" size={12} />
+              </Text> */}
+            </View>
+          </Pressable>
+
+          <Pressable onPress={async () => await schedulePushNotification()}>
+            <View style={styles.bottomTitle}>
+              <MaterialIcons
+                name="notifications"
+                size={25}
+                color="#293462"
+                style={{ alignSelf: "center", marginRight: "5%" }}
+              />
+              <Text style={styles.bottomDetail}>Test Notification</Text>
               {/* <Text style={styles.bottomDetail}>
                 <MaterialIcons name="arrow-forward-ios" size={12} />
               </Text> */}
