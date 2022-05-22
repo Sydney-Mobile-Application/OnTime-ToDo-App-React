@@ -521,7 +521,7 @@ export default function Dashboard({ navigation }) {
           showsVerticalScrollIndicator={false}
           showsHorizontalScrollIndicator={false}
           contentContainerStyle={{
-            backgroundColor: "#fff", height: windowHeight,
+            backgroundColor: "#fff", 
           }}
           refreshControl={
             <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />

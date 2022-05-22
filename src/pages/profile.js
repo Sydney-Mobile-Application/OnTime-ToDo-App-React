@@ -58,7 +58,7 @@ export default function Profile({ navigation }) {
 
   useEffect(() => {
     getSavedUserData();
-  }, [route.params?.noteId]);
+  }, []);
 
   let [fontsLoaded] = useFonts({
     Poppins_300Light,

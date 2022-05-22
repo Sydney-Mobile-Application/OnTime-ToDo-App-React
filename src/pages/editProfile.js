@@ -251,7 +251,7 @@ export default function EditProfile({ navigation }) {
             />
           )}
 
-          <Pressable onPress={() => pickImage()}>
+          <Pressable onPress={pickImage}>
             <SimpleLineIcons
               name="camera"
               size={20}
@@ -313,7 +313,7 @@ export default function EditProfile({ navigation }) {
             onSubmitData();
           }}
         >
-          <Text style={{ color: "white", fontFamily: "Poppins_600SemiBold" }}>
+          <Text style={{ color: "white", fontFamily: "Poppins_600SemiBold", paddingHorizontal: "5%", paddingVertical: "5%", }}>
             Save
           </Text>
         </Pressable>
@@ -384,12 +384,14 @@ const styles = StyleSheet.create({
   changePassword: {
     backgroundColor: "#293462",
     color: "#293462",
-    width: "50%",
+    // width: "50%",
+    paddingHorizontal: "5%",
+    paddingVertical: "5%",
     height: 40,
     borderRadius: 50,
     alignItems: "center",
     justifyContent: "center",
-    marginTop: 30,
+    marginTop: "3%",
   },
 
   signOut: {
