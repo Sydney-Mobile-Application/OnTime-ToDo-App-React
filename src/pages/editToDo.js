@@ -44,6 +44,24 @@ import {
   Timestamp,
 } from "firebase/firestore";
 import { db } from "../config/firebase";
+import { getApps, initializeApp } from "firebase/app";
+import { getDownloadURL, getStorage, ref } from "firebase/storage";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyBzfGyrTOPd4_S0MRyFbpiMVWKRlOpRl60",
+  authDomain: "todoapp-813f2.firebaseapp.com",
+  databaseURL:
+    "https://todoapp-813f2-default-rtdb.asia-southeast1.firebasedatabase.app",
+  projectId: "todoapp-813f2",
+  storageBucket: "todoapp-813f2.appspot.com",
+  messagingSenderId: "532708203730",
+  appId: "1:532708203730:web:bb80d5bec14d58c741610b",
+  measurementId: "G-Y054Z4FKQ1",
+};
+
+if (!getApps().length) {
+  initializeApp(firebaseConfig);
+}
 
 const windowWidth = Dimensions.get("window").width;
 const windowHeight = Dimensions.get("window").height;
@@ -147,6 +165,13 @@ export default function EditToDo({ navigation, route }) {
     }
   };
 
+  const getImageUrl = async (value) => {
+    const fileRef = ref(getStorage(), value);
+    await getDownloadURL(fileRef).then((downloadURL) => {
+      setImage(downloadURL);
+    });
+  };
+
   useEffect(() => {
     getSelectedNotes(route.params.noteId);
   }, [route.params?.noteId]);
@@ -167,6 +192,7 @@ export default function EditToDo({ navigation, route }) {
         .format("hh:mm")
         .toString()
     );
+    getImageUrl(state.userData?.imageURL);
   }, [state.userData]);
 
   const onChangeTime = (time) => {

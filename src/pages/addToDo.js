@@ -37,6 +37,7 @@ import AppLoading from "expo-app-loading";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import * as ImagePicker from "expo-image-picker"; // not react-image-picker
 import { RFPercentage, RFValue } from "react-native-responsive-fontsize";
+import uuid from "react-native-uuid";
 
 // Firebase
 import {
@@ -192,6 +193,7 @@ export default function AddToDo({ navigation }) {
     setURL(null);
     setImage(null);
     setPriority(false);
+    deleteImage();
   };
 
   const onChangeTime = (time) => {
@@ -230,21 +232,37 @@ export default function AddToDo({ navigation }) {
       } else if (textTitle === "" || textDesc === "") {
         Alert.alert("Error", "Title and Description Cannot Empty !");
       } else {
-        await uploadImage(imageURI);
+        let dataPost = {};
+
+        if (!imageURI) {
+          dataPost = {
+            date: Timestamp.fromDate(new Date(state.dateTime)),
+            title: textTitle,
+            description: textDesc,
+            priority: priority,
+            done: false,
+            url: linkURL,
+            imageURL: null,
+            userId: state.userData.uid,
+            createdDate: Timestamp.fromDate(new Date()),
+          };
+        } else {
+          await uploadImage(imageURI);
+
+          dataPost = {
+            date: Timestamp.fromDate(new Date(state.dateTime)),
+            title: textTitle,
+            description: textDesc,
+            priority: priority,
+            done: false,
+            url: linkURL,
+            imageURL: state.downloadImageUrl,
+            userId: state.userData.uid,
+            createdDate: Timestamp.fromDate(new Date()),
+          };
+        }
 
         const myDoc = doc(collection(db, "notes"));
-
-        const dataPost = {
-          date: Timestamp.fromDate(new Date(state.dateTime)),
-          title: textTitle,
-          description: textDesc,
-          priority: priority,
-          done: false,
-          url: linkURL,
-          imageURL: state.downloadImageUrl,
-          userId: state.userData.uid,
-          createdDate: Timestamp.fromDate(new Date()),
-        };
 
         setDoc(myDoc, dataPost)
           .then(() => {
@@ -280,7 +298,8 @@ export default function AddToDo({ navigation }) {
       xhr.open("GET", imageURI, true);
       xhr.send(null);
     });
-    const fileRef = ref(getStorage(), new Date().toISOString());
+
+    const fileRef = ref(getStorage(), state.downloadImageUrl);
 
     const uploadTask = uploadBytesResumable(fileRef, blob);
 
@@ -295,14 +314,11 @@ export default function AddToDo({ navigation }) {
         console.log("uploadBytes Err : ", error);
       },
       () => {
-        getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-          setState((prevState) => ({
-            ...prevState,
-            downloadImageUrl: downloadURL,
-          }));
-        });
-
         blob.close();
+
+        return true;
+        // getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+        // });
       }
     );
 
@@ -401,9 +417,21 @@ export default function AddToDo({ navigation }) {
     }
   };
 
+  const generateUniqueId = () => {
+    let uniqueId = uuid.v4();
+
+    if (uniqueId) {
+      setState((prevState) => ({
+        ...prevState,
+        downloadImageUrl: uniqueId,
+      }));
+    }
+  };
+
   useEffect(() => {
     clearData();
     getSavedUserData();
+    generateUniqueId();
   }, []);
 
   const getSavedUserData = async () => {

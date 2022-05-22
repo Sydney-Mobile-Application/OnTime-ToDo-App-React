@@ -441,7 +441,6 @@ export default function Dashboard({ navigation }) {
         query(
           collection(db, "notes"),
           where("userId", "==", userDataObj.uid.toString()),
-          where("priority", "==", true),
           where("done", "==", false),
           orderBy("date", "desc"),
           limit(1)
