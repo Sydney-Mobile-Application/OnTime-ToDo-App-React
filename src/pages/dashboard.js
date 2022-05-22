@@ -521,7 +521,7 @@ export default function Dashboard({ navigation }) {
           showsVerticalScrollIndicator={false}
           showsHorizontalScrollIndicator={false}
           contentContainerStyle={{
-            backgroundColor: "#fff",
+            backgroundColor: "#fff", height: windowHeight,
           }}
           refreshControl={
             <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
@@ -753,7 +753,6 @@ export default function Dashboard({ navigation }) {
 const styles = StyleSheet.create({
   containertop: {
     paddingTop: "2%",
-    // paddingTop: 30,
     backgroundColor: "#fff",
     alignItems: "center",
     justifyContent: "center",
