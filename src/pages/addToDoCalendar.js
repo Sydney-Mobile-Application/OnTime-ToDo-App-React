@@ -47,7 +47,8 @@ export default function TermAndCondition({ closeCalendarModal, receiveDate }) {
         break;
     }
     receiveDate(
-      String(date._i.day) + " " + String(month) + " " + String(date._i.year)
+      String(date._i.day) + " " + String(month) + " " + String(date._i.year),
+      date
     );
     console.log(date);
   };

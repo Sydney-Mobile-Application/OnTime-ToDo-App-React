@@ -290,12 +290,11 @@ const styles = StyleSheet.create({
     alignContent: "flex-start",
   },
 
-  notask: {
-    width: 150,
-    height: 150,
-    opacity: 0.2,
-    marginRight: "10%",
-    marginTop: "150%",
+  notask :{
+    width: 100,
+    height: 100,
+    opacity : 0.2,
+    marginLeft: "35%",
   },
   taskDate: {
     marginTop: 10,
