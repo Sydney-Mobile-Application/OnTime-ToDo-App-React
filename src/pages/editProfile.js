@@ -111,6 +111,7 @@ export default function EditProfile({ navigation }) {
         email: state.email ? state.email.toLowerCase() : email,
         username: state.username ? state.username : username,
         phone: state.phone ? state.phone : phone,
+        profileUrl: state.userData.profileUrl,
         createdDate: Timestamp.fromDate(new Date()),
       };
     } else {
@@ -130,8 +131,7 @@ export default function EditProfile({ navigation }) {
         try {
           const userData = Object.assign({ uid: state.userData.uid }, dataPost);
           const value = JSON.stringify(userData);
-          console.log("value updateDoc", value);
-          // AsyncStorage.setItem("@userData", value);
+          AsyncStorage.setItem("@userData", value);
         } catch (err) {
           console.log("Error Msg :", err);
         }
