@@ -23,6 +23,7 @@ import DateTimePicker from "@react-native-community/datetimepicker";
 import AddToDoCalendar from "./addToDoCalendar";
 import Prompt from "react-native-input-prompt";
 import Lightbox from "react-native-lightbox";
+import * as ImagePicker from "expo-image-picker"; // not react-image-picker
 import {
   Poppins_300Light,
   Poppins_400Regular,
@@ -185,6 +186,8 @@ export default function EditToDo({ navigation, route }) {
     }
   };
 
+  
+
   useEffect(() => {
     getSelectedNotes(route.params.noteId);
     generateUniqueId();
@@ -248,70 +251,43 @@ export default function EditToDo({ navigation, route }) {
       xhr.send(null);
     });
 
-    const ref = app
-      .storage()
-      .ref("images/" + (state.userData.uid + textTitle + "-image"));
-    const snapshot = await ref.put(blob);
+    const fileRef = ref(getStorage(), state.downloadImageUrl);
 
-    // We're done with the blob, close and release it
-    blob.close();
+    const uploadTask = uploadBytesResumable(fileRef, blob);
 
-    return await snapshot.ref.getDownloadURL();
+    uploadTask.on(
+      "state_changed",
+      (snapshot) => {
+        const progress =
+          (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+        console.log("Upload is " + progress + "% done");
+      },
+      (error) => {
+        console.log("uploadBytes Err : ", error);
+      },
+      () => {
+        blob.close();
+
+        return true;
+        // getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+        // });
+      }
+    );
+
+    // const ref = storageRef;
+    // console.log(fileRef);
+    // const snapshot = await ref.put(blob);
+
+    // getDownloadURL(fileRef)
+    //   .then((url) => {
+    //     console.log("getDownloadURL", url);
+    //     return url;
+    //   })
+    //   .catch((error) => {
+    //     console.log("error get downloadurl", error);
+    //   });
   };
 
-  const linkTask = () => {
-    setLink(!link);
-  };
-  const takeLink = (textLink) => {
-    onChangeLink(textLink);
-    setURL(textLink);
-    setLink(!link);
-  };
-  const deleteLink = () => {
-    let noLink = null;
-    onChangeLink(noLink);
-    setURL(noLink);
-  };
-
-  const pickImage = async () => {
-    // No permissions request is necessary for launching the image library
-    let result = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.Images,
-      allowsEditing: true,
-      // aspect: [4, 3],
-      quality: 1,
-    });
-    console.log("Height:" + result.height);
-    console.log(result);
-
-    if (!result.cancelled) {
-      setImage(result.uri);
-      dataImage(result.uri);
-    }
-  };
-
-  const takeCamImage = async () => {
-    // No permissions request is necessary for launching the image library
-    let result = await ImagePicker.launchCameraAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.Images,
-      allowsEditing: true,
-      // aspect: [4, 3],
-      quality: 1,
-    });
-
-    console.log(result);
-
-    if (!result.cancelled) {
-      setImage(result.uri);
-      dataImage(result.uri);
-    }
-  };
-
-  const deleteImage = async () => {
-    let result = null;
-    setImage(result);
-    dataImage(result);
-  };
 
   const onDoneData = () => {
     const myDoc = doc(db, "notes", state.noteId);
@@ -331,21 +307,14 @@ export default function EditToDo({ navigation, route }) {
       });
   };
 
-  const onUpdateData = () => {
+  const onUpdateData = async () => {
     const myDoc = doc(db, "notes", state.noteId);
 
     let dataPost = {};
 
     if (state.updatedDate) {
-      if (!imageURI) {
-        dataPost = {
-          date: Timestamp.fromDate(new Date(state.updatedDate)),
-          title: textTitle,
-          description: textDesc,
-          priority: priority,
-          url: linkURL,
-        };
-      } else {
+      if (imageURI) {
+        await uploadImage(imageURI);
         dataPost = {
           date: Timestamp.fromDate(new Date(state.updatedDate)),
           title: textTitle,
@@ -354,16 +323,48 @@ export default function EditToDo({ navigation, route }) {
           url: linkURL,
           imageURL: state.downloadImageUrl,
         };
-      }
-    } else {
-      if (!imageURI) {
+      } else if (!image){
         dataPost = {
+          date: Timestamp.fromDate(new Date(state.updatedDate)),
+          title: textTitle,
+          description: textDesc,
+          priority: priority,
+          url: linkURL,
+          imageURL: null
+        };
+      } 
+      else {
+        dataPost = {
+          date: Timestamp.fromDate(new Date(state.updatedDate)),
           title: textTitle,
           description: textDesc,
           priority: priority,
           url: linkURL,
         };
-      } else {
+        
+      }
+    } else {
+      if (imageURI) {
+        console.log("imageURI: ",imageURI)
+        await uploadImage(imageURI);
+        dataPost = {
+          title: textTitle,
+          description: textDesc,
+          priority: priority,
+          url: linkURL,
+          imageURL: state.downloadImageUrl,
+        };
+      } else if (!image) {
+        console.log("image: ",image)
+        dataPost = {
+          title: textTitle,
+          description: textDesc,
+          priority: priority,
+          url: linkURL,
+          imageURL: null,
+        }
+      }
+      else {
         dataPost = {
           title: textTitle,
           description: textDesc,
@@ -450,6 +451,60 @@ export default function EditToDo({ navigation, route }) {
     ]);
   };
 
+  const linkTask = () => {
+    setLink(!link);
+  };
+  const takeLink = (textLink) => {
+    onChangeLink(textLink);
+    setURL(textLink);
+    setLink(!link);
+  };
+  const deleteLink = () => {
+    let noLink = null;
+    onChangeLink(noLink);
+    setURL(noLink);
+  };
+
+  const pickImage = async () => {
+    // No permissions request is necessary for launching the image library
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.Images,
+      allowsEditing: true,
+      // aspect: [4, 3],
+      quality: 1,
+    });
+    console.log("Height:" + result.height);
+    console.log(result);
+
+    if (!result.cancelled) {
+      setImage(result.uri);
+      dataImage(result.uri);
+    }
+  };
+
+  const takeCamImage = async () => {
+    // No permissions request is necessary for launching the image library
+    let result = await ImagePicker.launchCameraAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.Images,
+      allowsEditing: true,
+      // aspect: [4, 3],
+      quality: 1,
+    });
+
+    console.log(result);
+
+    if (!result.cancelled) {
+      setImage(result.uri);
+      dataImage(result.uri);
+    }
+  };
+
+  const deleteImage = async () => {
+    let result = null;
+    setImage(result);
+    dataImage(result);
+  };
+
   const OpenURLButton = ({ url, linkURL }) => {
     const handlePress = useCallback(async () => {
       // Checking if the link is supported for links with custom URL scheme.
@@ -472,7 +527,9 @@ export default function EditToDo({ navigation, route }) {
         Go To URL{" "}
       </Text>
     );
-    // <Button title={"Go to URL"} onPress={handlePress} />;
+    {
+      /* <Button title={"Go to URL"} onPress={handlePress}/> */
+    }
   };
 
   if (!fontsLoaded) {
