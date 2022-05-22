@@ -24,6 +24,7 @@ import DateTimePicker from "@react-native-community/datetimepicker";
 import AddToDoCalendar from "./addToDoCalendar";
 import TheImagePicker from "./TheImagePicker";
 import TheLocationPicker from "./TheLocationPicker";
+import moment from "moment";
 
 import {
   Poppins_300Light,
@@ -93,7 +94,7 @@ const actions = [
     position: 2,
   },
   // {
-  //   text: "Location",
+  //   text: "Location",newDate
   //   color: "#293462",
   //   icon: require("../../assets/images/map.png"),
   //   name: "bt_location",
@@ -113,6 +114,9 @@ export default function AddToDo({ navigation }) {
   const [textDesc, onChangeTextDesc] = useState("");
   const [oldDate, newDate] = useState("Select Date Time");
   const [oldTime, newTime] = useState("0:00");
+  const [datePush,pushDate] = useState()
+  const [hourPush,pushHour] = useState()
+  const [minutePush,pushTime] = useState()
   const [modalCalendarVisible, setModalCalendarVisible] = useState(false);
   const [date, setDate] = useState(new Date());
   const [show, setShow] = useState(false);
@@ -157,10 +161,17 @@ export default function AddToDo({ navigation }) {
   // const callback = React.useCallback((date) => {
   //   newDate(date);
   // }, []);
-  const receiveDate = (index) => {
+  const receiveDate = (index,date) => {
     newDate(String(index));
     setShow(true);
+    pushDate(date)
+    
   };
+
+  
+  // console.log(
+  //   console.log("date nih",moment(datePush).format("YYYY-MM-DD").toString().concat(`T07:${hourPush}:${minutePush}.000Z`))
+  // )
 
   const editTask = async () => {
     Alert.alert("Save this changes?", "This task will be updated", [
@@ -194,6 +205,7 @@ export default function AddToDo({ navigation }) {
     setImage(null);
     setPriority(false);
     deleteImage();
+    
   };
 
   const onChangeTime = (time) => {
@@ -205,18 +217,40 @@ export default function AddToDo({ navigation }) {
       ]);
     } else {
       if (Number(Number(timenow.substring(16, 18)) - 6) < 0) {
+        if(Number(timenow.substring(16, 18)) + 18 > 10){
         var hour = Number(timenow.substring(16, 18)) + 18;
+        } else {
+        var hour = "0"+Number(timenow.substring(16, 18)) + 18;
+        }
       } else {
+          if(Number(timenow.substring(16, 18)) - 6 > 10){
+          var hour = Number(timenow.substring(16, 18)) - 6;
+          } else {
+          var hour = "0"+Number(timenow.substring(16, 18)) - 6;
+          }
         var hour = Number(timenow.substring(16, 18)) - 6;
       }
       var minute = timenow.substring(19, 21);
       // receiveDate(String(time._i.hour) + " : " + String(time._i.minute));
       // console.log(hour + ":" + minute);
       newTime(hour + ":" + minute);
-      setState((prevState) => ({
-        ...prevState,
-        dateTime: time.nativeEvent.timestamp.toString(),
-      }));
+      if(Number(hour)<10){
+        setState((prevState) => ({
+          ...prevState,
+          dateTime: moment(datePush).format("YYYY-MM-DD").toString().concat(`T0${Number(hour)}:${minute}:00+07:00`),
+        }));
+        console.log("dibawah 10: ",moment(datePush).format("YYYY-MM-DD").toString().concat(`T0${Number(hour)}:${minute}:00+07:00`))
+      } else {
+        setState((prevState) => ({
+          ...prevState,
+          dateTime: moment(datePush).format("YYYY-MM-DD").toString().concat(`T${Number(hour)}:${minute}:00+07:00`),
+          
+        }));
+        console.log("diatas 10: ",moment(datePush).format("YYYY-MM-DD").toString().concat(`T${Number(hour)}:${minute}:00+07:00`))
+        
+      }
+      pushHour(hour);
+      pushTime(minute);
       // const currentDate = selectedDate || time;
       // setShow(Platform.OS === 'ios');state.userData
       // setDate(currentDate);
@@ -233,6 +267,7 @@ export default function AddToDo({ navigation }) {
         Alert.alert("Error", "Title and Description Cannot Empty !");
       } else {
         let dataPost = {};
+        
 
         if (!imageURI) {
           dataPost = {

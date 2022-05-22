@@ -442,7 +442,7 @@ export default function Dashboard({ navigation }) {
           collection(db, "notes"),
           where("userId", "==", userDataObj.uid.toString()),
           where("done", "==", false),
-          orderBy("date", "desc"),
+          orderBy("date", "asc"),
           limit(1)
         )
       ).then((querySnapshot) => {

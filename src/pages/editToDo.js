@@ -113,6 +113,7 @@ export default function EditToDo({ navigation, route }) {
   const [linkURL, setURL] = useState(null); //pre-filled*
   const [link, setLink] = useState(false); //pre-filled*
   const [imageURI, dataImage] = useState(""); //pre-filled*
+  const [datePush,pushDate] = useState()
 
   const priorityTask = () => {
     setPriority(!priority);
@@ -134,9 +135,11 @@ export default function EditToDo({ navigation, route }) {
   // const callback = React.useCallback((date) => {
   //   newDate(date);
   // }, []);
-  const receiveDate = (index) => {
+  const receiveDate = (index, date) => {
     newDate(String(index));
     setShow(true);
+    pushDate(date)
+
   };
 
   const [heightDesc, setHeightDesc] = useState({
@@ -214,23 +217,50 @@ export default function EditToDo({ navigation, route }) {
   const onChangeTime = (time) => {
     setShow(Platform.OS === "ios");
     let timenow = String(time.nativeEvent.timestamp);
-
-    setState((prevState) => ({
-      ...prevState,
-      updatedDate: timenow,
-    }));
-
     if (timenow === "undefined") {
-      console.log("date time invalid");
+      Alert.alert("Invalid Date Input", "You have submitted invalid date", [
+        { text: "OK" },
+      ]);
     } else {
       if (Number(Number(timenow.substring(16, 18)) - 6) < 0) {
+        if(Number(timenow.substring(16, 18)) + 18 > 10){
         var hour = Number(timenow.substring(16, 18)) + 18;
+        } else {
+        var hour = "0"+Number(timenow.substring(16, 18)) + 18;
+        }
       } else {
+          if(Number(timenow.substring(16, 18)) - 6 > 10){
+          var hour = Number(timenow.substring(16, 18)) - 6;
+          } else {
+          var hour = "0"+Number(timenow.substring(16, 18)) - 6;
+          }
         var hour = Number(timenow.substring(16, 18)) - 6;
       }
       var minute = timenow.substring(19, 21);
-
+      // receiveDate(String(time._i.hour) + " : " + String(time._i.minute));
+      // console.log(hour + ":" + minute);
       newTime(hour + ":" + minute);
+      if(Number(hour)<10){
+        setState((prevState) => ({
+          ...prevState,
+          updatedDate: moment(datePush).format("YYYY-MM-DD").toString().concat(`T0${Number(hour)}:${minute}:00+07:00`),
+        }));
+        console.log("dibawah 10: ",moment(datePush).format("YYYY-MM-DD").toString().concat(`T0${Number(hour)}:${minute}:00+07:00`))
+      } else {
+        setState((prevState) => ({
+          ...prevState,
+          updatedDate: moment(datePush).format("YYYY-MM-DD").toString().concat(`T${Number(hour)}:${minute}:00+07:00`),
+          
+        }));
+        console.log("diatas 10: ",moment(datePush).format("YYYY-MM-DD").toString().concat(`T${Number(hour)}:${minute}:00+07:00`))
+        
+      }
+      // pushHour(hour);
+      // pushTime(minute);
+      // const currentDate = selectedDate || time;
+      // setShow(Platform.OS === 'ios');state.userData
+      // setDate(currentDate);
+      // console.log(date)
     }
   };
 
