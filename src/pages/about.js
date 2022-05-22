@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, View, Text, Pressable, Dimensions, Image } from 'react-native';
+import { StyleSheet, View, Text, Pressable, Dimensions, Image, ScrollView } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
 import {
   Poppins_300Light,
@@ -28,6 +28,11 @@ export default function About ({ navigation }) {
     return <AppLoading />;
   } else {
   return (
+    <ScrollView
+          showsVerticalScrollIndicator={false}
+          showsHorizontalScrollIndicator={false}
+          style={styles.task}
+        >
     <View style={styles.container}>
       <View>
         <Pressable onPress={() => navigation.navigate("Dashboard")}>
@@ -47,6 +52,7 @@ export default function About ({ navigation }) {
       <Text style={styles.aboutfooter}>Build 1.0032468</Text>
       </View>
     </View>
+    </ScrollView>
   );
   }
 };
@@ -59,6 +65,7 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-start',
     paddingLeft: windowHeight * 0.04,
     paddingTop: 50,
+    height: windowHeight,
   },
 
   iconGetStarted : {
