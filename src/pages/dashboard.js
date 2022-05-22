@@ -249,12 +249,12 @@ export default function Dashboard({ navigation }) {
         );
       } else {
         return (
-          <Swipeable
-            leftButtons={leftButtons}
-            leftButtonWidth={100}
-            rightButtonWidth={30}
-            rightButtons={rightButtons}
-          >
+          // <Swipeable
+          //   leftButtons={leftButtons}
+          //   leftButtonWidth={100}
+          //   rightButtonWidth={30}
+          //   rightButtons={rightButtons}
+          // >
             <View style={styles.containerhighlight}>
               {/* <MaterialIcons name="more-time" size={25} color="#EC9B3B" /> */}
               <View style={styles.highlight}>
@@ -274,7 +274,7 @@ export default function Dashboard({ navigation }) {
               </View>
               {/* <MaterialIcons name="done" size={25} color="#50C671" /> */}
             </View>
-          </Swipeable>
+          // </Swipeable>
         );
       }
     }
