@@ -76,6 +76,15 @@ export default function SettingMenu({ navigation }) {
     getSavedUserData();
   }, []);
 
+  useEffect(() => {
+    const unsubscribe = navigation.addListener("focus", () => {
+      getSavedUserData();
+    });
+
+    // Return the function to unsubscribe from the event so it gets removed on unmount
+    return unsubscribe;
+  }, [navigation]);
+
   let [fontsLoaded] = useFonts({
     Poppins_300Light,
     Poppins_400Regular,

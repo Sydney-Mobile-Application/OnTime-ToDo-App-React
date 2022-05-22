@@ -22,6 +22,22 @@ import { RFPercentage, RFValue } from "react-native-responsive-fontsize";
 
 // Firebase
 import { getStorage, ref, getDownloadURL } from "firebase/storage";
+import { getApps, initializeApp } from "firebase/app";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyBzfGyrTOPd4_S0MRyFbpiMVWKRlOpRl60",
+  authDomain: "todoapp-813f2.firebaseapp.com",
+  databaseURL:
+    "https://todoapp-813f2-default-rtdb.asia-southeast1.firebasedatabase.app",
+  projectId: "todoapp-813f2",
+  storageBucket: "todoapp-813f2.appspot.com",
+  messagingSenderId: "532708203730",
+  appId: "1:532708203730:web:bb80d5bec14d58c741610b",
+  measurementId: "G-Y054Z4FKQ1",
+};
+if (!getApps().length) {
+  initializeApp(firebaseConfig);
+}
 
 const windowWidth = Dimensions.get("window").width;
 const windowHeight = Dimensions.get("window").height;
@@ -59,6 +75,15 @@ export default function Profile({ navigation }) {
   useEffect(() => {
     getSavedUserData();
   }, []);
+
+  useEffect(() => {
+    const unsubscribe = navigation.addListener("focus", () => {
+      getSavedUserData();
+    });
+
+    // Return the function to unsubscribe from the event so it gets removed on unmount
+    return unsubscribe;
+  }, [navigation]);
 
   let [fontsLoaded] = useFonts({
     Poppins_300Light,

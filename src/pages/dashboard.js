@@ -490,6 +490,12 @@ export default function Dashboard({ navigation }) {
 
   const toDoPriority = state.toDoPriority;
 
+  const onRefresh = React.useCallback(() => {
+    setRefreshing(true);
+    getSavedUserData();
+    wait(1000).then(() => setRefreshing(false));
+  }, []);
+
   useEffect(() => {
     onRefresh();
     setModalVisible(true);
@@ -498,11 +504,14 @@ export default function Dashboard({ navigation }) {
     }, 5000);
   }, []);
 
-  const onRefresh = React.useCallback(() => {
-    setRefreshing(true);
-    getSavedUserData();
-    wait(1000).then(() => setRefreshing(false));
-  }, []);
+  useEffect(() => {
+    const unsubscribe = navigation.addListener("focus", () => {
+      getSavedUserData();
+    });
+
+    // Return the function to unsubscribe from the event so it gets removed on unmount
+    return unsubscribe;
+  }, [navigation]);
 
   const closeModal = () => {
     setModalVisible(false);
@@ -521,7 +530,7 @@ export default function Dashboard({ navigation }) {
           showsVerticalScrollIndicator={false}
           showsHorizontalScrollIndicator={false}
           contentContainerStyle={{
-            backgroundColor: "#fff", 
+            backgroundColor: "#fff",
           }}
           refreshControl={
             <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />

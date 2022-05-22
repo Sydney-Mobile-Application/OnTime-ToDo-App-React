@@ -107,12 +107,10 @@ export default function EditProfile({ navigation }) {
     let dataPost = {};
 
     if (!imageURI) {
-      console.log("imageURI", imageURI);
       dataPost = {
         email: state.email ? state.email.toLowerCase() : email,
         username: state.username ? state.username : username,
         phone: state.phone ? state.phone : phone,
-        profileUrl: null,
         createdDate: Timestamp.fromDate(new Date()),
       };
     } else {
@@ -132,7 +130,8 @@ export default function EditProfile({ navigation }) {
         try {
           const userData = Object.assign({ uid: state.userData.uid }, dataPost);
           const value = JSON.stringify(userData);
-          AsyncStorage.setItem("@userData", value);
+          console.log("value updateDoc", value);
+          // AsyncStorage.setItem("@userData", value);
         } catch (err) {
           console.log("Error Msg :", err);
         }
@@ -313,7 +312,14 @@ export default function EditProfile({ navigation }) {
             onSubmitData();
           }}
         >
-          <Text style={{ color: "white", fontFamily: "Poppins_600SemiBold", paddingHorizontal: "5%", paddingVertical: "5%", }}>
+          <Text
+            style={{
+              color: "white",
+              fontFamily: "Poppins_600SemiBold",
+              paddingHorizontal: "5%",
+              paddingVertical: "5%",
+            }}
+          >
             Save
           </Text>
         </Pressable>

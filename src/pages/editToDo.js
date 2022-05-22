@@ -47,7 +47,12 @@ import {
 } from "firebase/firestore";
 import { db } from "../config/firebase";
 import { getApps, initializeApp } from "firebase/app";
-import { getDownloadURL, getStorage, ref } from "firebase/storage";
+import {
+  getDownloadURL,
+  getStorage,
+  ref,
+  uploadBytesResumable,
+} from "firebase/storage";
 
 const firebaseConfig = {
   apiKey: "AIzaSyBzfGyrTOPd4_S0MRyFbpiMVWKRlOpRl60",
@@ -113,7 +118,7 @@ export default function EditToDo({ navigation, route }) {
   const [linkURL, setURL] = useState(null); //pre-filled*
   const [link, setLink] = useState(false); //pre-filled*
   const [imageURI, dataImage] = useState(""); //pre-filled*
-  const [datePush,pushDate] = useState()
+  const [datePush, pushDate] = useState();
 
   const priorityTask = () => {
     setPriority(!priority);
@@ -138,8 +143,7 @@ export default function EditToDo({ navigation, route }) {
   const receiveDate = (index, date) => {
     newDate(String(index));
     setShow(true);
-    pushDate(date)
-
+    pushDate(date);
   };
 
   const [heightDesc, setHeightDesc] = useState({
@@ -189,8 +193,6 @@ export default function EditToDo({ navigation, route }) {
     }
   };
 
-  
-
   useEffect(() => {
     getSelectedNotes(route.params.noteId);
     generateUniqueId();
@@ -223,37 +225,53 @@ export default function EditToDo({ navigation, route }) {
       ]);
     } else {
       if (Number(Number(timenow.substring(16, 18)) - 6) < 0) {
-        if(Number(timenow.substring(16, 18)) + 18 > 10){
-        var hour = Number(timenow.substring(16, 18)) + 18;
+        if (Number(timenow.substring(16, 18)) + 18 > 10) {
+          var hour = Number(timenow.substring(16, 18)) + 18;
         } else {
-        var hour = "0"+Number(timenow.substring(16, 18)) + 18;
+          var hour = "0" + Number(timenow.substring(16, 18)) + 18;
         }
       } else {
-          if(Number(timenow.substring(16, 18)) - 6 > 10){
+        if (Number(timenow.substring(16, 18)) - 6 > 10) {
           var hour = Number(timenow.substring(16, 18)) - 6;
-          } else {
-          var hour = "0"+Number(timenow.substring(16, 18)) - 6;
-          }
+        } else {
+          var hour = "0" + Number(timenow.substring(16, 18)) - 6;
+        }
         var hour = Number(timenow.substring(16, 18)) - 6;
       }
       var minute = timenow.substring(19, 21);
       // receiveDate(String(time._i.hour) + " : " + String(time._i.minute));
       // console.log(hour + ":" + minute);
       newTime(hour + ":" + minute);
-      if(Number(hour)<10){
+      if (Number(hour) < 10) {
         setState((prevState) => ({
           ...prevState,
-          updatedDate: moment(datePush).format("YYYY-MM-DD").toString().concat(`T0${Number(hour)}:${minute}:00+07:00`),
+          updatedDate: moment(datePush)
+            .format("YYYY-MM-DD")
+            .toString()
+            .concat(`T0${Number(hour)}:${minute}:00+07:00`),
         }));
-        console.log("dibawah 10: ",moment(datePush).format("YYYY-MM-DD").toString().concat(`T0${Number(hour)}:${minute}:00+07:00`))
+        console.log(
+          "dibawah 10: ",
+          moment(datePush)
+            .format("YYYY-MM-DD")
+            .toString()
+            .concat(`T0${Number(hour)}:${minute}:00+07:00`)
+        );
       } else {
         setState((prevState) => ({
           ...prevState,
-          updatedDate: moment(datePush).format("YYYY-MM-DD").toString().concat(`T${Number(hour)}:${minute}:00+07:00`),
-          
+          updatedDate: moment(datePush)
+            .format("YYYY-MM-DD")
+            .toString()
+            .concat(`T${Number(hour)}:${minute}:00+07:00`),
         }));
-        console.log("diatas 10: ",moment(datePush).format("YYYY-MM-DD").toString().concat(`T${Number(hour)}:${minute}:00+07:00`))
-        
+        console.log(
+          "diatas 10: ",
+          moment(datePush)
+            .format("YYYY-MM-DD")
+            .toString()
+            .concat(`T${Number(hour)}:${minute}:00+07:00`)
+        );
       }
       // pushHour(hour);
       // pushTime(minute);
@@ -318,7 +336,6 @@ export default function EditToDo({ navigation, route }) {
     //   });
   };
 
-
   const onDoneData = () => {
     const myDoc = doc(db, "notes", state.noteId);
 
@@ -353,17 +370,16 @@ export default function EditToDo({ navigation, route }) {
           url: linkURL,
           imageURL: state.downloadImageUrl,
         };
-      } else if (!image){
+      } else if (!image) {
         dataPost = {
           date: Timestamp.fromDate(new Date(state.updatedDate)),
           title: textTitle,
           description: textDesc,
           priority: priority,
           url: linkURL,
-          imageURL: null
+          imageURL: null,
         };
-      } 
-      else {
+      } else {
         dataPost = {
           date: Timestamp.fromDate(new Date(state.updatedDate)),
           title: textTitle,
@@ -371,11 +387,10 @@ export default function EditToDo({ navigation, route }) {
           priority: priority,
           url: linkURL,
         };
-        
       }
     } else {
       if (imageURI) {
-        console.log("imageURI: ",imageURI)
+        console.log("imageURI: ", imageURI);
         await uploadImage(imageURI);
         dataPost = {
           title: textTitle,
@@ -385,16 +400,15 @@ export default function EditToDo({ navigation, route }) {
           imageURL: state.downloadImageUrl,
         };
       } else if (!image) {
-        console.log("image: ",image)
+        console.log("image: ", image);
         dataPost = {
           title: textTitle,
           description: textDesc,
           priority: priority,
           url: linkURL,
           imageURL: null,
-        }
-      }
-      else {
+        };
+      } else {
         dataPost = {
           title: textTitle,
           description: textDesc,
