@@ -34,6 +34,7 @@ import { useFonts } from "expo-font";
 import AppLoading from "expo-app-loading";
 
 import moment from "moment";
+import uuid from "react-native-uuid";
 
 // Firebase
 import {
@@ -148,6 +149,7 @@ export default function EditToDo({ navigation, route }) {
     selectedData: [],
     noteId: null,
     updatedDate: null,
+    downloadImageUrl: null,
   });
 
   const getSelectedNotes = async (noteId) => {
@@ -172,12 +174,23 @@ export default function EditToDo({ navigation, route }) {
     });
   };
 
+  const generateUniqueId = () => {
+    let uniqueId = uuid.v4();
+
+    if (uniqueId) {
+      setState((prevState) => ({
+        ...prevState,
+        downloadImageUrl: uniqueId,
+      }));
+    }
+  };
+
   useEffect(() => {
     getSelectedNotes(route.params.noteId);
+    generateUniqueId();
   }, [route.params?.noteId]);
 
   useEffect(() => {
-    console.log("state.userdata", state.userData);
     onChangeTextTitle(state.userData?.title);
     onChangeTextDesc(state.userData?.description);
     setURL(state.userData?.url);
@@ -323,22 +336,43 @@ export default function EditToDo({ navigation, route }) {
 
     let dataPost = {};
 
-    state.updatedDate
-      ? (dataPost = {
+    if (state.updatedDate) {
+      if (!imageURI) {
+        dataPost = {
           date: Timestamp.fromDate(new Date(state.updatedDate)),
           title: textTitle,
           description: textDesc,
           priority: priority,
           url: linkURL,
-          imageURL: "noteImages/" + (state.userData.uid + textTitle + "-image"),
-        })
-      : (dataPost = {
+        };
+      } else {
+        dataPost = {
+          date: Timestamp.fromDate(new Date(state.updatedDate)),
           title: textTitle,
           description: textDesc,
           priority: priority,
           url: linkURL,
-          imageURL: "noteImages/" + (state.userData.uid + textTitle + "-image"),
-        });
+          imageURL: state.downloadImageUrl,
+        };
+      }
+    } else {
+      if (!imageURI) {
+        dataPost = {
+          title: textTitle,
+          description: textDesc,
+          priority: priority,
+          url: linkURL,
+        };
+      } else {
+        dataPost = {
+          title: textTitle,
+          description: textDesc,
+          priority: priority,
+          url: linkURL,
+          imageURL: state.downloadImageUrl,
+        };
+      }
+    }
 
     updateDoc(myDoc, dataPost)
       .then(() => {
