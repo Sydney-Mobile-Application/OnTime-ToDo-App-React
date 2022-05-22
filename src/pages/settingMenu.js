@@ -20,9 +20,7 @@ import {
 } from "@expo-google-fonts/poppins";
 import { useFonts } from "expo-font";
 import AppLoading from "expo-app-loading";
-
 import AsyncStorage from "@react-native-async-storage/async-storage";
-
 import CalendarPicker from "react-native-calendar-picker";
 import moment from "moment";
 
@@ -48,6 +46,23 @@ export default function SettingMenu({ navigation }) {
   const [state, setState] = useState({
     userData: "",
   });
+
+  const onLogout = async () => {
+    try {
+      const userData = await AsyncStorage.getItem("@userData");
+      if (userData !== null) {
+        try {
+          await AsyncStorage.removeItem("@userData");
+          navigation.navigate("Get Started");
+          return true;
+        } catch (exception) {
+          return false;
+        }
+      }
+    } catch (err) {
+      console.log("error msg : ", err);
+    }
+  };
 
   const getImageUrl = async (value) => {
     const fileRef = ref(getStorage(), value);
@@ -256,7 +271,11 @@ export default function SettingMenu({ navigation }) {
             </View>
           </Pressable>
 
-          <Pressable onPress={() => navigation.navigate("Sign In")}>
+          <Pressable
+            onPress={() => {
+              onLogout();
+            }}
+          >
             <View style={styles.bottomTitle}>
               <MaterialIcons
                 name="logout"

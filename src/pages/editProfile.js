@@ -137,7 +137,7 @@ export default function EditProfile({ navigation }) {
         }
 
         Alert.alert("Success", "User Updated Successfully !");
-        navigation.navigate("Profile");
+        navigation.navigate("Dashboard");
       })
       .catch((error) => {
         Alert.alert("Error", error.message);
@@ -152,6 +152,7 @@ export default function EditProfile({ navigation }) {
       aspect: [3, 3],
       quality: 1,
     });
+
     console.log("Height:" + result.height);
     console.log(result);
 
