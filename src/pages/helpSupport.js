@@ -16,7 +16,7 @@ const windowWidth = Dimensions.get("window").width;
 const windowHeight = Dimensions.get("window").height;
 
 const email = ('ontimeapp@gmail.com');
-const phoneNumber = ("+62 81275899699");
+const phoneNumber = ("+62 82385570341");
 
 export default function HelpSupport ({ navigation }) {
   let [fontsLoaded] = useFonts({
@@ -52,7 +52,7 @@ export default function HelpSupport ({ navigation }) {
           <Text style={styles.description1}>{email}</Text>
           </View>
        </TouchableOpacity>
-       <TouchableOpacity style={styles.helpSupportContainer} onPress={()=>{Linking.openURL(`whatsapp://send?text=hello&phone=${phoneNumber}`)}}
+       <TouchableOpacity style={styles.helpSupportContainer} onPress={()=>{Linking.openURL(`whatsapp://send?text=Hi, ToDoApp's Team!&phone=${phoneNumber}`)}}
        >
           <View style={styles.helpDetail}>
             <Text style={{marginRight: "5%"}}>
