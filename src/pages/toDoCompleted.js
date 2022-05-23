@@ -8,6 +8,7 @@ import {
   Dimensions,
   Image,
   RefreshControl,
+  Alert
 } from "react-native";
 
 import { MaterialIcons } from "@expo/vector-icons";

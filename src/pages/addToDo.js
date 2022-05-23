@@ -14,6 +14,7 @@ import {
   ScrollView,
   Button,
   Linking,
+  ToastAndroid
 } from "react-native";
 import Prompt from "react-native-input-prompt";
 import Lightbox from "react-native-lightbox";
@@ -279,6 +280,8 @@ export default function AddToDo({ navigation }) {
       } else if (textTitle === "" || textDesc === "") {
         Alert.alert("Error", "Title and Description Cannot Empty !");
       } else {
+        ToastAndroid.show("Saving your task...", ToastAndroid.SHORT);
+
         let dataPost = {};
 
         if (!imageURI) {
@@ -356,6 +359,7 @@ export default function AddToDo({ navigation }) {
         const progress =
           (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
         console.log("Upload is " + progress + "% done");
+        ToastAndroid.show("Uploading Image...", ToastAndroid.SHORT);
       },
       (error) => {
         console.log("uploadBytes Err : ", error);

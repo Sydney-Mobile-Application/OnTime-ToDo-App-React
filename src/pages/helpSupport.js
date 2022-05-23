@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, View, Text, Pressable, Dimensions } from 'react-native';
+import { StyleSheet, View, Text, Pressable, Dimensions, Linking, TouchableOpacity } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
 import {
   Poppins_300Light,
@@ -14,6 +14,9 @@ import { RFPercentage, RFValue } from "react-native-responsive-fontsize";
 
 const windowWidth = Dimensions.get("window").width;
 const windowHeight = Dimensions.get("window").height;
+
+const email = ('ontimeapp@gmail.com');
+const phoneNumber = ("+62 82385570341");
 
 export default function HelpSupport ({ navigation }) {
   let [fontsLoaded] = useFonts({
@@ -32,11 +35,12 @@ export default function HelpSupport ({ navigation }) {
         <Pressable onPress={() => navigation.navigate("Dashboard")}>
           <MaterialIcons  name='arrow-back' size={30} color='#293462'/>
         </Pressable>
-        <Text style={styles.helpSupportTitle}>Help & Support</Text>
+        <Text style={styles.helpSupportTitle}>Help Center</Text>
       </View>
 
     <View style={styles.helpSupportDetail}>
-        <View style={styles.helpSupportContainer}>
+        <TouchableOpacity style={styles.helpSupportContainer} 
+        onPress={()=>{ Linking.openURL("mailto:ontimeapp@gmail.com?subject=OnTime To Do App&body=Hi, ToDoApp's Team!");}}>
           <View style={styles.helpDetail}>
             <Text style={{marginRight: "5%"}}>
             <MaterialIcons 
@@ -45,10 +49,11 @@ export default function HelpSupport ({ navigation }) {
               color="#293462"
               />
             </Text>
-          <Text style={styles.description1}>ontimeapp@gmail.com</Text>
+          <Text style={styles.description1}>{email}</Text>
           </View>
-       </View>
-       <View style={styles.helpSupportContainer}>
+       </TouchableOpacity>
+       <TouchableOpacity style={styles.helpSupportContainer} onPress={()=>{Linking.openURL(`whatsapp://send?text=Hi, ToDoApp's Team!&phone=${phoneNumber}`)}}
+       >
           <View style={styles.helpDetail}>
             <Text style={{marginRight: "5%"}}>
             <MaterialIcons 
@@ -57,10 +62,10 @@ export default function HelpSupport ({ navigation }) {
               color="#293462"
               />
             </Text>
-          <Text style={styles.description1}>+12-345-678-900</Text>
+          <Text style={styles.description1}>{phoneNumber}</Text>
           </View>
-       </View>
-       <Pressable onPress={() => navigation.navigate("Guide")}>
+       </TouchableOpacity>
+       <TouchableOpacity onPress={() => navigation.navigate("Guide")}>
          <View style={styles.helpSupportContainer}>
           <View style={styles.helpDetail}>
             <Text style={{marginRight: "5%"}}>
@@ -73,7 +78,7 @@ export default function HelpSupport ({ navigation }) {
           <Text style={styles.description1}>Tap to FAQ</Text>
           </View>
        </View>
-       </Pressable>
+       </TouchableOpacity>
 
        
     </View>

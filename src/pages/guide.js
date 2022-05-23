@@ -15,6 +15,7 @@ import Collapsible from 'react-native-collapsible';
 import Accordion from 'react-native-collapsible/Accordion';
 import { MaterialIcons } from '@expo/vector-icons';
 import { RFPercentage, RFValue } from "react-native-responsive-fontsize";
+import { backgroundColor } from 'react-native/Libraries/Components/View/ReactNativeStyleAttributes';
 
 const windowWidth = Dimensions.get("window").width;
 const windowHeight = Dimensions.get("window").height;
@@ -187,13 +188,12 @@ const styles = StyleSheet.create({
     paddingHorizontal: "12%",
     fontFamily: "Poppins_600SemiBold",
     // lineHeight: 50,
-    marginBottom: "5%"
-
+    marginBottom: "5%",
   },
   content: {
     paddingHorizontal: "15%",
     paddingVertical: "3%",
-    backgroundColor: '#F5FCFF',
+    backgroundColor: '#FFFFFF',
     width: "100%",
     height: "100%",
     fontFamily: "Poppins_400Regular",
@@ -208,7 +208,7 @@ const styles = StyleSheet.create({
     marginBottom: "3%"
   },
   active: {
-    backgroundColor: '#F5FCFF',
+    // backgroundColor: '#F5FCFF',
   },
   inactive: {
     backgroundColor: '#FFFFFF',
