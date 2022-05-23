@@ -14,7 +14,7 @@ import {
   ScrollView,
   Button,
   Linking,
-  ToastAndroid
+  ToastAndroid,
 } from "react-native";
 import { MaterialIcons } from "@expo/vector-icons";
 import { Feather } from "@expo/vector-icons";
@@ -197,6 +197,7 @@ export default function EditToDo({ navigation, route }) {
   useEffect(() => {
     getSelectedNotes(route.params.noteId);
     generateUniqueId();
+    ToastAndroid.show("Loading your task...", ToastAndroid.SHORT);
   }, [route.params?.noteId]);
 
   useEffect(() => {
