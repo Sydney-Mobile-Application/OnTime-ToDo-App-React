@@ -35,7 +35,7 @@ export default function HelpSupport ({ navigation }) {
         <Pressable onPress={() => navigation.navigate("Dashboard")}>
           <MaterialIcons  name='arrow-back' size={30} color='#293462'/>
         </Pressable>
-        <Text style={styles.helpSupportTitle}>Help & Support</Text>
+        <Text style={styles.helpSupportTitle}>Help Center</Text>
       </View>
 
     <View style={styles.helpSupportDetail}>
