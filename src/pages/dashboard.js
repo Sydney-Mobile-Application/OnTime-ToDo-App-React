@@ -67,7 +67,7 @@ import * as Notifications from "expo-notifications";
 Notifications.setNotificationHandler({
   handleNotification: async () => ({
     shouldShowAlert: true,
-    shouldPlaySound: false,
+    shouldPlaySound: true,
     shouldSetBadge: false,
   }),
 });
@@ -151,6 +151,28 @@ export default function Dashboard({ navigation }) {
     }
   }
 
+  async function schedulePushNotificationDD() {
+    if (state.countTask-1 > 0) {
+      await Notifications.scheduleNotificationAsync({
+        content: {
+          title: "Don't Forget To Do Your Task ! 🔔",
+          body: `You Still Have ${state.countTask-1} Task To Do !`,
+          data: { data: "goes here" },
+        },
+        trigger: { seconds: 2 },
+      });
+    } else {
+      await Notifications.scheduleNotificationAsync({
+        content: {
+          title: "You can relax now ! 🤸‍♂️",
+          body: `You have no task right now 🤳`,
+          data: { data: "goes here" },
+        },
+        trigger: { seconds: 2 },
+      });
+    }
+  }
+
   async function registerForPushNotificationsAsync() {
     let token;
     if (Device.isDevice) {
@@ -194,7 +216,7 @@ export default function Dashboard({ navigation }) {
     updateDoc(myDoc, dataPost)
       .then(() => {
         Alert.alert("Success", "Task mark as Done !");
-        onRefresh();
+        getDDNotif();
       })
       .catch((error) => {
         Alert.alert("Error", error.message);
@@ -208,7 +230,8 @@ export default function Dashboard({ navigation }) {
 
     if (deleteData) {
       Alert.alert("Success", "Task deleted !");
-      onRefresh();
+      await onRefresh();
+      getDDNotif();
     }
   };
 
@@ -583,15 +606,26 @@ export default function Dashboard({ navigation }) {
 
   const toDoPriority = state.toDoPriority;
 
-  const onRefresh = React.useCallback(async () => {
+  const getNotif = (async () => {
     await schedulePushNotification();
+    onRefresh()
+  });
+
+  const getDDNotif = (async () => {
+    await schedulePushNotificationDD();
+    onRefresh()
+  });
+
+
+  const onRefresh = React.useCallback(async () => {
+    // await schedulePushNotification();
     setRefreshing(true);
     getSavedUserData();
     wait(1000).then(() => setRefreshing(false));
   }, []);
 
   useEffect(() => {
-    onRefresh();
+    getNotif();
     setModalVisible(true);
     setTimeout(() => {
       setModalVisible(false);
@@ -627,7 +661,7 @@ export default function Dashboard({ navigation }) {
             backgroundColor: "#fff",
           }}
           refreshControl={
-            <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+            <RefreshControl refreshing={refreshing} onRefresh={getNotif}  />
           }
         >
           <View style={styles.containertop}>
