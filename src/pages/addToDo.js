@@ -359,6 +359,7 @@ export default function AddToDo({ navigation }) {
         const progress =
           (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
         console.log("Upload is " + progress + "% done");
+        ToastAndroid.show("Uploading Image...", ToastAndroid.SHORT);
       },
       (error) => {
         console.log("uploadBytes Err : ", error);
