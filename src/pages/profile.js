@@ -139,14 +139,14 @@ export default function Profile({ navigation }) {
           </Text>
         </Pressable>
 
-        <Pressable
+        {/* <Pressable
           style={styles.signOut}
           onPress={() => navigation.navigate("Change Password")}
         >
           <Text style={{ color: "white", fontFamily: "Poppins_600SemiBold" }}>
             Change Password
           </Text>
-        </Pressable>
+        </Pressable> */}
 
         <Pressable
           style={styles.bottomText}
