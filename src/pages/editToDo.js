@@ -14,6 +14,7 @@ import {
   ScrollView,
   Button,
   Linking,
+  ToastAndroid,
 } from "react-native";
 import { MaterialIcons } from "@expo/vector-icons";
 import { Feather } from "@expo/vector-icons";
@@ -196,6 +197,7 @@ export default function EditToDo({ navigation, route }) {
   useEffect(() => {
     getSelectedNotes(route.params.noteId);
     generateUniqueId();
+    ToastAndroid.show("Loading your task...", ToastAndroid.SHORT);
   }, [route.params?.noteId]);
 
   useEffect(() => {
@@ -309,6 +311,7 @@ export default function EditToDo({ navigation, route }) {
         const progress =
           (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
         console.log("Upload is " + progress + "% done");
+        // ToastAndroid.show("Uploading Image...", ToastAndroid.SHORT);
       },
       (error) => {
         console.log("uploadBytes Err : ", error);
@@ -358,7 +361,7 @@ export default function EditToDo({ navigation, route }) {
     const myDoc = doc(db, "notes", state.noteId);
 
     let dataPost = {};
-
+    ToastAndroid.show("Saving your task...", ToastAndroid.SHORT);
     if (state.updatedDate) {
       if (imageURI) {
         await uploadImage(imageURI);
